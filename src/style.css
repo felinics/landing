@@ -3,7 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --font-sans: "Inter", sans-serif;
+  --font-sans: "Inter", "Noto Sans SC", sans-serif;
   --font-serif: "Source Serif 4", "Noto Serif SC", serif;
   --font-mono: "Fira Code", monospace;
   --shadow-nav: 0 4px 12px 0 rgba(0, 0, 0, 0.05);
@@ -21,6 +21,8 @@
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
   --color-ring: var(--ring);
+  --color-chat-user-bubble: var(--chat-user-bubble);
+  --color-chat-user-bubble-fg: var(--chat-user-bubble-fg);
 }
 
 @layer base {
@@ -37,6 +39,10 @@
     --destructive: #ef4444;
     --destructive-foreground: #ffffff;
     --ring: #09090b;
+
+    /* 聊天用户气泡：照搬产品 chat-user-bubble 的 oklch 公式，brand 取 --primary */
+    --chat-user-bubble: oklch(from var(--primary) 0.936 0.035 calc(h + 12));
+    --chat-user-bubble-fg: oklch(from var(--primary) 0.235 0.04 calc(h + 12));
 
     /* menu / select 表面 token（搬自 @memohai/ui，用于语言下拉与图标按钮） */
     --popover: oklch(0.995 0.001 286);
@@ -60,6 +66,9 @@
     --destructive: #ef4444;
     --destructive-foreground: #fafafa;
     --ring: #d4d4d8;
+
+    --chat-user-bubble: oklch(from var(--primary) 0.40 0.15 calc(h + 7));
+    --chat-user-bubble-fg: #fff;
 
     --popover: oklch(0.21 0 0);
     --popover-foreground: oklch(0.90 0 0);

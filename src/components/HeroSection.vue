@@ -3,7 +3,7 @@ import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
 import { ArrowRight, Github } from 'lucide-vue-next'
 import sunsetBg from '../assets/sunset.webp'
-import heroShot from '../assets/hero-shot.webp'
+import HeroShowcase from './HeroShowcase.vue'
 import { useTa } from '../composables/useTa'
 
 const { th } = useTa()
@@ -59,14 +59,11 @@ const titleFontClass = computed(() => 'font-serif')
       </div>
     </div>
 
-    <!-- App screenshot — overlaps the sky bottom, continues onto the page background -->
-    <div class="relative z-20 w-full max-w-[1040px] mx-auto px-4 md:px-6 -mt-[40px] md:-mt-[90px]">
-      <div class="rounded-xl overflow-hidden border border-white/10 ring-1 ring-black/5 shadow-2xl shadow-black/40 bg-[#0d1117]">
-        <img
-          :src="heroShot"
-          alt="Memoh workspace"
-          class="w-full h-auto block"
-        />
+    <!-- App showcase — overlaps the sky bottom, continues onto the page background.
+         真实 App 的无声循环录屏（含 Desktop），素材就位前优雅占位。 -->
+    <div class="relative z-20 w-full max-w-[1180px] mx-auto px-4 md:px-6 -mt-[40px] md:-mt-[90px]">
+      <div class="aspect-[16/10] w-full shadow-2xl shadow-black/50">
+        <HeroShowcase :chrome="false" />
       </div>
     </div>
   </section>

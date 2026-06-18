@@ -166,6 +166,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior-y: auto;
+  scrollbar-gutter: stable;
   scrollbar-width: none;
   -ms-overflow-style: none;
   will-change: scroll-position;

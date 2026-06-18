@@ -1,10 +1,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { RouterLink } from 'vue-router'
-import { ArrowRight, ImageIcon } from 'lucide-vue-next'
+import { ArrowRight } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 import { useHead, useSeoMeta } from '@unhead/vue'
 import HeroSection from '../components/HeroSection.vue'
+import ProofDesktop from '../components/proof/ProofDesktop.vue'
+import ProofFiles from '../components/proof/ProofFiles.vue'
+import ProofNetwork from '../components/proof/ProofNetwork.vue'
+import ProofSchedule from '../components/proof/ProofSchedule.vue'
+import ProofProactive from '../components/proof/ProofProactive.vue'
+import ProofMemory from '../components/proof/ProofMemory.vue'
+import ProofChannel from '../components/proof/ProofChannel.vue'
 import { useTa } from '../composables/useTa'
 
 const { locale, t } = useI18n()
@@ -55,22 +62,22 @@ useHead({
 })
 
 const s1Proofs = [
-  { key: 'desktop', hint: 'Agent 的桌面环境截图\nVNC / noVNC 远程桌面画面' },
-  { key: 'files', hint: 'Agent 的文件管理器截图\n文件列表 / 工作区目录结构' },
-  { key: 'network', hint: 'Agent 独立上网的证据\n浏览器自动操作 / 网页抓取画面' },
+  { key: 'desktop', comp: ProofDesktop },
+  { key: 'files', comp: ProofFiles },
+  { key: 'network', comp: ProofNetwork },
 ]
 
 const s2Proofs = [
-  { key: 'cron', hint: '定时任务面板截图\n任务列表 / 执行记录' },
-  { key: 'proactive', hint: 'Agent 主动发消息的截图\nTelegram / 微信收到 Agent 通知' },
-  { key: 'memory', hint: '跨会话记忆的证据\n上下文延续 / 记忆面板' },
+  { key: 'cron', comp: ProofSchedule },
+  { key: 'proactive', comp: ProofProactive },
+  { key: 'memory', comp: ProofMemory },
 ]
 
 const s3Channels = [
-  { name: 'Desktop', hint: 'Memoh Desktop 客户端截图' },
-  { name: 'Telegram', hint: 'Telegram 对话截图' },
-  { name: 'WeChat', hint: '微信对话截图' },
-  { name: 'Web', hint: 'Web UI 聊天截图' },
+  { name: 'Desktop', platform: 'desktop' as const },
+  { name: 'Telegram', platform: 'telegram' as const },
+  { name: 'WeChat', platform: 'wechat' as const },
+  { name: 'Discord', platform: 'discord' as const },
 ]
 
 const moreLogos = [
@@ -78,8 +85,11 @@ const moreLogos = [
   { name: 'Telegram', src: '/brands/telegram.svg' },
   { name: 'Discord',  src: '/brands/discord.svg' },
   { name: 'QQ',       src: '/brands/qq.svg' },
-  { name: 'Gmail',    src: '/brands/gmail.svg' },
   { name: 'Slack',    src: '/brands/slack.svg' },
+  { name: 'Gmail',    src: '/brands/gmail.svg' },
+  { name: 'LINE',     src: '/brands/line.svg' },
+  { name: 'WhatsApp', src: '/brands/whatsapp.svg' },
+  { name: 'Matrix',   src: '/brands/matrix.svg' },
 ]
 </script>
 
@@ -106,9 +116,8 @@ const moreLogos = [
                 <h3 class="font-medium text-base text-white" v-html="th(`s1.c${i+1}.title`)" />
                 <p class="text-sm text-white/65 leading-snug whitespace-pre-line" v-html="th(`s1.c${i+1}.desc`)" />
               </div>
-              <div class="rounded-xl border border-white/8 bg-[#2a2a2e] aspect-[4/5] flex flex-col items-center justify-center gap-2">
-                <ImageIcon :size="24" class="text-white/30" />
-                <span class="text-white/45 text-xs text-center px-4 whitespace-pre-line">{{ proof.hint }}</span>
+              <div class="aspect-[4/5] overflow-hidden">
+                <component :is="proof.comp" />
               </div>
             </div>
           </div>
@@ -139,9 +148,8 @@ const moreLogos = [
                 <h3 class="font-medium text-base text-white" v-html="th(`s2.c${i+1}.title`)" />
                 <p class="text-sm text-white/65 leading-snug whitespace-pre-line" v-html="th(`s2.c${i+1}.desc`)" />
               </div>
-              <div class="rounded-xl border border-white/8 bg-[#2a2a2e] aspect-[4/5] flex flex-col items-center justify-center gap-2">
-                <ImageIcon :size="24" class="text-white/30" />
-                <span class="text-white/45 text-xs text-center px-4 whitespace-pre-line">{{ proof.hint }}</span>
+              <div class="aspect-[4/5] overflow-hidden">
+                <component :is="proof.comp" />
               </div>
             </div>
           </div>
@@ -168,9 +176,8 @@ const moreLogos = [
 
           <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
             <div v-for="ch in s3Channels" :key="ch.name" class="flex flex-col gap-0 rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm overflow-hidden">
-              <div class="aspect-[3/4] bg-[#2a2a2e] flex flex-col items-center justify-center gap-2">
-                <ImageIcon :size="20" class="text-white/30" />
-                <span class="text-white/45 text-[10px] text-center px-2">{{ ch.hint }}</span>
+              <div class="aspect-[3/4] overflow-hidden">
+                <ProofChannel :platform="ch.platform" />
               </div>
               <div class="px-3 py-2.5 border-t border-white/10">
                 <span class="text-xs font-medium text-white">{{ ch.name }}</span>
@@ -181,9 +188,14 @@ const moreLogos = [
           <!-- And more · logo strip -->
           <div class="flex flex-col gap-3 pb-2">
             <p class="text-base text-white font-medium leading-snug">{{ locale === 'zh' ? '以及更多平台' : 'And more' }}</p>
-            <div class="flex flex-wrap items-center gap-x-5 gap-y-3">
-              <img v-for="logo in moreLogos" :key="logo.name" :src="logo.src" :alt="logo.name"
-                class="h-6 w-auto" />
+            <div class="flex flex-wrap items-center gap-3">
+              <span
+                v-for="logo in moreLogos"
+                :key="logo.name"
+                class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl border border-white/10 bg-black/40 px-2.5 backdrop-blur-sm"
+              >
+                <img :src="logo.src" :alt="logo.name" class="h-5 w-auto" />
+              </span>
             </div>
           </div>
 

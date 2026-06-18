@@ -267,6 +267,13 @@ onUnmounted(() => { observer?.disconnect() })
   transform-origin: center 88%;
 }
 
+@media (max-width: 767px) {
+  .egg-video {
+    object-position: 64% 88%;
+    transform-origin: 64% 88%;
+  }
+}
+
 .clip-video { opacity: 0; }
 .clip-video.active { opacity: 1; }
 
@@ -283,6 +290,16 @@ onUnmounted(() => { observer?.disconnect() })
   width: 240px;
   height: 280px;
   z-index: 3;
+}
+
+@media (max-width: 767px) {
+  .cat-hotspot {
+    /* 手机端视频向右偏移后，猫出现在右侧偏中区域 */
+    right: 10%;
+    bottom: 2%;
+    width: 160px;
+    height: 220px;
+  }
 }
 
 /* 黑板区：右侧中下，高度加高往上延伸 */

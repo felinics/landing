@@ -174,9 +174,9 @@ const moreLogos = [
             <p class="text-base md:text-lg text-white/80 leading-snug whitespace-pre-line" v-html="th('s3.subtitle')" />
           </div>
 
-          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
             <div v-for="ch in s3Channels" :key="ch.name" class="flex flex-col gap-0 rounded-xl border border-white/10 bg-black/40 backdrop-blur-sm overflow-hidden">
-              <div class="aspect-[3/4] overflow-hidden">
+              <div class="overflow-hidden md:aspect-[3/4]">
                 <ProofChannel :platform="ch.platform" />
               </div>
               <div class="px-3 py-2.5 border-t border-white/10">

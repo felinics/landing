@@ -101,6 +101,70 @@
     "title": "Talk to it from anywhere",
     "subtitle": "One agent, every channel."
   },
+  "proof": {
+    "network": {
+      "try": "Let me try fetching example.com and see what comes back.",
+      "fetch": "Fetch",
+      "say": "I'm online! Here's example.com, straight off the web."
+    },
+    "schedule": {
+      "today": "Today",
+      "tomorrow": "Tomorrow",
+      "t1": { "name": "Morning digest", "desc": "Every day" },
+      "t2": { "name": "Watch releases", "desc": "Weekdays" },
+      "t3": { "name": "Tidy inbox", "desc": "Every day" }
+    },
+    "proactive": {
+      "online": "online",
+      "t1": "Yesterday 23:14",
+      "t2": "09:02",
+      "t3": "14:20",
+      "ask": "Ping me when that release ships",
+      "ack": "Sure — watching it now.",
+      "say": "The release you were watching just shipped — I've filed the changes in your workspace.",
+      "say2": "Heads-up: design review at 3 — I've pulled up your notes from last time."
+    },
+    "memory": {
+      "u1": "Whatever happened with that PR?",
+      "recall": "Search memory",
+      "recallTarget": "last week · that PR",
+      "a1": "Found it — merged this morning, third pass on the same one.",
+      "u2": "Jot down the key points so we can pick up later",
+      "write": "Write",
+      "a2": "Saved. Next time I'll start right where we left off."
+    },
+    "channel": {
+      "you": "You",
+      "online": "online",
+      "desktop": {
+        "u1": "Kick off my weekly report?",
+        "a1": "Drafted it — saved to your desktop.",
+        "u2": "Pull in last week's numbers too",
+        "a2": "Done — all three charts updated to this week."
+      },
+      "telegram": {
+        "u1": "Remind me to grab the package at 6",
+        "a1": "Got it — I'll ping you at 6.",
+        "u2": "What's the weather tonight?",
+        "a2": "Rain tonight — bring an umbrella.",
+        "u3": "Move the package to tomorrow morning",
+        "a3": "Done — reminder set for 9am tomorrow."
+      },
+      "wechat": {
+        "u1": "What does おつかれ mean?",
+        "a1": "“Nice work” — a casual sign-off after work.",
+        "u2": "How should I reply?",
+        "a2": "“おつかれさまです” works naturally."
+      },
+      "discord": {
+        "channel": "# general",
+        "u1": "{'@'}Felinic catch me up on today",
+        "a1": "Three things: release, rename, Friday dinner.",
+        "u2": "What time Friday?",
+        "a2": "7pm, the usual spot."
+      }
+    }
+  },
   "cta_bottom": {
     "title": "Try Memoh",
     "btn": "Join waitlist",

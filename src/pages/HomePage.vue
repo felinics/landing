@@ -81,15 +81,16 @@ const s3Channels = [
 ]
 
 const moreLogos = [
-  { name: 'WeChat',   src: '/brands/wechat.svg' },
   { name: 'Telegram', src: '/brands/telegram.svg' },
   { name: 'Discord',  src: '/brands/discord.svg' },
-  { name: 'QQ',       src: '/brands/qq.svg' },
   { name: 'Slack',    src: '/brands/slack.svg' },
-  { name: 'Gmail',    src: '/brands/gmail.svg' },
-  { name: 'LINE',     src: '/brands/line.svg' },
+  { name: 'WeChat',   src: '/brands/wechat.svg' },
+  { name: 'Lark',     src: '/brands/lark.svg' },
+  { name: 'QQ',       src: '/brands/qq.svg' },
   { name: 'WhatsApp', src: '/brands/whatsapp.svg' },
+  { name: 'LINE',     src: '/brands/line.svg' },
   { name: 'Matrix',   src: '/brands/matrix.svg' },
+  { name: 'Gmail',    src: '/brands/gmail.svg' },
 ]
 </script>
 
@@ -194,7 +195,7 @@ const moreLogos = [
                 :key="logo.name"
                 class="inline-flex h-10 min-w-10 items-center justify-center rounded-xl border border-white/10 bg-black/40 px-2.5 backdrop-blur-sm"
               >
-                <img :src="logo.src" :alt="logo.name" class="h-5 w-auto" />
+                <img :src="logo.src" :alt="logo.name" class="h-5 w-5 object-contain" />
               </span>
             </div>
           </div>

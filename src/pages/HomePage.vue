@@ -91,6 +91,10 @@ const moreLogos = [
   { name: 'LINE',     src: '/brands/line.svg' },
   { name: 'Matrix',   src: '/brands/matrix.svg' },
   { name: 'Gmail',    src: '/brands/gmail.svg' },
+  { name: 'DingTalk', src: '/brands/dingtalk.svg' },
+  { name: 'WeCom',     src: '/brands/wecom.svg' },
+  { name: 'WeChat Official Account', src: '/brands/wechatoa.svg' },
+  { name: 'Misskey',  src: '/brands/misskey.svg' },
 ]
 </script>
 

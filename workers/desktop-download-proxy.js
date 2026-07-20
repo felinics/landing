@@ -72,10 +72,21 @@ const githubHeaders = (env, accept = 'application/vnd.github+json') => {
 }
 
 const githubFetch = async (url, env, accept) => {
-  const response = await fetch(url, {
+  let response = await fetch(url, {
     headers: githubHeaders(env, accept),
     redirect: 'follow',
   })
+
+  // Token 过期/失效不应让下载功能整体瘫痪(2026-07 曾因此全站 /downloads/* 502):
+  // 公开仓库的 release 元数据匿名即可读,token 被拒(401)或触限(403)时去掉
+  // Authorization 重试一次。匿名限流 60 次/时/IP,由 release 缓存(5 分钟)稀释,
+  // 实际请求量远低于阈值。token 换新后此路径自动不再触发。
+  if (!response.ok && env.GITHUB_TOKEN && (response.status === 401 || response.status === 403)) {
+    response = await fetch(url, {
+      headers: githubHeaders({ ...env, GITHUB_TOKEN: undefined }, accept),
+      redirect: 'follow',
+    })
+  }
 
   if (!response.ok) {
     const detail = await response.text().catch(() => '')

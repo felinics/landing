@@ -9,8 +9,8 @@ const metaPattern = /<!-- app-meta-start -->[\s\S]*?<!-- app-meta-end -->/
 const pages = {
   home: {
     title: 'Memoh — The multi-agent platform',
-    description: 'Every agent gets its own computer with a desktop, filesystem, and network. Always on, always there.',
-    socialDescription: 'Every agent gets its own computer with a desktop, filesystem, and network. Always on, always there.',
+    description: 'Every agent gets its own cloud computer with a desktop, filesystem, and network. Always on, always there.',
+    socialDescription: 'Every agent gets its own cloud computer with a desktop, filesystem, and network. Always on, always there.',
     url: 'https://memoh.ai/',
   },
   // /desktop 已重定向到 /download,但保留静态入口让旧链接拿到 200 而不是 404

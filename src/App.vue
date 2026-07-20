@@ -88,8 +88,8 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
             </div>
           </div>
 
-          <!-- Link columns (right) -->
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 sm:gap-12">
+          <!-- Link columns (right) — Legal 列撤下后只剩两列,勿改回 sm:grid-cols-3 -->
+          <div class="grid grid-cols-2 gap-8 sm:gap-12">
             <div class="flex flex-col gap-3">
               <span class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/55">{{ t('footer.product') }}</span>
               <router-link to="/download" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.download') }}</router-link>

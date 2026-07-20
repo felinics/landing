@@ -2,7 +2,6 @@
   "nav": {
     "docs": "Docs",
     "github": "GitHub",
-    "pricing": "Pricing",
     "blogs": "Blogs",
     "supermarket": "Supermarket",
     "desktop": "Desktop",
@@ -219,5 +218,14 @@
   "egg": {
     "hint": "Pet me",
     "petted": "Petted {n} times"
+  },
+  "notFound": {
+    "seo": {
+      "title": "Page not found — Memoh",
+      "description": "The page you are looking for does not exist."
+    },
+    "title": "Page not found",
+    "desc": "The link may be broken or the page has moved.",
+    "back": "Back to home"
   }
 }

@@ -29,7 +29,6 @@ const { isDark, toggle: toggleDark } = useThemePreference()
 
 const { locale } = useI18n()
 const docsUrl = computed(() => locale.value === 'zh' ? 'https://docs.memoh.ai/zh' : 'https://docs.memoh.ai')
-const pricingUrl = 'https://memoh.ai/pricing'
 
 const isLangOpen = ref(false)
 const langMenuRef = ref<HTMLElement | null>(null)
@@ -69,7 +68,7 @@ const selectLang = (lang: string) => {
         </RouterLink>
         <nav class="hidden md:flex items-center gap-1 sm:gap-2">
           <a :href="docsUrl" target="_blank" rel="noopener noreferrer" class="font-medium text-sm rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass">{{ $t('nav.docs') }}</a>
-          <a :href="pricingUrl" class="font-medium text-sm rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass">{{ $t('nav.pricing') }}</a>
+          <!-- Pricing 入口先撤下:/pricing 路由不存在,点进去是空白页。定价页上线时连同 nav.pricing 文案一起恢复。 -->
           <RouterLink to="/blogs" class="font-medium text-sm rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass" :active-class="overlay ? 'text-white bg-white/10' : 'text-foreground bg-accent'">{{ $t('nav.blogs') }}</RouterLink>
         </nav>
       </div>

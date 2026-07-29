@@ -4,6 +4,7 @@ const HomePage = () => import('./pages/HomePage.vue')
 const DownloadPage = () => import('./pages/DownloadPage.vue')
 const BlogsPage = () => import('./pages/BlogsPage.vue')
 const WaitlistPage = () => import('./pages/WaitlistPage.vue')
+const NotFoundPage = () => import('./pages/NotFoundPage.vue')
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -15,6 +16,8 @@ export const router = createRouter({
     { path: '/blogs/:slug', name: 'blog-post', component: BlogsPage },
     // /desktop has been merged into /download; keep a redirect for old links.
     { path: '/desktop', redirect: '/download' },
+    // Catch-all: without it, unknown URLs render an empty body between TopBar and footer.
+    { path: '/:pathMatch(.*)*', name: 'not-found', component: NotFoundPage },
   ],
   scrollBehavior(_to, _from, savedPosition) {
     if (savedPosition) return savedPosition

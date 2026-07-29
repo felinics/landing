@@ -80,15 +80,16 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
                  class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
                 <span aria-hidden="true" class="telegram-icon h-4 w-4"></span>
               </a>
-              <a href="https://x.com/memohai" target="_blank" rel="noopener noreferrer" aria-label="X"
+              <!-- 官方 X 账号是 @memoh_ai;x.com/memohai 是别人占用或无此账号(404),别改回去 -->
+              <a href="https://x.com/memoh_ai" target="_blank" rel="noopener noreferrer" aria-label="X"
                  class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
                 <Twitter class="w-4 h-4" />
               </a>
             </div>
           </div>
 
-          <!-- Link columns (right) -->
-          <div class="grid grid-cols-2 sm:grid-cols-3 gap-8 sm:gap-12">
+          <!-- Link columns (right) — Legal 列撤下后只剩两列,勿改回 sm:grid-cols-3 -->
+          <div class="grid grid-cols-2 gap-8 sm:gap-12">
             <div class="flex flex-col gap-3">
               <span class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/55">{{ t('footer.product') }}</span>
               <router-link to="/download" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.download') }}</router-link>
@@ -100,11 +101,8 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
               <router-link to="/blogs" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.blogs') }}</router-link>
               <a href="https://github.com/memohai/Memoh" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.github') }}</a>
             </div>
-            <div class="flex flex-col gap-3 col-span-2 sm:col-span-1">
-              <span class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/55">{{ t('footer.legal') }}</span>
-              <a href="https://memoh.ai" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('footer.privacy') }}</a>
-              <a href="https://memoh.ai" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('footer.terms') }}</a>
-            </div>
+            <!-- Legal 列整列撤下:Privacy/Terms 页面不存在,此前两个链接都指向首页占位。
+                 页面就绪后恢复此列及 footer.privacy / footer.terms 文案。 -->
           </div>
         </div>
 

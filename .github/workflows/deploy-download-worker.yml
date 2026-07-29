@@ -7,17 +7,38 @@ on:
     paths:
       - 'workers/**'
       - '.github/workflows/deploy-download-worker.yml'
+  pull_request:
+    paths:
+      - 'workers/**'
+      - '.github/workflows/deploy-download-worker.yml'
   workflow_dispatch:
 
 permissions:
   contents: read
 
 concurrency:
-  group: download-worker
+  group: download-worker-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Test download worker
+        run: node --test workers/*.test.js
+
   deploy:
+    if: github.event_name != 'pull_request'
+    needs: test
     runs-on: ubuntu-latest
 
     steps:

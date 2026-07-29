@@ -2,8 +2,7 @@
   "nav": {
     "docs": "文档",
     "github": "GitHub",
-    "pricing": "Pricing",
-    "blogs": "Blogs",
+    "blogs": "博客",
     "supermarket": "应用超市",
     "desktop": "桌面版",
     "download": "下载"
@@ -58,7 +57,7 @@
   "hero": {
     "title": "陪着你的%TA%",
     "subtitle": "Memoh 是多 Agent 平台，每个%TA%都住在自己的电脑里\n在这里一直等着你",
-    "ctaPrimary": "Join waitlist",
+    "ctaPrimary": "加入等候名单",
     "ctaSecondary": "GitHub",
     "cta": "开始",
     "desktop": "桌面版",
@@ -167,7 +166,7 @@
   },
   "cta_bottom": {
     "title": "试试 Memoh",
-    "btn": "Join waitlist",
+    "btn": "加入等候名单",
     "docs": "查看文档"
   },
   "waitlist": {
@@ -175,7 +174,7 @@
       "title": "加入 Memoh Waitlist",
       "description": "加入 Memoh waitlist，获取云端 Agent 工作区的早期访问资格。"
     },
-    "kicker": "Early access",
+    "kicker": "抢先体验",
     "title": "加入 Memoh waitlist。",
     "subtitle": "留下邮箱，等 hosted Memoh 开放更多名额时我们会联系你。",
     "notes": {
@@ -197,7 +196,7 @@
       "subtitle": "一个邮箱就够了。",
       "email": "邮箱",
       "placeholder": "邮箱地址",
-      "submit": "Join waitlist",
+      "submit": "加入等候名单",
       "submitting": "提交中...",
       "joined": "已加入",
       "success": "你已经加入 waitlist，我们会后续联系你。",
@@ -211,7 +210,7 @@
     "privacy": "隐私政策",
     "terms": "服务条款",
     "tagline": "多 Agent 平台\n每个%TA%都有自己的电脑，一直在",
-    "getStarted": "Join waitlist",
+    "getStarted": "加入等候名单",
     "product": "产品",
     "resources": "资源",
     "legal": "法律"
@@ -219,5 +218,14 @@
   "egg": {
     "hint": "摸摸我",
     "petted": "已经摸了 {n} 下"
+  },
+  "notFound": {
+    "seo": {
+      "title": "页面不存在 — Memoh",
+      "description": "你要找的页面不存在。"
+    },
+    "title": "页面不存在",
+    "desc": "链接可能已失效，或者页面被移动了。",
+    "back": "回到首页"
   }
 }

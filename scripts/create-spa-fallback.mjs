@@ -5,18 +5,26 @@ const distDir = resolve('dist')
 const indexPath = resolve(distDir, 'index.html')
 const metaPattern = /<!-- app-meta-start -->[\s\S]*?<!-- app-meta-end -->/
 
+// 静态 meta 必须与 src/locales 里的 seo.* 文案保持同一定位;home 同时是 index.html 的兜底内容
 const pages = {
   home: {
-    title: 'MemohAI - The Agent Orchestrator',
-    description: 'Memoh is a self-hosted agent orchestrator for hackers and AI developers, with container isolation, long-term memory, high concurrency, and zero telemetry.',
-    socialDescription: 'Self-hosted agent orchestration with container isolation, long-term memory, high concurrency, and zero telemetry.',
+    title: 'Memoh — The multi-agent platform',
+    description: 'Every agent gets its own cloud computer with a desktop, filesystem, and network. Always on, always there.',
+    socialDescription: 'Every agent gets its own cloud computer with a desktop, filesystem, and network. Always on, always there.',
     url: 'https://memoh.ai/',
   },
+  // /desktop 已重定向到 /download,但保留静态入口让旧链接拿到 200 而不是 404
   desktop: {
     title: 'Memoh Desktop - Download for macOS, Windows & Linux',
     description: 'Download the Memoh desktop app for macOS, Windows, and Linux. Run your agent workspace natively on your computer.',
     socialDescription: 'Download Memoh Desktop for macOS, Windows, and Linux.',
     url: 'https://memoh.ai/desktop',
+  },
+  download: {
+    title: 'Download Memoh Desktop - macOS, Windows & Linux',
+    description: 'Pick the Memoh desktop installer for your system. Available for macOS (Apple Silicon & Intel), Windows, and Linux.',
+    socialDescription: 'Download Memoh Desktop for macOS, Windows, and Linux.',
+    url: 'https://memoh.ai/download',
   },
   waitlist: {
     title: 'Join the Memoh waitlist',
@@ -49,7 +57,7 @@ const renderMeta = ({ title, description, socialDescription, url }) => {
     <meta name="robots" content="index, follow" />
     <link rel="canonical" href="${escapeHtml(url)}" />
     <meta property="og:type" content="website" />
-    <meta property="og:site_name" content="MemohAI" />
+    <meta property="og:site_name" content="Memoh" />
     <meta property="og:title" content="${escapeHtml(title)}" />
     <meta property="og:description" content="${escapeHtml(socialDescription)}" />
     <meta property="og:url" content="${escapeHtml(url)}" />
@@ -73,7 +81,8 @@ const indexHtml = await readFile(indexPath, 'utf8')
 await writeFile(indexPath, withMeta(indexHtml, pages.home))
 await writeFile(resolve(distDir, '404.html'), withMeta(indexHtml, pages.home))
 
-for (const route of ['desktop', 'waitlist', 'blogs']) {
+// 每个 SPA 路由都必须在这里有静态入口,否则 GitHub Pages 用 404.html 兜底、返回 404 状态码(SEO 直接判死)
+for (const route of ['desktop', 'download', 'waitlist', 'blogs']) {
   const routeDir = resolve(distDir, route)
   await mkdir(routeDir, { recursive: true })
   await writeFile(resolve(routeDir, 'index.html'), withMeta(indexHtml, pages[route]))

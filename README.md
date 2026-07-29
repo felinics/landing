@@ -78,6 +78,8 @@ Desktop installers are served through a Cloudflare Worker at:
 
 The Worker resolves the latest `memohai/Memoh` release, redirects to a same-domain versioned URL, then caches the release asset at Cloudflare edge on first download. Users never download from a GitHub release URL directly.
 
+Release assets are discovered by the stable platform suffix in each route and proxied through the `browser_download_url` returned by GitHub. Do not reconstruct asset URLs or couple the Worker to a product-name prefix such as `Memoh` or `Memoh-Local`.
+
 Deploy the Worker after configuring the `memoh.ai/downloads/desktop/*` route:
 
 ```bash

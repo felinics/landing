@@ -3,46 +3,32 @@ const DOWNLOAD_PREFIX = '/downloads/desktop'
 const LATEST_TTL_SECONDS = 300
 const ASSET_TTL_SECONDS = 60 * 60 * 24 * 30
 
-const assetPattern = (slug) => new RegExp(`^Memoh-Local-[0-9][0-9A-Za-z.-]*-${slug.replaceAll('.', '\\.')}$`, 'i')
-
 const ASSETS = {
   'mac-arm64.dmg': {
     key: 'macArm',
-    pattern: assetPattern('mac-arm64.dmg'),
   },
   'mac-x64.dmg': {
     key: 'macIntel',
-    pattern: assetPattern('mac-x64.dmg'),
   },
   'win-x64-setup.exe': {
     key: 'win',
-    pattern: assetPattern('win-x64-setup.exe'),
   },
   'linux-amd64.deb': {
     key: 'linuxDebAmd64',
-    pattern: assetPattern('linux-amd64.deb'),
   },
   'linux-x86_64.AppImage': {
     key: 'linuxAppImageX86',
-    pattern: assetPattern('linux-x86_64.AppImage'),
   },
 }
 
-const sanitizeFileNamePart = (value) => {
-  return String(value).replace(/[\\/:*?"<>|]+/g, '-').replace(/\s+/g, '-')
+const assetMatchesSlug = (asset, slug) => {
+  return typeof asset?.name === 'string'
+    && typeof asset?.browser_download_url === 'string'
+    && asset.name.toLowerCase().endsWith(`-${slug.toLowerCase()}`)
 }
 
-const downloadFileName = (tag, slug) => {
-  return `Memoh-Local-${sanitizeFileNamePart(tag)}-${sanitizeFileNamePart(slug)}`
-}
-
-const githubAssetFileName = (tag, slug) => {
-  const version = tag.replace(/^v/i, '')
-  return `Memoh-Local-${version}-${slug}`
-}
-
-const githubAssetUrl = (repo, tag, slug) => {
-  return `https://github.com/${repo}/releases/download/${encodeURIComponent(tag)}/${encodeURIComponent(githubAssetFileName(tag, slug))}`
+const contentDispositionFileName = (name) => {
+  return String(name).replace(/[\r\n"]/g, '_')
 }
 
 const jsonResponse = (body, init = {}) => {
@@ -134,16 +120,26 @@ const getRelease = async (tag, env, ctx) => {
   }
 
   const repo = env.MEMOH_RELEASE_REPO || RELEASE_REPO
-  const response = await githubFetch(`https://api.github.com/repos/${repo}/releases/tags/${encodeURIComponent(tag)}`, env)
+  const cache = caches.default
+  const cacheKey = new Request(`https://memoh.internal/downloads/releases/${encodeURIComponent(repo)}/${encodeURIComponent(tag)}`)
+  const cached = await cache.match(cacheKey)
+  if (cached) return cached.json()
 
-  return response.json()
+  const response = await githubFetch(`https://api.github.com/repos/${repo}/releases/tags/${encodeURIComponent(tag)}`, env)
+  const release = await response.json()
+
+  ctx.waitUntil(cache.put(cacheKey, jsonResponse(release, {
+    headers: cacheHeaders(ASSET_TTL_SECONDS),
+  })))
+
+  return release
 }
 
 const findAsset = (release, slug) => {
   const definition = ASSETS[slug]
   if (!definition) return undefined
 
-  const asset = release.assets?.find((candidate) => definition.pattern.test(candidate.name))
+  const asset = release.assets?.find((candidate) => assetMatchesSlug(candidate, slug))
   if (!asset) return undefined
 
   return {
@@ -164,7 +160,7 @@ const buildManifest = (requestUrl, release, repo) => {
 
     assets[definition.key] = {
       path: `${requestUrl.origin}${DOWNLOAD_PREFIX}/${encodeURIComponent(release.tag_name)}/${slug}`,
-      name: downloadFileName(release.tag_name, slug),
+      name: asset.name,
       originalName: asset.name,
       size: asset.size,
       contentType: asset.content_type,
@@ -209,8 +205,12 @@ const proxyAsset = async (request, env, ctx, tag, slug) => {
 
   if (!ASSETS[slug]) return notFound()
 
-  const repo = env.MEMOH_RELEASE_REPO || RELEASE_REPO
-  const assetResponse = await fetch(githubAssetUrl(repo, tag, slug), {
+  const release = await getRelease(tag, env, ctx)
+  const match = findAsset(release, slug)
+  if (!match) return new Response('Release asset not found', { status: 404 })
+
+  const { asset } = match
+  const assetResponse = await fetch(asset.browser_download_url, {
     method: request.method === 'HEAD' ? 'HEAD' : 'GET',
     headers: {
       'user-agent': 'memoh-landing-download-proxy',
@@ -229,8 +229,8 @@ const proxyAsset = async (request, env, ctx, tag, slug) => {
     headers: assetResponse.headers,
   })
   response.headers.set('cache-control', `public, max-age=${ASSET_TTL_SECONDS}, immutable`)
-  response.headers.set('content-disposition', `attachment; filename="${downloadFileName(tag, slug)}"`)
-  response.headers.set('x-memoh-release-tag', tag)
+  response.headers.set('content-disposition', `attachment; filename="${contentDispositionFileName(asset.name)}"`)
+  response.headers.set('x-memoh-release-tag', release.tag_name || tag)
   response.headers.set('x-memoh-cache', 'MISS')
   response.headers.delete('set-cookie')
 

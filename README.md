@@ -75,10 +75,12 @@ https://desktopresource.memoh.ai/latest-mac.yml
 https://desktopresource.memoh.ai/latest-linux.yml
 ```
 
-Every download action fetches the relevant `latest*.yml` manifest first and
-uses the artifact filename declared in its `files` list. Do not hard-code a
-versioned filename. A different public directory can be supplied at build time
-with `VITE_MEMOH_DESKTOP_RESOURCE_BASE_URL`.
+Every download action fetches the relevant `latest*.yml` manifest first. Windows
+and Linux use the artifact filename declared in its `files` list. Because
+`latest-mac.yml` is an `electron-updater` feed and therefore declares ZIP
+archives, macOS downloads use the matching same-version, same-architecture DMG
+filename. Do not hard-code a versioned filename. A different public directory
+can be supplied at build time with `VITE_MEMOH_DESKTOP_RESOURCE_BASE_URL`.
 
 The manifest-first Cloud Desktop flow is implemented in
 `src/lib/desktopDownloads.ts` and is shared by the home-page download menu and

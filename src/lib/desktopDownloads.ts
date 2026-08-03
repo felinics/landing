@@ -64,6 +64,15 @@ const resolveArtifactUrl = (filename: string) => {
   return url.href
 }
 
+const resolveInstallerFilename = (key: DesktopDownloadKey, filename: string) => {
+  if (key === 'macArm' || key === 'macIntel') {
+    // latest-mac.yml is an electron-updater feed, so its macOS artifacts are
+    // ZIP archives. The public download should use the matching signed DMG.
+    return filename.replace(/\.zip$/i, '.dmg')
+  }
+  return filename
+}
+
 export const desktopDownloadOptions: DesktopDownloadOption[] = [
   { key: 'macArm', icon: desktopPlatformIcons.macArm },
   { key: 'macIntel', icon: desktopPlatformIcons.macIntel },
@@ -90,5 +99,5 @@ export const resolveDesktopDownloadUrl = async (key: DesktopDownloadKey) => {
   if (!filename) {
     throw new Error(`No matching Desktop artifact found in ${desktopManifestNames[key]}`)
   }
-  return resolveArtifactUrl(filename)
+  return resolveArtifactUrl(resolveInstallerFilename(key, filename))
 }

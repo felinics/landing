@@ -1,12 +1,15 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { RouterLink } from 'vue-router'
-import { ArrowRight, Github } from 'lucide-vue-next'
+import { ArrowRight } from 'lucide-vue-next'
+import { useI18n } from 'vue-i18n'
 import sunsetBg from '../assets/sunset.webp'
+import DesktopDownloadButton from './DesktopDownloadButton.vue'
 import HeroShowcase from './HeroShowcase.vue'
 import { useTa } from '../composables/useTa'
 
 const { th } = useTa()
+const { locale } = useI18n()
+const docsUrl = computed(() => locale.value === 'zh' ? 'https://docs.memoh.ai/zh' : 'https://docs.memoh.ai')
 
 // 主标题统一用衬线字体（Source Serif 4 / Noto Serif SC）
 const titleFontClass = computed(() => 'font-serif')
@@ -16,7 +19,7 @@ const titleFontClass = computed(() => 'font-serif')
   <!-- HERO: full-bleed sunset sky + real app screenshot. -->
   <section class="relative w-full">
     <!-- Sky stage: sized close to the image ratio so the whole scene (cat + train) stays visible -->
-    <div class="relative w-full h-[86vh] min-h-[640px] max-h-[880px] flex items-start justify-center overflow-hidden">
+    <div class="relative w-full h-[86vh] min-h-[640px] max-h-[880px] flex items-start justify-center">
       <img
         :src="sunsetBg"
         alt=""
@@ -30,7 +33,7 @@ const titleFontClass = computed(() => 'font-serif')
       <div class="absolute inset-x-0 bottom-0 h-48 bg-gradient-to-b from-transparent to-background"></div>
 
       <!-- Content: headline + subtitle centered -->
-      <div class="relative z-10 w-full max-w-[1100px] mx-auto px-4 md:px-8 flex flex-col items-center text-center pt-40 md:pt-52">
+      <div class="relative z-30 w-full max-w-[1100px] mx-auto px-4 md:px-8 flex flex-col items-center text-center pt-40 md:pt-52">
         <h1 :class="[titleFontClass, 'font-medium text-white leading-[1.08] text-5xl md:text-6xl [text-shadow:0_1px_12px_oklch(0_0_0/0.18)] whitespace-pre-line']" v-html="th('hero.title')" />
 
         <p class="mt-6 max-w-[760px] text-base md:text-lg text-white/92 leading-relaxed drop-shadow-sm whitespace-pre-line">
@@ -39,21 +42,21 @@ const titleFontClass = computed(() => 'font-serif')
 
         <!-- CTAs — page-local treatment adapted from the @memohai/ui button contract -->
         <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
-          <RouterLink
-            to="/waitlist"
+          <a
+            href="https://app.memoh.net"
             class="hero-btn hero-btn-primary inline-flex h-[52px] items-center justify-center gap-2 rounded-full px-7 font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
           >
             {{ $t('hero.ctaPrimary') }}
             <ArrowRight :size="18" />
-          </RouterLink>
+          </a>
+          <DesktopDownloadButton surface="hero" />
           <a
-            href="https://github.com/memohai/Memoh"
+            :href="docsUrl"
             target="_blank"
-            rel="noreferrer"
+            rel="noopener noreferrer"
             class="hero-btn hero-btn-secondary inline-flex h-[52px] items-center justify-center gap-2 rounded-full px-7 font-medium text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
           >
-            <Github :size="18" />
-            {{ $t('hero.ctaSecondary') }}
+            {{ $t('cta_bottom.docs') }}
           </a>
         </div>
       </div>
@@ -134,7 +137,6 @@ const titleFontClass = computed(() => 'font-serif')
   background-color: rgba(0, 0, 0, 0.12);
 }
 
-/* ── Secondary: frosted glass (original feel) — fill on ::before so text never scales ── */
 .hero-btn-secondary::before {
   content: '';
   position: absolute;
@@ -155,4 +157,5 @@ const titleFontClass = computed(() => 'font-serif')
 .hero-btn-secondary:active::before {
   scale: 0.97;
 }
+
 </style>

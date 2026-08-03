@@ -14,8 +14,10 @@
     },
     "title": "Memoh on your desktop",
     "subtitle": "Run your agent workspace completely on your own computer. Built for macOS, Windows and Linux, with local files and services staying on your machine.",
-    "download": "Download",
+    "download": "Download Desktop",
     "moreDownloads": "Choose another desktop version",
+    "otherPlatforms": "Other platforms",
+    "downloadError": "Unable to load the latest download. Please try again.",
     "recommended": "Recommended",
     "docs": "Docs",
     "downloadFor": "Download for {os}",
@@ -33,7 +35,8 @@
       "macIntel": "macOS (Intel)",
       "win": "Windows (x64)",
       "linuxDebAmd64": "Linux .deb (amd64)",
-      "linuxAppImageX86": "Linux AppImage (x86_64)"
+      "linuxAppImageX86": "Linux AppImage (x86_64)",
+      "linuxRpmX86": "Linux .rpm (x86_64)"
     }
   },
   "download": {
@@ -57,7 +60,7 @@
   "hero": {
     "title": "someone who stays",
     "subtitle": "Memoh is the multi-agent platform — each one lives in a computer of its own\nright here, waiting for you",
-    "ctaPrimary": "Join waitlist",
+    "ctaPrimary": "Get Started",
     "ctaSecondary": "GitHub",
     "cta": "Join waitlist",
     "desktop": "Desktop App",
@@ -166,7 +169,7 @@
   },
   "cta_bottom": {
     "title": "Try Memoh",
-    "btn": "Join waitlist",
+    "btn": "Get Started",
     "docs": "Read the docs"
   },
   "waitlist": {

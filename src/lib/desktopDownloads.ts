@@ -5,51 +5,90 @@ export type { DesktopDownloadKey } from './desktopDevice'
 export type DesktopDownloadOption = {
   key: DesktopDownloadKey
   icon: string
-  href?: string
 }
 
-const desktopDownloadFileNames: Record<DesktopDownloadKey, string> = {
-  macArm: 'mac-arm64.dmg',
-  macIntel: 'mac-x64.dmg',
-  win: 'win-x64-setup.exe',
-  linuxDebAmd64: 'linux-amd64.deb',
-  linuxAppImageX86: 'linux-x86_64.AppImage',
+type DesktopManifestName = 'latest.yml' | 'latest-mac.yml' | 'latest-linux.yml'
+
+const DEFAULT_DESKTOP_RESOURCE_BASE_URL = 'https://desktopresource.memoh.ai'
+const desktopResourceBaseUrl = (
+  import.meta.env.VITE_MEMOH_DESKTOP_RESOURCE_BASE_URL || DEFAULT_DESKTOP_RESOURCE_BASE_URL
+).replace(/\/+$/, '')
+
+const desktopManifestNames: Record<DesktopDownloadKey, DesktopManifestName> = {
+  macArm: 'latest-mac.yml',
+  macIntel: 'latest-mac.yml',
+  win: 'latest.yml',
+  linuxDebAmd64: 'latest-linux.yml',
+  linuxAppImageX86: 'latest-linux.yml',
+  linuxRpmX86: 'latest-linux.yml',
 }
 
-const proxiedDownloadUrl = (key: DesktopDownloadKey, tag = 'latest') => {
-  return `/downloads/desktop/${encodeURIComponent(tag)}/${desktopDownloadFileNames[key]}`
+const desktopArtifactPatterns: Record<DesktopDownloadKey, RegExp> = {
+  macArm: /-mac-arm64\.(?:zip|dmg)$/i,
+  macIntel: /-mac-x64\.(?:zip|dmg)$/i,
+  win: /-win-x64-setup\.exe$/i,
+  linuxDebAmd64: /-linux-amd64\.deb$/i,
+  linuxAppImageX86: /-linux-x86_64\.AppImage$/i,
+  linuxRpmX86: /-linux-x86_64\.rpm$/i,
 }
 
-const envUrl = (value: string | undefined, fallback: string) => value || fallback
-
-const desktopDownloadEnvUrls: Record<DesktopDownloadKey, string | undefined> = {
-  macArm: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_MAC_ARM,
-  macIntel: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_MAC_INTEL,
-  win: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_WINDOWS,
-  linuxDebAmd64: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_LINUX_DEB_AMD64,
-  linuxAppImageX86: import.meta.env.VITE_MEMOH_DESKTOP_DOWNLOAD_LINUX_APPIMAGE_X86_64,
+const readYamlScalar = (rawValue: string) => {
+  const value = rawValue.trim()
+  if (value.startsWith('"') && value.endsWith('"')) {
+    try {
+      return JSON.parse(value) as string
+    } catch {
+      return value.slice(1, -1)
+    }
+  }
+  if (value.startsWith("'") && value.endsWith("'")) {
+    return value.slice(1, -1).replace(/''/g, "'")
+  }
+  return value
 }
 
-export const desktopDownloadUrls: Record<DesktopDownloadKey, string | undefined> = {
-  macArm: envUrl(desktopDownloadEnvUrls.macArm, proxiedDownloadUrl('macArm')),
-  macIntel: envUrl(desktopDownloadEnvUrls.macIntel, proxiedDownloadUrl('macIntel')),
-  win: envUrl(desktopDownloadEnvUrls.win, proxiedDownloadUrl('win')),
-  linuxDebAmd64: envUrl(desktopDownloadEnvUrls.linuxDebAmd64, proxiedDownloadUrl('linuxDebAmd64')),
-  linuxAppImageX86: envUrl(desktopDownloadEnvUrls.linuxAppImageX86, proxiedDownloadUrl('linuxAppImageX86')),
+export const parseDesktopManifestFiles = (manifest: string) => {
+  return manifest
+    .split(/\r?\n/)
+    .map((line) => line.match(/^\s*-\s+url:\s*(.+?)\s*$/)?.[1])
+    .filter((value): value is string => Boolean(value))
+    .map(readYamlScalar)
+}
+
+const resolveArtifactUrl = (filename: string) => {
+  const resourceRoot = `${desktopResourceBaseUrl}/`
+  const url = new URL(filename, resourceRoot)
+  if (!url.href.startsWith(resourceRoot)) {
+    throw new Error('Desktop manifest contains an invalid artifact URL')
+  }
+  return url.href
 }
 
 export const desktopDownloadOptions: DesktopDownloadOption[] = [
-  { key: 'macArm', icon: desktopPlatformIcons.macArm, href: desktopDownloadUrls.macArm },
-  { key: 'macIntel', icon: desktopPlatformIcons.macIntel, href: desktopDownloadUrls.macIntel },
-  { key: 'win', icon: desktopPlatformIcons.win, href: desktopDownloadUrls.win },
-  { key: 'linuxDebAmd64', icon: desktopPlatformIcons.linuxDebAmd64, href: desktopDownloadUrls.linuxDebAmd64 },
-  { key: 'linuxAppImageX86', icon: desktopPlatformIcons.linuxAppImageX86, href: desktopDownloadUrls.linuxAppImageX86 },
+  { key: 'macArm', icon: desktopPlatformIcons.macArm },
+  { key: 'macIntel', icon: desktopPlatformIcons.macIntel },
+  { key: 'win', icon: desktopPlatformIcons.win },
+  { key: 'linuxDebAmd64', icon: desktopPlatformIcons.linuxDebAmd64 },
+  { key: 'linuxAppImageX86', icon: desktopPlatformIcons.linuxAppImageX86 },
+  { key: 'linuxRpmX86', icon: desktopPlatformIcons.linuxRpmX86 },
 ]
 
-export const getDesktopDownloadHref = (key?: DesktopDownloadKey | null, tag?: string) => {
-  if (!key) return undefined
-  if (tag && !desktopDownloadEnvUrls[key]) {
-    return proxiedDownloadUrl(key, tag)
+export const resolveDesktopDownloadUrl = async (key: DesktopDownloadKey) => {
+  const manifestUrl = `${desktopResourceBaseUrl}/${desktopManifestNames[key]}`
+  const response = await fetch(manifestUrl, {
+    cache: 'no-store',
+    headers: {
+      accept: 'application/yaml, text/yaml, text/plain',
+    },
+  })
+  if (!response.ok) {
+    throw new Error(`Unable to load ${desktopManifestNames[key]}`)
   }
-  return desktopDownloadUrls[key]
+
+  const filename = parseDesktopManifestFiles(await response.text())
+    .find((candidate) => desktopArtifactPatterns[key].test(candidate))
+  if (!filename) {
+    throw new Error(`No matching Desktop artifact found in ${desktopManifestNames[key]}`)
+  }
+  return resolveArtifactUrl(filename)
 }

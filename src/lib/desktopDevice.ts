@@ -1,4 +1,10 @@
-export type DesktopDownloadKey = 'macArm' | 'macIntel' | 'win' | 'linuxDebAmd64' | 'linuxAppImageX86'
+export type DesktopDownloadKey =
+  | 'macArm'
+  | 'macIntel'
+  | 'win'
+  | 'linuxDebAmd64'
+  | 'linuxAppImageX86'
+  | 'linuxRpmX86'
 
 type ClientHintValues = {
   architecture?: string
@@ -24,11 +30,12 @@ type DeviceSignals = {
 }
 
 export const desktopPlatformIcons: Record<DesktopDownloadKey, string> = {
-  macArm: 'mdi:apple',
-  macIntel: 'mdi:apple',
-  win: 'mdi:microsoft-windows',
-  linuxDebAmd64: 'mdi:linux',
-  linuxAppImageX86: 'mdi:linux',
+  macArm: 'simple-icons:apple',
+  macIntel: 'simple-icons:apple',
+  win: 'simple-icons:windows11',
+  linuxDebAmd64: 'simple-icons:linux',
+  linuxAppImageX86: 'simple-icons:linux',
+  linuxRpmX86: 'simple-icons:linux',
 }
 
 const normalize = (...parts: Array<string | undefined>) => parts.filter(Boolean).join(' ').toLowerCase()

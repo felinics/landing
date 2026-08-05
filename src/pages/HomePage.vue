@@ -8,6 +8,7 @@ import DesktopDownloadButton from '../components/DesktopDownloadButton.vue'
 import ProofDesktop from '../components/proof/ProofDesktop.vue'
 import ProofFiles from '../components/proof/ProofFiles.vue'
 import ProofNetwork from '../components/proof/ProofNetwork.vue'
+import ProofAgents from '../components/proof/ProofAgents.vue'
 import ProofSchedule from '../components/proof/ProofSchedule.vue'
 import ProofProactive from '../components/proof/ProofProactive.vue'
 import ProofMemory from '../components/proof/ProofMemory.vue'
@@ -61,7 +62,11 @@ useHead({
   ],
 })
 
+// S1 四张卡:第一张讲谁住在里面(agent runtime),后三张讲电脑的部件
+// (桌面/文件/网络)。runtime 轴不是渠道轴,故属于 S1 而非 S3;
+// 作为 grid 里的卡存在,不单独占行。
 const s1Proofs = [
+  { key: 'agents', comp: ProofAgents },
   { key: 'desktop', comp: ProofDesktop },
   { key: 'files', comp: ProofFiles },
   { key: 'network', comp: ProofNetwork },
@@ -109,17 +114,19 @@ const moreLogos = [
       <img src="/art-railway.webp" alt="" class="absolute bottom-0 left-0 w-full h-auto" style="min-height:100%;object-fit:cover;object-position:38% 100%" />
       <div class="absolute inset-0 bg-gradient-to-b from-black/55 via-black/25 via-55% to-transparent" />
       <div class="relative z-10 flex justify-center px-6 md:px-12 pt-10 md:pt-14 pb-0">
-        <div class="w-full max-w-[1080px] flex flex-col gap-10 md:gap-12">
+        <div class="w-full max-w-[1200px] flex flex-col gap-10 md:gap-12">
           <div class="flex flex-col gap-3 max-w-[600px]">
             <h2 class="font-semibold text-2xl md:text-3xl tracking-tight text-white" v-html="th('s1.title')" />
             <p class="text-base md:text-lg text-white/80 leading-snug whitespace-pre-line" v-html="th('s1.subtitle')" />
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             <div v-for="(proof, i) in s1Proofs" :key="proof.key" class="flex flex-col gap-4 rounded-2xl border border-white/10 bg-black/30 backdrop-blur-sm p-4 md:p-5">
               <div class="flex flex-col gap-0.5 px-1">
                 <h3 class="font-medium text-base text-white" v-html="th(`s1.c${i+1}.title`)" />
-                <p class="text-sm text-white/65 leading-snug whitespace-pre-line" v-html="th(`s1.c${i+1}.desc`)" />
+                <!-- min-h 三行:四张卡描述行数不齐(2~3 行),固定最小高度让 proof 面板顶对齐;
+                     行数不够的描述在自身块内留白,不占卡片布局 -->
+                <p class="min-h-[3.625rem] text-sm text-white/65 leading-snug whitespace-pre-line" v-html="th(`s1.c${i+1}.desc`)" />
               </div>
               <div class="aspect-[4/5] overflow-hidden">
                 <component :is="proof.comp" />

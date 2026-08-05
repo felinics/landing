@@ -14,8 +14,10 @@
     },
     "title": "Memoh 桌面版",
     "subtitle": "让智能体工作区完全在你的电脑上本地运行\n为 macOS、Windows 与 Linux 打造，本地文件与服务留在本机",
-    "download": "下载",
+    "download": "下载桌面版",
     "moreDownloads": "选择其他桌面版本",
+    "otherPlatforms": "其他平台",
+    "downloadError": "暂时无法获取最新下载，请稍后重试。",
     "recommended": "推荐",
     "docs": "文档",
     "downloadFor": "下载 {os} 版",
@@ -33,7 +35,8 @@
       "macIntel": "macOS (Intel)",
       "win": "Windows (x64)",
       "linuxDebAmd64": "Linux .deb (amd64)",
-      "linuxAppImageX86": "Linux AppImage (x86_64)"
+      "linuxAppImageX86": "Linux AppImage (x86_64)",
+      "linuxRpmX86": "Linux .rpm (x86_64)"
     }
   },
   "download": {
@@ -57,7 +60,7 @@
   "hero": {
     "title": "陪着你的%TA%",
     "subtitle": "Memoh 是多 Agent 平台，每个%TA%都住在自己的电脑里\n在这里一直等着你",
-    "ctaPrimary": "加入等候名单",
+    "ctaPrimary": "立即开始",
     "ctaSecondary": "GitHub",
     "cta": "开始",
     "desktop": "桌面版",
@@ -166,7 +169,7 @@
   },
   "cta_bottom": {
     "title": "试试 Memoh",
-    "btn": "加入等候名单",
+    "btn": "立即开始",
     "docs": "查看文档"
   },
   "waitlist": {

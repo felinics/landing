@@ -64,9 +64,32 @@ Create a production-ready, minified build:
 npm run build
 ```
 
-## Desktop Download Proxy
+## Desktop Downloads
 
-Desktop installers are served through a Cloudflare Worker at:
+The landing page resolves Cloud Desktop installers from the public
+S3-compatible release directory:
+
+```text
+https://desktopresource.memoh.ai/latest.yml
+https://desktopresource.memoh.ai/latest-mac.yml
+https://desktopresource.memoh.ai/latest-linux.yml
+```
+
+Every download action fetches the relevant `latest*.yml` manifest first. Windows
+and Linux use the artifact filename declared in its `files` list. Because
+`latest-mac.yml` is an `electron-updater` feed and therefore declares ZIP
+archives, macOS downloads use the matching same-version, same-architecture DMG
+filename. Do not hard-code a versioned filename. A different public directory
+can be supplied at build time with `VITE_MEMOH_DESKTOP_RESOURCE_BASE_URL`.
+
+The manifest-first Cloud Desktop flow is implemented in
+`src/lib/desktopDownloads.ts` and is shared by the home-page download menu and
+the `/download` page.
+
+## Legacy Desktop Download Proxy
+
+The older OSS Desktop download routes are still served through a Cloudflare
+Worker at:
 
 ```text
 /downloads/desktop/latest/mac-arm64.dmg

@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
-import { RouterLink } from 'vue-router'
 import { ArrowRight } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 import { useHead, useSeoMeta } from '@unhead/vue'
 import HeroSection from '../components/HeroSection.vue'
+import DesktopDownloadButton from '../components/DesktopDownloadButton.vue'
 import ProofDesktop from '../components/proof/ProofDesktop.vue'
 import ProofFiles from '../components/proof/ProofFiles.vue'
 import ProofNetwork from '../components/proof/ProofNetwork.vue'
@@ -218,13 +218,14 @@ const moreLogos = [
         {{ $t('cta_bottom.title') }}
       </h2>
       <div class="flex flex-col sm:flex-row items-center gap-4">
-        <RouterLink
-          to="/waitlist"
+        <a
+          href="https://app.memoh.net"
           class="cta-btn-primary inline-flex items-center justify-center gap-2 h-[48px] px-8 rounded-full font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
         >
           {{ $t('cta_bottom.btn') }}
           <ArrowRight :size="16" />
-        </RouterLink>
+        </a>
+        <DesktopDownloadButton surface="page" />
         <a
           :href="docsUrl"
           target="_blank"
@@ -297,4 +298,5 @@ const moreLogos = [
 .cta-btn-secondary:active::before {
   scale: 0.98;
 }
+
 </style>

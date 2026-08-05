@@ -1,18 +1,18 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
 import { Icon } from '@iconify/vue'
+import { LoaderCircle } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 import { useHead, useSeoMeta } from '@unhead/vue'
 import {
   desktopDownloadOptions,
-  getDesktopDownloadHref,
+  resolveDesktopDownloadUrl,
   type DesktopDownloadKey,
 } from '../lib/desktopDownloads'
 import {
   getInitialDesktopDownloadKey,
   resolvePreferredDesktopDownloadKey,
 } from '../lib/desktopDevice'
-import { fetchDesktopReleaseInfo, type DesktopReleaseInfo } from '../lib/desktopRelease'
 
 const { locale, t } = useI18n()
 const pageUrl = 'https://memoh.ai/download'
@@ -45,28 +45,29 @@ useHead({
 })
 
 const preferredDownloadKey = ref<DesktopDownloadKey | undefined>(getInitialDesktopDownloadKey())
-const releaseInfo = ref<DesktopReleaseInfo | undefined>()
-const isReleaseInfoLoading = ref(false)
+const loadingKey = ref<DesktopDownloadKey>()
+const downloadError = ref('')
 
 const updatePreferredDownload = async () => {
   preferredDownloadKey.value = await resolvePreferredDesktopDownloadKey() || preferredDownloadKey.value
 }
 
-const updateReleaseInfo = async () => {
-  isReleaseInfoLoading.value = true
+const download = async (key: DesktopDownloadKey) => {
+  if (loadingKey.value) return
+  loadingKey.value = key
+  downloadError.value = ''
   try {
-    releaseInfo.value = await fetchDesktopReleaseInfo()
+    window.location.assign(await resolveDesktopDownloadUrl(key))
+  } catch {
+    downloadError.value = t('desktop.downloadError')
   } finally {
-    isReleaseInfoLoading.value = false
+    loadingKey.value = undefined
   }
 }
 
 onMounted(() => {
   void updatePreferredDownload()
-  void updateReleaseInfo()
 })
-
-const downloadTag = computed(() => releaseInfo.value?.tag)
 
 const familyOf = (key: DesktopDownloadKey): 'mac' | 'win' | 'linux' => {
   if (key.startsWith('mac')) return 'mac'
@@ -94,7 +95,6 @@ const groups = computed(() =>
         key: opt.key,
         icon: opt.icon,
         label: t(`desktop.os.${opt.key}`),
-        href: getDesktopDownloadHref(opt.key, downloadTag.value),
       })),
   })),
 )
@@ -108,7 +108,6 @@ const preferredFamilyName = computed(() => {
   if (!fam) return undefined
   return fam === 'mac' ? 'macOS' : fam === 'win' ? 'Windows' : 'Linux'
 })
-const preferredDownloadHref = computed(() => getDesktopDownloadHref(preferredDownloadKey.value, downloadTag.value))
 </script>
 
 <template>
@@ -124,19 +123,24 @@ const preferredDownloadHref = computed(() => getDesktopDownloadHref(preferredDow
 
     <!-- Auto-detected recommended download -->
     <div
-      v-if="preferredDownloadHref"
+      v-if="preferredDownloadKey"
       class="flex flex-col sm:flex-row sm:items-center gap-x-4 gap-y-3"
     >
-      <a
-        :href="preferredDownloadHref"
-        target="_blank"
-        rel="noopener noreferrer"
+      <button
+        type="button"
+        :disabled="Boolean(loadingKey)"
         class="btn-pill btn-pill-primary inline-flex h-12 items-center justify-center gap-2 px-6 font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        @click="download(preferredDownloadKey)"
       >
         <span class="whitespace-nowrap">{{ t('desktop.downloadFor', { os: preferredFamilyName }) }}</span>
-        <Icon icon="mdi:tray-arrow-down" class="w-[18px] h-[18px] shrink-0" />
-      </a>
+        <LoaderCircle v-if="loadingKey === preferredDownloadKey" class="h-[18px] w-[18px] shrink-0 animate-spin" />
+        <Icon v-else icon="mdi:tray-arrow-down" class="w-[18px] h-[18px] shrink-0" />
+      </button>
     </div>
+
+    <p v-if="downloadError" role="alert" class="-mt-8 text-sm text-red-400">
+      {{ downloadError }}
+    </p>
 
     <!-- Full platform grid -->
     <div class="w-full grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -150,22 +154,26 @@ const preferredDownloadHref = computed(() => getDesktopDownloadHref(preferredDow
           <h2 class="font-semibold text-foreground">{{ group.name }}</h2>
         </div>
         <div class="px-2 pb-2 flex flex-col">
-          <a
+          <button
             v-for="item in group.items"
             :key="item.key"
-            :href="item.href || undefined"
-            target="_blank"
-            rel="noopener noreferrer"
-            :aria-disabled="!item.href"
+            type="button"
+            :disabled="Boolean(loadingKey)"
             class="group/item flex items-center gap-3 rounded-xl px-3 py-3 text-sm text-foreground transition-colors hover:bg-black/[0.04] dark:hover:bg-white/[0.06] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-            :class="{ 'pointer-events-none opacity-50': !item.href }"
+            @click="download(item.key)"
           >
+            <Icon :icon="item.icon" class="h-4 w-4 shrink-0 text-muted-foreground" />
             <span class="flex-1 min-w-0 truncate font-medium">{{ item.label }}</span>
+            <LoaderCircle
+              v-if="loadingKey === item.key"
+              class="h-4 w-4 shrink-0 animate-spin text-muted-foreground"
+            />
             <Icon
+              v-else
               icon="mdi:tray-arrow-down"
               class="w-4 h-4 shrink-0 text-muted-foreground transition-colors group-hover/item:text-foreground"
             />
-          </a>
+          </button>
         </div>
       </div>
     </div>

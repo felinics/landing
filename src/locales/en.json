@@ -68,14 +68,18 @@
     "title": "A computer of its own",
     "subtitle": "Every agent gets a desktop, a filesystem, and a network — not a chat window, a real computer that stays on.",
     "c1": {
+      "title": "Agents you already know",
+      "desc": "Claude Code or Codex\ncan move in — your pick."
+    },
+    "c2": {
       "title": "Its own desktop",
       "desc": "A full graphical desktop where it browses and works."
     },
-    "c2": {
+    "c3": {
       "title": "Its own files",
       "desc": "A persistent filesystem of its own — notes, downloads, workspace."
     },
-    "c3": {
+    "c4": {
       "title": "Its own network",
       "desc": "Isolated networking. It goes online on its own terms."
     }

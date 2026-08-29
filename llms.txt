@@ -25,8 +25,8 @@ curl -sL https://memoh.sh | bash
 - Waitlist: https://memoh.ai/waitlist
 - Blog: https://memoh.ai/blogs
 - Documentation: https://docs.memoh.ai
-- GitHub: https://github.com/memohai/Memoh
-- Plugin Market: https://github.com/memohai/supermarket
+- GitHub: https://github.com/felinics/Memoh
+- Plugin Market: https://github.com/felinics/supermarket
 
 ## Blog Posts
 - Desktop workspace display: https://memoh.ai/blogs/2026-05-15

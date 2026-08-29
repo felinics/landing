@@ -6,7 +6,7 @@ import worker from './desktop-download-proxy.js'
 const release = {
   name: 'v0.16.0',
   tag_name: 'v0.16.0',
-  html_url: 'https://github.com/memohai/Memoh/releases/tag/v0.16.0',
+  html_url: 'https://github.com/felinics/Memoh/releases/tag/v0.16.0',
   published_at: '2026-07-11T16:56:45Z',
   assets: [
     {
@@ -74,7 +74,7 @@ test('falls back to the public API and discovers assets without a product-name p
   const runtime = createRuntime()
   const response = await worker.fetch(
     new Request('https://memoh.ai/downloads/desktop/latest/manifest.json'),
-    { MEMOH_RELEASE_REPO: 'memohai/Memoh', GITHUB_TOKEN: 'expired-token' },
+    { MEMOH_RELEASE_REPO: 'felinics/Memoh', GITHUB_TOKEN: 'expired-token' },
     runtime.ctx,
   )
   await runtime.flush()
@@ -118,7 +118,7 @@ test('proxies the asset URL returned by GitHub instead of constructing a filenam
   const runtime = createRuntime()
   const response = await worker.fetch(
     new Request('https://memoh.ai/downloads/desktop/v0.16.0/mac-arm64.dmg'),
-    { MEMOH_RELEASE_REPO: 'memohai/Memoh' },
+    { MEMOH_RELEASE_REPO: 'felinics/Memoh' },
     runtime.ctx,
   )
   await runtime.flush()
@@ -127,7 +127,7 @@ test('proxies the asset URL returned by GitHub instead of constructing a filenam
   assert.equal(await response.text(), 'installer-bytes')
   assert.equal(response.headers.get('content-disposition'), 'attachment; filename="Memoh-0.16.0-mac-arm64.dmg"')
   assert.deepEqual(calls, [
-    'https://api.github.com/repos/memohai/Memoh/releases/tags/v0.16.0',
+    'https://api.github.com/repos/felinics/Memoh/releases/tags/v0.16.0',
     release.assets[0].browser_download_url,
   ])
 })

@@ -72,7 +72,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
             </div>
             <p class="text-sm text-muted-foreground leading-relaxed whitespace-pre-line" v-html="th('footer.tagline')" />
             <div class="flex items-center gap-2">
-              <a href="https://github.com/memohai/Memoh" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
+              <a href="https://github.com/felinics/Memoh" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
                  class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
                 <Github class="w-4 h-4" />
               </a>
@@ -93,13 +93,13 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
             <div class="flex flex-col gap-3">
               <span class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/55">{{ t('footer.product') }}</span>
               <router-link to="/download" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.download') }}</router-link>
-              <a href="https://github.com/memohai/supermarket" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.supermarket') }}</a>
+              <a href="https://github.com/felinics/supermarket" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.supermarket') }}</a>
             </div>
             <div class="flex flex-col gap-3">
               <span class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/55">{{ t('footer.resources') }}</span>
               <a :href="docsUrl" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.docs') }}</a>
               <router-link to="/blogs" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.blogs') }}</router-link>
-              <a href="https://github.com/memohai/Memoh" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.github') }}</a>
+              <a href="https://github.com/felinics/Memoh" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.github') }}</a>
             </div>
             <!-- Legal 列整列撤下:Privacy/Terms 页面不存在,此前两个链接都指向首页占位。
                  页面就绪后恢复此列及 footer.privacy / footer.terms 文案。 -->

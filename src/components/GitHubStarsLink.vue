@@ -6,8 +6,8 @@ const props = defineProps<{
   overlay?: boolean
 }>()
 
-const repoUrl = 'https://github.com/memohai/Memoh'
-const repoApiUrl = 'https://api.github.com/repos/memohai/Memoh'
+const repoUrl = 'https://github.com/felinics/Memoh'
+const repoApiUrl = 'https://api.github.com/repos/felinics/Memoh'
 const cacheKey = 'memoh-github-stars'
 const cacheTtlMs = 10 * 60 * 1000
 

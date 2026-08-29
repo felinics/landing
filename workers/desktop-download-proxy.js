@@ -1,4 +1,4 @@
-const RELEASE_REPO = 'memohai/Memoh'
+const RELEASE_REPO = 'felinics/Memoh'
 const DOWNLOAD_PREFIX = '/downloads/desktop'
 const LATEST_TTL_SECONDS = 300
 const ASSET_TTL_SECONDS = 60 * 60 * 24 * 30

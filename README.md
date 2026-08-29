@@ -12,7 +12,7 @@ Inspired by Memoh's clean and modern interface, this landing page incorporates:
 
 ## 🛠 Technical Stack
 
-This project leverages a robust, modern frontend architecture based on the `memohai/Memoh` core repository:
+This project leverages a robust, modern frontend architecture based on the `felinics/Memoh` core repository:
 
 - **Framework**: Vue 3 (Composition API & `<script setup>`)
 - **Language**: TypeScript
@@ -43,7 +43,7 @@ Make sure you have Node.js and `npm` installed on your local machine.
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/memohai/Memoh.git
+   git clone https://github.com/felinics/Memoh.git
    ```
 2. Navigate to the landing page directory and install the dependencies:
    ```bash
@@ -99,7 +99,7 @@ Worker at:
 /downloads/desktop/latest/linux-x86_64.AppImage
 ```
 
-The Worker resolves the latest `memohai/Memoh` release, redirects to a same-domain versioned URL, then caches the release asset at Cloudflare edge on first download. Users never download from a GitHub release URL directly.
+The Worker resolves the latest `felinics/Memoh` release, redirects to a same-domain versioned URL, then caches the release asset at Cloudflare edge on first download. Users never download from a GitHub release URL directly.
 
 Release assets are discovered by the stable platform suffix in each route and proxied through the `browser_download_url` returned by GitHub. Do not reconstruct asset URLs or couple the Worker to a product-name prefix such as `Memoh` or `Memoh-Local`.
 

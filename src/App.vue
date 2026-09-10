@@ -91,12 +91,12 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
           <!-- Link columns (right) — Legal 列撤下后只剩两列,勿改回 sm:grid-cols-3 -->
           <div class="grid grid-cols-2 gap-8 sm:gap-12">
             <div class="flex flex-col gap-3">
-              <span class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/55">{{ t('footer.product') }}</span>
+              <span class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/85">{{ t('footer.product') }}</span>
               <router-link to="/download" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.download') }}</router-link>
               <a href="https://github.com/felinics/supermarket" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.supermarket') }}</a>
             </div>
             <div class="flex flex-col gap-3">
-              <span class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/55">{{ t('footer.resources') }}</span>
+              <span class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/85">{{ t('footer.resources') }}</span>
               <a :href="docsUrl" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.docs') }}</a>
               <router-link to="/blogs" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.blogs') }}</router-link>
               <a href="https://github.com/felinics/Memoh" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.github') }}</a>
@@ -139,7 +139,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 /* Home page: page background fades from the purple-black used behind the
    dusk-journey cards (top) into the deeper near-black (#09090b) at the tail. */
 .home-shell {
-  height: 100vh;
+  height: 100dvh;
   overflow: hidden;
   background: #09090b;
 }
@@ -160,7 +160,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 }
 
 .home-scroll {
-  height: 100vh;
+  height: 100dvh;
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior-y: auto;
@@ -176,6 +176,22 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 
 .home-content {
   min-height: 100%;
+}
+
+.home-content :deep(a:focus-visible),
+.home-content :deep(button:focus-visible) {
+  outline: 2px solid #c4b5fd;
+  outline-offset: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .home-content :deep(*),
+  .home-content :deep(*::before),
+  .home-content :deep(*::after) {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }
 
 .home-gradient {

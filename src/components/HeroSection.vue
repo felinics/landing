@@ -16,11 +16,12 @@ const titleFontClass = computed(() => 'font-serif')
   <!-- HERO: full-bleed sunset sky + real app screenshot. -->
   <section class="relative w-full">
     <!-- Sky stage: sized close to the image ratio so the whole scene (cat + train) stays visible -->
-    <div class="relative w-full h-[86vh] min-h-[640px] max-h-[880px] flex items-start justify-center">
+    <div class="relative w-full h-[86svh] min-h-[640px] max-h-[880px] flex items-start justify-center">
       <img
         :src="sunsetBg"
         alt=""
         aria-hidden="true"
+        fetchpriority="high"
         class="hero-sunset absolute inset-0 w-full h-full object-cover object-center"
       />
       <!-- Warm wash pulls down the harsh magenta in the sunset sky -->
@@ -31,9 +32,9 @@ const titleFontClass = computed(() => 'font-serif')
 
       <!-- Content: headline + subtitle centered -->
       <div class="relative z-30 w-full max-w-[1100px] mx-auto px-4 md:px-8 flex flex-col items-center text-center pt-40 md:pt-52">
-        <h1 :class="[titleFontClass, 'font-medium text-white leading-[1.08] text-5xl md:text-6xl [text-shadow:0_1px_12px_oklch(0_0_0/0.18)] whitespace-pre-line']" v-html="th('hero.title')" />
+        <h1 :class="[titleFontClass, 'text-balance font-medium text-white leading-[1.08] text-5xl md:text-6xl [text-shadow:0_1px_12px_oklch(0_0_0/0.18)] whitespace-pre-line']" v-html="th('hero.title')" />
 
-        <p class="mt-6 max-w-[760px] text-base md:text-lg text-white/92 leading-relaxed drop-shadow-sm whitespace-pre-line">
+        <p class="mt-6 max-w-[760px] text-pretty text-base md:text-lg text-white/92 leading-relaxed drop-shadow-sm whitespace-pre-line">
           <span v-html="th('hero.subtitle')" />
         </p>
 
@@ -41,7 +42,7 @@ const titleFontClass = computed(() => 'font-serif')
         <div class="mt-9 flex flex-col sm:flex-row items-center justify-center gap-3">
           <a
             href="https://app.memoh.net"
-            class="hero-btn hero-btn-primary inline-flex h-[52px] items-center justify-center gap-2 rounded-full px-7 font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+            class="hero-btn hero-btn-primary whitespace-nowrap inline-flex h-[52px] items-center justify-center gap-2 rounded-full px-7 font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
           >
             {{ $t('hero.ctaPrimary') }}
             <ArrowRight :size="18" />
@@ -86,9 +87,7 @@ const titleFontClass = computed(() => 'font-serif')
   transition: scale 0.15s ease-out;
 }
 
-/* ── Primary: faithful to @memohai/ui contract "Save" (neutral tone) ──
-   ::before = --foreground fill (scales), ::after = bottom-up white sheen.
-   No drop shadow — exactly like the component bench. */
+/* Keep the warm fill separate so hover feedback does not move the label. */
 .hero-btn-primary {
   color: #18181b;
 }

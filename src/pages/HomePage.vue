@@ -91,20 +91,20 @@ const moreLogos = [
   <ComputerSection />
 
   <!-- ═══ SCREEN 2 — 你不在的时候 Ta 也在 ═══ -->
-  <section class="w-full px-4 md:px-6 py-[8px] md:py-[10px]">
-    <div class="w-full relative overflow-hidden" style="min-height:clamp(520px,72vh,820px)">
-      <div class="relative z-10 flex justify-center px-6 md:px-12 pt-10 md:pt-14 pb-0">
+  <section class="w-full px-4 py-12 md:px-8 md:py-16">
+    <div class="w-full relative">
+      <div class="relative z-10 flex justify-center">
         <div class="w-full max-w-[1080px] flex flex-col gap-10 md:gap-12">
           <div class="mx-auto flex w-full max-w-[720px] flex-col gap-3 text-center">
-            <h2 class="font-medium text-[clamp(28px,3.2vw,42px)] leading-[1.15] tracking-[-0.045em] text-white" v-html="th('s2.title')" />
-            <p class="text-base md:text-lg text-white/80 leading-snug whitespace-pre-line" v-html="th('s2.subtitle')" />
+            <h2 class="text-balance font-medium text-[clamp(28px,3.2vw,42px)] leading-[1.2] tracking-[-0.045em] text-white" v-html="th('s2.title')" />
+            <p class="text-pretty text-base md:text-lg text-[#a1a1aa] leading-relaxed whitespace-pre-line" v-html="th('s2.subtitle')" />
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-            <div v-for="(proof, i) in s2Proofs" :key="proof.key" class="flex min-w-0 flex-col gap-4 overflow-hidden rounded-3xl bg-[#202022] p-4 text-[#f5f5f7] md:p-5">
-              <div class="flex flex-col gap-0.5 px-1">
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
+            <div v-for="(proof, i) in s2Proofs" :key="proof.key" class="mx-auto flex w-full min-w-0 max-w-[480px] flex-col gap-4 overflow-hidden rounded-3xl bg-[#202022] p-4 text-[#f5f5f7] md:p-5">
+              <div class="flex flex-col gap-1.5 px-1 lg:min-h-[76px]">
                 <h3 class="font-medium text-base text-[#f5f5f7]" v-html="th(`s2.c${i+1}.title`)" />
-                <p class="text-sm text-[#a1a1aa] leading-snug whitespace-pre-line" v-html="th(`s2.c${i+1}.desc`)" />
+                <p class="text-pretty text-sm text-[#a1a1aa] leading-relaxed whitespace-pre-line" v-html="th(`s2.c${i+1}.desc`)" />
               </div>
               <div class="aspect-[4/5] overflow-hidden">
                 <component :is="proof.comp" />
@@ -112,30 +112,29 @@ const moreLogos = [
             </div>
           </div>
 
-          <div class="h-[120px] md:h-[170px]" />
         </div>
       </div>
     </div>
   </section>
 
   <!-- ═══ SCREEN 3 — 在哪都能找到 Ta ═══ -->
-  <section class="w-full px-4 md:px-6 py-[8px] md:py-[10px]">
-    <div class="w-full relative overflow-hidden" style="min-height:clamp(520px,72vh,820px)">
-      <div class="relative z-10 flex justify-center px-6 md:px-12 pt-10 md:pt-14 pb-0">
+  <section class="w-full px-4 py-12 md:px-8 md:py-16">
+    <div class="w-full relative">
+      <div class="relative z-10 flex justify-center">
         <div class="w-full max-w-[1080px] flex flex-col gap-10 md:gap-12">
           <div class="mx-auto flex w-full max-w-[720px] flex-col gap-3 text-center">
-            <h2 class="font-medium text-[clamp(28px,3.2vw,42px)] leading-[1.15] tracking-[-0.045em] text-white" v-html="th('s3.title')" />
-            <p class="text-base md:text-lg text-white/80 leading-snug whitespace-pre-line" v-html="th('s3.subtitle')" />
+            <h2 class="text-balance font-medium text-[clamp(28px,3.2vw,42px)] leading-[1.2] tracking-[-0.045em] text-white" v-html="th('s3.title')" />
+            <p class="text-pretty text-base md:text-lg text-[#a1a1aa] leading-relaxed whitespace-pre-line" v-html="th('s3.subtitle')" />
           </div>
 
-          <div class="grid grid-cols-1 md:grid-cols-4 gap-4 md:gap-6">
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             <div v-for="ch in s3Channels" :key="ch.name" class="flex flex-col gap-0 overflow-hidden rounded-3xl bg-[#202022] text-[#f5f5f7]">
-              <div class="relative h-[420px] shrink-0 md:aspect-[3/4] md:h-auto">
+              <div class="relative h-[420px] shrink-0 lg:aspect-[3/4] lg:h-auto">
                 <div class="absolute inset-x-3 bottom-0 top-3 overflow-hidden rounded-xl border border-white/10">
                   <ProofChannel :platform="ch.platform" />
                 </div>
               </div>
-              <div class="bg-[#202022] px-3 py-2.5 text-center">
+              <div class="bg-[#202022] px-3 py-3 text-center">
                 <span class="text-xs font-medium text-white">{{ ch.name }}</span>
               </div>
             </div>
@@ -155,7 +154,6 @@ const moreLogos = [
             </div>
           </div>
 
-          <div class="h-[60px] md:h-[90px]" />
         </div>
       </div>
     </div>
@@ -164,15 +162,15 @@ const moreLogos = [
   <PricingSection />
 
   <!-- ═══ BOTTOM CTA ═══ -->
-  <section class="w-full flex items-center justify-center min-h-[60vh] pt-[120px] pb-[140px] px-4 md:px-8">
+  <section class="w-full flex items-center justify-center pt-24 pb-28 md:pt-32 md:pb-36 px-4 md:px-8">
     <div class="w-full max-w-[1080px] flex flex-col items-center text-center gap-8">
-      <h2 class="font-semibold text-3xl md:text-4xl tracking-tight text-foreground">
+      <h2 class="text-balance font-medium text-[clamp(28px,3.2vw,42px)] leading-[1.2] tracking-[-0.045em] text-foreground">
         {{ $t('cta_bottom.title') }}
       </h2>
-      <div class="flex flex-col sm:flex-row items-center gap-4">
+      <div class="flex flex-wrap justify-center items-center gap-3">
         <a
           href="https://app.memoh.net"
-          class="cta-btn-primary inline-flex items-center justify-center gap-2 h-[48px] px-8 rounded-full font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+          class="cta-btn-primary whitespace-nowrap inline-flex items-center justify-center gap-2 h-[48px] px-8 rounded-full font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
         >
           {{ $t('cta_bottom.btn') }}
           <ArrowRight :size="16" />
@@ -182,7 +180,7 @@ const moreLogos = [
           :href="docsUrl"
           target="_blank"
           rel="noopener noreferrer"
-          class="cta-btn-secondary inline-flex items-center justify-center h-[48px] px-8 rounded-full font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
+          class="cta-btn-secondary whitespace-nowrap inline-flex items-center justify-center h-[48px] px-8 rounded-full font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
         >
           {{ $t('cta_bottom.docs') }}
         </a>

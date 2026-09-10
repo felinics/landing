@@ -24,13 +24,13 @@ function selectPlan() { window.location.assign('https://app.memoh.net/') }
 <template>
   <section id="pricing" class="w-full px-4 py-16 md:px-8 md:py-24" aria-labelledby="pricing-title">
     <div class="mx-auto w-full max-w-[1080px]">
-      <h2 id="pricing-title" class="mb-10 text-center text-3xl font-semibold tracking-tight text-foreground md:text-4xl">Pricing</h2>
+      <h2 id="pricing-title" class="mb-10 text-balance text-center font-medium text-[clamp(28px,3.2vw,42px)] leading-[1.2] tracking-[-0.045em] text-foreground">Pricing</h2>
       <div class="cloud-pricing">
-        <div class="flex flex-wrap justify-center gap-3">
+        <div class="pricing-grid">
           <PlanCard
             v-for="plan in plans"
             :key="plan.name"
-            class="min-w-0 grow basis-[15rem] max-w-[18rem]"
+            class="min-w-0"
             :name="plan.name"
             :tagline="plan.tagline"
             :price="plan.price"
@@ -47,3 +47,16 @@ function selectPlan() { window.location.assign('https://app.memoh.net/') }
     </div>
   </section>
 </template>
+
+<style scoped>
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  max-width: 960px;
+  margin-inline: auto;
+}
+@media (min-width: 768px) {
+  .pricing-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+</style>

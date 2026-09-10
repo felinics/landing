@@ -2,14 +2,13 @@
   color-scheme: dark;
   max-width: 1328px;
   margin: 0 auto;
-  /* Match the proof-to-channel gap: spacer + flex gap + section padding + heading inset. */
-  padding: 216px 32px 168px;
+  padding: 144px 32px 96px;
   color: #f5f5f7;
 }
 @media (min-width: 768px) {
   .computer-section {
-    padding-top: 294px;
-    padding-bottom: 228px;
+    padding-top: 224px;
+    padding-bottom: 144px;
   }
 }
 .computer-heading {
@@ -21,13 +20,15 @@
   font-size: clamp(28px, 3.2vw, 42px);
   font-weight: 500;
   letter-spacing: -0.045em;
-  line-height: 1.15;
+  line-height: 1.2;
+  text-wrap: balance;
 }
 .computer-heading p {
-  margin-top: 18px;
-  color: #96969f;
+  margin-top: 16px;
+  color: #a1a1aa;
   font-size: 17px;
   line-height: 1.6;
+  text-wrap: pretty;
 }
 .computer-grid {
   display: grid;
@@ -43,7 +44,7 @@
 }
 .computer-feature-copy {
   padding: 28px 32px 0;
-  min-height: 110px;
+  min-height: 116px;
 }
 .computer-feature-copy h3 {
   font-size: 16px;
@@ -54,7 +55,8 @@
   color: #a1a1aa;
   font-size: 16px;
   line-height: 26px;
-  margin: 0;
+  margin: 4px 0 0;
+  text-wrap: pretty;
 }
 .demo-player {
   position: relative;
@@ -119,7 +121,7 @@
   color: #ededed;
 }
 .demo-controls button:focus-visible {
-  outline: 2px solid #555;
+  outline: 2px solid #a1a1aa;
   outline-offset: 2px;
 }
 .demo-controls svg {
@@ -1234,4 +1236,9 @@
     opacity: 1;
     bottom: 0;
   }
+}
+
+@media (hover: none) {
+  .demo-controls { opacity: 1; }
+  .demo-controls button { width: 36px; height: 36px; }
 }

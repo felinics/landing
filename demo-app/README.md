@@ -14,8 +14,7 @@ API server, remote desktop service, or running terminal behind the iframe.
 - Installed skills: `installed-skills.json` copies weather from the local Supermarket
   repository and humanizer / humanizer-zh from Memoh, with full documents, support
   files and licenses. Source revisions and destination paths are recorded in that
-  fixture. Weather uses the registry namespace; the writing skills simulate user
-  imports under `skills/user/personal`. Catalog, index, and file reads share this data.
+  fixture. Each skill lives directly under `skills/<skill-name>/`. Catalog, index, and file reads share this data.
 - Data: `mocks/data.ts`, `fixtures.ts`, and generated API defaults in `contracts.json`.
 - Transport: local fetch, chat stream, upload, and terminal adapters. Unknown API
   routes and external fetches fail locally instead of reaching a backend.

@@ -86,6 +86,8 @@ test('file listing preserves nested directories and reads copied workspace templ
 
 test('installed skill catalog uses the same complete documents as the file browser and index', async () => {
  const {skills} = await get('/bots/bot-memoh/container/skills')
+ const root = await get('/bots/bot-memoh/container/fs/list?path=/data/skills')
+ assert.deepEqual(root.entries.filter((entry:any) => entry.isDir).map((entry:any) => entry.name).sort(), skills.map((skill:any) => skill.name).sort())
  const read = (path:string) => get(`/bots/bot-memoh/container/fs/read?path=${encodeURIComponent(path)}`)
  const index = JSON.parse((await read('/data/.memoh/skills/index.json')).content)
  for (const skill of skills) {

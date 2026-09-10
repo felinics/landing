@@ -15,8 +15,8 @@ const props = defineProps<{
 
 const linkClass = computed(() =>
   props.overlay
-    ? 'text-white/85 hover:text-white hover:bg-white/10'
-    : 'text-muted-foreground hover:text-foreground hover:bg-accent',
+    ? 'text-white/85 hover:text-white'
+    : 'text-muted-foreground hover:text-foreground',
 )
 
 const iconBtnClass = computed(() =>
@@ -67,9 +67,9 @@ const selectLang = (lang: string) => {
           </span>
         </RouterLink>
         <nav class="hidden md:flex items-center gap-1 sm:gap-2">
-          <a :href="docsUrl" target="_blank" rel="noopener noreferrer" class="font-medium text-sm rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass">{{ $t('nav.docs') }}</a>
+          <a :href="docsUrl" target="_blank" rel="noopener noreferrer" class="font-medium text-sm rounded-md px-3 py-2 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass">{{ $t('nav.docs') }}</a>
           <!-- Pricing 入口先撤下:/pricing 路由不存在,点进去是空白页。定价页上线时连同 nav.pricing 文案一起恢复。 -->
-          <RouterLink to="/blogs" class="font-medium text-sm rounded-md px-3 py-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass" :active-class="overlay ? 'text-white bg-white/10' : 'text-foreground bg-accent'">{{ $t('nav.blogs') }}</RouterLink>
+          <RouterLink to="/blogs" class="font-medium text-sm rounded-md px-3 py-2 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass" :active-class="overlay ? 'text-white' : 'text-foreground'">{{ $t('nav.blogs') }}</RouterLink>
         </nav>
       </div>
 
@@ -79,15 +79,15 @@ const selectLang = (lang: string) => {
            target="_blank"
            rel="noopener noreferrer"
            aria-label="Telegram"
-           class="icon-ghost flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-md bg-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none"
-           :class="[iconBtnClass, overlay ? 'icon-ghost--overlay' : '']">
+           class="flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-md bg-transparent transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none"
+           :class="iconBtnClass">
           <span aria-hidden="true" class="telegram-icon h-4 w-4 shrink-0"></span>
         </a>
 
         <div class="relative flex items-center" ref="langMenuRef">
           <button @click="toggleLangMenu"
-                  class="icon-ghost flex items-center justify-center gap-1.5 px-2 h-9 rounded-md bg-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none"
-                  :class="[iconBtnClass, overlay ? 'icon-ghost--overlay' : '']"
+                  class="flex items-center justify-center gap-1.5 px-2 h-9 rounded-md bg-transparent transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none"
+                  :class="iconBtnClass"
                   aria-label="Select language">
             <Languages class="w-4 h-4 shrink-0" />
             <span class="text-[10px] font-bold tracking-tighter">{{ locale === 'zh' ? 'ZH' : 'EN' }}</span>
@@ -105,13 +105,13 @@ const selectLang = (lang: string) => {
             <div v-if="isLangOpen"
                  class="lang-menu absolute top-full right-0 mt-1.5 w-36 z-50 p-1.5 flex flex-col gap-0.5">
               <button @click="selectLang('en')"
-                      class="lang-item flex items-center justify-between gap-2 w-full rounded-[8px] px-2.5 py-1.5 text-sm text-left transition-colors duration-[60ms]"
+                      class="lang-item flex items-center justify-between gap-2 w-full rounded-[8px] px-2.5 py-1.5 text-sm text-left transition-colors duration-200"
                       :class="locale === 'en' ? 'text-foreground' : 'text-muted-foreground'">
                 <span>English</span>
                 <Check v-if="locale === 'en'" class="w-4 h-4 shrink-0" />
               </button>
               <button @click="selectLang('zh')"
-                      class="lang-item flex items-center justify-between gap-2 w-full rounded-[8px] px-2.5 py-1.5 text-sm text-left transition-colors duration-[60ms]"
+                      class="lang-item flex items-center justify-between gap-2 w-full rounded-[8px] px-2.5 py-1.5 text-sm text-left transition-colors duration-200"
                       :class="locale === 'zh' ? 'text-foreground' : 'text-muted-foreground'">
                 <span>中文</span>
                 <Check v-if="locale === 'zh'" class="w-4 h-4 shrink-0" />
@@ -121,8 +121,8 @@ const selectLang = (lang: string) => {
         </div>
 
         <button v-if="!hideThemeToggle" @click="toggleDark()"
-                class="icon-ghost flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-md bg-transparent transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none"
-                :class="[iconBtnClass, overlay ? 'icon-ghost--overlay' : '']"
+                class="flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-md bg-transparent transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none"
+                :class="iconBtnClass"
                 aria-label="Toggle theme">
           <Sun v-if="isDark" class="w-4 h-4 shrink-0" />
           <Moon v-else class="w-4 h-4 shrink-0" />
@@ -134,34 +134,6 @@ const selectLang = (lang: string) => {
 </template>
 
 <style scoped>
-/* Icon buttons adopt the @memohai/ui contract semantic: the icon never moves —
-   background + press-scale live on ::before, so only the bg layer reacts. */
-.icon-ghost {
-  position: relative;
-  isolation: isolate;
-}
-.icon-ghost::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background-color: transparent;
-  transition:
-    scale 0.255s linear(0, .3505, .7432, .9336, .9951, 1.0062, 1.0045, 1.0019, 1.0005, 1),
-    background-color 0.12s ease-out;
-}
-.icon-ghost:hover::before {
-  background-color: var(--btn-ghost-hover);
-}
-.icon-ghost--overlay:hover::before {
-  background-color: oklch(1 0 0 / 0.12);
-}
-/* ghost/secondary press contract: a restrained 0.974 nudge, not a hard squash */
-.icon-ghost:active::before {
-  scale: 0.974;
-}
-
 .telegram-icon {
   background-color: currentColor;
   mask: url('/brands/telegram.svg') center / contain no-repeat;
@@ -177,6 +149,6 @@ const selectLang = (lang: string) => {
   box-shadow: var(--shadow-dropdown);
 }
 .lang-item:hover {
-  background-color: var(--ui-selected);
+  color: var(--foreground);
 }
 </style>

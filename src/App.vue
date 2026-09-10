@@ -3,7 +3,6 @@ import { computed, watchEffect } from 'vue'
 import { useTa } from './composables/useTa'
 import { useThemePreference } from './composables/useTheme'
 import { useRoute } from 'vue-router'
-import { Github } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 import BackgroundCanvas from './components/BackgroundCanvas.vue'
 import TopBar from './components/TopBar.vue'
@@ -108,16 +107,16 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
             </div>
             <div class="footer-socials">
               <a href="https://github.com/felinics/Memoh" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
-                 class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
-                <Github class="w-4 h-4" />
+                 class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground transition-colors duration-200">
+                <span aria-hidden="true" class="github-icon h-4 w-4"></span>
               </a>
               <a href="https://t.me/memohai" target="_blank" rel="noopener noreferrer" aria-label="Telegram"
-                 class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
+                 class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground transition-colors duration-200">
                 <span aria-hidden="true" class="telegram-icon h-4 w-4"></span>
               </a>
               <!-- 官方 X 账号是 @memoh_ai;x.com/memohai 是别人占用或无此账号(404),别改回去 -->
               <a href="https://x.com/memoh_ai" target="_blank" rel="noopener noreferrer" aria-label="X"
-                 class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
+                 class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground transition-colors duration-200">
                 <span aria-hidden="true" class="x-icon h-3.5 w-3.5"></span>
               </a>
             </div>
@@ -213,6 +212,11 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
   font-size: 11px;
   line-height: 1.6;
   color: var(--muted-foreground);
+}
+.github-icon {
+  background-color: currentColor;
+  mask: url("/brands/github.svg") center / contain no-repeat;
+  -webkit-mask: url("/brands/github.svg") center / contain no-repeat;
 }
 .x-icon {
   background-color: currentColor;

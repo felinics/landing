@@ -40,7 +40,7 @@ function toggle(task: Task) {
 </script>
 
 <template>
-  <div class="proof-surface flex h-full w-full flex-col overflow-hidden rounded-xl border border-white/10 bg-[#0b0b0e]">
+  <div class="proof-surface proof-dark flex h-full w-full flex-col overflow-hidden rounded-xl border border-border bg-background">
     <div
       v-for="(group, gi) in groups"
       :key="group.labelKey"
@@ -63,7 +63,7 @@ function toggle(task: Task) {
         <div
           v-for="task in group.tasks"
           :key="task.nameKey"
-          class="flex items-center gap-2 rounded-[10px] border border-white/10 bg-white/[0.03]"
+          class="flex items-center gap-2 rounded-[10px] border border-border bg-muted"
         >
           <div class="min-w-0 flex-1 px-3 py-2.5">
             <div class="flex min-w-0 items-center gap-2">
@@ -78,7 +78,7 @@ function toggle(task: Task) {
               role="switch"
               :aria-checked="task.on"
               class="relative flex h-[18px] w-[31px] cursor-pointer items-center rounded-full transition-colors focus:outline-none"
-              :class="task.on ? 'bg-[#3b82f6]' : 'bg-white/15'"
+              :class="task.on ? 'bg-[#3b82f6]' : 'bg-white/20'"
               @click="toggle(task)"
             >
               <span

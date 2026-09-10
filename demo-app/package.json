@@ -1,0 +1,11 @@
+{
+  "name": "memoh-landing-demo",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.27.0",
+  "scripts": {
+    "build": "pnpm --filter @memohai/web build",
+    "dev": "pnpm --filter @memohai/web dev",
+    "test": "pnpm --dir packages/ui exec tsx --test ../../mocks/mock.test.ts"
+  }
+}

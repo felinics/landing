@@ -71,20 +71,20 @@
     "title": "A computer of its own",
     "subtitle": "Every agent gets a desktop, a filesystem, and a network — not a chat window, a real computer that stays on.",
     "c1": {
-      "title": "Agents you already know",
-      "desc": "Claude Code or Codex\ncan move in — your pick."
+      "title": "Choose an agent",
+      "desc": "Switch between Memoh, Codex, and Claude Code from the chat input."
     },
     "c2": {
-      "title": "Its own desktop",
-      "desc": "A full graphical desktop where it browses and works."
+      "title": "Use its desktop",
+      "desc": "Ask it to open a website and follow along in the desktop beside your chat."
     },
     "c3": {
-      "title": "Its own files",
-      "desc": "A persistent filesystem of its own — notes, downloads, workspace."
+      "title": "Install what it needs",
+      "desc": "Add runtimes and skills from Supermarket, and authorize connectors for your apps."
     },
     "c4": {
-      "title": "Its own network",
-      "desc": "Isolated networking. It goes online on its own terms."
+      "title": "Build and preview",
+      "desc": "Ask for a website, then open its localhost link in a new tab."
     }
   },
   "s2": {
@@ -234,5 +234,67 @@
     "title": "Page not found",
     "desc": "The link may be broken or the page has moved.",
     "back": "Back to home"
+  },
+  "computerDemo": {
+    "toolOpenPage": "Open web page",
+    "toolEditing": "Editing",
+    "toolEdited": "Edited",
+    "toolBrowsing": "Browsing",
+    "toolBrowsed": "Browsed",
+    "toolBuildCounts": "1 file operation, 1 command",
+    "toolRun": "Run",
+    "toolFocusSearch": "Focus search field",
+    "toolTypeYoutube": "Type youtube",
+    "toolPressEnter": "Press key Enter",
+    "newSession": "New Session",
+    "welcome": "Where should we begin?",
+    "attachFiles": "Attach files",
+    "askAnything": "What would you like to do?",
+    "play": "Play animation",
+    "pause": "Pause animation",
+    "replay": "Replay animation",
+    "agentAlt": "In a new session, the plus menu switches between Memoh, Codex, and Claude Code.",
+    "desktopAlt": "A request to open YouTube appears in chat. The desktop opens Chromium and searches Google for YouTube.",
+    "packagesAlt": "Browse Supermarket, open Node.js, install it to a bot, and manage installed packages. A GitHub connector example shows separate authorization.",
+    "buildAlt": "An agent builds a reading list website. Its localhost link opens a preview in a new Memoh tab.",
+    "youtubeRequest": "Open YouTube for me.",
+    "youtubeReply": "I’ll open it in the browser.",
+    "youtubeResult": "Enjoy the videos and music you love.",
+    "openBrowser": "Browser",
+    "searchPackages": "Search Packages…",
+    "all": "All",
+    "runtimes": "Runtimes",
+    "nodeDescription": "JavaScript runtime with npm and npx.",
+    "pythonDescription": "Python interpreter with pip.",
+    "uvDescription": "Python package and project manager.",
+    "installToBot": "Install to Bot",
+    "dependencies": "Dependencies",
+    "information": "Information",
+    "version": "Version",
+    "source": "Source",
+    "browseSupermarket": "Browse Supermarket",
+    "githubDescription": "Access GitHub repositories, issues, and pull requests.",
+    "needsConnection": "Not connected",
+    "connected": "Connected",
+    "authorize": "Authorize",
+    "installPackage": "Install Package",
+    "installingPackage": "Installing Package",
+    "selectBot": "Select a bot",
+    "installWill": "Installing will",
+    "installNode": "Install Node.js into the workspace if missing.",
+    "cancel": "Cancel",
+    "install": "Install",
+    "installed": "Installed",
+    "installing": "Installing…",
+    "buildRequest": "Build me a reading list website.",
+    "createFiles": "Create file",
+    "runCommand": "Run command",
+    "buildReply": "The reading list is ready. Preview it here:",
+    "readingList": "Reading list",
+    "library": "My library",
+    "addBook": "Add book",
+    "findBook": "Find a book…",
+    "toRead": "To read",
+    "finished": "Finished"
   }
 }

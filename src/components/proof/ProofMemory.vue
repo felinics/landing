@@ -9,7 +9,7 @@ const { t } = useI18n()
 </script>
 
 <template>
-  <div class="proof-surface flex h-full w-full flex-col justify-end gap-3 overflow-hidden rounded-xl border border-white/10 bg-[#0b0b0e] p-4">
+  <div class="proof-surface proof-dark flex h-full w-full flex-col justify-end gap-3 overflow-hidden rounded-xl border border-border bg-background p-4">
     <!-- 轮次 1：用户问起上次的事 → Ta 先搜记忆，再答 -->
     <div class="flex justify-end">
       <p class="w-fit max-w-[82%] rounded-2xl bg-chat-user-bubble px-3.5 py-2.5 text-[13px] leading-snug text-chat-user-bubble-fg">

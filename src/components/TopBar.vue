@@ -61,7 +61,7 @@ const selectLang = (lang: string) => {
     >
       <div class="flex items-center gap-4 sm:gap-6 md:gap-10 overflow-hidden">
         <RouterLink to="/" class="flex items-center shrink-0 gap-2">
-          <img src="/logo.png" alt="Memoh Logo" class="w-6 h-6 object-contain" />
+          <img src="/logo.png" alt="Memoh Logo" class="w-6 h-6 object-contain brightness-0 invert" />
           <span class="font-bold text-lg tracking-tight" :class="overlay ? 'text-white' : 'text-foreground'">
             Memoh
           </span>

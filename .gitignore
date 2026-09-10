@@ -53,3 +53,6 @@ MemohAI-Landing-Page-PRD.md
 TECH_STACK.md
 *.bak
 FigmaMake-Memoh-Landing-Page-Detailed.md
+
+# Built from the vendored browser-only Memoh demo
+/public/memoh-demo/

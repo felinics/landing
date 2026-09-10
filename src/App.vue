@@ -67,7 +67,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
           <!-- Brand block (left) -->
           <div class="flex flex-col gap-4 max-w-[320px]">
             <div class="flex items-center gap-2">
-              <img src="/logo.png" alt="Memoh Logo" class="w-6 h-6 object-contain" />
+              <img src="/logo.png" alt="Memoh Logo" class="w-6 h-6 object-contain brightness-0 invert" />
               <span class="font-bold text-lg tracking-tight text-foreground">Memoh</span>
             </div>
             <p class="text-sm text-muted-foreground leading-relaxed whitespace-pre-line" v-html="th('footer.tagline')" />

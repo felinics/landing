@@ -7,14 +7,23 @@
     "dev": "vite",
     "build": "vue-tsc -b && vite build && node scripts/create-spa-fallback.mjs",
     "preview": "vite preview",
-    "test:worker": "node --test workers/*.test.js"
+    "test:worker": "node --test workers/*.test.js",
+    "build:demo": "pnpm --dir demo-app install --frozen-lockfile && pnpm --dir demo-app build",
+    "predev": "npm run build:pricing && npm run build:demo",
+    "prebuild": "npm run build:pricing && npm run build:demo",
+    "test:demo": "pnpm --dir demo-app test",
+    "build:pricing": "node src/components/pricing/build-css.mjs"
   },
   "dependencies": {
     "@iconify/vue": "^5.0.0",
     "@unhead/vue": "^3.0.4",
     "@vueuse/core": "^14.2.1",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
     "lucide-vue-next": "^1.0.0",
+    "reka-ui": "^2.10.4",
     "shiki": "^4.2.0",
+    "tailwind-merge": "^3.6.0",
     "vue": "^3.5.32",
     "vue-i18n": "^9.14.5",
     "vue-router": "^4.6.4"
@@ -26,6 +35,7 @@
     "@vue/tsconfig": "^0.9.1",
     "autoprefixer": "^10.4.27",
     "postcss": "^8.5.9",
+    "postcss-prefix-selector": "^2.2.1",
     "tailwindcss": "^4.2.2",
     "typescript": "~6.0.2",
     "vite": "^8.0.4",

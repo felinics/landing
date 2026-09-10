@@ -1,0 +1,12 @@
+{
+  "repository": "https://github.com/felinics/Memoh",
+  "commit": "dc6c43f1627e0735119eb216ebc79a5570abe612",
+  "uiCommit": "a75be8b56b601949231b2e165a2b2b521326a84d",
+  "copied": [
+    "apps/web",
+    "packages/ui",
+    "packages/icons",
+    "packages/sdk",
+    "patches"
+  ]
+}

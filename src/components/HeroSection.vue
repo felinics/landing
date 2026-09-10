@@ -63,9 +63,9 @@ const titleFontClass = computed(() => 'font-serif')
     </div>
 
     <!-- App showcase — overlaps the sky bottom, continues onto the page background.
-         真实 App 的无声循环录屏（含 Desktop），素材就位前优雅占位。 -->
+         原版 Memoh 前端的纯浏览器交互演示。 -->
     <div class="relative z-20 w-full max-w-[1180px] mx-auto px-4 md:px-6 -mt-[40px] md:-mt-[90px]">
-      <div class="aspect-[16/10] w-full shadow-2xl shadow-black/50">
+      <div class="aspect-[16/10] min-h-[520px] md:min-h-0 w-full shadow-2xl shadow-black/50">
         <HeroShowcase :chrome="false" />
       </div>
     </div>

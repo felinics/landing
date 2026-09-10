@@ -71,20 +71,20 @@
     "title": "一台属于%TA%的电脑",
     "subtitle": "每个 Agent 都有自己的桌面、文件和网络\n不是聊天框，是一台真正开着的电脑",
     "c1": {
-      "title": "你熟悉的 Agent",
-      "desc": "Claude Code、Codex 都能住进来\n用哪个，由你选"
+      "title": "选择 Agent",
+      "desc": "在聊天输入框中切换 Memoh、Codex 和 Claude Code。"
     },
     "c2": {
-      "title": "%TA%自己的桌面",
-      "desc": "完整的图形界面\n%TA%在里面浏览、工作——不只是一个对话框"
+      "title": "使用它的桌面",
+      "desc": "让它打开一个网站，在聊天旁边的桌面中查看操作过程。"
     },
     "c3": {
-      "title": "%TA%自己的文件",
-      "desc": "一套属于 Agent 的持久文件系统\n%TA%的笔记、%TA%的下载、%TA%的工作区"
+      "title": "安装需要的工具",
+      "desc": "从 Supermarket 安装运行时和技能，为应用授权 Connector。"
     },
     "c4": {
-      "title": "%TA%自己的网络",
-      "desc": "独立的网络环境\n%TA%按自己的节奏上网，获取需要的东西"
+      "title": "开发并预览",
+      "desc": "让它编写网页，点击 localhost 链接，在新标签页中预览。"
     }
   },
   "s2": {
@@ -234,5 +234,67 @@
     "title": "页面不存在",
     "desc": "链接可能已失效，或者页面被移动了。",
     "back": "回到首页"
+  },
+  "computerDemo": {
+    "toolOpenPage": "打开网页",
+    "toolEditing": "修改中",
+    "toolEdited": "已修改",
+    "toolBrowsing": "浏览中",
+    "toolBrowsed": "已浏览",
+    "toolBuildCounts": "1 次文件操作，1 条命令",
+    "toolRun": "运行",
+    "toolFocusSearch": "聚焦搜索框",
+    "toolTypeYoutube": "输入 youtube",
+    "toolPressEnter": "按键 Enter",
+    "newSession": "新会话",
+    "welcome": "我们从哪里开始？",
+    "attachFiles": "添加附件",
+    "askAnything": "你想做什么？",
+    "play": "播放动画",
+    "pause": "暂停动画",
+    "replay": "重播动画",
+    "agentAlt": "在新会话中，点击加号菜单切换 Memoh、Codex 和 Claude Code。",
+    "desktopAlt": "左侧输入打开 YouTube，右侧桌面打开 Chromium，在 Google 搜索 YouTube。",
+    "packagesAlt": "浏览 Supermarket，打开 Node.js 详情并安装到 Bot，再管理已安装的包。GitHub Connector 示例演示独立授权。",
+    "buildAlt": "Agent 编写阅读清单网页，点击 localhost 链接在 Memoh 新标签页中预览。",
+    "youtubeRequest": "帮我打开 YouTube。",
+    "youtubeReply": "我来在浏览器中打开。",
+    "youtubeResult": "观看你喜欢的视频与音乐。",
+    "openBrowser": "浏览器",
+    "searchPackages": "搜索软件包…",
+    "all": "全部",
+    "runtimes": "运行时",
+    "nodeDescription": "JavaScript 运行时，包含 npm 和 npx。",
+    "pythonDescription": "Python 解释器，包含 pip。",
+    "uvDescription": "Python 包与项目管理工具。",
+    "installToBot": "安装到 Bot",
+    "dependencies": "依赖",
+    "information": "信息",
+    "version": "版本",
+    "source": "来源",
+    "browseSupermarket": "浏览 Supermarket",
+    "githubDescription": "访问 GitHub 仓库、Issue 和 Pull Request。",
+    "needsConnection": "未连接",
+    "connected": "已连接",
+    "authorize": "授权",
+    "installPackage": "安装软件包",
+    "installingPackage": "正在安装软件包",
+    "selectBot": "选择 Bot",
+    "installWill": "安装时将会",
+    "installNode": "如果工作区中没有 Node.js，将安装此依赖。",
+    "cancel": "取消",
+    "install": "安装",
+    "installed": "已安装",
+    "installing": "安装中…",
+    "buildRequest": "帮我做一个阅读清单网页。",
+    "createFiles": "创建文件",
+    "runCommand": "运行命令",
+    "buildReply": "阅读清单做好了，在这里预览：",
+    "readingList": "阅读清单",
+    "library": "我的书架",
+    "addBook": "添加书籍",
+    "findBook": "搜索书籍…",
+    "toRead": "待读",
+    "finished": "已读"
   }
 }

@@ -3,7 +3,7 @@ import { computed, watchEffect } from 'vue'
 import { useTa } from './composables/useTa'
 import { useThemePreference } from './composables/useTheme'
 import { useRoute } from 'vue-router'
-import { MapPin, Github, Twitter } from 'lucide-vue-next'
+import { Github } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 import BackgroundCanvas from './components/BackgroundCanvas.vue'
 import TopBar from './components/TopBar.vue'
@@ -38,8 +38,6 @@ const isMemohNet = computed(() => {
   return hostname === 'memoh.net'
 })
 
-const memohNetAddress = 'Cloud Technology Building, No. 50 Liuxin 1st Road, Nanshan District, Shenzhen'
-const footerAddress = computed(() => (isMemohNet.value ? memohNetAddress : t('footer.address')))
 const docsUrl = computed(() => locale.value === 'zh' ? 'https://docs.memoh.ai/zh' : 'https://docs.memoh.ai')
 const miitBeianUrl = 'https://beian.miit.gov.cn/'
 const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
@@ -62,16 +60,53 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 
         <RouterView />
 
-        <footer class="w-full max-w-[1080px] py-[60px] relative z-10 after:absolute after:top-0 after:left-4 after:right-4 md:after:left-8 md:after:right-8 after:h-px after:bg-border px-4 md:px-8">
-        <div class="flex flex-col md:flex-row md:justify-between gap-10 md:gap-16">
-          <!-- Brand block (left) -->
-          <div class="flex flex-col gap-4 max-w-[320px]">
-            <div class="flex items-center gap-2">
-              <img src="/logo.png" alt="Memoh Logo" class="w-6 h-6 object-contain brightness-0 invert" />
-              <span class="font-bold text-lg tracking-tight text-foreground">Memoh</span>
+        <footer class="site-footer">
+          <div class="footer-main">
+            <!-- Brand block (left) -->
+            <div class="footer-brand">
+              <div class="footer-wordmark">
+                <img src="/logo.png" alt="Memoh Logo" class="h-7 w-7 object-contain" :class="isHomeRoute || isDark ? 'brightness-0 invert' : ''" />
+                <span class="font-semibold text-[22px] tracking-tight text-foreground">Memoh</span>
+              </div>
+              <p class="footer-tagline" v-html="th('footer.tagline')" />
             </div>
-            <p class="text-sm text-muted-foreground leading-relaxed whitespace-pre-line" v-html="th('footer.tagline')" />
-            <div class="flex items-center gap-2">
+
+            <!-- Link columns (right) — Legal 列撤下后只剩两列,勿改回 sm:grid-cols-3 -->
+            <div class="footer-links">
+              <div class="footer-link-group">
+                <h2 class="footer-link-heading">{{ t('footer.product') }}</h2>
+                <router-link to="/download" class="footer-link">{{ t('nav.download') }}</router-link>
+                <a href="https://github.com/felinics/supermarket" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('nav.supermarket') }}</a>
+              </div>
+              <div class="footer-link-group">
+                <h2 class="footer-link-heading">{{ t('footer.resources') }}</h2>
+                <a :href="docsUrl" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('nav.docs') }}</a>
+                <router-link to="/blogs" class="footer-link">{{ t('nav.blogs') }}</router-link>
+                <a href="https://github.com/felinics/Memoh" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('nav.github') }}</a>
+              </div>
+              <!-- Legal 列整列撤下:Privacy/Terms 页面不存在,此前两个链接都指向首页占位。
+                   页面就绪后恢复此列及 footer.privacy / footer.terms 文案。 -->
+            </div>
+          </div>
+
+          <!-- Bottom row: legal line -->
+          <div class="footer-bottom">
+            <div class="footer-company">
+              <span class="footer-copyright">{{ t('footer.copyright') }}</span>
+            </div>
+            <div
+              v-if="isMemohNet"
+              class="footer-registration"
+            >
+              <a :href="miitBeianUrl" target="_blank" rel="noopener noreferrer" class="hover:text-muted-foreground transition-colors">
+                粤ICP备2020082274号
+              </a>
+              <span aria-hidden="true" class="text-muted-foreground/45">｜</span>
+              <a :href="telecomLicenseUrl" target="_blank" rel="noopener noreferrer" class="hover:text-muted-foreground transition-colors">
+                增值电信业务经营许可证 B1-20214707
+              </a>
+            </div>
+            <div class="footer-socials">
               <a href="https://github.com/felinics/Memoh" target="_blank" rel="noopener noreferrer" aria-label="GitHub"
                  class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
                 <Github class="w-4 h-4" />
@@ -83,51 +118,10 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
               <!-- 官方 X 账号是 @memoh_ai;x.com/memohai 是别人占用或无此账号(404),别改回去 -->
               <a href="https://x.com/memoh_ai" target="_blank" rel="noopener noreferrer" aria-label="X"
                  class="flex items-center justify-center w-9 h-9 rounded-md text-muted-foreground hover:text-foreground hover:bg-accent transition-colors">
-                <Twitter class="w-4 h-4" />
+                <span aria-hidden="true" class="x-icon h-3.5 w-3.5"></span>
               </a>
             </div>
           </div>
-
-          <!-- Link columns (right) — Legal 列撤下后只剩两列,勿改回 sm:grid-cols-3 -->
-          <div class="grid grid-cols-2 gap-8 sm:gap-12">
-            <div class="flex flex-col gap-3">
-              <span class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/85">{{ t('footer.product') }}</span>
-              <router-link to="/download" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.download') }}</router-link>
-              <a href="https://github.com/felinics/supermarket" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.supermarket') }}</a>
-            </div>
-            <div class="flex flex-col gap-3">
-              <span class="text-[11px] font-medium uppercase tracking-wider text-muted-foreground/85">{{ t('footer.resources') }}</span>
-              <a :href="docsUrl" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.docs') }}</a>
-              <router-link to="/blogs" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.blogs') }}</router-link>
-              <a href="https://github.com/felinics/Memoh" target="_blank" rel="noopener noreferrer" class="text-sm text-muted-foreground hover:text-foreground transition-colors">{{ t('nav.github') }}</a>
-            </div>
-            <!-- Legal 列整列撤下:Privacy/Terms 页面不存在,此前两个链接都指向首页占位。
-                 页面就绪后恢复此列及 footer.privacy / footer.terms 文案。 -->
-          </div>
-        </div>
-
-        <!-- Bottom row: legal line -->
-        <div class="mt-12 pt-6 border-t border-border/50 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-          <div class="flex flex-col gap-1">
-            <span class="text-xs text-muted-foreground">{{ t('footer.copyright') }}</span>
-            <div class="flex items-center gap-1 text-muted-foreground/60">
-              <MapPin :size="10" />
-              <span class="text-[10px]">{{ footerAddress }}</span>
-            </div>
-          </div>
-          <div
-            v-if="isMemohNet"
-            class="inline-flex items-center gap-1.5 rounded-md border border-border/40 bg-muted/20 px-2 py-1 text-[10px] text-muted-foreground/75 leading-none whitespace-nowrap"
-          >
-            <a :href="miitBeianUrl" target="_blank" rel="noopener noreferrer" class="hover:text-muted-foreground transition-colors">
-              粤ICP备2020082274号
-            </a>
-            <span aria-hidden="true" class="text-muted-foreground/45">｜</span>
-            <a :href="telecomLicenseUrl" target="_blank" rel="noopener noreferrer" class="hover:text-muted-foreground transition-colors">
-              增值电信业务经营许可证 B1-20214707
-            </a>
-          </div>
-        </div>
         </footer>
       </div>
       <EasterEgg v-if="isHomeRoute" />
@@ -136,6 +130,120 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 </template>
 
 <style scoped>
+.site-footer {
+  position: relative;
+  z-index: 10;
+  width: min(100%, 1080px);
+  padding: 0 32px 32px;
+  color: var(--foreground);
+  font-family: "Geist", "Noto Sans SC", sans-serif;
+}
+.footer-main {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+  gap: 80px;
+  padding: 48px 0 40px;
+  border-top: 1px solid var(--border);
+}
+.footer-wordmark {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.footer-tagline {
+  max-width: 31ch;
+  margin-top: 16px;
+  color: var(--muted-foreground);
+  font-family: var(--font-serif);
+  font-size: 21px;
+  font-weight: 400;
+  line-height: 1.5;
+  letter-spacing: -0.015em;
+  white-space: pre-line;
+  text-wrap: pretty;
+}
+.footer-links {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px;
+}
+.footer-link-group {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+.footer-link-heading {
+  margin-bottom: 12px;
+  font-size: 13px;
+  letter-spacing: 0.01em;
+  line-height: 28px;
+  font-weight: 500;
+  color: var(--foreground);
+}
+.footer-link {
+  padding-block: 5px;
+  font-size: 14px;
+  line-height: 22px;
+  color: var(--muted-foreground);
+  text-decoration-color: transparent;
+  text-underline-offset: 5px;
+  transition: color 160ms, text-decoration-color 160ms;
+}
+.footer-link:hover {
+  color: var(--foreground);
+  text-decoration: underline;
+}
+.footer-bottom {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px 32px;
+  padding-top: 24px;
+  border-top: 1px solid color-mix(in srgb, var(--border) 60%, transparent);
+}
+.footer-company {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+.footer-copyright, .footer-registration {
+  font-size: 11px;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+.x-icon {
+  background-color: currentColor;
+  mask: url("/brands/x.svg") center / contain no-repeat;
+  -webkit-mask: url("/brands/x.svg") center / contain no-repeat;
+}
+.footer-socials { display: flex; gap: 6px; }
+.footer-registration {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+}
+.site-footer :is(a, button):focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 4px;
+  border-radius: 4px;
+}
+@media (max-width: 639px) {
+  .site-footer { padding: 0 24px 28px; }
+  .footer-main {
+    grid-template-columns: 1fr;
+    gap: 32px;
+    padding: 36px 0 28px;
+  }
+  .footer-tagline { margin-top: 12px; font-size: 20px; }
+  .footer-link { padding-block: 9px; }
+  .footer-bottom { gap: 16px; }
+  .footer-socials { margin-left: -9px; }
+}
+
+
 /* Home page: page background fades from the purple-black used behind the
    dusk-journey cards (top) into the deeper near-black (#09090b) at the tail. */
 .home-shell {

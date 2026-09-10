@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { ArrowRight } from 'lucide-vue-next'
-import { useI18n } from 'vue-i18n'
 import sunsetBg from '../assets/sunset.webp'
 import DesktopDownloadButton from './DesktopDownloadButton.vue'
 import HeroShowcase from './HeroShowcase.vue'
 import { useTa } from '../composables/useTa'
 
 const { th } = useTa()
-const { locale } = useI18n()
-const docsUrl = computed(() => locale.value === 'zh' ? 'https://docs.memoh.ai/zh' : 'https://docs.memoh.ai')
 
 // 主标题统一用衬线字体（Source Serif 4 / Noto Serif SC）
 const titleFontClass = computed(() => 'font-serif')
@@ -50,14 +47,6 @@ const titleFontClass = computed(() => 'font-serif')
             <ArrowRight :size="18" />
           </a>
           <DesktopDownloadButton surface="hero" />
-          <a
-            :href="docsUrl"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="hero-btn hero-btn-secondary inline-flex h-[52px] items-center justify-center gap-2 rounded-full px-7 font-medium text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/60"
-          >
-            {{ $t('cta_bottom.docs') }}
-          </a>
         </div>
       </div>
     </div>
@@ -101,7 +90,7 @@ const titleFontClass = computed(() => 'font-serif')
    ::before = --foreground fill (scales), ::after = bottom-up white sheen.
    No drop shadow — exactly like the component bench. */
 .hero-btn-primary {
-  color: var(--background);
+  color: #18181b;
 }
 .hero-btn-primary::before {
   content: '';
@@ -109,7 +98,7 @@ const titleFontClass = computed(() => 'font-serif')
   inset: 0;
   z-index: -1;
   border-radius: inherit;
-  background-color: var(--foreground);
+  background-color: #faf7f2;
   transition:
     scale 0.3s linear(0, .3505, .7432, .9336, .9951, 1.0062, 1.0045, 1.0019, 1.0005, 1),
     background-color 0.15s ease-out;
@@ -135,27 +124,6 @@ const titleFontClass = computed(() => 'font-serif')
 .hero-btn-primary:active::after {
   opacity: 1;
   background-color: rgba(0, 0, 0, 0.12);
-}
-
-.hero-btn-secondary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  background-color: oklch(1 0 0 / 0.10);
-  box-shadow: inset 0 0 0 1px oklch(1 0 0 / 0.30);
-  backdrop-filter: blur(8px);
-  transition:
-    scale 0.3s linear(0, .3505, .7432, .9336, .9951, 1.0062, 1.0045, 1.0019, 1.0005, 1),
-    background-color 0.15s ease-out;
-}
-.hero-btn-secondary:hover::before {
-  background-color: oklch(1 0 0 / 0.20);
-  scale: 1.005 1.015;
-}
-.hero-btn-secondary:active::before {
-  scale: 0.97;
 }
 
 </style>

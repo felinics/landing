@@ -1,0 +1,1 @@
+var e=[`chat`,`workspace_read`,`workspace_write`,`workspace_exec`,`manage`];function t(t){let n=new Set;for(let r of t??[])e.includes(r)&&n.add(r);if(n.has(`manage`))for(let t of e)n.add(t);return n.has(`workspace_write`)&&n.add(`workspace_read`),e.filter(e=>n.has(e))}function n(e,n){return t(e).includes(n)}export{t as n,n as r,e as t};

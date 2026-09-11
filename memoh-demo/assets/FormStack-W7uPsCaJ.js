@@ -1,0 +1,1 @@
+import{W as e,b as t,q as n}from"./vue.runtime.esm-bundler-W0gd1xqI.js";import{Dn as r}from"./src-BmGCXbU4.js";var i={},a={class:`space-y-4`};function o(r,i){return e(),t(`div`,a,[n(r.$slots,`default`)])}var s=r(i,[[`render`,o]]);export{s as t};

@@ -1,0 +1,1 @@
+var e=Symbol(`memohai:desktop-shell`),t=Symbol(`memohai:desktop-runtime`),n=Symbol(`memohai:desktop-updates`);export{e as n,n as r,t};

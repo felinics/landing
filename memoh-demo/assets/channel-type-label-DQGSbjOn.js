@@ -1,0 +1,1 @@
+function e(e,t,n){let r=(t??``).trim().toLowerCase();if(!r)return(n??``).trim()||``;let i=`bots.channels.types.${r}`,a=e(i);return a===i?(n??``).trim()||r.charAt(0).toUpperCase()+r.slice(1):a}export{e as t};

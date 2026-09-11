@@ -1,0 +1,1 @@
+import{g as e}from"./vue.runtime.esm-bundler-W0gd1xqI.js";function t(e,t=``){let n=e?.trim()??``;return n&&n.slice(0,2).toUpperCase()||t}function n(n,r=``){return e(()=>t(n(),r))}export{n,t};

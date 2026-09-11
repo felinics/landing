@@ -1,0 +1,1 @@
+var e=`/memoh-demo/logo.svg`;export{e as t};

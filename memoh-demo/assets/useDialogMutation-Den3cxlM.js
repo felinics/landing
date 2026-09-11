@@ -1,0 +1,1 @@
+import{Nt as e}from"./src-BmGCXbU4.js";import{i as t}from"./api-error-CwUkOyjl.js";function n(){async function n(n,r){try{let e=await n();return await r.onSuccess?.(e),!0}catch(n){return e.error(t(n,r.fallbackMessage,{prefixFallback:!0})),!1}}return{run:n}}export{n as t};

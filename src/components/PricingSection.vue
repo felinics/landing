@@ -25,7 +25,6 @@ const plans = computed(() => [
       : `Everything in ${plan.name === 'Pro' ? 'Go' : 'Pro'}` },
   ]),
 ] })))
-function selectPlan() { window.location.assign('https://app.memoh.net/') }
 </script>
 
 <template>
@@ -46,8 +45,8 @@ function selectPlan() { window.location.assign('https://app.memoh.net/') }
             :highlighted="plan.name === 'Go'"
             :highlight-label="zh ? '推荐' : 'Recommended'"
             :current-label="zh ? '当前套餐' : 'Current plan'"
-            :cta-label="zh ? '立即开始' : 'Get started'"
-            @select="selectPlan"
+            cta-label="Coming Soon"
+            :cta-disabled="true"
           />
         </div>
       </div>

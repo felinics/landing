@@ -15,7 +15,7 @@ import {
   resolvePreferredDesktopDownloadKey,
 } from '../lib/desktopDevice'
 
-withDefaults(defineProps<{
+const props = withDefaults(defineProps<{
   surface?: 'hero' | 'page'
 }>(), {
   surface: 'page',
@@ -40,6 +40,13 @@ onMounted(async () => {
 const preferredLabel = computed(() => (
   preferredKey.value ? t(`desktop.os.${preferredKey.value}`) : t('desktop.download')
 ))
+
+const triggerLabel = computed(() => {
+  if (props.surface !== 'hero' || !preferredKey.value) return preferredLabel.value
+  const key = preferredKey.value
+  const platform = key === 'macArm' || key === 'macIntel' ? 'mac' : key === 'win' ? 'win' : 'linux'
+  return t('desktop.downloadFor', { os: t(`download.groups.${platform}`) })
+})
 
 const toggleMenu = () => {
   errorMessage.value = ''
@@ -81,10 +88,10 @@ const downloadPreferred = () => {
         @click="downloadPreferred"
       >
         <LoaderCircle v-if="loadingKey && loadingKey === preferredKey" :size="18" class="shrink-0 animate-spin" />
-        <Download v-else :size="18" class="shrink-0" />
-        <span class="max-w-[215px] truncate">{{ preferredLabel }}</span>
+        <Download v-else-if="surface !== 'hero'" :size="18" class="shrink-0" />
+        <span class="max-w-[215px] truncate">{{ triggerLabel }}</span>
         <Icon
-          v-if="preferredKey"
+          v-if="preferredKey && !(loadingKey && loadingKey === preferredKey)"
           :icon="desktopPlatformIcons[preferredKey]"
           class="h-[18px] w-[18px] shrink-0"
         />
@@ -163,8 +170,12 @@ const downloadPreferred = () => {
   background: oklch(1 0 0 / 0.20);
 }
 
-.desktop-download--hero .download-trigger-toggle {
-  border-left: 1px solid oklch(1 0 0 / 0.24);
+.desktop-download--hero .download-trigger-main {
+  padding-right: 8px;
+}
+
+.desktop-download--hero .download-trigger-main > .iconify {
+  order: -1;
 }
 
 .desktop-download--hero .download-trigger-main:focus-visible,

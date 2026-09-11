@@ -1,0 +1,8 @@
+packages:
+  - apps/*
+  - packages/*
+patchedDependencies:
+  dockview-core@7.0.2: patches/dockview-core@7.0.2.patch
+  dockview-vue@7.0.2: patches/dockview-vue@7.0.2.patch
+onlyBuiltDependencies:
+  - esbuild

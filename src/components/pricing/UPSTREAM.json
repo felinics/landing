@@ -1,0 +1,6 @@
+{
+  "source": "/Users/acbox/projects/memoh/Memoh-Cloud/packages/memoh",
+  "revision": "c41a30dad965a65337ec014b2c9b7e95c7184ca5",
+  "uiRevision": "8cd8237aa13a1a6f50f0abbe029d90729a279695",
+  "note": "PlanCard template and UI primitives copied unchanged apart from local imports. CSS compiled from upstream tokens and scoped to .cloud-pricing."
+}

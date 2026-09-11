@@ -12,15 +12,15 @@
 //  · wechat / discord   = 不流式，Ta 思考片刻后整条消息直接出现。
 //  · 四个平台的起始 / 思考 / 回复节奏各不相同，刻意错开，不会齐刷刷一起动。
 // 尊重 prefers-reduced-motion：直接铺满，不播放。
-import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { computed, ref, watch, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 type Platform = 'desktop' | 'telegram' | 'wechat' | 'discord'
 const props = defineProps<{ platform: Platform }>()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const page = computed(() => ({
-  desktop: '#0b0b0e',
+  desktop: 'var(--background)',
   telegram: '#0e1621',
   wechat: '#1a1a1a',
   discord: '#313338',
@@ -56,10 +56,29 @@ const streamingKey = ref<number | null>(null)  // 正在流式输出的气泡 ke
 
 const root = ref<HTMLElement>()
 let observer: IntersectionObserver | null = null
+let started = false
 const timers: number[] = []
 const wait = (fn: () => void, ms: number) => { timers.push(window.setTimeout(fn, ms)) }
 
+function clearPlayback() {
+  timers.forEach(clearTimeout)
+  timers.length = 0
+  streamingKey.value = null
+}
+
+function showAllMessages() {
+  rendered.value = seq.value.map((m, i) => ({ side: m.side, text: t(m.key), key: i }))
+}
+
+// 已显示的消息保存的是动画文本快照；切换语言时也要清理仍在输出旧语言的计时器。
+watch(locale, () => {
+  if (!started) return
+  clearPlayback()
+  showAllMessages()
+})
+
 function play() {
+  started = true
   const c = conf.value
   const list = seq.value
   let i = 0
@@ -111,7 +130,8 @@ function play() {
 onMounted(() => {
   const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
   if (reduce || typeof IntersectionObserver === 'undefined') {
-    rendered.value = seq.value.map((m, i) => ({ side: m.side, text: t(m.key), key: i }))
+    started = true
+    showAllMessages()
     return
   }
   observer = new IntersectionObserver((entries) => {
@@ -127,7 +147,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   observer?.disconnect()
-  timers.forEach(clearTimeout)
+  clearPlayback()
 })
 
 const im = {
@@ -149,13 +169,13 @@ const cfg = computed(() => im[props.platform as 'telegram' | 'wechat'])
 </script>
 
 <template>
-  <div ref="root" class="proof-surface w-full overflow-hidden md:h-full" :style="{ backgroundColor: page }">
+  <div ref="root" class="proof-surface w-full overflow-hidden h-full" :class="{ 'proof-dark': platform === 'desktop' }" :style="{ backgroundColor: page }">
     <!-- Memoh 原生聊天：用户右品牌气泡 + 助手左纯文本（流式） -->
-    <div v-if="platform === 'desktop'" class="flex flex-col md:h-full">
-      <div class="flex shrink-0 items-center border-b border-white/[0.06] px-4 py-3 md:px-3.5 md:py-2.5">
+    <div v-if="platform === 'desktop'" class="flex h-full flex-col">
+      <div class="flex shrink-0 items-center border-b border-border px-4 py-3 md:px-3.5 md:py-2.5">
         <span class="text-[13px] font-[550] tracking-[-0.02em] text-white/70 md:text-[11px]">Felinic</span>
       </div>
-      <TransitionGroup name="msg" tag="div" class="flex min-h-0 flex-col gap-3 p-4 md:flex-1 md:justify-end md:gap-2.5 md:p-3">
+      <TransitionGroup name="msg" tag="div" class="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto no-scrollbar p-4 *:shrink-0 md:[justify-content:safe_end] md:gap-2.5 md:p-3">
         <div v-for="m in rendered" :key="m.key" :class="m.side === 'user' ? 'flex justify-end' : ''">
           <p v-if="m.side === 'user'" class="w-fit max-w-[86%] rounded-2xl bg-chat-user-bubble px-3.5 py-2 text-[14px] leading-snug text-chat-user-bubble-fg md:px-3 md:py-1.5 md:text-[11.5px]">{{ m.text }}</p>
           <p v-else class="text-[14px] leading-relaxed text-foreground/90 md:text-[11.5px]">{{ m.text }}</p>
@@ -164,12 +184,12 @@ const cfg = computed(() => im[props.platform as 'telegram' | 'wechat'])
     </div>
 
     <!-- Telegram / WeChat 原生气泡（telegram 流式，wechat 直接出现） -->
-    <div v-else-if="platform === 'telegram' || platform === 'wechat'" class="flex flex-col md:h-full">
+    <div v-else-if="platform === 'telegram' || platform === 'wechat'" class="flex h-full flex-col">
       <div class="flex shrink-0 flex-col justify-center px-4 py-2.5 md:px-3.5 md:py-2" :style="{ backgroundColor: cfg.header }">
         <p class="text-[13px] font-medium leading-tight text-white md:text-[12px]">Felinic</p>
         <p v-if="cfg.online" class="text-[11px] leading-tight text-[#6cb1e1] md:text-[10px]">{{ t('proof.channel.online') }}</p>
       </div>
-      <TransitionGroup name="msg" tag="div" class="flex min-h-0 flex-col gap-3 p-4 md:flex-1 md:justify-end md:gap-2 md:p-3">
+      <TransitionGroup name="msg" tag="div" class="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto no-scrollbar p-4 *:shrink-0 md:[justify-content:safe_end] md:gap-2 md:p-3">
         <div v-for="m in rendered" :key="m.key" class="flex" :class="m.side === 'user' ? 'justify-end' : ''">
           <p class="max-w-[82%] px-3 py-2 text-[14px] leading-snug md:px-2.5 md:py-1.5 md:text-[11.5px]" :class="m.side === 'user' ? cfg.outBubble : cfg.inBubble">{{ m.text }}<span v-if="m.side === 'agent' && m.key === streamingKey" class="cursor" aria-hidden="true" /></p>
         </div>
@@ -177,11 +197,11 @@ const cfg = computed(() => im[props.platform as 'telegram' | 'wechat'])
     </div>
 
     <!-- Discord 扁平列表：彩色用户名 + 正文（直接出现） -->
-    <div v-else class="flex flex-col md:h-full">
+    <div v-else class="flex h-full flex-col">
       <div class="flex shrink-0 items-center bg-[#2b2d31] px-4 py-3 md:px-3 md:py-2.5">
         <span class="truncate text-[13px] font-semibold text-white/90 md:text-[12px]">{{ t('proof.channel.discord.channel') }}</span>
       </div>
-      <TransitionGroup name="msg" tag="div" class="flex min-h-0 flex-col gap-3 p-4 md:flex-1 md:justify-end md:gap-2 md:p-3">
+      <TransitionGroup name="msg" tag="div" class="flex min-h-0 flex-1 flex-col gap-3 overflow-y-auto no-scrollbar p-4 *:shrink-0 md:[justify-content:safe_end] md:gap-2 md:p-3">
         <div v-for="m in rendered" :key="m.key" class="min-w-0">
           <span class="text-[12px] font-medium leading-tight md:text-[11px]" :class="m.side === 'user' ? 'text-[#949ba4]' : 'text-[#c8a2ff]'">{{ m.side === 'user' ? t('proof.channel.you') : 'Felinic' }}</span>
           <p class="text-[13.5px] leading-snug text-[#dbdee1] md:text-[11px]">{{ m.text }}</p>

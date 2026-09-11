@@ -1,0 +1,246 @@
+import type {
+  ChatAttachment,
+  RequestedSkillSelection,
+  SessionSummary,
+  UIAttachment,
+  UIAttachmentsMessage,
+  UIErrorMessage,
+  UIForwardRef,
+  UIReasoningMessage,
+  UINoticeMessage,
+  UIReplyRef,
+  UISkillActivation,
+  UITextMessage,
+  UIToolApproval,
+  UIToolMessage,
+  UIUserInput,
+} from '@/composables/api/useChat.types'
+
+/**
+ * Prefix of the synthetic turn_id the runtime projection assigns to a live
+ * steer that has no durable history turn yet. Shared by projection, merge, and
+ * scroll anchoring so the convention is defined once.
+ */
+export const RUNTIME_STEER_TURN_PREFIX = 'queue-steer:'
+
+export function isRuntimeSteerTurnId(turnId: string | undefined | null): boolean {
+  return typeof turnId === 'string' && turnId.startsWith(RUNTIME_STEER_TURN_PREFIX)
+}
+
+export interface BackgroundTask {
+  taskId: string
+  status: string
+  event?: string
+  botId?: string
+  sessionId?: string
+  command?: string
+  agentId?: string
+  agentSessionId?: string
+  outputFile?: string
+  outputTail?: string
+  stream?: string
+  chunk?: string
+  exitCode?: number
+  duration?: string
+  stalled?: boolean
+}
+
+export type TextBlock = UITextMessage
+export type ThinkingBlock = UIReasoningMessage
+export type AttachmentItem = UIAttachment
+export type AttachmentBlock = UIAttachmentsMessage
+export type ErrorBlock = UIErrorMessage
+export type NoticeBlock = UINoticeMessage
+
+export interface ToolCallBlock extends UIToolMessage {
+  toolCallId: string
+  toolName: string
+  result: unknown | null
+  done: boolean
+  approval?: UIToolApproval
+  userInput?: UIUserInput
+  backgroundTask?: BackgroundTask
+}
+
+export type ContentBlock = TextBlock | ThinkingBlock | ToolCallBlock | AttachmentBlock | ErrorBlock | NoticeBlock
+
+export interface ChatViewTarget {
+  botId: string
+  sessionId: string | null
+  viewId: string
+}
+
+export type ActiveChatTarget =
+  | {
+      kind: 'session'
+      sessionId: string
+      session: SessionSummary | null
+      runtimeType: string
+      isExternalAgent: boolean
+      isPendingExternalAgent: false
+      metadata: Record<string, unknown>
+      explicitSelection: boolean
+    }
+  | {
+      kind: 'draft-external-agent'
+      sessionId: null
+      session: null
+      runtimeType: 'acp_agent' | 'codex' | 'claude-code'
+      isExternalAgent: true
+      isPendingExternalAgent: true
+      metadata: Record<string, unknown>
+      explicitSelection: boolean
+    }
+  | {
+      kind: 'draft-native'
+      sessionId: null
+      session: null
+      runtimeType: 'model'
+      isExternalAgent: false
+      isPendingExternalAgent: false
+      metadata: Record<string, unknown>
+      explicitSelection: boolean
+    }
+
+export interface ChatUserTurn {
+  id: string
+  serverId?: string
+  role: 'user'
+  text: string
+  userMessageKind?: string
+  skillActivation?: UISkillActivation
+  attachments: AttachmentItem[]
+  reply?: UIReplyRef
+  forward?: UIForwardRef
+  timestamp: string
+  platform?: string
+  senderDisplayName?: string
+  senderAvatarUrl?: string
+  senderUserId?: string
+  externalMessageId?: string
+  streaming: boolean
+  isSelf: boolean
+  invocationId?: string
+  turnId?: string
+  // Immutable turn-level sequence from the settled (REST history) path.
+  // Live turns do not carry one until their settled twin arrives.
+  turnPosition?: number
+  runtimeRunId?: string
+  runtimeContinuation?: boolean
+  // Set by createOptimisticUserTurn / createOptimisticAssistantTurn and
+  // cleared as soon as the server twin replaces the optimistic row in
+  // mergeMessages. mergeMessages keys off this flag to decide which side of
+  // a (optimistic, server) pair to drop, so any new code path that creates a
+  // client-only turn before the server acknowledges it MUST set this.
+  __optimistic?: boolean
+}
+
+export interface ChatAssistantTurn {
+  id: string
+  serverId?: string
+  role: 'assistant'
+  messages: ContentBlock[]
+  timestamp: string
+  platform?: string
+  externalMessageId?: string
+  streaming: boolean
+  invocationId?: string
+  turnId?: string
+  turnPosition?: number
+  runtimeRunId?: string
+  runtimeContinuation?: boolean
+  // See ChatUserTurn.__optimistic.
+  __optimistic?: boolean
+}
+
+export interface ChatSystemTurn {
+  id: string
+  serverId?: string
+  role: 'system'
+  kind: 'background_task'
+  backgroundTask: BackgroundTask
+  timestamp: string
+  platform?: string
+  streaming: boolean
+  turnId?: string
+  turnPosition?: number
+}
+
+export type ChatMessage = ChatUserTurn | ChatAssistantTurn | ChatSystemTurn
+
+/**
+ * A user turn admitted from a durable follow-up continuation run.
+ *
+ * Runtime continuation turns are intentionally distinct from queue steer
+ * turns: both are runtime-owned inputs, but only the former represents a
+ * follow-up item being handed off to a new run.
+ */
+export function isRuntimeContinuationUserTurn(
+  message: {
+    role: string
+    turnId?: string
+    runtimeRunId?: string
+    runtimeContinuation?: boolean
+  },
+): boolean {
+  return message.role === 'user'
+    && Boolean(message.runtimeRunId?.trim())
+    && message.runtimeContinuation === true
+    && Boolean(message.turnId?.trim())
+    && !isRuntimeSteerTurnId(message.turnId)
+}
+
+export type SendMessageStage = 'startup' | 'stream'
+
+export interface SendMessageResult {
+  ok: boolean
+  /** A real chat message completed, rather than a locally handled command. */
+  messageSent?: boolean
+  stage?: SendMessageStage
+  error?: string
+  errorCode?: string
+  restoreInput?: string
+  restoreAttachments?: ChatAttachment[]
+  restoreRequestedSkills?: RequestedSkillSelection[]
+  composerScope?: string
+}
+
+export interface SendMessageOptions {
+  target?: ChatViewTarget
+  modelId?: string
+  reasoningEffort?: string
+  workspaceTargetId?: string
+  requestedSkills?: RequestedSkillSelection[]
+  composerScope?: string
+  /** Called after command handling, before creating a session or sending a message. */
+  onBeforeMessageSend?: () => void
+  /** The server has finished this turn's preference write, before generation ends. */
+  onModelPreferenceSettled?: () => void
+  /** Called immediately before a real chat turn is appended or dispatched. */
+  onBeforeTurnAppend?: (target: ChatViewTarget) => void
+  /** Called when that turn is rolled back after a startup-stage failure. */
+  onTurnAppendAborted?: () => void
+}
+
+export interface ChatWorkspaceTargetSnapshot {
+  target_id: string
+  kind?: string
+  name?: string
+}
+
+export type ChatWorkspaceTargetSelectionSource = 'unset' | 'default' | 'session' | 'user'
+
+export interface ExternalAgentSessionInput {
+  /** Persisted Agent instance selected for this session. */
+  botAgentId?: string
+  /** Runtime owned by the selected Agent. Omitted by legacy ACP callers. */
+  runtime?: 'acp' | 'codex' | 'claude-code'
+  /** Temporary ACP provider identity stored in BotAgent metadata. */
+  agentId: string
+  sessionMode?: 'chat' | 'discuss'
+  projectPath?: string
+  projectMode?: string
+  title?: string
+  /** Warm pre-session runtime to bind to the created session. */
+  runtimeId?: string
+}

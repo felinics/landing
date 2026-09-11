@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/logo.svg" />
+    <!-- interactive-widget=resizes-content: Android Chrome shrinks the layout
+         viewport itself when the software keyboard opens, so the h-dvh shell
+         chain (and with it the composer) rises natively. iOS Safari ignores
+         the hint — there the lift comes from useVirtualKeyboard instead. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, interactive-widget=resizes-content" />
+    <title>Memoh Demo</title>
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/demo-entry.ts"></script>
+  </body>
+</html>

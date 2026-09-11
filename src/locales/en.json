@@ -58,8 +58,8 @@
     "description": "Every agent gets its own cloud computer with a desktop, filesystem, and network. Always on, always there."
   },
   "hero": {
-    "title": "someone who stays",
-    "subtitle": "Memoh is the multi-agent platform — each one lives in a computer of its own\nright here, waiting for you",
+    "title": "Give your agent a cloud computer",
+    "subtitle": "Memoh is a cloud-first multi-agent platform.\nEvery agent has its own desktop, files, and network, running 24/7.",
     "ctaPrimary": "Get Started",
     "ctaSecondary": "GitHub",
     "cta": "Join waitlist",

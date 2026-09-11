@@ -58,8 +58,8 @@
     "description": "每个 Agent 都拥有一台云端电脑，有桌面、有文件、有网络，一直开着，一直在"
   },
   "hero": {
-    "title": "陪着你的%TA%",
-    "subtitle": "Memoh 是多 Agent 平台，每个%TA%都住在自己的电脑里\n在这里一直等着你",
+    "title": "给你的 Agent 一台云电脑",
+    "subtitle": "Memoh 是云优先的多 Agent 平台。\n每个 Agent 都有独立的桌面、文件和网络，24/7 持续运行。",
     "ctaPrimary": "立即开始",
     "ctaSecondary": "GitHub",
     "cta": "开始",

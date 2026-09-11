@@ -19,7 +19,8 @@ export type BlogPost = {
 }
 
 const slugAliases: Record<string, string> = {
-  '2026-09-11-en': '2026-09-11',
+  '2026-09-11': '2026-09-15',
+  '2026-09-11-en': '2026-09-15',
 }
 
 const parseFrontmatter = (raw: string) => {

@@ -97,3 +97,15 @@ test('installed skill catalog uses the same complete documents as the file brows
   assert.ok(parent.entries.some((entry:any) => entry.name === 'SKILL.md' && !entry.isDir))
  }
 })
+
+test('external agent catalogs resolve independently with valid defaults', async () => {
+ const agents = (await get('/bots/bot-memoh/agents')).items
+ const catalogs = await Promise.all(agents.map((agent: { id: string }) => get(`/bots/bot-memoh/agents/${agent.id}/models`)))
+ for (const catalog of catalogs) {
+  assert.ok(catalog.models.length > 0)
+  assert.ok(catalog.models.some((model: { id: string }) => model.id === catalog.configured_model_id))
+  assert.equal(catalog.models.filter((model: { default: boolean }) => model.default).length, 1)
+ }
+ const firstIds = new Set(catalogs[0].models.map((model: { id: string }) => model.id))
+ assert.ok(catalogs[1].models.every((model: { id: string }) => !firstIds.has(model.id)))
+})

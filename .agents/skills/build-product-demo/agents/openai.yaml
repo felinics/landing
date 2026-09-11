@@ -1,0 +1,3 @@
+interface:
+  display_name: "产品模拟演示"
+  short_description: "依据真实产品源码制作模拟演示，校准鼠标与输入动作，并验证界面还原和状态一致性"

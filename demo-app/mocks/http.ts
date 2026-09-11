@@ -88,7 +88,7 @@ function read(path: string, query: URLSearchParams): any {
   if(tail==='/workspace-targets') return {targets:[{target_id:'container',kind:'container',name:'Workspace',online:true,primary:true,status:'running'}]}
   if(tail==='/workdirs') return {items:[{id:`${bid}-workdir`,bot_id:bid,name:'Workspace',path:'/data',target_kind:'container',workspace_target_id:'container',archived:false,created_at:now,updated_at:now}]}
   if(tail==='/sessions') return items(sessions.filter(s=>s.bot_id===bid))
-  if(tail==='/sessions/model-preference-seed') return {model_id:'model-1',chat_model_id:'model-1',reasoning_effort:'medium'}
+  if(tail==='/sessions/model-preference-seed') return {model_id:'model-1',chat_model_id:'model-1',reasoning_effort:'high'}
   if(/^\/sessions\/[^/]+$/.test(tail)) return sessions.find(s=>s.id===tail.split('/')[2])??{}
   if(tail==='/messages') return items(query.has('before')||query.has('before_message_id')?[]:conversation(query.get('session_id')??'session-welcome'))
   if(tail.endsWith('/status') && tail.startsWith('/sessions/')) return {message_count:12,skills:['research','writing'],context_usage:{used_tokens:8420,max_tokens:200000,context_window:200000},cache_stats:{}}

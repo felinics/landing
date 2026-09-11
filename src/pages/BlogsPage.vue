@@ -1,32 +1,41 @@
 <script setup lang="ts">
 import { computed, ref, watch } from 'vue'
 import { RouterLink, useRoute, useRouter } from 'vue-router'
-import { useSeoMeta } from '@unhead/vue'
+import { useHead, useSeoMeta } from '@unhead/vue'
+import { useI18n } from 'vue-i18n'
 import { ArrowLeft, ArrowRight, CalendarDays, Clock3, FileText, UserRound } from 'lucide-vue-next'
-import { blogPosts, getBlogPost } from '../lib/blogs'
+import { formatBlogDate, getBlogPost, getBlogPosts } from '../lib/blogs'
 
 const route = useRoute()
 const router = useRouter()
+const { t, locale } = useI18n()
 
 const slug = computed(() => {
   const value = route.params.slug
   return typeof value === 'string' ? value : ''
 })
 const isDetail = computed(() => slug.value.length > 0)
-const activePost = computed(() => (slug.value ? getBlogPost(decodeURIComponent(slug.value)) : undefined))
-const featuredPost = computed(() => blogPosts[0])
-const relatedPosts = computed(() => blogPosts.filter((post) => post.slug !== activePost.value?.slug).slice(0, 3))
+const blogPosts = computed(() => getBlogPosts(locale.value))
+const activePost = computed(() => (slug.value ? getBlogPost(slug.value, locale.value) : undefined))
+const featuredPost = computed(() => blogPosts.value[0])
+const relatedPosts = computed(() => blogPosts.value.filter((post) => post.slug !== activePost.value?.slug).slice(0, 3))
 const renderedHtml = ref('')
 const isRenderingPost = ref(false)
 let renderToken = 0
 
 const pageTitle = computed(() => {
-  if (activePost.value) return `${activePost.value.title} | Memoh Blog`
-  if (isDetail.value) return 'Post not found | Memoh Blog'
-  return 'Memoh Blog'
+  if (activePost.value) return t('blog.seoPostTitle', { title: activePost.value.title })
+  if (isDetail.value) return t('blog.seoNotFoundTitle')
+  return t('blog.seoTitle')
 })
 
-const pageDescription = computed(() => activePost.value?.excerpt || 'Field notes, architecture writeups, and product updates from the Memoh team.')
+const pageDescription = computed(() => activePost.value?.excerpt || t('blog.seoDescription'))
+
+useHead({
+  htmlAttrs: {
+    lang: computed(() => locale.value),
+  },
+})
 
 useSeoMeta({
   title: () => pageTitle.value,
@@ -71,14 +80,14 @@ watch(
         <header class="max-w-[760px] flex flex-col gap-5">
           <div class="inline-flex w-fit items-center gap-2 rounded-md border border-border bg-background px-3 py-1.5 text-xs font-medium text-muted-foreground">
             <FileText class="w-3.5 h-3.5" />
-            Memoh Blog
+            {{ $t('blog.badge') }}
           </div>
           <div class="flex flex-col gap-4">
             <h1 class="text-4xl md:text-6xl font-semibold tracking-tight text-foreground leading-[1.05]">
-              Notes from the agent platform.
+              {{ $t('blog.indexTitle') }}
             </h1>
             <p class="text-base md:text-lg text-muted-foreground leading-relaxed max-w-[680px]">
-              Product updates, architecture deep dives, and implementation notes from the Memoh team.
+              {{ $t('blog.indexDescription') }}
             </p>
           </div>
         </header>
@@ -92,7 +101,7 @@ watch(
             <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
               <span class="inline-flex items-center gap-1.5">
                 <CalendarDays class="w-3.5 h-3.5" />
-                {{ featuredPost.date }}
+                {{ formatBlogDate(featuredPost.dateKey, locale) }}
               </span>
               <span class="inline-flex items-center gap-1.5">
                 <UserRound class="w-3.5 h-3.5" />
@@ -100,11 +109,11 @@ watch(
               </span>
               <span class="inline-flex items-center gap-1.5">
                 <Clock3 class="w-3.5 h-3.5" />
-                {{ featuredPost.readingMinutes }} min read
+                {{ $t('blog.minRead', { n: featuredPost.readingMinutes }) }}
               </span>
             </div>
             <div class="flex flex-col gap-3">
-              <span class="text-xs font-medium uppercase tracking-[0.16em] text-primary">Latest</span>
+              <span class="text-xs font-medium uppercase tracking-[0.16em] text-primary">{{ $t('blog.latest') }}</span>
               <h2 class="text-2xl md:text-3xl font-semibold tracking-tight text-foreground leading-tight">
                 {{ featuredPost.title }}
               </h2>
@@ -113,7 +122,7 @@ watch(
               </p>
             </div>
             <span class="inline-flex items-center gap-2 text-sm font-medium text-foreground">
-              Read article
+              {{ $t('blog.readArticle') }}
               <ArrowRight class="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
             </span>
           </div>
@@ -141,8 +150,8 @@ watch(
           >
             <div class="flex flex-col gap-4">
               <div class="flex items-center justify-between gap-3 text-xs text-muted-foreground">
-                <span>{{ post.date }}</span>
-                <span>{{ post.readingMinutes }} min</span>
+                <span>{{ formatBlogDate(post.dateKey, locale) }}</span>
+                <span>{{ $t('blog.min', { n: post.readingMinutes }) }}</span>
               </div>
               <div class="flex flex-col gap-3">
                 <h2 class="text-lg font-semibold tracking-tight text-foreground leading-snug">
@@ -154,7 +163,7 @@ watch(
               </div>
             </div>
             <span class="mt-8 inline-flex items-center gap-2 text-sm font-medium text-foreground">
-              Read article
+              {{ $t('blog.readArticle') }}
               <ArrowRight class="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
             </span>
           </RouterLink>
@@ -169,14 +178,14 @@ watch(
           class="mb-8 inline-flex items-center gap-2 rounded-md px-0 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           <ArrowLeft class="w-4 h-4" />
-          Back to blogs
+          {{ $t('blog.back') }}
         </RouterLink>
 
         <header class="mb-10 flex flex-col gap-5 border-b border-border pb-8">
           <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground">
             <span class="inline-flex items-center gap-1.5">
               <CalendarDays class="w-3.5 h-3.5" />
-              {{ activePost.date }}
+              {{ formatBlogDate(activePost.dateKey, locale) }}
             </span>
             <span class="inline-flex items-center gap-1.5">
               <UserRound class="w-3.5 h-3.5" />
@@ -184,7 +193,7 @@ watch(
             </span>
             <span class="inline-flex items-center gap-1.5">
               <Clock3 class="w-3.5 h-3.5" />
-              {{ activePost.readingMinutes }} min read
+              {{ $t('blog.minRead', { n: activePost.readingMinutes }) }}
             </span>
           </div>
           <h1 class="text-3xl md:text-5xl font-semibold tracking-tight text-foreground leading-tight">
@@ -196,12 +205,12 @@ watch(
         </header>
 
         <div v-if="isRenderingPost" class="rounded-xl border border-border bg-background p-6 text-sm text-muted-foreground">
-          Rendering code blocks...
+          {{ $t('blog.rendering') }}
         </div>
         <div v-else class="blog-body" v-html="renderedHtml"></div>
 
         <section v-if="relatedPosts.length" class="mt-14 border-t border-border pt-8">
-          <h2 class="mb-4 text-lg font-semibold tracking-tight text-foreground">More from Memoh</h2>
+          <h2 class="mb-4 text-lg font-semibold tracking-tight text-foreground">{{ $t('blog.more') }}</h2>
           <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
             <RouterLink
               v-for="post in relatedPosts"
@@ -209,7 +218,7 @@ watch(
               :to="`/blogs/${post.slug}`"
               class="group rounded-xl border border-border bg-background p-4 transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
             >
-              <p class="mb-2 text-xs text-muted-foreground">{{ post.date }}</p>
+              <p class="mb-2 text-xs text-muted-foreground">{{ formatBlogDate(post.dateKey, locale) }}</p>
               <h3 class="text-sm font-medium leading-snug text-foreground">{{ post.title }}</h3>
             </RouterLink>
           </div>
@@ -221,14 +230,14 @@ watch(
       <div class="rounded-xl border border-border bg-muted p-3 text-muted-foreground">
         <FileText class="w-6 h-6" />
       </div>
-      <h1 class="text-3xl font-semibold tracking-tight text-foreground">Post not found</h1>
-      <p class="text-muted-foreground">The blog post you opened does not exist in this landing site.</p>
+      <h1 class="text-3xl font-semibold tracking-tight text-foreground">{{ $t('blog.notFoundTitle') }}</h1>
+      <p class="text-muted-foreground">{{ $t('blog.notFoundDescription') }}</p>
       <button
         type="button"
         class="inline-flex items-center justify-center rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-colors hover:bg-foreground/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         @click="router.push('/blogs')"
       >
-        Back to blogs
+        {{ $t('blog.back') }}
       </button>
     </section>
   </main>

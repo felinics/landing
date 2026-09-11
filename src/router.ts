@@ -13,6 +13,8 @@ export const router = createRouter({
     { path: '/waitlist', name: 'waitlist', component: WaitlistPage },
     { path: '/download', name: 'download', component: DownloadPage },
     { path: '/blogs', name: 'blogs', component: BlogsPage },
+    { path: '/blogs/2026-09-11', redirect: '/blogs/2026-09-15' },
+    { path: '/blogs/2026-09-11-en', redirect: '/blogs/2026-09-15' },
     { path: '/blogs/:slug', name: 'blog-post', component: BlogsPage },
     // /desktop has been merged into /download; keep a redirect for old links.
     { path: '/desktop', redirect: '/download' },

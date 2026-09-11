@@ -7,6 +7,24 @@
     "desktop": "桌面版",
     "download": "下载"
   },
+  "blog": {
+    "badge": "Memoh 博客",
+    "indexTitle": "来自 Agent 平台的笔记。",
+    "indexDescription": "Memoh 团队的产品更新、架构深挖与实现笔记。",
+    "latest": "最新",
+    "readArticle": "阅读全文",
+    "minRead": "{n} 分钟阅读",
+    "min": "{n} 分钟",
+    "back": "返回博客",
+    "rendering": "正在渲染代码块...",
+    "more": "更多文章",
+    "notFoundTitle": "文章不存在",
+    "notFoundDescription": "你打开的博客文章不在这个站点里。",
+    "seoTitle": "Memoh 博客",
+    "seoPostTitle": "{title} | Memoh 博客",
+    "seoNotFoundTitle": "文章不存在 | Memoh 博客",
+    "seoDescription": "Memoh 团队的产品更新、架构笔记与实现记录。"
+  },
   "desktop": {
     "seo": {
       "title": "Memoh 桌面版 - macOS、Windows 与 Linux 下载",

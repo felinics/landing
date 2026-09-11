@@ -11,6 +11,7 @@ on:
       - 'public/**'
       - 'scripts/**'
       - 'src/**'
+      - 'demo-app/**'
       - '.github/workflows/deploy-landing.yml'
   workflow_dispatch:
 
@@ -36,12 +37,12 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
       
       - name: Setup pnpm
-        uses: pnpm/action-setup@v3
+        uses: pnpm/action-setup@v4
         with:
-          version: 8
+          version: 10.27.0
       
       - name: Get pnpm store directory
         shell: bash
@@ -57,7 +58,7 @@ jobs:
             ${{ runner.os }}-pnpm-store-
       
       - name: Install dependencies
-        run: pnpm install --no-frozen-lockfile
+        run: pnpm install --frozen-lockfile
 
       - name: Build with Vite
         run: pnpm build

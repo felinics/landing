@@ -12,12 +12,12 @@
 //  · wechat / discord   = 不流式，Ta 思考片刻后整条消息直接出现。
 //  · 四个平台的起始 / 思考 / 回复节奏各不相同，刻意错开，不会齐刷刷一起动。
 // 尊重 prefers-reduced-motion：直接铺满，不播放。
-import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { computed, ref, watch, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 
 type Platform = 'desktop' | 'telegram' | 'wechat' | 'discord'
 const props = defineProps<{ platform: Platform }>()
-const { t } = useI18n()
+const { t, locale } = useI18n()
 
 const page = computed(() => ({
   desktop: 'var(--background)',
@@ -56,10 +56,29 @@ const streamingKey = ref<number | null>(null)  // 正在流式输出的气泡 ke
 
 const root = ref<HTMLElement>()
 let observer: IntersectionObserver | null = null
+let started = false
 const timers: number[] = []
 const wait = (fn: () => void, ms: number) => { timers.push(window.setTimeout(fn, ms)) }
 
+function clearPlayback() {
+  timers.forEach(clearTimeout)
+  timers.length = 0
+  streamingKey.value = null
+}
+
+function showAllMessages() {
+  rendered.value = seq.value.map((m, i) => ({ side: m.side, text: t(m.key), key: i }))
+}
+
+// 已显示的消息保存的是动画文本快照；切换语言时也要清理仍在输出旧语言的计时器。
+watch(locale, () => {
+  if (!started) return
+  clearPlayback()
+  showAllMessages()
+})
+
 function play() {
+  started = true
   const c = conf.value
   const list = seq.value
   let i = 0
@@ -111,7 +130,8 @@ function play() {
 onMounted(() => {
   const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches
   if (reduce || typeof IntersectionObserver === 'undefined') {
-    rendered.value = seq.value.map((m, i) => ({ side: m.side, text: t(m.key), key: i }))
+    started = true
+    showAllMessages()
     return
   }
   observer = new IntersectionObserver((entries) => {
@@ -127,7 +147,7 @@ onMounted(() => {
 
 onUnmounted(() => {
   observer?.disconnect()
-  timers.forEach(clearTimeout)
+  clearPlayback()
 })
 
 const im = {

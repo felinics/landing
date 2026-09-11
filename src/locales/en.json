@@ -69,22 +69,22 @@
   },
   "s1": {
     "title": "A computer of its own",
-    "subtitle": "Every agent gets a desktop, a filesystem, and a network — not a chat window, a real computer that stays on.",
+    "subtitle": "Every agent gets its own desktop, files, and network on a real computer that runs 24/7.",
     "c1": {
-      "title": "Choose an agent",
-      "desc": "Switch between Memoh, Codex, and Claude Code from the chat input."
+      "title": "Bring your own agent",
+      "desc": "Deploy your Codex, Claude Code, or other ACP-compatible agents to a Memoh cloud computer. Use your own subscription or models provided by Memoh."
     },
     "c2": {
-      "title": "Use its desktop",
-      "desc": "Ask it to open a website and follow along in the desktop beside your chat."
+      "title": "Let it work. Take over anytime.",
+      "desc": "Let it use its desktop to browse websites, search for videos, and operate apps. Follow along anytime, or take over the desktop and continue yourself."
     },
     "c3": {
-      "title": "Install what it needs",
-      "desc": "Add runtimes and skills from Supermarket, and authorize connectors for your apps."
+      "title": "Every tool, hosted in one place",
+      "desc": "Manage dependency packages, app connectors, and agent skills with one click. Everything is hosted on the cloud computer, ready for your agent to use."
     },
     "c4": {
-      "title": "Build and preview",
-      "desc": "Ask for a website, then open its localhost link in a new tab."
+      "title": "Build in the cloud. Preview anytime.",
+      "desc": "Write code and run your development environment entirely on the cloud computer. Open a preview anytime to explore and try out the app as it takes shape."
     }
   },
   "s2": {
@@ -212,6 +212,15 @@
     }
   },
   "footer": {
+    "selfHosting": "Self-hosting",
+    "releases": "Releases",
+    "contributing": "Contributing",
+    "community": "Community",
+    "discussions": "Discussions",
+    "reportIssue": "Report an issue",
+    "businessContact": "Business contact",
+    "social": "Social",
+    "ecosystem": "Ecosystem",
     "copyright": "© 2026 MEMOH AI PTE. LTD. All rights reserved.",
     "address": "BUKIT BATOK CRESCENT, WCEGA TOWER, #17-75, Singapore 658065",
     "privacy": "Privacy",

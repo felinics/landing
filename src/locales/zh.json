@@ -69,22 +69,22 @@
   },
   "s1": {
     "title": "一台属于%TA%的电脑",
-    "subtitle": "每个 Agent 都有自己的桌面、文件和网络\n不是聊天框，是一台真正开着的电脑",
+    "subtitle": "每个 Agent 都有自己的桌面、文件和网络\n一台 24 × 7 持续运行的真正电脑",
     "c1": {
-      "title": "选择 Agent",
-      "desc": "在聊天输入框中切换 Memoh、Codex 和 Claude Code。"
+      "title": "带上你自己的 Agent",
+      "desc": "把你的 Codex、Claude Code 或其他支持 ACP 的 Agent 部署到 Memoh 云电脑上，沿用自己的订阅，也可以使用 Memoh 提供的模型。"
     },
     "c2": {
-      "title": "使用它的桌面",
-      "desc": "让它打开一个网站，在聊天旁边的桌面中查看操作过程。"
+      "title": "让它操控，随时接管",
+      "desc": "让它通过自己的桌面打开网站、搜索视频、操作应用。你可以随时查看操作过程，也可以亲自接管桌面，继续操作。"
     },
     "c3": {
-      "title": "安装需要的工具",
-      "desc": "从 Supermarket 安装运行时和技能，为应用授权 Connector。"
+      "title": "所需工具，一处托管",
+      "desc": "一键管理依赖包、应用 Connector 和 Agent Skill，全部托管在云电脑里，随时供它使用。"
     },
     "c4": {
-      "title": "开发并预览",
-      "desc": "让它编写网页，点击 localhost 链接，在新标签页中预览。"
+      "title": "在云上开发，随时预览",
+      "desc": "从编写代码到运行开发环境，都在云电脑上完成。随时打开预览，查看和体验开发中的应用。"
     }
   },
   "s2": {
@@ -212,6 +212,15 @@
     }
   },
   "footer": {
+    "selfHosting": "自部署",
+    "releases": "版本更新",
+    "contributing": "贡献指南",
+    "community": "社区",
+    "discussions": "社区讨论",
+    "reportIssue": "问题反馈",
+    "businessContact": "商务联系",
+    "social": "社交平台",
+    "ecosystem": "生态",
     "copyright": "© 2026 MEMOH AI PTE. LTD. All rights reserved.",
     "address": "BUKIT BATOK CRESCENT, WCEGA TOWER, #17-75, Singapore 658065",
     "privacy": "隐私政策",

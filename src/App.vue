@@ -70,21 +70,38 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
               <p class="footer-tagline" v-html="th('footer.tagline')" />
             </div>
 
-            <!-- Link columns (right) — Legal 列撤下后只剩两列,勿改回 sm:grid-cols-3 -->
+            <!-- Product, resources, and community destinations. -->
             <div class="footer-links">
               <div class="footer-link-group">
                 <h2 class="footer-link-heading">{{ t('footer.product') }}</h2>
                 <router-link to="/download" class="footer-link">{{ t('nav.download') }}</router-link>
-                <a href="https://github.com/felinics/supermarket" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('nav.supermarket') }}</a>
+                <a href="https://docs.memoh.ai/self-hosted/" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.selfHosting') }}</a>
               </div>
               <div class="footer-link-group">
                 <h2 class="footer-link-heading">{{ t('footer.resources') }}</h2>
                 <a :href="docsUrl" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('nav.docs') }}</a>
                 <router-link to="/blogs" class="footer-link">{{ t('nav.blogs') }}</router-link>
-                <a href="https://github.com/felinics/Memoh" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('nav.github') }}</a>
+                <a href="https://github.com/felinics/Memoh/releases" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.releases') }}</a>
+                <a href="https://github.com/felinics/Memoh/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.contributing') }}</a>
               </div>
-              <!-- Legal 列整列撤下:Privacy/Terms 页面不存在,此前两个链接都指向首页占位。
-                   页面就绪后恢复此列及 footer.privacy / footer.terms 文案。 -->
+              <div class="footer-link-group">
+                <h2 class="footer-link-heading">{{ t('footer.community') }}</h2>
+                <a href="https://github.com/felinics/Memoh" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('nav.github') }}</a>
+                <a href="https://github.com/felinics/Memoh/discussions" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.discussions') }}</a>
+                <a href="https://github.com/felinics/Memoh/issues" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.reportIssue') }}</a>
+                <a href="mailto:business@memoh.net" class="footer-link">{{ t('footer.businessContact') }}</a>
+              </div>
+              <div class="footer-link-group">
+                <h2 class="footer-link-heading">{{ t('footer.social') }}</h2>
+                <a href="https://x.com/memoh_ai" target="_blank" rel="noopener noreferrer" class="footer-link">X</a>
+                <a href="https://t.me/memohai" target="_blank" rel="noopener noreferrer" class="footer-link">Telegram</a>
+              </div>
+              <div class="footer-link-group">
+                <h2 class="footer-link-heading">{{ t('footer.ecosystem') }}</h2>
+                <a href="https://github.com/felinics/twilight" target="_blank" rel="noopener noreferrer" class="footer-link">Twilight AI</a>
+                <a href="https://github.com/felinics/connect-it" target="_blank" rel="noopener noreferrer" class="footer-link">Connect It</a>
+                <a href="https://github.com/felinics/ui" target="_blank" rel="noopener noreferrer" class="footer-link">Felinic UI</a>
+              </div>
             </div>
           </div>
 
@@ -139,8 +156,8 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 }
 .footer-main {
   display: grid;
-  grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
-  gap: 80px;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 40px;
   padding: 48px 0 40px;
   border-top: 1px solid var(--border);
 }
@@ -163,7 +180,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 }
 .footer-links {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(5, minmax(0, 1fr));
   gap: 32px;
 }
 .footer-link-group {
@@ -234,7 +251,11 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
   outline-offset: 4px;
   border-radius: 4px;
 }
+@media (min-width: 640px) and (max-width: 899px) {
+  .footer-links { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
 @media (max-width: 639px) {
+  .footer-links { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px 24px; }
   .site-footer { padding: 0 24px 28px; }
   .footer-main {
     grid-template-columns: 1fr;

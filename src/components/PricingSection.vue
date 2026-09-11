@@ -8,15 +8,22 @@ import './pricing/fonts.css'
 const { locale } = useI18n()
 const zh = computed(() => locale.value === 'zh')
 const plans = computed(() => [
-  { name: 'Go', price: '$9', tagline: zh.value ? '从日常对话和轻量任务开始。' : 'For everyday conversations and lighter tasks.', tokens: '2M', cpu: 2, ram: 4, disk: 20, hours: 60, computers: 1 },
-  { name: 'Pro', price: '$29', tagline: zh.value ? '为日常工作和持续运行的 Agent 准备。' : 'For daily work and always-ready agents.', tokens: '10M', cpu: 4, ram: 8, disk: 50, hours: 200, computers: 2 },
-  { name: 'Premium', price: '$79', tagline: zh.value ? '为更复杂的任务提供更多算力和空间。' : 'More compute and room for demanding work.', tokens: '30M', cpu: 8, ram: 16, disk: 100, hours: 600, computers: 5 },
+  { name: 'Go', price: 5, tagline: zh.value ? '从日常对话和轻量任务开始。' : 'For everyday conversations and lighter tasks.', cpu: 8, ram: 16, disk: 40 },
+  { name: 'Pro', price: 60, tagline: zh.value ? '为日常工作和持续运行的 Agent 准备。' : 'For daily work and always-ready agents.', cpu: 16, ram: 32, disk: 120 },
+  { name: 'Premium', price: 150, tagline: zh.value ? '为更复杂的任务提供更多算力和空间。' : 'More compute and room for demanding work.', cpu: 32, ram: 64, disk: 300 },
 ].map(plan => ({ ...plan, features: [
-  { text: `${plan.tokens} Tokens ${zh.value ? '/ 月' : '/ month'}`, emphasis: true },
-  { text: `${plan.cpu} vCPU · ${plan.ram} GB RAM` },
-  { text: `${plan.disk} GB ${zh.value ? '云电脑存储' : 'cloud computer storage'}` },
-  { text: zh.value ? `每月 ${plan.hours} 云电脑运行小时` : `${plan.hours} cloud computer hours / month` },
-  { text: zh.value ? `最多 ${plan.computers} 台云电脑` : `Up to ${plan.computers} cloud computer${plan.computers > 1 ? 's' : ''}` },
+  { text: `${plan.cpu} ${zh.value ? '核 CPU Total' : 'CPU cores total'}`, emphasis: true },
+  { text: `${plan.ram} GB ${zh.value ? '内存 Total' : 'RAM total'}`, emphasis: true },
+  { text: zh.value ? `每月 ${plan.price * 5} credits 的 Token 额度` : `${plan.price * 5} credits for tokens / month`, emphasis: true },
+  { text: `${plan.disk} GB ${zh.value ? '存储 Total' : 'storage total'}` },
+  ...(plan.name === 'Go' ? [
+    { text: zh.value ? '创建无限多的 Bot' : 'Create unlimited Bots' },
+    { text: zh.value ? '使用 DeepSeek、Kimi、GPT、Claude 等模型' : 'Use DeepSeek, Kimi, GPT, Claude, and more' },
+  ] : [
+    { text: zh.value
+      ? `包含 ${plan.name === 'Pro' ? 'Go' : 'Pro'} 套餐的所有权益`
+      : `Everything in ${plan.name === 'Pro' ? 'Go' : 'Pro'}` },
+  ]),
 ] })))
 function selectPlan() { window.location.assign('https://app.memoh.net/') }
 </script>
@@ -33,10 +40,10 @@ function selectPlan() { window.location.assign('https://app.memoh.net/') }
             class="min-w-0"
             :name="plan.name"
             :tagline="plan.tagline"
-            :price="plan.price"
+            :price="`$${plan.price}`"
             :price-suffix="zh ? '/ 月' : '/mo'"
             :features="plan.features"
-            :highlighted="plan.name === 'Pro'"
+            :highlighted="plan.name === 'Go'"
             :highlight-label="zh ? '推荐' : 'Recommended'"
             :current-label="zh ? '当前套餐' : 'Current plan'"
             :cta-label="zh ? '立即开始' : 'Get started'"

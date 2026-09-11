@@ -1,1 +1,0 @@
-import{t as e}from"./index-0uQtn5YK.js";import{t}from"./_.contribution-CRFk3kU6.js";t({id:`powershell`,extensions:[`.ps1`,`.psm1`,`.psd1`],aliases:[`PowerShell`,`powershell`,`ps`,`ps1`],loader:()=>e(()=>import(`./powershell-DmHpPYUd.js`),[])});

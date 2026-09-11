@@ -1,1 +1,0 @@
-import{t as e}from"./index-0uQtn5YK.js";import{t}from"./_.contribution-CRFk3kU6.js";t({id:`shell`,extensions:[`.sh`,`.bash`],aliases:[`Shell`,`sh`],loader:()=>e(()=>import(`./shell-CC2rA5mh.js`),[])});

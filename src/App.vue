@@ -18,7 +18,7 @@ const isDownloadRoute = computed(() => route.path.startsWith('/download'))
 const isBlogsRoute = computed(() => route.path.startsWith('/blogs'))
 const isWaitlistRoute = computed(() => route.path.startsWith('/waitlist'))
 const isHomeRoute = computed(() => route.path === '/')
-const isPlainContentRoute = computed(() => isDownloadRoute.value || isBlogsRoute.value || isWaitlistRoute.value)
+const isPlainContentRoute = computed(() => isDownloadRoute.value || isBlogsRoute.value || isWaitlistRoute.value || route.meta.legal === true)
 
 // Single owner of the <html> `dark` class. The landing page always *renders*
 // dark, but must never overwrite the user's saved preference — so we force the
@@ -109,6 +109,11 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
           <div class="footer-bottom">
             <div class="footer-company">
               <span class="footer-copyright">{{ t('footer.copyright') }}</span>
+              <nav class="footer-legal" :aria-label="t('legal.documents')">
+                <RouterLink :to="{ path: '/legal/terms', query: { lang: locale } }">{{ t('legal.titles.terms') }}</RouterLink>
+                <RouterLink :to="{ path: '/legal/privacy', query: { lang: locale } }">{{ t('legal.titles.privacy') }}</RouterLink>
+                <RouterLink :to="{ path: '/legal/cross-border', query: { lang: locale } }">{{ t('legal.titles.cross-border') }}</RouterLink>
+              </nav>
             </div>
             <div
               v-if="isMemohNet"
@@ -230,6 +235,8 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
   line-height: 1.6;
   color: var(--muted-foreground);
 }
+.footer-legal { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 11px; line-height: 1.7; color: var(--muted-foreground); }
+.footer-legal a:hover { color: var(--foreground); text-decoration: underline; text-underline-offset: 4px; }
 .github-icon {
   background-color: currentColor;
   mask: url("/brands/github.svg") center / contain no-repeat;

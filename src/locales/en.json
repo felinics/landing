@@ -221,7 +221,7 @@
     "businessContact": "Business contact",
     "social": "Social",
     "ecosystem": "Ecosystem",
-    "copyright": "© 2026 MEMOH AI PTE. LTD. All rights reserved.",
+    "copyright": "© 2026 MEMOH AI PTE LTD All rights reserved.",
     "address": "BUKIT BATOK CRESCENT, WCEGA TOWER, #17-75, Singapore 658065",
     "privacy": "Privacy",
     "terms": "Terms",
@@ -305,5 +305,20 @@
     "findBook": "Find a book…",
     "toRead": "To read",
     "finished": "Finished"
+  },
+  "legal": {
+    "titles": {
+      "terms": "Service Agreement",
+      "privacy": "Privacy Policy",
+      "cross-border": "Cross-Border Data Transfer Terms"
+    },
+    "back": "Back to home",
+    "updated": "Updated",
+    "language": "Document language",
+    "documents": "Legal documents",
+    "contents": "On this page",
+    "download": "Download Markdown",
+    "loading": "Loading document…",
+    "loadError": "The document could not be loaded. Refresh this page or download the Markdown file."
   }
 }

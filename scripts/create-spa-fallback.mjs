@@ -40,6 +40,22 @@ const pages = {
   },
 }
 
+// Keep legal documents out of search until the operational details are complete.
+for (const [route, title] of Object.entries({
+  legal: 'Service Agreement',
+  'legal/terms': 'Service Agreement',
+  'legal/privacy': 'Privacy Policy',
+  'legal/cross-border': 'Cross-Border Data Transfer Terms',
+})) {
+  pages[route] = {
+    title: `${title} | Memoh`,
+    description: 'Memoh legal documents.',
+    socialDescription: 'Memoh legal documents.',
+    url: `https://memoh.ai/${route}`,
+    robots: 'noindex, nofollow',
+  }
+}
+
 const escapeHtml = (value) => {
   return value
     .replace(/&/g, '&amp;')
@@ -48,13 +64,13 @@ const escapeHtml = (value) => {
     .replace(/>/g, '&gt;')
 }
 
-const renderMeta = ({ title, description, socialDescription, url }) => {
+const renderMeta = ({ title, description, socialDescription, url, robots = 'index, follow' }) => {
   const image = 'https://memoh.ai/logo.png'
 
   return `<!-- app-meta-start -->
     <title>${escapeHtml(title)}</title>
     <meta name="description" content="${escapeHtml(description)}" />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="${escapeHtml(robots)}" />
     <link rel="canonical" href="${escapeHtml(url)}" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Memoh" />
@@ -82,7 +98,7 @@ await writeFile(indexPath, withMeta(indexHtml, pages.home))
 await writeFile(resolve(distDir, '404.html'), withMeta(indexHtml, pages.home))
 
 // 每个 SPA 路由都必须在这里有静态入口,否则 GitHub Pages 用 404.html 兜底、返回 404 状态码(SEO 直接判死)
-for (const route of ['desktop', 'download', 'waitlist', 'blogs']) {
+for (const route of Object.keys(pages).filter((route) => route !== 'home')) {
   const routeDir = resolve(distDir, route)
   await mkdir(routeDir, { recursive: true })
   await writeFile(resolve(routeDir, 'index.html'), withMeta(indexHtml, pages[route]))

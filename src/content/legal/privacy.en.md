@@ -52,7 +52,7 @@ Where consent is required, it must be voluntary, explicit and informed, obtained
 
 Necessary cookies, session tokens and local storage may support sign-in, security, language and theme preferences. You can manage or clear them in your browser; doing so may require signing in again or resetting preferences.
 
-If non-essential analytics, marketing or third-party tracking is enabled, we will separately explain providers, categories, purposes, duration and controls, obtaining consent before activation where required. Refusal does not affect basic browsing. **Actual technologies and expiry periods: [To be completed: verified cookie and local storage inventory].**
+If non-essential analytics, marketing or third-party tracking is enabled, we will separately explain providers, categories, purposes, duration and controls, obtaining consent before activation where required. Refusal does not affect basic browsing. **Retention period for the cookies and similar technologies described above: 180 days.**
 
 ## 5. Providers, sharing, transfers and public disclosure
 

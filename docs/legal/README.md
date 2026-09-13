@@ -43,7 +43,7 @@ Reference policies are not incorporated wholesale into Memoh's terms. Their comp
 
 Before adopting the text as an effective policy, reconcile it with the actual service:
 
-- Complete the remaining provider inventory, roles, data categories, destinations, retention and rights channels. The Privacy Policy keeps explicit placeholders for other providers, the cookie inventory and retention schedules.
+- Complete the remaining provider inventory, roles, data categories, destinations, retention and rights channels. The Privacy Policy specifies a 180-day retention period for cookies and similar technologies. Verify the actual technology inventory and expiry behaviour; placeholders remain for other providers and other data retention schedules.
 - Verify account closure, data deletion, backup clearance, model-training restrictions and actual provider configurations against the stated commitments.
 - Verify tool permissions, renewal notices, refunds and generated-content labelling against product behaviour.
 - Confirm applicable entity boundaries, the effective version and date, and the publication and notice process. Review indexing metadata when these details are complete.

@@ -305,5 +305,20 @@
     "findBook": "Find a book…",
     "toRead": "To read",
     "finished": "Finished"
+  },
+  "legal": {
+    "titles": {
+      "terms": "Service Agreement",
+      "privacy": "Privacy Policy",
+      "cross-border": "Cross-Border Data Transfer Terms"
+    },
+    "back": "Back to home",
+    "updated": "Updated",
+    "language": "Document language",
+    "documents": "Legal documents",
+    "contents": "On this page",
+    "download": "Download Markdown",
+    "loading": "Loading document…",
+    "loadError": "The document could not be loaded. Refresh this page or download the Markdown file."
   }
 }

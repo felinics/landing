@@ -1,4 +1,4 @@
-import{$ as e,D as t,F as n,G as r,O as i,Ot as a,S as o,U as s,V as c,Z as l,b as u,f as d,g as f,it as p,k as m,n as h,ut as g,w as _,x as v}from"./vue.D51lypTh-vlpxYK8Q.js";import{t as y}from"./arrow-left-C0XrdiBu.js";import{t as b}from"./calendar-days-BcrGb3m1.js";import{c as x,d as S,i as C,l as w,t as T}from"./index-D8_wRXmY.js";var E=d(`arrow-down-to-line`,[[`path`,{d:`M12 17V3`,key:`1cwfxf`}],[`path`,{d:`m6 11 6 6 6-6`,key:`12ii2o`}],[`path`,{d:`M19 21H5`,key:`150jfl`}]]),D={terms:{zh:`本服务协议由您与**深圳猫本原理科技有限公司（以下简称“猫本公司”，英文名 Felinic）**订立，适用于猫本公司通过 Memoh 提供的网站、应用、API、人工智能交互及相关工具服务。下文“我们”指猫本公司，“您”包括个人用户及依法获得授权的组织用户。
+import{$ as e,D as t,F as n,G as r,O as i,Ot as a,S as o,U as s,V as c,Z as l,b as u,f as d,g as f,it as p,k as m,n as h,ut as g,w as _,x as v}from"./vue.D51lypTh-vlpxYK8Q.js";import{t as y}from"./arrow-left-C0XrdiBu.js";import{t as b}from"./calendar-days-BcrGb3m1.js";import{c as x,d as S,i as C,l as w,t as T}from"./index-BBI-r-Wz.js";var E=d(`arrow-down-to-line`,[[`path`,{d:`M12 17V3`,key:`1cwfxf`}],[`path`,{d:`m6 11 6 6 6-6`,key:`12ii2o`}],[`path`,{d:`M19 21H5`,key:`150jfl`}]]),D={terms:{zh:`本服务协议由您与**深圳猫本原理科技有限公司（以下简称“猫本公司”，英文名 Felinic）**订立，适用于猫本公司通过 Memoh 提供的网站、应用、API、人工智能交互及相关工具服务。下文“我们”指猫本公司，“您”包括个人用户及依法获得授权的组织用户。
 
 **请重点阅读费用、自动续费、内容使用、服务限制、责任承担及争议解决条款。您应在获得充分阅读机会后，通过明确的确认操作接受本协议。阅读本页面本身不构成接受；接受服务协议也不替代依法需要另行取得的个人信息处理同意。**
 
@@ -294,7 +294,7 @@ Use these channels for billing disputes, complaints, infringement notices, accou
 
 必要的 Cookie、会话令牌或本地存储可用于登录状态、安全防护及保存语言、主题偏好。您可通过浏览器清除或管理，清除后可能需要重新登录或设置偏好。
 
-如启用非必要的分析、营销或第三方追踪技术，我们会另行说明提供方、数据类别、目的、期限和控制方式，并在适用法律要求时于启用前取得同意。拒绝此类技术不影响基本浏览。**实际技术清单及保存期限：【待填写：核实后的 Cookie / 本地存储清单】。**
+如启用非必要的分析、营销或第三方追踪技术，我们会另行说明提供方、数据类别、目的、期限和控制方式，并在适用法律要求时于启用前取得同意。拒绝此类技术不影响基本浏览。**实际技术清单及保存期限：180天。**
 
 ## 5. 委托、共享、转移与公开披露
 
@@ -409,7 +409,7 @@ Where consent is required, it must be voluntary, explicit and informed, obtained
 
 Necessary cookies, session tokens and local storage may support sign-in, security, language and theme preferences. You can manage or clear them in your browser; doing so may require signing in again or resetting preferences.
 
-If non-essential analytics, marketing or third-party tracking is enabled, we will separately explain providers, categories, purposes, duration and controls, obtaining consent before activation where required. Refusal does not affect basic browsing. **Actual technologies and expiry periods: [To be completed: verified cookie and local storage inventory].**
+If non-essential analytics, marketing or third-party tracking is enabled, we will separately explain providers, categories, purposes, duration and controls, obtaining consent before activation where required. Refusal does not affect basic browsing. **Retention period for the cookies and similar technologies described above: 180 days.**
 
 ## 5. Providers, sharing, transfers and public disclosure
 

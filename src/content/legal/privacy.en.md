@@ -64,7 +64,7 @@ We do not sell your personal information. Recipients receive access only as nece
 - **Corporate changes:** For transfers arising from merger, division, dissolution or insolvency, we will identify the recipient and its contact details and require continued protection. Changed purposes or methods require the recipient to obtain renewed consent where applicable.
 - **Legal disclosure:** Public disclosure requires separate consent or a specific lawful basis. We review authority, legal grounds and scope for official requests and provide only what is legally necessary.
 
-Overseas recipients include **MEMOH AI PTE LTD in Singapore**. Its relevant purposes, information categories, safeguards and contact channel are described in the [Cross-Border Data Transfer Terms](/legal/cross-border?lang=en). Contact the overseas recipient directly at [support@memoh.ai](mailto:support@memoh.ai) for service and privacy requests, or contact the mainland China provider at [support@memoh.net](mailto:support@memoh.net) for assistance.
+Overseas recipients include **MEMOH AI PTE. LTD. in Singapore**. Its relevant purposes, information categories, safeguards and contact channel are described in the [Cross-Border Data Transfer Terms](/legal/cross-border?lang=en). Contact the overseas recipient directly at [support@memoh.ai](mailto:support@memoh.ai) for service and privacy requests, or contact the mainland China provider at [support@memoh.net](mailto:support@memoh.net) for assistance.
 
 **Other service providers: [To be completed: each provider's legal name, role, contacts, purposes, methods, categories, regions, retention and policy link].** We will provide specific notices for additional recipients as required; generic descriptions in this Policy cannot replace those notices.
 

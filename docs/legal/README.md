@@ -21,7 +21,7 @@ Footer links preserve the selected language. `scripts/create-spa-fallback.mjs` c
 | Role | Entity | Contact |
 | --- | --- | --- |
 | Mainland China service provider | 深圳猫本原理科技有限公司（猫本公司）/ Felinic | support@memoh.net |
-| Overseas recipient in Singapore | MEMOH AI PTE LTD | support@memoh.ai |
+| Overseas recipient in Singapore | MEMOH AI PTE. LTD. | support@memoh.ai |
 
 The mainland correspondence address is 深圳市南山区 TCL 国际 E 城 G4 栋 (Building G4, TCL International E City, Nanshan District, Shenzhen, China). Singapore and Japan are possible overseas processing and storage locations; each feature's actual arrangements require specific disclosure. The overseas recipient's street address and other vendors' identities have not been supplied.
 

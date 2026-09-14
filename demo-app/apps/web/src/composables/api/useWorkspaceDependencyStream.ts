@@ -1,5 +1,4 @@
 import {
-  deleteBotsByBotIdDependenciesByDepId,
   postBotsByBotIdDependenciesByDepIdInstall,
   postBotsByBotIdDependenciesByDepIdReinstall,
   postBotsByBotIdDependenciesByDepIdUpdate,
@@ -31,7 +30,7 @@ export interface WorkspaceDependencyStreamRequestOptions {
   definitionRevision?: string
   /**
    * Version to install / update / reinstall to. Empty means the latest the
-   * catalog script resolves (or the manifest pin). Ignored by remove.
+   * catalog script resolves (or the manifest pin).
    */
   version?: string
   /**
@@ -47,7 +46,6 @@ export interface WorkspaceDependencyStreamOptions extends WorkspaceDependencyStr
   depId: string
   action: DependencyOperationAction
   /** Omitted → the Server uses the bot's current target. */
-  workspaceTargetId?: string
 }
 
 function isStringRecord(value: unknown): value is Record<string, string> {
@@ -90,17 +88,15 @@ export async function* streamDependencyOperation(
   botId: string,
   depId: string,
   action: DependencyOperationAction,
-  workspaceTargetId?: string,
   options: WorkspaceDependencyStreamRequestOptions = {},
 ): AsyncGenerator<WorkspaceDependencyStreamEvent, void, unknown> {
   let streamError: unknown
 
-  // One options object for the four generated SSE functions: their *Data
-  // shapes are identical (path bot_id/dep_id, optional workspace_target_id),
+  // One options object for the three generated SSE functions: their *Data
+  // shapes are identical (path bot_id/dep_id),
   // and the generated functions keep each route's URL single-sourced.
   const request = {
     path: { bot_id: botId, dep_id: depId },
-    query: workspaceTargetId ? { workspace_target_id: workspaceTargetId } : undefined,
     headers: { Accept: 'text/event-stream' },
     signal: options.signal,
     fetch: fetchSSEProblem,
@@ -129,13 +125,11 @@ export async function* streamDependencyOperation(
     } : undefined,
   }
 
-  const result = action === 'remove'
-    ? await deleteBotsByBotIdDependenciesByDepId(versioned)
-    : action === 'update'
-      ? await postBotsByBotIdDependenciesByDepIdUpdate(versioned)
-      : action === 'reinstall'
-        ? await postBotsByBotIdDependenciesByDepIdReinstall(versioned)
-        : await postBotsByBotIdDependenciesByDepIdInstall(versioned)
+  const result = action === 'update'
+    ? await postBotsByBotIdDependenciesByDepIdUpdate(versioned)
+    : action === 'reinstall'
+      ? await postBotsByBotIdDependenciesByDepIdReinstall(versioned)
+      : await postBotsByBotIdDependenciesByDepIdInstall(versioned)
 
   for await (const event of result.stream as AsyncGenerator<unknown, void, unknown>) {
     if (!isWorkspaceDependencyStreamEvent(event)) {
@@ -160,7 +154,6 @@ export function openWorkspaceDependencyStream(
       options.botId,
       options.depId,
       options.action,
-      options.workspaceTargetId,
       { version: options.version, definitionRevision: options.definitionRevision, sessionId: options.sessionId, signal: options.signal },
     ),
   }

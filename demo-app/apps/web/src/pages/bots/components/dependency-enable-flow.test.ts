@@ -28,8 +28,6 @@ describe('resolveEnableFlowStep', () => {
       .toEqual({ kind: 'workspace', state: 'not_running' })
     expect(resolveEnableFlowStep(codex, { workspace_state: 'missing' }))
       .toEqual({ kind: 'workspace', state: 'missing' })
-    expect(resolveEnableFlowStep(codex, { workspace_state: 'remote_offline' }))
-      .toEqual({ kind: 'remote_offline' })
   })
 
   it('passes an installed dependency straight through, whatever its version', () => {

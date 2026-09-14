@@ -1,3 +1,4 @@
+import scenario from './scenario.json'
 import installedSkillData from './installed-skills.json'
 import workspaceTemplate from './workspace-template.json'
 export type RecordData = Record<string, any>
@@ -28,7 +29,7 @@ export const models = [
 ].map(model => ({ ...model, enable: true, config: { context_window: 200000, max_tokens: 16384, vision: true, tool_call: true }, reasoning: { supported: true, efforts: ['low','medium','high'], default_effort: 'high' } }))
 export const settings = { chat_model_id: 'model-1', compaction_model_id: 'model-0', chat_runtime: 'native', default_bot_agent_id: '', reasoning_effort: 'high', language: 'en', timezone: 'Asia/Singapore', compaction_enabled: true, compaction_threshold: 80000, compaction_target_percent: 50, search_provider_id: 'search-0', memory_provider_id: 'memory-0', fetch_provider_id: 'fetch-0', image_model_id: 'model-5', tts_model_id: 'speech-0', transcription_model_id: 'transcription-0', video_model_id: 'video-0', display_enabled: false, show_tool_calls_in_im: true, persist_full_tool_results: true, acl_default_effect: 'allow', tool_approval_config: { mode: 'auto' } }
 export const sessionTitles = ['Plan a productive week', 'Research: the future of personal AI', 'Build a reading tracker', 'A little inspiration for today', '整理我的项目笔记', 'Weekly research digest']
-export const sessions: RecordData[] = bots.flatMap(bot => sessionTitles.map((title,i) => ({ id: bot.name==='memoh' && i===0 ? 'session-welcome' : `${bot.id}-session-${i}`, bot_id: bot.id, title, type: 'chat', session_mode: 'chat', runtime_type: 'native', bot_agent_id: '', workdir_id: `${bot.id}-workdir`, channel_type: 'local', created_by_user_id: user.id, metadata: {}, runtime_metadata: {}, preferred_chat_model_id: 'model-1', preferred_reasoning_effort: 'high', created_at: new Date(Date.parse(now)-i*3600000).toISOString(), updated_at: new Date(Date.parse(now)-i*3600000).toISOString() })))
+export const sessions: RecordData[] = bots.flatMap(bot => sessionTitles.map((title,i) => ({ id: bot.name==='memoh' && i===0 ? 'session-welcome' : `${bot.id}-session-${i}`, bot_id: bot.id, title, type: 'chat', session_mode: 'chat', runtime_type: 'native', bot_agent_id: '', workdir_id: `${bot.id}-${scenario.folders[i % scenario.folders.length]!.key}`, channel_type: 'local', created_by_user_id: user.id, metadata: {}, runtime_metadata: {}, preferred_chat_model_id: 'model-1', preferred_reasoning_effort: 'high', created_at: new Date(Date.parse(now)-i*3600000).toISOString(), updated_at: new Date(Date.parse(now)-i*3600000).toISOString() })))
 export const histories: Record<string, RecordData[]> = {}
 export function conversation(sid: string): RecordData[] {
   if (histories[sid]) return histories[sid]
@@ -77,3 +78,15 @@ Object.assign(files, workspaceTemplate)
 export const directories = new Set(['/data/.memoh/media', '/data/.memoh/screenshots', '/data/skills', '/data/memory'])
 Object.assign(files, installedSkillData.files)
 files['/data/.memoh/skills/index.json'] = JSON.stringify({version:1, updated_at:now, overrides:{}, items:installedSkills.map(({name,source_path,source_kind}) => ({name,source_path,source_kind}))}, null, 2)
+
+// Shared examples drive the sidebar, composer menus and their file trees.
+export const demoAgents = scenario.agents.filter(agent => agent.id).map(agent => ({
+ id:agent.id, name:agent.name, runtime:agent.runtime, enabled:true, agent_credential_id:'credential-demo',
+ metadata:{provider:agent.runtime,auth:agent.runtime==='codex'?'api_key':'workspace'}, created_at:now, updated_at:now,
+}))
+export const workspaceTargets = scenario.computers
+export const workdirsFor = (botId: string) => scenario.folders.map(folder => ({...folder, id:`${botId}-${folder.key}`, bot_id:botId, archived:false, created_at:now, updated_at:now}))
+for (const folder of scenario.folders) {
+ directories.add(folder.path)
+ files[`${folder.path}/README.md`] = `# ${folder.name}\n\nA browser-only example project.\n`
+}

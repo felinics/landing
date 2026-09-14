@@ -1,3 +1,4 @@
+import { randomUUID } from '@/utils/uuid'
 import {
   getBots,
   getBotsByBotIdAcpRuntimesByRuntimeId,
@@ -84,7 +85,7 @@ export function queueItemText(item: SessionQueueItem): string {
 
 const queuePath = (botId: string, sessionId: string) => ({ bot_id: botId.trim(), session_id: sessionId.trim() })
 
-export async function enqueueSteerQueue(botId: string, sessionId: string, text: string, invocationId = crypto.randomUUID()): Promise<SessionQueueItem> {
+export async function enqueueSteerQueue(botId: string, sessionId: string, text: string, invocationId = randomUUID()): Promise<SessionQueueItem> {
   const { data } = await postBotsByBotIdSessionsBySessionIdSteerQueue({
     path: queuePath(botId, sessionId),
     body: { invocation_id: invocationId, text },
@@ -98,7 +99,7 @@ export async function fetchSessionQueues(botId: string, sessionId: string): Prom
   return data ?? {}
 }
 
-export async function enqueueFollowUpQueue(botId: string, sessionId: string, text: string, invocationId = crypto.randomUUID()): Promise<SessionQueueItem> {
+export async function enqueueFollowUpQueue(botId: string, sessionId: string, text: string, invocationId = randomUUID()): Promise<SessionQueueItem> {
   const { data } = await postBotsByBotIdSessionsBySessionIdFollowUpQueue({
     path: queuePath(botId, sessionId),
     body: { invocation_id: invocationId, text },

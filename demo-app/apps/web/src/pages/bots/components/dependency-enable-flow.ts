@@ -1,10 +1,10 @@
+import { externalAgentDisplayName } from '@/utils/external-agent'
 import type { BotagentsBotAgent } from '@memohai/sdk'
 import type {
   DependencyItem,
   PreflightItem,
   PreflightResponse,
 } from '@/composables/api/useWorkspaceDependencies'
-import { acpAgentDisplayName } from '@/utils/acp'
 
 // Pure decision table of the "enable an agent" preflight. The
 // flow component owns the dialogs; this module only maps the agent's declared
@@ -21,7 +21,6 @@ export type EnableFlowStep =
   | { kind: 'satisfied' }
   /** The UI guides the user to the workspace; it never starts it silently. */
   | { kind: 'workspace'; state: 'not_running' | 'missing' }
-  | { kind: 'remote_offline' }
   | { kind: 'install'; item: DependencyItem }
   | { kind: 'platform_unsupported'; item: DependencyItem }
   /** The Server did not recognise the dependency or answered without a state. */
@@ -47,7 +46,7 @@ export function dependencyItemFromPreflight(
   const state = preflight?.state
   return {
     id: requirement.dependencyId,
-    name: preflight?.name?.trim() || acpAgentDisplayName(requirement.dependencyId, requirement.dependencyId),
+    name: preflight?.name?.trim() || externalAgentDisplayName(requirement.dependencyId, requirement.dependencyId),
     category: 'agent',
     source: 'managed',
     installed_version: preflight?.installed_version?.trim() || undefined,
@@ -64,8 +63,6 @@ export function resolveEnableFlowStep(
     case 'not_running':
     case 'missing':
       return { kind: 'workspace', state: response.workspace_state }
-    case 'remote_offline':
-      return { kind: 'remote_offline' }
   }
   const preflight = (response?.items ?? []).find(item => item.dependency_id === requirement.dependencyId)
   if (!preflight) return { kind: 'unknown' }

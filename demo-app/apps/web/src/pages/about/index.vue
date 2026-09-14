@@ -3,7 +3,7 @@
     <!-- About is sparse: keep the title attached to its cards and float the whole
          group in the upper-middle (biased above center), unlike the denser,
          top-aligned Settings pages. -->
-    <div class="flex flex-1 flex-col justify-center gap-8 pb-[12vh]">
+    <div class="flex flex-1 flex-col justify-center gap-8 pb-[4vh]">
       <h1 class="px-2 text-lg font-semibold">
         {{ $t('sidebar.about') }}
       </h1>
@@ -66,32 +66,19 @@
         </div>
       </SettingsSection>
 
-      <!-- Updates: status as the row label, actions on the right — the standard
-           Settings row pattern. Browser checks the OSS server release; Desktop
-           delegates app checks/download/install to Electron main over preload. -->
-      <SettingsSection :title="$t('about.updatesSection')">
+      <!-- Browser release checks retain their server-update flow. -->
+      <SettingsSection
+        v-if="!desktopUpdates"
+        :title="$t('about.updatesSection')"
+      >
         <SettingsRow
           :label="updateLabel"
           :description="updateDesc"
+          stack="sm"
+          class="break-words"
         >
           <div class="flex items-center gap-1.5">
-            <template v-if="desktopUpdates">
-              <Button
-                v-if="desktopUpdate?.status !== 'unavailable'"
-                variant="secondary"
-                size="sm"
-                :disabled="desktopUpdateActionDisabled"
-                :loading="desktopUpdateActionLoading"
-                loading-mode="icon"
-                @click="runDesktopUpdateAction"
-              >
-                <Download v-if="desktopUpdate?.status === 'available'" />
-                <RotateCcw v-else-if="desktopUpdate?.status === 'downloaded'" />
-                <RefreshCw v-else />
-                {{ desktopUpdateActionLabel }}
-              </Button>
-            </template>
-            <template v-else-if="update.hasUpdate">
+            <template v-if="update.hasUpdate">
               <Button
                 v-if="update.releaseBody"
                 variant="ghost"
@@ -128,10 +115,20 @@
       </SettingsSection>
 
       <section
-        v-if="desktopShell"
+        v-if="desktopShell || desktopUpdates"
         class="space-y-2.5"
       >
         <ActionCard
+          v-if="desktopUpdates"
+          :title="$t('about.updatesSection')"
+          @click="updatesOpen = true"
+        >
+          <template #icon>
+            <RefreshCw />
+          </template>
+        </ActionCard>
+        <ActionCard
+          v-if="desktopShell"
           :title="$t('about.advanced')"
           @click="advancedOpen = true"
         >
@@ -158,16 +155,14 @@
     </div>
 
     <!-- Release notes live behind a button and scroll internally so the dialog
-         never grows past the viewport. -->
-    <Dialog
-      v-if="!desktopUpdates"
-      v-model:open="notesOpen"
-    >
+         never grows past the viewport. Web reads the GitHub release body;
+         Desktop reads the notes its update feed ships (null → no button). -->
+    <Dialog v-model:open="notesOpen">
       <DialogContent class="flex max-h-[80vh] w-full max-w-2xl flex-col gap-0 overflow-hidden p-0 sm:max-w-2xl">
         <DialogHeader class="border-b border-border px-6 py-4 text-left">
           <DialogTitle>{{ $t('about.releaseNotes') }}</DialogTitle>
-          <DialogDescription v-if="update.latestVersion">
-            {{ $t('about.newVersionTitle', { version: update.latestVersion }) }}
+          <DialogDescription v-if="notesVersion">
+            {{ $t('about.newVersionTitle', { version: notesVersion }) }}
           </DialogDescription>
         </DialogHeader>
 
@@ -175,8 +170,8 @@
           class="about-notes prose prose-sm dark:prose-invert min-h-0 max-w-none flex-1 overflow-y-auto px-6 py-4 text-sm leading-relaxed *:first:mt-0"
         >
           <MarkdownRender
-            v-if="update.releaseBody"
-            :content="cleanMarkdownBody(update.releaseBody)"
+            v-if="notesBody"
+            :content="cleanMarkdownBody(notesBody)"
             :is-dark="isDark"
             :typewriter="false"
             :fade="false"
@@ -187,7 +182,10 @@
           />
         </div>
 
-        <DialogFooter class="border-t border-border px-6 py-3">
+        <DialogFooter
+          v-if="!desktopUpdates"
+          class="border-t border-border px-6 py-3"
+        >
           <Button
             as="a"
             :href="update.releaseUrl"
@@ -199,6 +197,59 @@
           </Button>
         </DialogFooter>
       </DialogContent>
+    </Dialog>
+
+    <!-- Status, recovery and automation share one focused desktop surface. -->
+    <Dialog
+      v-if="desktopUpdates"
+      v-model:open="updatesOpen"
+    >
+      <DialogPanel
+        width="lg"
+        footer
+      >
+        <DialogHeader>
+          <DialogTitle>{{ $t('about.updatesSection') }}</DialogTitle>
+          <DialogDescription>
+            {{ $t('about.currentVersion', { version: displayVersion || '—' }) }}
+          </DialogDescription>
+        </DialogHeader>
+        <DialogBody>
+          <SettingsSection bordered>
+            <SettingsRow
+              v-if="desktopUpdate && desktopUpdate.status !== 'idle'"
+              :label="updateLabel"
+              :description="updateDesc"
+              class="break-words"
+              role="status"
+              aria-live="polite"
+            />
+            <SettingsRow :label="$t('about.autoUpdate')">
+              <Switch
+                :model-value="desktopUpdate?.autoUpdate ?? true"
+                :disabled="!desktopUpdate || preferencePending || desktopUpdate.status === 'installing'"
+                :aria-label="$t('about.autoUpdate')"
+                @update:model-value="setAutoUpdate"
+              />
+            </SettingsRow>
+          </SettingsSection>
+        </DialogBody>
+        <DialogFooter>
+          <Button
+            v-if="desktopUpdate?.status !== 'unavailable'"
+            variant="secondary"
+            size="sm"
+            :disabled="!desktopUpdate || desktopUpdateActionDisabled"
+            :loading="desktopUpdateActionLoading"
+            loading-mode="icon"
+            @click="runDesktopUpdateAction"
+          >
+            <RotateCcw v-if="desktopUpdate?.status === 'downloaded'" />
+            <RefreshCw v-else />
+            {{ desktopUpdateActionLabel }}
+          </Button>
+        </DialogFooter>
+      </DialogPanel>
     </Dialog>
 
     <Dialog v-model:open="advancedOpen">
@@ -230,13 +281,14 @@
 
 <script setup lang="ts">
 import type { Component } from 'vue'
-import { computed, inject, onBeforeUnmount, onMounted, ref } from 'vue'
+import { computed, inject, onMounted, ref } from 'vue'
 import { storeToRefs } from 'pinia'
 import { useDark } from '@vueuse/core'
-import { BookOpen, Download, Github, MessageSquare, RefreshCw, RotateCcw, SlidersHorizontal } from 'lucide-vue-next'
+import { BookOpen, Github, MessageSquare, RefreshCw, RotateCcw, SlidersHorizontal } from 'lucide-vue-next'
 import {
   ActionCard,
   Badge,
+  Switch,
   Button,
   Dialog,
   DialogBody,
@@ -250,15 +302,13 @@ import {
 } from '@felinic/ui'
 import MarkdownRender from 'markstream-vue'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import ChatCodeBlock from '@/pages/home/components/chat-code-block.vue'
 import { registerSharedMarkdownComponents } from '@/components/markdown'
 import {
   DesktopShellKey,
-  DesktopUpdatesKey,
-  type DesktopUpdateInfo,
-  type DesktopUpdateState,
 } from '@/lib/desktop-shell'
+import { useDesktopUpdates } from '@/composables/useDesktopUpdates'
 import { SettingsRow, SettingsSection } from '@felinic/ui'
 import { useCapabilitiesStore } from '@/store/capabilities'
 import { useSettingsStore } from '@/store/settings'
@@ -282,17 +332,28 @@ interface ResourceLink {
 
 const { t } = useI18n()
 const router = useRouter()
+const route = useRoute()
+// The route carries the request so the footer can open the dialog even when
+// About is cached. Closing removes it, so a later ordinary visit stays closed.
+const updatesOpen = computed({
+  get: () => route.name === 'about' && route.query.updates === '1',
+  set: (open: boolean) => {
+    const query = { ...route.query }
+    if (open) query.updates = '1'
+    else delete query.updates
+    void router.replace({ query })
+  },
+})
 const desktopShell = inject(DesktopShellKey, false)
-const desktopUpdates = inject(DesktopUpdatesKey, undefined)
-const desktopUpdateInfo = ref<DesktopUpdateInfo | null>(null)
-const desktopUpdate = ref<DesktopUpdateState | null>(null)
-let stopDesktopUpdateListener: (() => void) | undefined
+const { bridge: desktopUpdates, state: desktopUpdate } = useDesktopUpdates()
+const preferencePending = ref(false)
+const actionPending = ref(false)
 
 const capabilitiesStore = useCapabilitiesStore()
 const { serverVersion, commitHash } = storeToRefs(capabilitiesStore)
 const normalizedServerVersion = computed(() => (serverVersion.value ?? '').replace(/^v/i, ''))
 const displayVersion = computed(() => (
-  desktopUpdateInfo.value?.version.replace(/^v/i, '')
+  desktopUpdate.value?.currentVersion.replace(/^v/i, '')
   || normalizedServerVersion.value
 ))
 
@@ -313,13 +374,13 @@ const links: ResourceLink[] = [
 // Update row copy: the label states the headline status, the description carries
 // the running version or a hint, depending on whether a check has run yet.
 const updateLabel = computed(() => {
-  if (desktopUpdates) {
+  if (desktopUpdates.value) {
     const state = desktopUpdate.value
     if (!state) return t('about.currentVersion', { version: displayVersion.value || '—' })
     if (state.status === 'up-to-date') return t('about.upToDate')
-    if (['available', 'downloading', 'downloaded'].includes(state.status) && state.latestVersion) {
-      return t('about.newVersionTitle', { version: state.latestVersion })
-    }
+    if (state.status === 'installing') return t('about.applyingUpdate')
+    if (state.status === 'downloaded') return t('about.readyToRestart')
+    if (state.status === 'downloading') return t('about.updatingVersion', { version: state.latestVersion || '—' })
     if (state.status === 'error') return t('about.desktopUpdateFailed')
     if (state.status === 'unavailable') return t('about.desktopUpdatesUnavailable')
     return t('about.currentVersion', { version: state.currentVersion })
@@ -329,18 +390,16 @@ const updateLabel = computed(() => {
   return t('about.currentVersion', { version: normalizedServerVersion.value || '—' })
 })
 const updateDesc = computed(() => {
-  if (desktopUpdates) {
+  if (desktopUpdates.value) {
     const state = desktopUpdate.value
     if (!state || state.status === 'idle') return t('about.desktopCheckHint')
     if (state.status === 'checking') return t('about.checking')
-    if (state.status === 'up-to-date') {
-      return t('about.currentVersion', { version: state.currentVersion })
-    }
-    if (state.status === 'available') return t('about.desktopUpdateAvailableDesc')
+    if (state.status === 'up-to-date') return ''
+    if (state.status === 'installing') return t('about.installingUpdate')
     if (state.status === 'downloading') {
-      return t('about.downloadingUpdate', { progress: state.progress ?? 0 })
+      return state.progress == null ? t('about.preparingUpdate') : t('about.downloadingUpdate', { progress: state.progress })
     }
-    if (state.status === 'downloaded') return t('about.desktopUpdateDownloadedDesc')
+    if (state.status === 'downloaded') return t(state.autoUpdate ? 'about.desktopUpdateDownloadedDesc' : 'about.updateReadyPaused')
     if (state.status === 'error') return state.error || t('about.desktopUpdateFailed')
     return t('about.desktopUpdatesUnavailableDesc')
   }
@@ -353,17 +412,17 @@ const updateDesc = computed(() => {
   return t('about.checkHint')
 })
 const desktopUpdateActionLoading = computed(() => (
-  ['checking', 'downloading'].includes(desktopUpdate.value?.status ?? '')
+  ['checking', 'downloading', 'installing'].includes(desktopUpdate.value?.status ?? '')
 ))
-const desktopUpdateActionDisabled = computed(() => desktopUpdateActionLoading.value)
+const desktopUpdateActionDisabled = computed(() => actionPending.value || desktopUpdateActionLoading.value)
 const desktopUpdateActionLabel = computed(() => {
   switch (desktopUpdate.value?.status) {
     case 'checking':
       return t('about.checking')
-    case 'available':
-      return t('about.downloadUpdate')
+    case 'installing':
+      return t('about.installingUpdate')
     case 'downloading':
-      return t('about.downloadingUpdate', { progress: desktopUpdate.value.progress ?? 0 })
+      return desktopUpdate.value?.progress == null ? t('about.preparingUpdate') : t('about.downloadingUpdate', { progress: desktopUpdate.value.progress })
     case 'downloaded':
       return t('about.restartToUpdate')
     case 'error':
@@ -375,6 +434,15 @@ const desktopUpdateActionLabel = computed(() => {
 
 const notesOpen = ref(false)
 const advancedOpen = ref(false)
+
+// Notes dialog source: the desktop branch reads the feed-shipped notes on the
+// update state; the browser branch reads the GitHub release body.
+const notesBody = computed(() =>
+  desktopUpdates.value ? (desktopUpdate.value?.releaseNotes ?? '') : update.releaseBody,
+)
+const notesVersion = computed(() =>
+  desktopUpdates.value ? (desktopUpdate.value?.latestVersion ?? '') : update.latestVersion,
+)
 
 async function openServerConnection() {
   advancedOpen.value = false
@@ -408,23 +476,19 @@ onMounted(async () => {
   // startup check.
   void capabilitiesStore.load()
 
-  if (!desktopUpdates) return
-  stopDesktopUpdateListener = desktopUpdates.onStateChanged((state) => {
-    desktopUpdate.value = state
-  })
-  try {
-    const [info, state] = await Promise.all([
-      desktopUpdates.getInfo(),
-      desktopUpdates.getState(),
-    ])
-    desktopUpdateInfo.value = info
-    desktopUpdate.value = state
-  } catch (error) {
-    const reason = error instanceof Error ? error.message : String(error)
-    toast.error(`${t('about.checkFailed')}: ${reason}`)
-  }
 })
-onBeforeUnmount(() => stopDesktopUpdateListener?.())
+
+async function setAutoUpdate(enabled: boolean) {
+  if (!desktopUpdates.value || preferencePending.value) return
+  preferencePending.value = true
+  try {
+    await desktopUpdates.value.setAutoUpdate(enabled)
+  } catch (error) {
+    toast.error(`${t('about.checkFailed')}: ${error instanceof Error ? error.message : String(error)}`)
+  } finally {
+    preferencePending.value = false
+  }
+}
 
 async function recheck() {
   try {
@@ -436,21 +500,21 @@ async function recheck() {
 }
 
 async function runDesktopUpdateAction() {
-  if (!desktopUpdates || desktopUpdateActionDisabled.value) return
+  if (!desktopUpdates.value || desktopUpdateActionDisabled.value) return
+  actionPending.value = true
   try {
     const status = desktopUpdate.value?.status
-    const state = status === 'available'
-      ? await desktopUpdates.download()
-      : status === 'downloaded'
-        ? await desktopUpdates.install()
-        : await desktopUpdates.check()
-    desktopUpdate.value = state
+    const state = status === 'downloaded'
+      ? await desktopUpdates.value.install()
+      : await desktopUpdates.value.check()
     if (state.status === 'error') {
       toast.error(`${t('about.checkFailed')}: ${state.error || t('about.desktopUpdateFailed')}`)
     }
   } catch (error) {
     const reason = error instanceof Error ? error.message : String(error)
     toast.error(`${t('about.checkFailed')}: ${reason}`)
+  } finally {
+    actionPending.value = false
   }
 }
 </script>

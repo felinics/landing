@@ -1,3 +1,4 @@
+import { randomUUID } from '@/utils/uuid'
 export type SessionQueueSubmissionMode = 'steer' | 'follow-up'
 export type SessionQueueInvocationId = `${string}-${string}-${string}-${string}-${string}`
 
@@ -28,7 +29,7 @@ export class SessionQueueSubmissionGate {
   private retry: SessionQueueSubmission | null = null
   private readonly createInvocationId: () => SessionQueueInvocationId
 
-  constructor(createInvocationId: () => SessionQueueInvocationId = () => crypto.randomUUID()) {
+  constructor(createInvocationId: () => SessionQueueInvocationId = () => randomUUID()) {
     this.createInvocationId = createInvocationId
   }
 

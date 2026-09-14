@@ -39,6 +39,12 @@
   to { opacity: 0; }
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .sidebar-scroll [data-slot="scroll-area-scrollbar"][data-state] {
+    animation: none;
+  }
+}
+
 /* Quieter than the library default (muted-foreground/35): the sidebar is a
  * tight, dark-adjacent surface where 35% read as a smudge. Specificity must
  * beat the wrapper's tailwind classes (bg-muted-foreground/35 + hover:/55). */

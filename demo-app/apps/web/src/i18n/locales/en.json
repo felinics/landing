@@ -95,10 +95,9 @@
     "preview": "Preview"
   },
   "computerAccess": {
-    "nativeAlwaysOn": "Always available to this Bot",
     "emptyBots": "No bots yet.",
-    "emptyComputers": "No computers connected.",
-    "connectCta": "Connect computer",
+    "yourComputer": "Your computer",
+    "notConnected": "Not connected",
     "updateFailed": "Couldn’t update access",
     "done": "Done",
     "subtitleRuntime": "Which bots can use it?",
@@ -112,7 +111,6 @@
     "finish": "Done"
   },
   "errors": {
-    "media": { "reference_unavailable": "This file could not be shared. Ask the agent to recreate or share it again." },
     "queue": {
       "steer_unsupported": "This run cannot accept steer input. Wait for it to finish and send a new message."
     },
@@ -143,7 +141,11 @@
     },
     "agent": {
       "response_timeout": "The model did not respond in time. Please try again.",
-      "response_interrupted": "The model response was interrupted. Please try again."
+      "response_interrupted": "The model response was interrupted. Please try again.",
+      "provider_overloaded": "The model provider is overloaded right now. Please try again in a moment.",
+      "provider_rate_limited": "The model provider rate limit was reached. Please wait a moment before sending again.",
+      "provider_quota_exhausted": "The model provider account has no remaining balance or quota.",
+      "provider_auth_failed": "The model provider rejected the credentials. Check the provider API key."
     },
     "queue_request_invalid": "Enter text after /steer or /queue in an existing conversation.",
     "queue_no_active_run": "The current response has ended. Send this as a new message.",
@@ -197,9 +199,9 @@
     },
     "registry": {
       "unavailable": "The Supermarket is unavailable. Please try again later.",
-      "package_not_found": "This package is no longer available.",
-      "package_invalid": "This package is invalid and cannot be installed.",
-      "package_install_failed": "The package could not be installed. Please try again."
+      "app_not_found": "This app is no longer available.",
+      "app_invalid": "This app is invalid and cannot be installed.",
+      "app_install_failed": "The app could not be installed. Please try again."
     },
     "workspace": {
       "unreachable": "The workspace could not be reached.",
@@ -214,7 +216,6 @@
       "busy": "Another operation on this dependency is in progress.",
       "workspace_not_running": "The workspace isn't running. Start it first.",
       "workspace_missing": "The workspace hasn't been created yet.",
-      "remote_offline": "That computer is offline.",
       "rollback_unavailable": "No previous version to roll back to.",
       "operation_failed": "The dependency operation failed. Check the log and try again.",
       "catalog_unavailable": "The dependency catalog is unavailable. Please try again later.",
@@ -272,6 +273,37 @@
     "external_runtime": {
       "auth_required": "Codex is not connected yet. Open Agent settings to connect ChatGPT or configure an API key.",
       "unavailable": "The external Agent runtime is unavailable. Check the Agent setup and workspace, then try again."
+    },
+    "app": {
+      "not_found": "This App installation was not found.",
+      "request_invalid": "The App request is invalid.",
+      "busy": "Another operation on this App is in progress.",
+      "operation_failed": "The App operation failed."
+    },
+    "agent_authorization": {
+      "expired": "This authorization has expired. Connect your account again.",
+      "not_ready": "Finish connecting your account before creating the Bot.",
+      "limit": "Close other pending authorizations and try again.",
+      "failed": "Account authorization failed. Please try again.",
+      "code_invalid": "The authorization code is invalid or expired. Copy the complete code from Claude or connect again."
+    },
+    "workdir": {
+      "git_busy": "An agent is using this working directory. Wait for it to finish before switching branches.",
+      "git_branch_unavailable": "This local branch is unavailable. Refresh and select an existing branch.",
+      "git_switch_failed": "Git could not switch branches. Check uncommitted changes and whether the branch is used by another worktree.",
+      "git_unavailable": "The Git working directory could not be read. Check the workspace and try again."
+    },
+    "runtime_control": {
+      "goal_requires_default_mode": "Exit Plan mode before creating or resuming a goal.",
+      "steer_failed": "The additional instruction could not be delivered. Send it again after this turn finishes.",
+      "unsupported": "This runtime does not support this control.",
+      "command_unavailable": "This runtime command is no longer available. Refresh and try again.",
+      "mode_unavailable": "This mode is unavailable. Refresh and choose a supported mode.",
+      "thread_unavailable": "Start a conversation before using this operation.",
+      "failed": "The runtime control could not be completed. Try again.",
+      "forbidden": "You do not have access to this conversation.",
+      "request_invalid": "The runtime control request is invalid.",
+      "cancelled": "Operation cancelled."
     }
   },
   "auth": {
@@ -285,7 +317,7 @@
     "passwordPlaceholder": "Enter password",
     "login": "Sign In",
     "register": "Sign Up",
-    "logout": "Sign Out",
+    "logout": "Log Out",
     "logoutConfirm": "Are you sure you want to sign out?",
     "loginFailed": "Login Failed",
     "invalidCredentials": "Invalid username or password",
@@ -311,6 +343,11 @@
     }
   },
   "sidebar": {
+    "updateChip": {
+      "updating": "Updating",
+      "restart": "Restart",
+      "error": "Update error"
+    },
     "session": "Sessions",
     "chat": "Chat",
     "bots": "Bots",
@@ -339,6 +376,7 @@
     "keyboard": "Keyboard",
     "supermarket": "Supermarket",
     "about": "About",
+    "userMenu": "Account menu",
     "switchBot": "Switch bot",
     "manageBots": "Manage Bots"
   },
@@ -608,13 +646,22 @@
     "empty": "No members"
   },
   "about": {
+    "updatingVersion": "Updating to v{version}",
+    "readyToRestart": "Ready to restart",
+    "applyingUpdate": "Applying update",
+    "autoUpdatePausedDescription": "Automatic checks and installation are paused.",
+    "updateReadyPaused": "Ready. Restart to install; automatic installation is off.",
+    "preparingUpdate": "Preparing update…",
+    "installingUpdate": "Restarting…",
+    "autoUpdateDescription": "Download in the background and install when Memoh quits.",
+    "autoUpdate": "Automatic updates",
     "tagline": "Open-source multi-agent platform",
     "description": "Multiple AI agents, each with its own computer and long-term memory.",
     "updatesSection": "Updates",
     "currentVersion": "Version v{version}",
     "checkHint": "Check GitHub for the latest release.",
     "desktopCheckHint": "Check for a newer Desktop app version.",
-    "checkForUpdates": "Check for Updates",
+    "checkForUpdates": "Check for updates",
     "checking": "Checking…",
     "upToDate": "You're on the latest version",
     "newVersionAvailable": "New Version Available: v{version}",
@@ -626,12 +673,10 @@
     "checkFailed": "Check Failed",
     "desktopUpdatesUnavailable": "Automatic updates are unavailable",
     "desktopUpdatesUnavailableDesc": "This build does not have an update feed configured.",
-    "desktopUpdateAvailableDesc": "Download this version, then restart Memoh to install it.",
-    "downloadUpdate": "Download Update",
     "downloadingUpdate": "Downloading… {progress}%",
-    "desktopUpdateDownloadedDesc": "The update is ready. Restart Memoh to install it.",
+    "desktopUpdateDownloadedDesc": "Ready. Restart now, or Memoh will install the update when you quit.",
     "restartToUpdate": "Restart to Update",
-    "retryUpdate": "Try Again",
+    "retryUpdate": "Retry update",
     "desktopUpdateFailed": "Desktop update failed",
     "github": "GitHub",
     "docs": "Documentation",
@@ -644,7 +689,10 @@
     "license": "AGPLv3 · © 2026 MemohAI"
   },
   "chat": {
-    "mediaPreparing": "Preparing media",
+    "runtimeStatus": {
+      "compacting": "Compacting context…",
+      "api_retry": "Retry {attempt}/{max_retries} in {seconds}s…"
+    },
     "selectSession": "Select a session",
     "welcome": {
       "folder": "What can I do in {name}?",
@@ -754,7 +802,6 @@
       "steerDescription": "Add to the current response at the next safe step",
       "followUpDescription": "Send automatically after the current response",
       "steerPlaceholder": "Add something to the current response…",
-      "followUpPlaceholder": "Write the next message…",
       "enqueueSteer": "Add to current response",
       "enqueueFollowUp": "Add to up next",
       "steerQueued": "Added to the current response queue",
@@ -786,11 +833,11 @@
     "pastedViewerTitle": "Pasted content",
     "agent": "Agent",
     "continueOn": {
-      "label": "Continue on",
-      "addComputer": "Add a computer",
+      "label": "Computers",
+      "addComputer": "Add computer",
+      "addYourComputer": "Add your computer",
       "manageAccess": "Manage access",
-      "manageComputers": "Manage computers",
-      "noAccess": "This Bot has no computer access"
+      "manageComputers": "Manage computers"
     },
     "computerLoading": "Loading computers",
     "computerLoadFailed": "Couldn’t load computers",
@@ -800,7 +847,9 @@
     "folderUnavailable": "Unavailable folder",
     "folderDetachDraft": "Start without a folder",
     "folderNewSession": "New session in {name}",
-    "attachFiles": "Attach files",
+    "apps": "Apps",
+    "manageConnectors": "Manage connectors",
+    "attachFiles": "Upload Files or Images",
     "dropToAttach": "Drop files here to add to chat",
     "dropFolderUnsupported": "Attachments can't be folders. Drop it on the Files panel instead.",
     "pdfTooLargeForNative": "This PDF exceeds 12MB, so it will be saved to the workspace as a path; the model can't view its content directly.",
@@ -877,6 +926,7 @@
       "unanswered": "No answer"
     },
     "tools": {
+      "elapsedRunning": "Running · {seconds}s",
       "read": "Read",
       "read_image": "View image",
       "read_document": "Read document",
@@ -1024,11 +1074,14 @@
       "exitCode": "exit {code}",
       "approve": "Allow",
       "reject": "Reject",
-      "pendingApproval": "pending approval",
+      "pendingApproval": "Awaiting approval",
+      "approvalDeclined": "Declined",
+      "approvalCanceled": "Canceled",
+      "approvalExpired": "Expired",
       "executionLocation": "Execution location",
       "pendingUserInput": "waiting for input",
       "userInputSubmitted": "answered",
-      "userInputCanceled": "canceled",
+      "userInputCanceled": "Canceled",
       "userInputFailed": "failed",
       "userInputExpired": "expired",
       "userInputPlaceholder": "Answer",
@@ -1256,11 +1309,9 @@
       "helpDescription": "Show available quick actions",
       "skillListDescription": "Show skills available for this turn",
       "newDescription": "Start a new session",
-      "permissionDescription": "View or change this Agent session's permission mode",
-      "permissionModesTitle": "Permission modes",
       "permissionModesText": "Choose a mode declared by this Agent. The change applies only to this session.",
-      "permissionModeChangedTitle": "Permission mode changed",
-      "permissionModeChangedText": "This Agent session now uses the selected permission mode. Tool consent remains a separate decision.",
+      "permissionModeChangedTitle": "Session mode updated",
+      "permissionModeChangedText": "The selected session mode is now applied.",
       "permissionCurrentMode": "Current mode",
       "compactDescription": "Compact this session's context ({percent}% full)",
       "compactDescriptionNoStats": "Compact this session's context",
@@ -1337,6 +1388,8 @@
     },
     "openPreviewToSide": "Open preview to the side",
     "previewTab": "Preview: {name}",
+    "contextUsedTokens": "{used} / {window} tokens",
+    "contextUsedPercent": "{percent}% context used",
     "sessionInfoRingAria": "Session info",
     "sessionInfoRingAriaUsage": "Session info, context {percent}% used",
     "sessionInfoTooltipHint": "Hover to see session info",
@@ -1402,9 +1455,9 @@
       "prepare": {
         "title": "Preparing desktop",
         "checking": "Checking desktop runtime",
-        "toolkit": "Workspace toolkit is not installed; trying system packages",
+        "toolkit": "Workspace toolkit is not installed; trying system apps",
         "system": "Checking workspace operating system",
-        "installing": "Installing desktop and VNC packages",
+        "installing": "Installing desktop and VNC apps",
         "browser": "Installing Chrome and CJK fonts",
         "starting": "Starting VNC display",
         "desktop": "Starting desktop session",
@@ -1437,7 +1490,49 @@
         "rtt": "RTT"
       }
     },
-    "modelDefaultNamed": "Default ({model})"
+    "modelDefaultNamed": "Default ({model})",
+    "runtimeProject": {
+      "chooseBranch": "Switch branch",
+      "noBranches": "No local branches yet",
+      "detachedHead": "Detached HEAD",
+      "expand": "Show workspace",
+      "collapse": "Hide workspace",
+      "choose": "Choose project",
+      "clear": "Don't work in a project",
+      "none": "No project",
+      "workspace": "Memoh workspace",
+      "empty": "Add a folder in the sidebar to choose a project."
+    },
+    "planMode": {
+      "commandLabel": "Plan mode",
+      "label": "Plan",
+      "enable": "Turn plan mode on",
+      "disable": "Turn plan mode off",
+      "placeholder": "Describe your task to generate a plan…",
+      "changeFailed": "Could not change plan mode. Please try again."
+    },
+    "runtimeModeNextTurn": "Applies when the next run starts.",
+    "runtimeModeModelUnavailable": "This model does not support this permission mode. Choose another mode or model.",
+    "permissionMode": "Permission mode",
+    "goal": {
+      "label": "Goal",
+      "description": "Set a goal to keep pursuing",
+      "placeholder": "Describe your goal and what completing it means",
+      "cancelDraft": "Cancel goal input",
+      "sentAsGoal": "Sent as goal",
+      "pause": "Pause goal",
+      "resume": "Resume goal",
+      "clear": "Clear goal",
+      "textOnly": "Send the goal as text without attachments or skills.",
+      "status": {
+        "active": "Pursuing goal",
+        "paused": "Goal paused",
+        "blocked": "Goal blocked",
+        "usageLimited": "Usage limit reached",
+        "budgetLimited": "Token budget reached",
+        "complete": "Goal completed"
+      }
+    }
   },
   "models": {
     "title": "Models",
@@ -1954,7 +2049,7 @@
   "bots": {
     "toolApproval": {
       "title": "Tool Call Approval",
-      "intro": "Choose what this Bot may do in its Workspace and on each connected computer.",
+      "intro": "Choose what this Bot may do in its Workspace and on each connected computer. These rules govern the tools Memoh provides. Claude Code and Codex apply their own permission mode to their built-in tools; when one of them asks, Memoh shows the request as a card for a user with the matching Workspace permission to decide.",
       "loading": "Loading approval rules...",
       "loadFailed": "Couldn’t load tool approval",
       "loadFailedDescription": "Check the server connection and try again.",
@@ -2078,6 +2173,9 @@
       "settingsDesc": "Timezone and more"
     },
     "agentCreate": {
+      "prepare": "Prepare Agent",
+      "prepareDescription": "Check the workspace and install the dependencies required to run this Agent.",
+      "authorizeAfterCreate": "Continue to authorize this Agent after the Bot is created.",
       "typeAriaLabel": "Agent type",
       "oauthSettingsHint": "Authorization happens after creation — finish it anytime in the bot's settings.",
       "requiredError": "Please fill in \"{field}\"",
@@ -2098,7 +2196,8 @@
         "creating": "Creating workspace",
         "restoring": "Restoring memory & data",
         "ready": "Bot is ready",
-        "applyingSettings": "Applying model & memory settings"
+        "applyingSettings": "Applying model & memory settings",
+        "installingAgent": "Installing {name}"
       }
     },
     "editBot": "Edit Bot",
@@ -2303,6 +2402,7 @@
       "reminderAction": "Set up"
     },
     "tabs": {
+      "advanced": "Advanced",
       "overviewSubtitle": "Where this bot lives and how it's set up.",
       "overview": "Overview",
       "general": "General",
@@ -2315,18 +2415,16 @@
       "channels": "Platforms",
       "remoteRuntime": "Computers",
       "container": "Workspace",
-      "dependencies": "Dependencies",
       "mcp": "MCP",
       "compaction": "Compaction",
       "schedule": "Schedule",
       "history": "History",
-      "connectors": "Connectors",
-      "skills": "Skills",
       "email": "Email",
       "files": "Files",
       "access": "Access",
       "terminal": "Terminal",
-      "settings": "Settings"
+      "settings": "Settings",
+      "apps": "Apps"
     },
     "agent": {
       "add": "Add Agent",
@@ -2374,8 +2472,16 @@
       "modelsLoadFailed": "Couldn’t load Agent models. Check the Agent setup and try again.",
       "openSettings": "Open Agent settings",
       "dependencyChecking": "Checking dependency…",
-      "dependencyRemoteOffline": "The bot's connected computer is offline. Dependencies can be checked once it is back online.",
-      "dependencyInstalledEnableHint": "{name} installed. Turn the agent on to use it."
+      "dependencyInstalledEnableHint": "{name} installed. Turn the agent on to use it.",
+      "claudeAccount": "Claude account",
+      "claudeAccountDescription": "Authorize Claude Code with your Claude subscription account.",
+      "claudeAuthorizationHint": "Open the authorization page and sign in to Claude. Copy the authorization code shown there, then paste it below to finish connecting.",
+      "openAuthorizationPage": "Open authorization page",
+      "authorizationCode": "Authorization code",
+      "authorizationCodePlaceholder": "Paste the complete authorization code",
+      "completeAuthorization": "Complete authorization",
+      "defaultPermissionMode": "Default permission mode",
+      "defaultPermissionModeDescription": "New sessions use this mode. A session selection overrides the default. The mode governs the agent's built-in tools; tools Memoh provides always follow the Tool Call Approval rules."
     },
     "dependencies": {
       "title": "Workspace dependencies",
@@ -2397,7 +2503,8 @@
         "removing": "Removing",
         "updateAvailable": "{version} available",
         "unsupported": "Unsupported",
-        "unsupportedTooltip": "This dependency isn't available on the workspace platform."
+        "unsupportedTooltip": "This dependency isn't available on the workspace platform.",
+        "retired": "Retired"
       },
       "action": {
         "install": "Install",
@@ -2415,8 +2522,6 @@
         "start": "Start workspace",
         "missingTitle": "No workspace yet",
         "goToContainer": "Open workspace tab",
-        "remoteOfflineTitle": "\"{name}\" is offline",
-        "remoteOfflineDescription": "Dependencies can be managed once it is online.",
         "discoveryErrorTitle": "Couldn't detect dependencies in the workspace right now",
         "discoveryErrorRetry": "Retry"
       },
@@ -2432,11 +2537,10 @@
         "version": "Version",
         "versionPlaceholder": "Latest",
         "versionHelp": "Leave blank to install the latest version.",
-        "remoteWarningTitle": "Runs on your computer \"{name}\"",
-        "remoteWarningDescription": "The script downloads and writes files on that computer.",
         "installConfirm": "Install",
         "updateConfirm": "Update",
-        "installAndEnable": "Install and enable"
+        "installAndEnable": "Install and enable",
+        "versionInvalid": "Enter a release identifier such as 1.2.3 or latest."
       },
       "progress": {
         "installing": "Installing {name}",
@@ -2449,7 +2553,10 @@
         "failedHint": "Recorded as failed; retry from the dependency list. The full log can be copied.",
         "runInBackground": "Run in background",
         "version": "Version",
-        "entrypoint": "Entrypoint"
+        "entrypoint": "Entrypoint",
+        "log": "Operation log",
+        "unknownTitle": "Result not confirmed",
+        "unknownHint": "The operation result is not yet confirmed. Refresh dependencies to check its status."
       },
       "script": {
         "title": "Script that will run in the workspace",
@@ -3321,75 +3428,6 @@
         "note": "Note"
       }
     },
-    "skills": {
-      "title": "Skills",
-      "discoveryTitle": "Skill Paths",
-      "discoveryDescription": "Manage where this bot stores managed skills and which external paths are scanned.",
-      "managedPathLabel": "Managed Path",
-      "managedPathDescription": "Memoh-managed skills are stored here.",
-      "managedPathHint": "\"Copy to Managed Path\" copies an external skill here. Managed copies take precedence.",
-      "discoveryPathsLabel": "External Skill Paths",
-      "discoveryPathsDescription": "Memoh scans these absolute paths for compatible external skills. One path per line.",
-      "discoveryPathPlaceholder": "/root/.agents/skills",
-      "discoveryAddPath": "Add Path",
-      "discoveryEmpty": "No external skill paths. Only managed and legacy skills will be scanned.",
-      "discoveryDefaultHint": "Default external paths: {paths}",
-      "discoveryReset": "Reset",
-      "discoverySummaryDefault": "Default",
-      "discoverySummaryCustom": "{count} paths",
-      "discoverySummaryUnsaved": "Unsaved changes",
-      "discoveryPathRequired": "Path is required",
-      "discoveryPathAbsolute": "Path must be absolute",
-      "discoveryPathReserved": "This path is reserved for Memoh-managed or legacy skills",
-      "discoveryPathDuplicate": "Duplicate path",
-      "discoverySaveSuccess": "Skill paths saved",
-      "discoverySaveFailed": "Failed to save skill paths",
-      "addSkill": "New Skill",
-      "libraryTitle": "Skill library",
-      "packageBadge": "Package",
-      "openPackage": "Open Package",
-      "backToLibrary": "Back",
-      "viewSkill": "View Skill",
-      "uninstallPackage": "Uninstall Package",
-      "uninstallPackageConfirm": "Uninstall this Package?",
-      "uninstallPackageSuccess": "Package uninstalled",
-      "uninstallPackageFailed": "Failed to uninstall Package",
-      "packageSkillsUnavailable": "Package Skills are unavailable",
-      "close": "Close",
-      "emptyTitle": "No Active Skills",
-      "emptyDescription": "Create a managed skill or scan external paths to get started.",
-      "managedBadge": "Managed",
-      "discoveredBadge": "External",
-      "effectiveBadge": "Effective",
-      "shadowedBadge": "Shadowed",
-      "shadowedHint": "A managed copy with the same name takes precedence over this source.",
-      "disabledBadge": "Disabled",
-      "legacyBadge": "Legacy",
-      "compatBadge": "External",
-      "description": "Description",
-      "descriptionPlaceholder": "Enter skill description",
-      "content": "Content",
-      "contentPlaceholder": "Enter skill content/prompt",
-      "deleteConfirm": "Permanently delete this managed skill?",
-      "overrideTitle": "Edit to create a managed copy",
-      "adoptAction": "Copy to Managed Path",
-      "adoptBlocked": "A managed copy already exists",
-      "disableAction": "Disable this skill source",
-      "enableAction": "Enable this skill source",
-      "adoptSuccess": "Skill copied to managed path",
-      "adoptFailed": "Failed to copy skill to managed path",
-      "disableSuccess": "Skill disabled",
-      "disableFailed": "Failed to disable skill",
-      "enableSuccess": "Skill enabled",
-      "enableFailed": "Failed to enable skill",
-      "shadowedBy": "Shadowed by:",
-      "deleteSuccess": "Skill deleted",
-      "deleteFailed": "Failed to delete skill",
-      "saveSuccess": "Skill saved",
-      "saveFailed": "Failed to save skill",
-      "loadFailed": "Failed to load skills",
-      "intro": "Configure custom abilities for this bot. Managed skills take precedence."
-    },
     "compaction": {
       "title": "Compaction Logs",
       "settingsTitle": "Compaction Settings",
@@ -3607,23 +3645,14 @@
   },
   "supermarket": {
     "title": "Supermarket",
-    "searchPlaceholder": "Search Skills...",
-    "searchPlaceholderWithConnectors": "Search Skills and Connectors...",
+    "searchPlaceholder": "Search Apps...",
     "skillsSection": "Skills",
-    "packagesSection": "Packages",
-    "connectorsSection": "Connectors",
-    "dependenciesSection": "Dependencies",
     "noResults": "No results found",
-    "noPackageResults": "No packages found",
-    "noConnectorResults": "No connectors found",
-    "noDependencyResults": "No dependencies found",
+    "noAppResults": "No apps found",
     "install": "Install",
     "installToBot": "Install to Bot",
     "selectBot": "Select a bot",
     "selectBotPlaceholder": "Choose a bot to install to...",
-    "selectWorkspaceTarget": "Workspace",
-    "dependencyInstallTitle": "Install {name}",
-    "viewBotDependencies": "View bot dependencies",
     "envVariables": "Environment Variables",
     "envDescription": "Configure the required environment variables",
     "installSuccess": "Installed successfully",
@@ -3637,7 +3666,7 @@
     "homepage": "Homepage",
     "files": "Files",
     "viewDetails": "View details",
-    "packageInstallTitle": "Install Package",
+    "appInstallTitle": "Install App",
     "loadError": "Failed to load from Supermarket",
     "submit": "Submit",
     "information": "Information",
@@ -3645,7 +3674,7 @@
     "registry": "Registry",
     "allRegistries": "All",
     "registryFilter": "Filter by registry",
-    "package": "Package",
+    "app": "App",
     "previousPage": "Previous page",
     "nextPage": "Next page",
     "developer": "Developer",
@@ -3655,10 +3684,30 @@
     "website": "Website",
     "instructions": "Instructions",
     "backToSupermarket": "Back to Supermarket",
-    "includedSkills": "Included Skills",
-    "packageNotFound": "Package not found",
+    "appNotFound": "App not found",
     "noDescription": "No description",
-    "unnamedSkill": "Unnamed skill"
+    "unnamedSkill": "Unnamed skill",
+    "dependenciesHint": "Installed into the bot's workspace and shared with other Apps that need them.",
+    "dependenciesLoadError": "Unable to load dependency details. Please try again.",
+    "dependencyUnavailable": "Dependency details unavailable.",
+    "dependencyPending": "Loading…",
+    "connectorsHint": "Authorize connectors during installation.",
+    "connectorsUnavailableHint": "Connect-It is not configured on this server; these connectors will stay unauthorized.",
+    "connectorAuthHint": "Authorize during installation.",
+    "license": "License",
+    "repository": "Repository",
+    "revision": "Revision",
+    "installPreview": "Installing will",
+    "installPreviewDependency": "install into the workspace if missing",
+    "installPreviewConnector": "authorize during installation",
+    "installPreviewConnectorOptional": "can be authorized later (optional)",
+    "viewAll": "View all",
+    "sidebar": {
+      "installed": "Installed",
+      "manageRequired": "Manage permission is required to install Apps for this bot.",
+      "manage": "Manage",
+      "discovered": "Available in workspace"
+    }
   },
   "connectors": {
     "title": "Connectors",
@@ -3680,7 +3729,7 @@
     "reauthorize": "Reauthorize",
     "disconnect": "Disconnect",
     "disconnectTitle": "Disconnect connector?",
-    "disconnectDescription": "This will remove {name} from the Bot and delete its stored connection.",
+    "disconnectDescription": "This deletes the stored {name} connection. Apps that use it will ask for authorization again.",
     "disconnected": "Connector disconnected",
     "disconnectFailed": "Failed to disconnect connector",
     "loadFailed": "Failed to load connectors",
@@ -3819,5 +3868,253 @@
     "expiresIn": "Expires in {time}",
     "codeExpired": "Code expired",
     "copyFailed": "Failed to copy the code"
+  },
+  "apps": {
+    "diagnostics": {
+      "failed": "Operation failed",
+      "partial": "Needs attention",
+      "viewDetails": "View details",
+      "errorDetails": "Error details",
+      "copyError": "Copy error details",
+      "partialHint": "Some components failed or still need authorization. Review the components below to finish setup."
+    },
+    "title": "Apps",
+    "checkUpdates": "Check for updates",
+    "checkUpdatesDone": "Update check finished",
+    "checkUpdatesFailed": "Couldn't check for updates",
+    "browse": "Browse Supermarket",
+    "emptyTitle": "No Apps installed yet",
+    "emptyDescription": "Install Skills, dependencies and connectors as Apps from the Supermarket.",
+    "emptyAction": "Open Supermarket",
+    "loadFailed": "Couldn't load Apps",
+    "busy": "Another App operation is still running in this workspace.",
+    "viewBotApps": "View bot Apps",
+    "components": "{count} component | {count} components",
+    "workspaceNotRunningDescription": "Installing and updating Apps needs a running workspace. The list shows the last recorded state.",
+    "action": {
+      "restore": "Restore installation",
+      "install": "Install",
+      "resume": "Continue setup",
+      "update": "Update",
+      "remove": "Uninstall",
+      "viewProgress": "View progress",
+      "open": "View in Supermarket"
+    },
+    "section": {
+      "skills": "{count} Skill | {count} Skills",
+      "dependencies": "{count} dependency | {count} dependencies",
+      "connectors": "{count} connector | {count} connectors"
+    },
+    "dependency": {
+      "shared": "Shared",
+      "unknown": "Not in catalog"
+    },
+    "connector": {
+      "needsAuth": "Authorization required",
+      "optional": "Optional",
+      "shared": "Shared across workspaces",
+      "authorize": "Authorize",
+      "authDescription": "Connect the service {name} uses.",
+      "unavailableTitle": "Connector unavailable",
+      "unavailableDescription": "This connector type is not offered by the configured Connect-It deployment."
+    },
+    "remove": {
+      "title": "Uninstall {name}?",
+      "description": "Removes the App's Skills. Dependencies and connections are released only when no other App references them.",
+      "willRemove": "Will be removed",
+      "willKeep": "Kept",
+      "willDisconnect": "Will be disconnected",
+      "alsoRemoveRequired": "Also remove auto-installed Apps that only this one uses",
+      "reason": {
+        "shared": "used by another App",
+        "image": "shipped with the workspace image",
+        "absent": "not installed"
+      }
+    },
+    "progress": {
+      "recoveryHint": "To continue a failed uninstall, choose Uninstall. Restore installation sets up the App again and may reinstall removed components.",
+      "installing": "Installing {name}",
+      "updating": "Updating {name}",
+      "resuming": "Continuing setup of {name}",
+      "removing": "Uninstalling {name}",
+      "doneTitle": "Done",
+      "partialTitle": "Installed with items needing attention",
+      "partialHint": "Some components failed or still need authorization. Continue the setup from the Apps tab once they are resolved.",
+      "failedTitle": "Operation failed",
+      "failedHint": "Recorded as failed; retry from the Apps tab. The full log can be copied.",
+      "unknownTitle": "Result not confirmed",
+      "unknownHint": "The operation result is not yet confirmed. Refresh Apps to check its status.",
+      "preparing": "Preparing…",
+      "noLog": "No script output.",
+      "log": "Operation log",
+      "runInBackground": "Run in background",
+      "reconnecting": "Connection to the server was lost; checking the result…",
+      "preparingAuthorization": "Preparing authorization…",
+      "awaitingAuthorization": "Complete authorization in the opened window.",
+      "authorize": "Connect {name} to finish installation.",
+      "authorizationLoadFailed": "Could not load authorization. Try again."
+    },
+    "steps": {
+      "skills": "Skills",
+      "dependency": "Dependency {name}",
+      "connector": "Connector {name}"
+    },
+    "stepStatus": {
+      "running": "Running",
+      "installed": "Installed",
+      "linked": "Linked",
+      "needs_auth": "Needs authorization",
+      "failed": "Failed",
+      "skipped": "Skipped",
+      "removed": "Removed",
+      "kept": "Kept",
+      "unlinked": "Unlinked",
+      "disconnected": "Disconnected",
+      "updated": "Updated"
+    },
+    "background": {
+      "installed": "{name} installed",
+      "partial": "{name} installed, some items need attention",
+      "updated": "{name} updated",
+      "removed": "{name} uninstalled",
+      "failed": "{name}: operation failed"
+    },
+    "enableFlow": {
+      "installDescription": "Installs the {name} App into the workspace, then enables the agent."
+    },
+    "sections": {
+      "skills": "Skills",
+      "dependencies": "Dependencies",
+      "connectors": "Connectors"
+    },
+    "update": {
+      "title": "Update {name}",
+      "description": "Choose what to update. Dependencies move to their latest version; the App release replaces its Skills.",
+      "release": "App release",
+      "confirm": "Update {count} item | Update {count} items",
+      "none": "Nothing to update."
+    }
+  },
+  "runtime": {
+    "claudeCode": {
+      "modes": {
+        "inherit": {
+          "name": "Runtime default",
+          "description": "Use the workspace permission configuration."
+        },
+        "default": {
+          "name": "Manual",
+          "description": "Ask before operations that need approval."
+        },
+        "acceptEdits": {
+          "name": "Accept edits",
+          "description": "Automatically allow edits and common file operations in the working directory."
+        },
+        "auto": {
+          "name": "Auto",
+          "description": "Let Claude assess operations and handle ordinary permission checks."
+        },
+        "bypassPermissions": {
+          "name": "Bypass permissions",
+          "description": "Skip ordinary approval prompts. Explicit rules and Memoh tool permissions still apply."
+        }
+      },
+      "commands": {
+        "status": {
+          "description": "Show the last observed Claude session state"
+        },
+        "skills": {
+          "description": "List skills observed in this Claude session"
+        },
+        "mcp": {
+          "description": "Show MCP servers observed in this Claude session"
+        },
+        "compact": {
+          "description": "Compact Claude session context",
+          "running_text": "Compacting",
+          "completed_text": "Compaction completed"
+        },
+        "goal": {
+          "description": "Set a goal to keep pursuing",
+          "input_hint": "Describe your goal"
+        }
+      }
+    },
+    "codex": {
+      "modes": {
+        "strict": {
+          "name": "Ask for approval",
+          "description": "Always ask to edit external files and use the internet"
+        },
+        "policy": {
+          "name": "Approve for me",
+          "description": "Only ask for actions detected as potentially unsafe"
+        },
+        "yolo": {
+          "name": "Full access",
+          "description": "Unrestricted access to the internet and any file in your workspace"
+        }
+      },
+      "commands": {
+        "review": {
+          "description": "Review workspace changes",
+          "input_hint": "Optional review instructions"
+        },
+        "status": {
+          "description": "Show thread status, token usage and account limits"
+        },
+        "skills": {
+          "description": "List available skills"
+        },
+        "mcp": {
+          "description": "List MCP server status"
+        },
+        "compact": {
+          "description": "Compact thread context",
+          "running_text": "Compacting",
+          "completed_text": "Compaction completed"
+        },
+        "goal": {
+          "description": "Set a goal to keep pursuing",
+          "input_hint": "Describe your goal"
+        }
+      }
+    },
+    "planModes": {
+      "default": {
+        "name": "Default"
+      },
+      "plan": {
+        "name": "Plan"
+      }
+    },
+    "result": {
+      "notices": {
+        "last_observed": "Last observed session data"
+      },
+      "fields": {
+        "session_id": "Session",
+        "model": "Model",
+        "permission_mode": "Permissions",
+        "input_tokens": "Input",
+        "output_tokens": "Output",
+        "cache_read_input_tokens": "Cache read",
+        "cache_creation_input_tokens": "Cache creation",
+        "thread_id": "Thread",
+        "status": "Status",
+        "tokens": "Tokens",
+        "context_window": "Context window",
+        "limits": "Account limits",
+        "primary": "Primary quota used",
+        "secondary": "Secondary quota used"
+      },
+      "empty": "No entries available.",
+      "unknown": "Unavailable",
+      "details": "View JSON"
+    }
+  },
+  "elicitation": {
+    "done": "Done",
+    "cancel": "Cancel"
   }
 }

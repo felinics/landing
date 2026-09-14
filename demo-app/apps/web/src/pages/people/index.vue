@@ -71,7 +71,9 @@
                       :src="user.avatar_url"
                       :alt="memberName(user)"
                     />
-                    <AvatarFallback>{{ memberInitials(user) }}</AvatarFallback>
+                    <AvatarFallback>
+                      {{ memberInitials(user) }}
+                    </AvatarFallback>
                   </Avatar>
                   <div class="min-w-0">
                     <div class="flex items-center gap-2">

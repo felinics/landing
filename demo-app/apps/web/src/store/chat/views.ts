@@ -4,7 +4,7 @@ import {
   locateMessageUI,
 } from '@/composables/api/useChat'
 import type { RuntimeProjectionState } from './runtime-projection'
-import { isRuntimeRunActive } from './runtime-projection'
+import { isRuntimeRunStreaming } from './runtime-projection'
 import { createAssistantStreamRegistry } from './assistant-streams'
 import type { createTranscriptController } from './transcript'
 import { createChatViewRegistry, type ChatViewEntry } from './view-registry'
@@ -55,7 +55,7 @@ export function createChatViews(deps: ChatViewsDeps) {
       return Boolean(
         run
         && run.turn_id === turnId
-        && isRuntimeRunActive(run.status),
+        && isRuntimeRunStreaming(run),
       )
     },
     onRefreshApplied: (view, sessionId, latestTimestamp) => {
@@ -166,7 +166,13 @@ export function createChatViews(deps: ChatViewsDeps) {
       sessionId,
       viewId: focusedViewId.value,
     })
-    await view.transcript.loadInitialMessages(botId, sessionId, commitInitialHistory)
+    // A populated, untouched cache can render immediately only while the bot's
+    // activity stream covers changes. Otherwise keep the #933 behavior: mask
+    // until fresh history and the initial runtime snapshot commit together.
+    const mask = view.transcript.messages.length === 0
+      || view.staleWhileHidden
+      || !chatViews.isActivityStreamCovered(botId)
+    await view.transcript.loadInitialMessages(botId, sessionId, commitInitialHistory, { mask })
     view.initialized = true
   }
   const fetchSessionWindow = (botId: string, sessionId: string) =>
@@ -198,8 +204,8 @@ export function createChatViews(deps: ChatViewsDeps) {
       || !resolvedSessionId
       || resolvedBotId !== (deps.currentBotId.value ?? '').trim()
     ) return false
-    return isRuntimeRunActive(
-      runtimeProjectionProbe(resolvedSessionId)?.currentRunView?.status,
+    return isRuntimeRunStreaming(
+      runtimeProjectionProbe(resolvedSessionId)?.currentRunView,
     )
   }
 

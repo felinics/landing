@@ -25,3 +25,5 @@ export const claudeCodeModels = catalog([
   ['claude-fable-5-1', 'Claude Fable 5.1', 'Availability depends on your account and provider.'],
   ['claude-fable-5', 'Claude Fable 5', 'Availability depends on your account and provider.'],
 ])
+
+// A separate configured instance using the same simulated model provider.

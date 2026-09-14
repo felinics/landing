@@ -65,7 +65,7 @@ const typed = (text: string, time: number, start: number, duration: number) =>
               "
             />
           </div>
-          <MemohComposer
+          <MemohComposer folder="Research Notes" computer="Alex's Mac Mini"
             :text="
               time < 6.5
                 ? typed(t('computerDemo.youtubeRequest'), time, 2, 2.4)

@@ -109,3 +109,43 @@ test('external agent catalogs resolve independently with valid defaults', async 
  const firstIds = new Set(catalogs[0].models.map((model: { id: string }) => model.id))
  assert.ok(catalogs[1].models.every((model: { id: string }) => !firstIds.has(model.id)))
 })
+
+test('session folders resolve against the current workdir response contract', async () => {
+ const { items: sessions } = await get('/bots/bot-memoh/sessions')
+ const { workdirs } = await get('/bots/bot-memoh/workdirs')
+ for (const session of sessions) {
+  const folder = workdirs.find((row: any) => row.id === session.workdir_id)
+  assert.ok(folder, `Missing folder for ${session.id}`)
+  assert.equal((await get(`/bots/bot-memoh/container/fs/list?path=${encodeURIComponent(folder.path)}`)).path, folder.path)
+ }
+})
+
+test('sidebar app installation validates the release and reconciles only its bot', async () => {
+ const { data: apps } = await get('/supermarket/apps?q=uv&limit=1')
+ const app = apps[0]
+ const detail = await get(`/supermarket/registries/${app.registry_id}/apps/${app.app_id}`)
+ const before = await get('/bots/bot-research/apps')
+ const payload = { registry_id: app.registry_id, app_id: app.app_id, revision: detail.revision }
+ const invalid = await write('/bots/bot-memoh/apps', 'POST', { ...payload, revision: 'stale' })
+ assert.equal(invalid.status, 400)
+ const response = await write('/bots/bot-memoh/apps', 'POST', payload)
+ const events = await response.text()
+ assert.match(events, /"type":"step_done"/)
+ assert.match(events, /"type":"done","status":"installed"/)
+ const installed = (await get('/bots/bot-memoh/apps')).items.find((row: any) => row.app_id === app.app_id)
+ assert.equal(installed.revision, detail.revision)
+ assert.equal(installed.status, 'installed')
+ assert.deepEqual(installed.dependencies.map((row: any) => row.id), detail.dependencies)
+ assert.deepEqual(await get('/bots/bot-research/apps'), before)
+ await write('/bots/bot-memoh/apps', 'POST', payload)
+ assert.equal((await get('/bots/bot-memoh/apps')).items.filter((row: any) => row.app_id === app.app_id).length, 1)
+})
+
+test('creating a session preserves the selected agent and workspace', async()=>{
+ const selection={bot_agent_id:'agent-codex',runtime_type:'codex',workdir_id:'bot-memoh-research',runtime_metadata:{project_path:'/data/research-notes'}}
+ const created=await(await write('/bots/bot-memoh/sessions','POST',selection)).json()
+ for(const [key,value] of Object.entries(selection)) assert.deepEqual(created[key],value)
+ const listed=await get('/bots/bot-memoh/sessions')
+ const rows=Array.isArray(listed)?listed:listed.items
+ assert.equal(rows.find((row:any)=>row.id===created.id).bot_agent_id,selection.bot_agent_id)
+})

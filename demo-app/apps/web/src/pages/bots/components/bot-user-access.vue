@@ -133,7 +133,7 @@
               v-if="grant.subject_type === 'user' && grant.user_avatar_url"
               :src="grant.user_avatar_url"
             />
-            <AvatarFallback class="bg-muted text-muted-foreground">
+            <AvatarFallback>
               <Globe
                 v-if="grant.subject_type === 'everyone'"
                 class="size-3.5"

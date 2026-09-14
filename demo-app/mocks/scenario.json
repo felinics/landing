@@ -1,0 +1,76 @@
+{
+  "agents": [
+    {
+      "id": "",
+      "name": "Memoh",
+      "runtime": "native",
+      "icon": "/demo/memoh.svg",
+      "model": "DeepSeek V4.1 Flash"
+    },
+    {
+      "id": "agent-claude",
+      "name": "Claude Code",
+      "runtime": "claude-code",
+      "icon": "/brands/claude-code-color.svg",
+      "model": "Claude Sonnet 5"
+    },
+    {
+      "id": "agent-codex",
+      "name": "Codex",
+      "runtime": "codex",
+      "icon": "/brands/codex-blob.svg",
+      "model": "GPT 6 Astra"
+    }
+  ],
+  "computers": [
+    {
+      "target_id": "native",
+      "kind": "native",
+      "name": "Cloud Computer",
+      "online": true,
+      "primary": true,
+      "status": "online"
+    },
+    {
+      "target_id": "runtime-alex-mini",
+      "runtime_id": "runtime-alex-mini",
+      "kind": "remote",
+      "name": "Alex's Mac Mini",
+      "online": true,
+      "primary": false,
+      "status": "online",
+      "os": "darwin",
+      "arch": "arm64"
+    }
+  ],
+  "folders": [
+    {
+      "key": "daily",
+      "name": "Daily Planner",
+      "path": "/data/daily-planner",
+      "target_kind": "native",
+      "workspace_target_id": "native"
+    },
+    {
+      "key": "research",
+      "name": "Research Notes",
+      "path": "/data/research-notes",
+      "target_kind": "native",
+      "workspace_target_id": "native"
+    },
+    {
+      "key": "tracker",
+      "name": "Reading Tracker",
+      "path": "/data/reading-tracker",
+      "target_kind": "native",
+      "workspace_target_id": "native"
+    },
+    {
+      "key": "studio",
+      "name": "Design Studio",
+      "path": "/Users/alex/Projects/design-studio",
+      "target_kind": "remote",
+      "workspace_target_id": "runtime-alex-mini"
+    }
+  ]
+}

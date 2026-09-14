@@ -13,15 +13,18 @@
 </template>
 
 <script setup lang="ts">
+import { normalizeAgentID } from '@/utils/external-agent'
 import { watch } from 'vue'
+import { useTitle } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
 import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { getBotsByBotIdAgents, getBotsById } from '@memohai/sdk'
 import { PanePlaceholder } from '@felinic/ui'
 import { useChatStore } from '@/store/chat-list'
+import { routeConversationLabel } from '@/store/chat-list.utils'
 import { useWorkspaceTabsStore } from '@/store/workspace-tabs'
-import { ACP_NO_PROJECT_MODE, createACPNoProjectPath, normalizeACPAgentID } from '@/utils/acp'
+import { ACP_NO_PROJECT_MODE, createACPNoProjectPath } from '@/utils/acp'
 import { botAgentProvider } from '@/utils/bot-agent'
 import ChatWorkspace from './components/chat-workspace.vue'
 
@@ -30,7 +33,7 @@ const router = useRouter()
 const { t } = useI18n()
 const chatStore = useChatStore()
 const workspaceTabs = useWorkspaceTabsStore()
-const { currentBotId, bots } = storeToRefs(chatStore)
+const { currentBotId, bots, activeSession } = storeToRefs(chatStore)
 
 // Resolve a bot UUID from a URL name slug. Prefers the already-loaded bot list,
 // falling back to the API (which accepts both name and UUID identifiers).
@@ -74,6 +77,14 @@ let suppressUrlSync = false
 const CHAT_ROUTE_NAMES = new Set(['home', 'bot'])
 const isChatRoute = () => CHAT_ROUTE_NAMES.has(route.name as string)
 
+// Home remains mounted behind settings, so the route gates the browser title.
+useTitle(() => {
+  const session = activeSession.value
+  if (!isChatRoute() || !currentBotId.value || !session) return 'Memoh'
+  const title = (session.title ?? '').trim() || routeConversationLabel(session) || t('chat.untitledSession')
+  return `Memoh · ${title}`
+}, { restoreOnUnmount: () => 'Memoh' })
+
 // One-shot guard so concurrent syncStoreFromUrl() calls can't both start a
 // session for the same redirect. Set synchronously before the first await.
 let agentStartConsumed = false
@@ -97,7 +108,7 @@ async function maybeStartExternalAgentSession() {
     return
   }
   agentStartConsumed = true
-  const agentId = normalizeACPAgentID(raw)
+  const agentId = normalizeAgentID(raw)
   try {
     const botId = currentBotId.value?.trim() ?? ''
     if (agentId && botId) {

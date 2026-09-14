@@ -1,3 +1,4 @@
+import { randomUUID } from '@/utils/uuid'
 import { useUserStore } from '@/store/user'
 import type {
   Bot,
@@ -161,9 +162,7 @@ export function isOptimisticTurn(turn: ChatMessage): boolean {
 }
 
 export function createInvocationId(): string {
-  const randomUUID = globalThis.crypto?.randomUUID
-  if (typeof randomUUID === 'function') return randomUUID.call(globalThis.crypto)
-  return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`
+  return randomUUID()
 }
 
 export function cloneToolApprovalState(approval: UIToolApproval): UIToolApproval {

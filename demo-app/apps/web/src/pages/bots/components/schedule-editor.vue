@@ -3,6 +3,7 @@
        section label over a card of label-left / control-right rows. -->
   <form
     class="space-y-8"
+    novalidate
     @submit.prevent="handleSubmit"
   >
     <SettingsSection :title="t('bots.steps.basicInfo')">
@@ -14,6 +15,7 @@
           <Input
             id="sched-name"
             v-model="form.name"
+            :aria-invalid="submitted && !form.name.trim()"
             :placeholder="t('bots.schedule.form.namePlaceholder')"
           />
         </div>
@@ -166,6 +168,7 @@
           >
             <Input
               :model-value="patternState.advancedPattern"
+              :aria-invalid="submitted && !isValidCron(manualCron)"
               class="font-mono"
               placeholder="0 9 * * *"
               @update:model-value="v => patchState({ advancedPattern: String(v) })"
@@ -202,6 +205,7 @@
       <Textarea
         id="sched-command"
         v-model="form.command"
+        :aria-invalid="submitted && !form.command.trim()"
         size="lg"
         class="min-h-[9rem] resize-none bg-card font-mono"
         :placeholder="t('bots.schedule.form.commandPlaceholder')"
@@ -218,6 +222,7 @@
         ref="executionFields"
         :bot-id="botId"
         :form="execution"
+        :submitted="submitted"
       />
       <!-- The placeholder carries the empty-value meaning, so no help line
            repeats it. -->
@@ -274,7 +279,7 @@
         </Button>
         <Button
           type="submit"
-          :disabled="!canSubmit"
+          :disabled="isSaving"
           :loading="isSaving"
         >
           {{ mode === 'create' ? t('common.create') : t('common.confirm') }}
@@ -364,7 +369,8 @@ const form = reactive<SchedulePlainForm>({
 const patternState = ref<ScheduleFormState>(defaultScheduleFormState())
 const execution = reactive<ScheduleExecutionForm>(defaultExecutionForm())
 const executionFields = ref<InstanceType<typeof ScheduleExecutionFields> | null>(null)
-const manualCron = ref('')
+const manualCron = computed(() => toCron(patternState.value))
+const submitted = ref(false)
 const isSaving = ref(false)
 const submitError = ref<string | null>(null)
 const botTimezone = ref<string | undefined>(undefined)
@@ -417,22 +423,6 @@ const schedulePreviewText = computed(() => {
   const description = describeCron(manualCron.value, cronLocale.value) || ''
   if (!description) return ''
   return effectiveTimezone.value ? `${description} · ${effectiveTimezone.value}` : description
-})
-
-watch(
-  () => patternState.value,
-  (next) => {
-    try {
-      const canonical = toCron(next)
-      if (toCron(fromCron(manualCron.value)) !== canonical) manualCron.value = canonical
-    } catch { /* invalid intermediate state */ }
-  },
-  { deep: true },
-)
-
-watch(manualCron, (next) => {
-  const nextState = fromCron(next)
-  if (JSON.stringify(patternState.value) !== JSON.stringify(nextState)) patternState.value = nextState
 })
 
 const runLimitModel = computed({
@@ -517,9 +507,9 @@ function resetForm() {
   form.maxCalls = null
   form.enabled = true
   patternState.value = defaultScheduleFormState()
-  manualCron.value = toCron(patternState.value)
   Object.assign(execution, defaultExecutionForm())
   submitError.value = null
+  submitted.value = false
 }
 
 function hydrateForm(schedule: ScheduleSchedule) {
@@ -530,9 +520,9 @@ function hydrateForm(schedule: ScheduleSchedule) {
   form.maxCalls = (typeof raw === 'number' && raw > 0) ? raw : null
   form.enabled = schedule.enabled ?? true
   patternState.value = fromCron(schedule.pattern ?? '')
-  manualCron.value = schedule.pattern ?? ''
   hydrateExecution(schedule)
   submitError.value = null
+  submitted.value = false
 }
 
 function hydrateFromProps() {
@@ -555,8 +545,10 @@ async function fetchBotSettings() {
 }
 
 async function handleSubmit() {
-  if (!canSubmit.value) return
+  if (isSaving.value) return
+  submitted.value = true
   submitError.value = null
+  if (!canSubmit.value) return
   isSaving.value = true
   try {
     const base = {

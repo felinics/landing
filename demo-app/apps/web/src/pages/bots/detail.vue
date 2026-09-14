@@ -45,108 +45,104 @@
                 <span class="min-w-0 truncate">{{ backLabel }}</span>
               </NavItem>
 
-              <!-- Identity floats as a card — same recipe as the bots-list persona
-                   cards (bg-card + border + menu-shell radius), just tighter padding.
-                   Wrapping it gives the header a real visual anchor: the round avatar
-                   no longer sits bare against the nav-hover edge, so back + name read
-                   as one settled block instead of two misaligned centers. The card
-                   border replaces the old hairline, so no divider above or below. -->
-              <div class="mt-3 flex items-center gap-3 rounded-[var(--radius-menu-shell)] border border-border bg-card p-3">
-                <!-- Avatar -->
-                <div class="group/avatar relative size-12 shrink-0 rounded-full overflow-hidden bg-muted">
-                  <Avatar class="size-12 rounded-full">
-                    <AvatarImage
-                      v-if="bot?.avatar_url"
-                      :src="bot.avatar_url"
-                      :alt="bot.display_name"
-                    />
-                    <AvatarFallback class="text-lg">
-                      {{ avatarFallback }}
-                    </AvatarFallback>
-                  </Avatar>
-                  <!-- Edit Overlay -->
-                  <button
-                    type="button"
-                    class="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity group-hover/avatar:opacity-100"
-                    :title="$t('common.edit')"
-                    :aria-label="$t('common.edit')"
-                    :disabled="!bot || botLifecyclePending"
-                    @click="handleEditAvatar"
-                  >
-                    <SquarePen class="size-4 text-white" />
-                  </button>
-                </div>
-              
-                <!-- Info Block -->
-                <div class="min-w-0 flex-1 flex flex-col justify-center">
-                  <div class="group/name flex items-center gap-1 relative min-w-0">
-                    <template v-if="isEditingBotName && bot">
-                      <Input
-                        ref="editNameInputRef"
-                        v-model="botNameDraft"
-                        class="h-7 w-full text-xs px-2 pr-6 shadow-none"
-                        :placeholder="$t('bots.displayNamePlaceholder')"
-                        :disabled="isSavingBotName"
-                        @keydown.enter.prevent="handleConfirmBotName"
-                        @keydown.esc.prevent="handleCancelBotName"
-                        @blur="handleConfirmBotName"
+              <SettingsSection class="mt-3">
+                <div class="flex items-center gap-3 p-3">
+                  <!-- Avatar -->
+                  <div class="group/avatar relative size-12 shrink-0 rounded-full overflow-hidden bg-muted">
+                    <Avatar class="size-12 rounded-full">
+                      <AvatarImage
+                        v-if="bot?.avatar_url"
+                        :src="bot.avatar_url"
+                        :alt="bot.display_name"
                       />
-                      <div class="absolute right-1.5 top-1/2 -translate-y-1/2 opacity-50 pointer-events-none">
-                        <Check class="size-3" />
-                      </div>
-                    </template>
-                    <template v-else>
-                      <h2 class="truncate text-sm font-semibold text-foreground">
-                        {{ botNameDraft.trim() || bot?.display_name || botId }}
-                      </h2>
-                      <button
-                        v-if="bot"
-                        type="button"
-                        class="opacity-0 group-hover/name:opacity-100 p-1 shrink-0"
-                        :disabled="botLifecyclePending"
-                        @click="handleStartEditBotName"
-                      >
-                        <SquarePen class="size-3 text-muted-foreground" />
-                      </button>
-                    </template>
+                      <AvatarFallback class="text-lg">
+                        {{ avatarFallback }}
+                      </AvatarFallback>
+                    </Avatar>
+                    <!-- Edit Overlay -->
+                    <button
+                      type="button"
+                      class="absolute inset-0 flex items-center justify-center rounded-full bg-black/40 opacity-0 transition-opacity group-hover/avatar:opacity-100"
+                      :title="$t('common.edit')"
+                      :aria-label="$t('common.edit')"
+                      :disabled="!bot || botLifecyclePending"
+                      @click="handleEditAvatar"
+                    >
+                      <SquarePen class="size-4 text-white" />
+                    </button>
                   </div>
-                
-                  <!-- Status: an inline dot + label living inside the white identity
-                       card — no filled pill, so it never reads as a black blob on
-                       white. A success dot for a healthy/active bot echoes the right
-                       pane's green "Healthy"; an issue turns dot + label destructive;
-                       a healthy-but-inactive bot dims to a muted dot; lifecycle shows
-                       a spinner. Bot type trails as a muted footnote. All semantic
-                       tokens, so light and dark stay in sync. -->
-                  <div class="mt-1 flex items-center gap-1.5 text-[11px]">
-                    <template v-if="bot">
-                      <LoaderCircle
-                        v-if="bot.status === 'creating' || bot.status === 'deleting'"
-                        class="size-2.5 shrink-0 animate-spin text-muted-foreground"
-                      />
-                      <span
-                        v-else
-                        class="size-1.5 shrink-0 rounded-full"
-                        :class="statusVariant === 'destructive'
-                          ? 'bg-destructive'
-                          : statusVariant === 'secondary'
-                            ? 'bg-muted-foreground/40'
-                            : 'bg-success'"
-                      />
-                      <span
-                        class="font-medium"
-                        :class="statusVariant === 'destructive' ? 'text-destructive' : 'text-muted-foreground'"
-                        :title="hasIssue ? issueTitle : undefined"
-                      >{{ statusLabel }}</span>
-                      <span
-                        v-if="bot.type"
-                        class="text-muted-foreground/60"
-                      >· {{ botTypeLabel }}</span>
-                    </template>
+
+                  <!-- Info Block -->
+                  <div class="min-w-0 flex-1 flex flex-col justify-center">
+                    <div class="group/name flex items-center gap-1 relative min-w-0">
+                      <template v-if="isEditingBotName && bot">
+                        <Input
+                          ref="editNameInputRef"
+                          v-model="botNameDraft"
+                          class="h-7 w-full text-xs px-2 pr-6 shadow-none"
+                          :placeholder="$t('bots.displayNamePlaceholder')"
+                          :disabled="isSavingBotName"
+                          @keydown.enter.prevent="handleConfirmBotName"
+                          @keydown.esc.prevent="handleCancelBotName"
+                          @blur="handleConfirmBotName"
+                        />
+                        <div class="absolute right-1.5 top-1/2 -translate-y-1/2 opacity-50 pointer-events-none">
+                          <Check class="size-3" />
+                        </div>
+                      </template>
+                      <template v-else>
+                        <h2 class="truncate text-sm font-semibold text-foreground">
+                          {{ botNameDraft.trim() || bot?.display_name || botId }}
+                        </h2>
+                        <button
+                          v-if="bot"
+                          type="button"
+                          class="opacity-0 group-hover/name:opacity-100 p-1 shrink-0"
+                          :disabled="botLifecyclePending"
+                          @click="handleStartEditBotName"
+                        >
+                          <SquarePen class="size-3 text-muted-foreground" />
+                        </button>
+                      </template>
+                    </div>
+
+                    <!-- Status: an inline dot + label living inside the white identity
+                         card — no filled pill, so it never reads as a black blob on
+                         white. A success dot for a healthy/active bot echoes the right
+                         pane's green "Healthy"; an issue turns dot + label destructive;
+                         a healthy-but-inactive bot dims to a muted dot; lifecycle shows
+                         a spinner. Bot type trails as a muted footnote. All semantic
+                         tokens, so light and dark stay in sync. -->
+                    <div class="mt-1 flex items-center gap-1.5 text-[11px]">
+                      <template v-if="bot">
+                        <LoaderCircle
+                          v-if="bot.status === 'creating' || bot.status === 'deleting'"
+                          class="size-2.5 shrink-0 animate-spin text-muted-foreground"
+                        />
+                        <span
+                          v-else
+                          class="size-1.5 shrink-0 rounded-full"
+                          :class="statusVariant === 'destructive'
+                            ? 'bg-destructive'
+                            : statusVariant === 'secondary'
+                              ? 'bg-muted-foreground/40'
+                              : 'bg-success'"
+                        />
+                        <span
+                          class="font-medium"
+                          :class="statusVariant === 'destructive' ? 'text-destructive' : 'text-muted-foreground'"
+                          :title="hasIssue ? issueTitle : undefined"
+                        >{{ statusLabel }}</span>
+                        <span
+                          v-if="bot.type"
+                          class="text-muted-foreground/60"
+                        >· {{ botTypeLabel }}</span>
+                      </template>
+                    </div>
                   </div>
                 </div>
-              </div>
-            
+              </SettingsSection>
+
               <!-- Search Input -->
               <div class="mt-3 relative">
                 <Search class="absolute left-2.5 top-1/2 -translate-y-1/2 size-3 text-muted-foreground" />
@@ -203,8 +199,8 @@
                         <!-- NavItem's root is already a flex row, so the count
                              pushes itself to the trailing edge without a slot. -->
                         <BadgeCount
-                          v-if="tab.value === 'dependencies' && dependencyAttentionCount > 0"
-                          :count="dependencyAttentionCount"
+                          v-if="tab.value === 'apps' && appAttentionCount > 0"
+                          :count="appAttentionCount"
                           variant="destructive"
                           class="ml-auto"
                         />
@@ -269,13 +265,14 @@
 <script setup lang="ts">
 import {
   Avatar, AvatarImage, AvatarFallback, Input,
-  SidebarMenu, SidebarMenuItem,
+  SidebarMenu, SidebarMenuItem, SettingsSection,
 } from '@felinic/ui'
 import {
-  SquarePen, LoaderCircle, Check, Search, X, LayoutDashboard, Settings, MessageSquare,
-  BrainCircuit, ShieldAlert, Database, Mail, Link, Clock, Server, FileBox, Zap,
-  Monitor, Globe, Bot as BotIcon, ChevronLeft, Workflow, Laptop, Plug, Package
+  SquarePen, LoaderCircle, Check, Search, X, LayoutDashboard, MessageSquare,
+  ShieldAlert, Database, Mail, Link, Server, SlidersHorizontal,
+  Bot as BotIcon, ChevronLeft, Laptop, Package as App
 } from 'lucide-vue-next'
+import { SettingsIcon as Settings } from '@memohai/icon/ui'
 import { computed, ref, watch, onMounted, toValue, nextTick, inject, type Ref } from 'vue'
 import { useRoute, useRouter, onBeforeRouteLeave } from 'vue-router'
 import { BadgeCount, NavItem, toast } from '@felinic/ui'
@@ -294,25 +291,18 @@ import type {
 } from '@memohai/sdk'
 import { useCapabilitiesStore } from '@/store/capabilities'
 
+import BotAdvanced from './components/bot-advanced.vue'
 import BotSettings from './components/bot-settings.vue'
-import BotToolApproval from './components/bot-tool-approval.vue'
-import BotHooks from './components/bot-hooks.vue'
-import BotDesktop from './components/bot-desktop.vue'
-import BotNetwork from './components/bot-network.vue'
 import BotChannels from './components/bot-channels.vue'
 import BotMcp from './components/bot-mcp.vue'
-import BotConnectors from './components/bot-connectors.vue'
 import BotMemory from './components/bot-memory.vue'
-import BotSkills from './components/bot-skills.vue'
-import BotCompaction from './components/bot-compaction.vue'
 import BotEmail from './components/bot-email.vue'
 import BotOverview from './components/bot-overview.vue'
-import BotSchedule from './components/bot-schedule.vue'
 import BotContainer from './components/bot-container.vue'
 import BotRemoteRuntime from './components/bot-remote-runtime.vue'
 import BotAccess from './components/bot-access.vue'
 import BotAgents from './components/bot-agents.vue'
-import BotDependencies from './components/bot-dependencies.vue'
+import BotApps from './components/bot-apps.vue'
 import AvatarEditDialog from './components/avatar-edit-dialog.vue'
 import { resolveApiErrorMessage } from '@/utils/api-error'
 import { useAvatarInitials } from '@/composables/useAvatarInitials'
@@ -325,8 +315,7 @@ import MasterDetailSidebarLayout from '@/components/master-detail-sidebar-layout
 import { DesktopShellKey } from '@/lib/desktop-shell'
 import { resolveBotWorkspaceBackend } from '@/utils/bot-workspace'
 import { filterBotDetailsTabs, type BotDetailsTabRule } from '@/utils/bot-detail-tabs'
-import { useBotDependenciesQuery } from '@/composables/api/useWorkspaceDependencies'
-import { dependencyNeedsAttention } from '@/utils/workspace-dependency'
+import { appNeedsAttention, useBotAppsQuery } from '@/composables/api/useApps'
 type BotCheck = BotsBotCheck
 type BotContainerInfo = HandlersGetContainerResponse
 type BotContainerSnapshot = HandlersListSnapshotsResponse extends { snapshots?: (infer T)[] } ? T : never
@@ -401,38 +390,29 @@ const canManageBot = computed(() => {
 
 const capabilitiesStore = useCapabilitiesStore()
 
-// Sidebar count for the Dependencies tab: rows that need a hand (missing,
-// failed, version to align, update available). Same query key as the tab
-// itself (bot + the Server-resolved primary target), so opening the tab reuses
-// this fetch; chat-only members never see the tab, so they never fetch.
-const dependencyBadgeBotId = computed(() => (canManageBot.value ? botId.value : '')) as Ref<string>
-const { data: dependencyList } = useBotDependenciesQuery(dependencyBadgeBotId, ref(''))
-const dependencyAttentionCount = computed(() => (dependencyList.value?.items ?? []).filter(dependencyNeedsAttention).length)
+// Sidebar count for the Apps tab: Apps that need a hand (partial,
+// failed, update available). Same bot-scoped query key as the tab itself,
+// so opening the tab reuses this fetch;
+// chat-only members never see the tab, so they never fetch.
+const appBadgeBotId = computed(() => (canManageBot.value ? botId.value : '')) as Ref<string>
+const { data: appList } = useBotAppsQuery(appBadgeBotId)
+const appAttentionCount = computed(() => (appList.value?.items ?? []).filter(appNeedsAttention).length)
 
 const tabList = computed(() => {
   const bot_id = toValue(botId)
   const tabs = [
     { value: 'overview', label: 'bots.tabs.overview', icon: LayoutDashboard, component: BotOverview, params: {} },
     { value: 'general', label: 'bots.tabs.general', icon: Settings, component: BotSettings, params: { 'bot-id': bot_id, 'bot-type': bot.value?.type } },
-    { value: 'desktop', label: 'bots.tabs.desktop', icon: Monitor, component: BotDesktop, params: { 'bot-id': bot_id }, containerWorkspaceOnly: true },
     { value: 'remote-runtime', label: 'bots.tabs.remoteRuntime', icon: Laptop, component: BotRemoteRuntime, params: { 'bot-id': bot_id } },
     { value: 'container', label: 'bots.tabs.container', icon: Server, component: BotContainer, params: {}, containerWorkspaceOnly: true },
-    { value: 'network', label: 'bots.tabs.network', icon: Globe, component: BotNetwork, params: { 'bot-id': bot_id }, containerWorkspaceOnly: true },
     { value: 'memory', label: 'bots.tabs.memory', icon: Database, component: BotMemory, params: { 'bot-id': bot_id } },
     { value: 'channels', label: 'bots.tabs.channels', icon: MessageSquare, component: BotChannels, params: { 'bot-id': bot_id } },
+    { value: 'advanced', label: 'bots.tabs.advanced', icon: SlidersHorizontal, component: BotAdvanced, params: { 'bot-id': bot_id, 'workspace-backend': botWorkspaceBackend.value } },
     { value: 'access', label: 'bots.tabs.access', icon: ShieldAlert, component: BotAccess, params: { 'bot-id': bot_id, 'bot-type': bot.value?.type } },
-    { value: 'tool-approval', label: 'bots.tabs.toolApproval', icon: Zap, component: BotToolApproval, params: { 'bot-id': bot_id } },
-    { value: 'hooks', label: 'bots.tabs.hooks', icon: Workflow, component: BotHooks, params: { 'bot-id': bot_id }, containerWorkspaceOnly: true },
     { value: 'agents', label: 'bots.tabs.agents', icon: BotIcon, component: BotAgents, params: { 'bot-id': bot_id } },
     { value: 'email', label: 'bots.tabs.email', icon: Mail, component: BotEmail, params: { 'bot-id': bot_id } },
-    ...(capabilitiesStore.loaded && capabilitiesStore.connectors
-      ? [{ value: 'connectors', label: 'bots.tabs.connectors', icon: Plug, component: BotConnectors, params: { 'bot-id': bot_id } }]
-      : []),
     { value: 'mcp', label: 'bots.tabs.mcp', icon: Link, component: BotMcp, params: { 'bot-id': bot_id } },
-    { value: 'dependencies', label: 'bots.tabs.dependencies', icon: Package, component: BotDependencies, params: { 'bot-id': bot_id } },
-    { value: 'compaction', label: 'bots.tabs.compaction', icon: FileBox, component: BotCompaction, params: { 'bot-id': bot_id } },
-    { value: 'schedule', label: 'bots.tabs.schedule', icon: Clock, component: BotSchedule, params: { 'bot-id': bot_id } },
-    { value: 'skills', label: 'bots.tabs.skills', icon: BrainCircuit, component: BotSkills, params: { 'bot-id': bot_id } },
+    { value: 'apps', label: 'bots.tabs.apps', icon: App, component: BotApps, params: { 'bot-id': bot_id } },
   ] satisfies Array<BotDetailsTabRule & {
     label: string
     icon: unknown
@@ -456,26 +436,25 @@ const searchIndex = computed(() => {
     { tab: 'general', key: 'bots.settings.dangerZone', keywords: ['delete', 'remove'] },
     { tab: 'container', key: 'bots.container.dataTitle', keywords: ['docker', 'image', 'gpu', 'volume'] },
     { tab: 'container', key: 'bots.container.metricsTitle', keywords: ['cpu', 'ram', 'storage'] },
-    { tab: 'dependencies', key: 'bots.tabs.dependencies', keywords: ['codex', 'claude code', 'node', 'python', 'uv', 'install', 'version', '依赖', '安装', '版本', '依存', 'インストール'] },
+    { tab: 'apps', key: 'bots.tabs.apps', keywords: ['codex', 'claude code', 'node', 'python', 'uv', 'install', 'version', 'connector', 'oauth', 'dependency', 'supermarket', '依赖', '安装', '版本', '连接器', '扩展包', '依存', 'インストール', 'コネクター', 'パッケージ'] },
     { tab: 'remote-runtime', key: 'bots.remoteRuntime.title', keywords: ['files', 'commands', 'computer', 'server', '文件', '命令', '电脑', '服务器', 'ファイル', 'コマンド'] },
     { tab: 'memory', key: 'bots.memory.title', keywords: ['vector', 'database', 'pgvector', 'embed'] },
     { tab: 'channels', key: 'bots.channels.configured', keywords: ['telegram', 'discord', 'wechat', 'slack'] },
     { tab: 'access', key: 'bots.access.title', keywords: ['permissions', 'acl', 'rules', 'allow', 'deny'] },
-    { tab: 'tool-approval', key: 'bots.toolApproval.title', keywords: ['mcp', 'tools', 'review', 'bypass', 'approval'] },
-    { tab: 'hooks', key: 'bots.hooks.title', keywords: ['hooks', 'events', 'tool calls', 'approval', 'workspace'] },
+    { tab: 'advanced', section: 'tool-approval', key: 'bots.toolApproval.title', keywords: ['mcp', 'tools', 'review', 'bypass', 'approval'] },
+    { tab: 'advanced', section: 'desktop', key: 'bots.tabs.desktop', keywords: ['desktop', 'display', 'browser', '桌面', 'デスクトップ'] },
+    { tab: 'advanced', section: 'network', key: 'bots.tabs.network', keywords: ['network', 'proxy', 'vpn', '网络', 'ネットワーク'] },
+    { tab: 'advanced', section: 'hooks', key: 'bots.hooks.title', keywords: ['hooks', 'events', 'tool calls', 'approval', 'workspace'] },
     { tab: 'agents', key: 'bots.tabs.agents', keywords: ['codex', 'claude code', 'external agent', 'acp'] },
     { tab: 'email', key: 'bots.email.title', keywords: ['smtp', 'imap', 'mailbox', 'bindings'] },
-    ...(capabilitiesStore.loaded && capabilitiesStore.connectors
-      ? [{ tab: 'connectors', key: 'bots.tabs.connectors', keywords: ['providers', 'apps', 'oauth', 'api', '连接器', 'コネクター'] }]
-      : []),
     { tab: 'mcp', key: 'bots.tabs.mcp', keywords: ['servers', 'connect', 'custom mcp'] },
-    { tab: 'compaction', key: 'bots.compaction.title', keywords: ['compress', 'summarize', 'context window'] },
-    { tab: 'schedule', key: 'bots.schedule.title', keywords: ['cron', 'jobs', 'tasks', 'automation'] },
-    { tab: 'skills', key: 'bots.skills.title', keywords: ['prompts', 'instructions', 'system prompt'] },
-  ].map(item => ({
-    ...item,
-    translatedTitle: t(item.key)
-  }))
+    { tab: 'advanced', section: 'compaction', key: 'bots.tabs.compaction', keywords: ['compaction', 'compress', 'summarize', 'context window'] },
+  ].filter(item => botWorkspaceBackend.value !== 'remote'
+    || !['desktop', 'network', 'hooks'].includes(item.section ?? ''))
+    .map(item => ({
+      ...item,
+      translatedTitle: t(item.key),
+    }))
 })
 
 const normalizedQuery = computed(() => searchQuery.value.trim().toLowerCase())
@@ -497,7 +476,23 @@ function tabMatches(tab: { value: string, label: string }): boolean {
 }
 
 function selectTab(value: string): void {
+  const match = normalizedQuery.value
+    ? searchIndex.value.find(item => item.tab === value && (
+      item.translatedTitle.toLowerCase().includes(normalizedQuery.value)
+      || item.keywords.some(keyword => keyword.toLowerCase().includes(normalizedQuery.value))
+    ))
+    : undefined
   searchQuery.value = ''
+  if (value === 'advanced' || match?.section || route.query.section) {
+    const query = { ...route.query, tab: value, section: match?.section }
+    if (isMobile.value) {
+      tabPushedFromList.value = true
+      void router.push({ query })
+    } else {
+      void router.replace({ query })
+    }
+    return
+  }
   // Mobile: the tab list and a tab's content are two addressable levels —
   // bare path = list, ?tab=x = content — so the tap is a real push and the
   // system back button pops straight back to the list. The synced-param
@@ -512,7 +507,7 @@ function selectTab(value: string): void {
 }
 
 // Mobile stack state for MasterDetailSidebarLayout, derived from the URL so a
-// refresh / deep link (for example, ?tab=schedule) opens straight on the content and the
+// refresh / deep link (for example, ?tab=advanced) opens straight on the content and the
 // KeepAlive'd page can never inherit a stale stack state from another bot.
 const mobileDetailOpen = computed(() => {
   const tab = route.query.tab
@@ -539,19 +534,14 @@ function closeMobileDetail(): void {
   void router.replace({ query: rest }).catch(() => {})
 }
 
-const groupedTabs = computed(() => {
-  const coreKeys = ['overview', 'general', 'channels']
-  const capabilityKeys = ['skills', 'hooks', 'tool-approval', 'agents', 'connectors', 'mcp', 'dependencies', 'memory']
-  const runtimeKeys = ['desktop', 'remote-runtime', 'container', 'network', 'schedule', 'compaction']
-  const securityKeys = ['access', 'email']
-
-  return [
-    { key: 'core', items: tabList.value.filter(t => coreKeys.includes(t.value)) },
-    { key: 'capabilities', items: tabList.value.filter(t => capabilityKeys.includes(t.value)) },
-    { key: 'runtime', items: tabList.value.filter(t => runtimeKeys.includes(t.value)) },
-    { key: 'security', items: tabList.value.filter(t => securityKeys.includes(t.value)) },
-  ].filter(g => g.items.length > 0)
-})
+const groupedTabs = computed(() => [
+  { key: 'core', keys: ['overview', 'general', 'channels'] },
+  { key: 'capabilities', keys: ['memory', 'agents', 'apps', 'mcp', 'container', 'remote-runtime', 'email'] },
+  { key: 'administration', keys: ['advanced', 'access'] },
+].map(group => ({
+  key: group.key,
+  items: group.keys.flatMap(key => tabList.value.filter(tab => tab.value === key)),
+})).filter(group => group.items.length > 0))
 
 // Narrow the grouped nav in place while searching; drop emptied groups.
 const displayGroups = computed(() =>
@@ -606,6 +596,10 @@ watch(bot, (val) => {
 
 const activeTab = useSyncedQueryParam('tab', 'overview')
 watch([tabList, activeTab], ([tabs, tab]) => {
+  if (['tool-approval', 'hooks', 'desktop', 'network', 'compaction'].includes(tab)) {
+    void router.replace({ query: { ...route.query, tab: 'advanced', section: tab } })
+    return
+  }
   if (tab === 'acp') {
     activeTab.value = 'agents'
     return

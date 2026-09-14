@@ -38,9 +38,13 @@ export interface TranscriptDeps {
   // this turn? Settled reconciliation uses it to tell an in-flight boundary
   // turn (retain) from a vanished one (drop).
   isTurnLive?: (sessionId: string, turnId: string) => boolean
+  // The view registry's stale-mark version: captured when a history fetch
+  // starts and handed back through the refresh hook, so a stale mark that
+  // landed mid-refresh is not mistaken for covered by the fetched history.
+  historyRefreshToken?: () => number
 }
 
-type RefreshAppliedHook = (targetSessionId: string, latestTimestamp?: string) => void
+type RefreshAppliedHook = (targetSessionId: string, latestTimestamp?: string, refreshToken?: number) => void
 type CommitInitialHistory = (applyHistory: () => void) => Promise<void>
 type AfterHistoryCommit = () => void
 
@@ -62,6 +66,7 @@ export function createTranscriptController({
   fetchMessages,
   locateMessage,
   isTurnLive: isTurnLiveDep,
+  historyRefreshToken,
 }: TranscriptDeps) {
   const messages = reactive<ChatMessage[]>([])
   const loadingMessages = ref(false)
@@ -158,7 +163,9 @@ export function createTranscriptController({
     loadingOlder.value = false
   }
 
-  function applyFetchedHistory(botId: string, targetSessionId: string, generation: number, turns: UITurn[]) {
+  function applyFetchedHistory(
+    botId: string, targetSessionId: string, generation: number, turns: UITurn[], refreshToken?: number,
+  ) {
     if (!isCurrentHistoryContext(botId, targetSessionId, generation)) return
     if (hasLoadedOlder.value) {
       mergeMessages(turns, targetSessionId)
@@ -168,7 +175,7 @@ export function createTranscriptController({
       // page is not proof that history ended. Only pagination can settle it.
       hasMoreOlder.value = true
     }
-    onRefreshApplied(targetSessionId, messages[messages.length - 1]?.timestamp)
+    onRefreshApplied(targetSessionId, messages[messages.length - 1]?.timestamp, refreshToken)
   }
 
   async function refreshCurrentSession(
@@ -193,10 +200,11 @@ export function createTranscriptController({
 
     const afterHistoryCallbacks = new Set<AfterHistoryCommit>()
     if (afterHistory) afterHistoryCallbacks.add(afterHistory)
+    const refreshToken = historyRefreshToken?.()
     const promise = (async () => {
       const turns = await fetchMessages(bid, sid, { limit: PAGE_SIZE })
       if (!isCurrentHistoryContext(bid, sid, generation)) return
-      applyFetchedHistory(bid, sid, generation, turns)
+      applyFetchedHistory(bid, sid, generation, turns, refreshToken)
       // Keep a replacement Runtime projection in the same synchronous commit
       // as the refreshed anchor so Vue cannot paint the database-only state.
       for (const apply of afterHistoryCallbacks) apply()
@@ -211,21 +219,33 @@ export function createTranscriptController({
     botId: string,
     targetSessionId: string,
     commitInitialHistory: CommitInitialHistory,
+    // mask=true (default) hides the cached transcript behind loadingMessages
+    // until fresh history commits. mask=false keeps a trusted cache visible
+    // and revalidates in the open. Both paths commit fetched history and its
+    // runtime projection together, without a database-only intermediate frame.
+    options: { mask?: boolean } = {},
   ) {
     const bid = botId.trim()
     const sid = targetSessionId.trim()
     if (!bid || !sid) return
-    loadingMessages.value = true
-    const version = ++loadingMessagesVersion
+    const mask = options.mask !== false
+    if (mask) loadingMessages.value = true
+    // Only a masked load owns the loadingMessages lifecycle: bumping the
+    // version here (or clearing in finally) when unmasked could strand a
+    // concurrent masked load's flag.
+    const version = mask ? ++loadingMessagesVersion : loadingMessagesVersion
     const generation = historyGeneration
+    // Captured before the fetch: marks already present are covered by this
+    // read; only later marks must survive the refresh-applied hook.
+    const refreshToken = historyRefreshToken?.()
     try {
       const turns = await fetchMessages(bid, sid, { limit: PAGE_SIZE })
       if (!isCurrentHistoryContext(bid, sid, generation)) return
       await commitInitialHistory(() => {
-        applyFetchedHistory(bid, sid, generation, turns)
+        applyFetchedHistory(bid, sid, generation, turns, refreshToken)
       })
     } finally {
-      if (version === loadingMessagesVersion) loadingMessages.value = false
+      if (mask && version === loadingMessagesVersion) loadingMessages.value = false
     }
   }
 
@@ -551,6 +571,7 @@ export function createTranscriptController({
       output: incoming.output ?? existing.output,
       approval: mergeApprovalState(existing.approval, incoming.approval),
       execution_location: incoming.execution_location ?? existing.execution_location,
+      elapsed_time_seconds: incoming.elapsed_time_seconds ?? existing.elapsed_time_seconds,
       userInput: incoming.userInput ?? existing.userInput,
       user_input: incoming.user_input ?? existing.user_input,
       backgroundTask: incoming.backgroundTask ?? existing.backgroundTask,
@@ -581,7 +602,7 @@ export function createTranscriptController({
 
   function hasVisibleAssistantBlocks(turn: ChatAssistantTurn): boolean {
     return turn.messages.some(block =>
-      block.type !== 'error' || Boolean(block.code || block.content),
+      block.type !== 'status' && (block.type !== 'error' || Boolean(block.code || block.content)),
     )
   }
 

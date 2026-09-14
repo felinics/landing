@@ -2,7 +2,6 @@ import type { Ref } from 'vue'
 import { useQuery, useQueryCache } from '@pinia/colada'
 import {
   getBotsByBotIdDependencies,
-  getWorkspaceDependenciesCatalog,
   getBotsByBotIdDependenciesByDepIdScript,
   postBotsByBotIdDependenciesByDepIdRollback,
   postBotsByBotIdDependenciesCheckUpdates,
@@ -37,36 +36,32 @@ export type ScriptResponse = HandlersWorkspaceDependencyScriptResponse
 export type ScriptEnv = HandlersWorkspaceDependencyScriptEnv
 export type ScriptAction = NonNullable<ScriptResponse['action']>
 export type DependencyOperationResponse = HandlersWorkspaceDependencyOperationResponse
-/** The operations that stream a log. Rollback is synchronous. */
-export type DependencyOperationAction = 'install' | 'update' | 'reinstall' | 'remove'
+/**
+ * The dependency operations that stream a log. Install here means a retry or
+ * an overlay for a dependency an App already references; removal belongs
+ * to the App. Rollback is synchronous.
+ */
+export type DependencyOperationAction = 'install' | 'update' | 'reinstall'
 
 export const BOT_DEPENDENCIES_QUERY_KEY = 'bot-dependencies'
 
 /**
- * Query key of one bot+target dependency list. `invalidateBotDependencies`
- * invalidates by the two-element prefix so every target of a bot refreshes.
+ * Query key of one bot dependency list. `invalidateBotDependencies`
+ * invalidates by the two-element prefix to refresh the bot.
  */
-export function botDependenciesQueryKey(botId: string, targetId: string): string[] {
-  return [BOT_DEPENDENCIES_QUERY_KEY, botId, targetId]
+export function botDependenciesQueryKey(botId: string): string[] {
+  return [BOT_DEPENDENCIES_QUERY_KEY, botId]
 }
 
-// The Server resolves an empty target to the bot's current one; an explicit
-// id is only sent when the caller picked a target, so the primary target and
-// "no selection" share the Server's default path.
-function workspaceTargetQuery(targetId: string): { workspace_target_id: string } | undefined {
-  const trimmed = targetId.trim()
-  return trimmed ? { workspace_target_id: trimmed } : undefined
-}
-
-export function useBotDependenciesQuery(botId: Ref<string>, targetId: Ref<string>, forceRefresh?: Ref<boolean>) {
+export function useBotDependenciesQuery(botId: Ref<string>, forceRefresh?: Ref<boolean>) {
   return useQuery({
-    key: () => botDependenciesQueryKey(botId.value, targetId.value),
+    key: () => botDependenciesQueryKey(botId.value),
     query: async () => {
       const refresh = forceRefresh?.value ?? false
       if (forceRefresh) forceRefresh.value = false
       const { data } = await getBotsByBotIdDependencies({
         path: { bot_id: botId.value },
-        query: { ...workspaceTargetQuery(targetId.value), refresh: refresh || undefined },
+        query: { refresh: refresh || undefined },
         throwOnError: true,
       })
       return data
@@ -82,14 +77,12 @@ export function useBotDependenciesQuery(botId: Ref<string>, targetId: Ref<string
  */
 export async function preflightDependencies(
   botId: string,
-  targetId: string,
   dependencyIds: string[],
 ): Promise<PreflightResponse> {
   const { data } = await postBotsByBotIdDependenciesPreflight({
     path: { bot_id: botId },
     body: {
       dependency_ids: dependencyIds,
-      workspace_target_id: workspaceTargetQuery(targetId)?.workspace_target_id,
     },
     throwOnError: true,
   })
@@ -99,12 +92,10 @@ export async function preflightDependencies(
 /** Switches back to the previously kept version. Pure data; nothing streams. */
 export async function rollbackDependency(
   botId: string,
-  targetId: string,
   depId: string,
 ): Promise<DependencyOperationResponse> {
   const { data } = await postBotsByBotIdDependenciesByDepIdRollback({
     path: { bot_id: botId, dep_id: depId },
-    query: workspaceTargetQuery(targetId),
     throwOnError: true,
   })
   return data
@@ -117,11 +108,9 @@ export async function rollbackDependency(
  */
 export async function checkDependencyUpdates(
   botId: string,
-  targetId: string,
 ): Promise<DependencyListResponse> {
   const { data } = await postBotsByBotIdDependenciesCheckUpdates({
     path: { bot_id: botId },
-    query: workspaceTargetQuery(targetId),
     throwOnError: true,
   })
   return data
@@ -134,29 +123,22 @@ export async function checkDependencyUpdates(
  */
 export async function fetchDependencyScript(
   botId: string,
-  targetId: string,
   depId: string,
   action: ScriptAction,
   definitionRevision?: string,
 ): Promise<ScriptResponse> {
   const { data } = await getBotsByBotIdDependenciesByDepIdScript({
     path: { bot_id: botId, dep_id: depId },
-    query: { action, definition_revision: definitionRevision || undefined, ...workspaceTargetQuery(targetId) },
+    query: { action, definition_revision: definitionRevision || undefined },
     throwOnError: true,
   })
   return data
 }
 
-/** Refetches every target's dependency list of one bot. */
+/** Refetches the bot's dependency list. */
 export function invalidateBotDependencies(
   queryCache: ReturnType<typeof useQueryCache>,
   botId: string,
 ): Promise<unknown> {
   return queryCache.invalidateQueries({ key: [BOT_DEPENDENCIES_QUERY_KEY, botId] })
-}
-
-/** Explicit retry of the remote catalog, independently of software update checks. */
-export async function refreshDependencyCatalog() {
-  const { data } = await getWorkspaceDependenciesCatalog({ query: { refresh: true }, throwOnError: true })
-  return data
 }

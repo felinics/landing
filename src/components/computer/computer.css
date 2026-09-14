@@ -300,9 +300,9 @@
   flex-direction: column;
   justify-content: center;
   gap: 27px;
-  padding: 34px 80px 0;
+  padding: 0 80px 100px;
 }
-.memoh-welcome .memoh-composer {
+.memoh-welcome .memoh-composer-dock {
   width: 100%;
   max-width: 540px;
   margin-inline: auto;
@@ -317,8 +317,8 @@
   position: relative;
   border: 1px solid #383838;
   background: #222222;
-  border-radius: 12px;
-  padding: 12px;
+  border-radius: 16px;
+  padding: 10px;
 }
 .memoh-input {
   height: 33px;
@@ -362,7 +362,7 @@
   position: absolute;
   width: 177px;
   left: 0;
-  bottom: 44px;
+  top: 100%;
   z-index: 4;
   padding: 5px;
   background: #191919;
@@ -521,7 +521,7 @@
 .google-search.focused {
   border-color: #a8c7fa;
 }
-.memoh-chat-pane .memoh-composer {
+.memoh-chat-pane .memoh-composer-dock {
   margin-top: auto;
   width: 100%;
   padding: 9px;
@@ -1080,7 +1080,7 @@
   gap: 13px;
   height: calc(100% - 40px);
 }
-.memoh-build-chat .memoh-composer {
+.memoh-build-chat .memoh-composer-dock {
   margin-top: auto;
 }
 .memoh-build-chat .memoh-input {
@@ -1242,3 +1242,33 @@
   .demo-controls { opacity: 1; }
   .demo-controls button { width: 36px; height: 36px; }
 }
+
+/* Mirrors chat-pane's input surface and separate session-attribute row. */
+.memoh-composer-dock { position: relative; width: 100%; }
+.memoh-composer-context { display: flex; align-items: center; gap: 7px; min-height: 34px; padding: 0 5px; color: #969696; font-size: 10px; }
+.memoh-context-item { display: inline-flex; align-items: center; gap: 4px; min-width: 0; white-space: nowrap; }
+.memoh-context-item > span { overflow: hidden; text-overflow: ellipsis; }
+.memoh-context-item svg, .memoh-context-item img { width: 12px; height: 12px; flex-shrink: 0; object-fit: contain; }
+.memoh-agent-picker { position: relative; overflow: visible; flex-shrink: 0; }
+.memoh-context-ring { margin-left: auto; width: 14px; height: 14px; flex-shrink: 0; border: 2px solid #454545; border-top-color: #969696; border-radius: 50%; }
+.memoh-send { background: #7544ac; color: #fff; }
+.memoh-send.inactive { background: #ededed; color: #191919; opacity: .4; }
+.memoh-chat-pane .memoh-composer-dock { padding: 0; }
+.memoh-chat-pane .memoh-composer-context { gap: 5px; font-size: 9px; }
+
+.package-workbench { display: flex; height: calc(100% - 40px); }
+.package-sidebar { width: 245px; flex-shrink: 0; border-right: 1px solid #383838; padding: 8px; display: flex; flex-direction: column; gap: 9px; background: #141414; }
+.package-sidebar-nav { display: flex; align-items: center; gap: 12px; }
+.package-sidebar-nav > span { display: flex; align-items: center; gap: 5px; background: #303030; padding: 5px 8px; border-radius: 20px; }
+.package-sidebar .package-search { margin: 0; height: 28px; font-size: 10px; }
+.package-sidebar > small { padding-left: 6px; color: #969696; }
+.package-sidebar-row { display: flex; align-items: flex-start; gap: 9px; border: 1px solid #383838; border-radius: 10px; padding: 9px; }
+.package-sidebar-icon { display: flex; width: 38px; height: 38px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 6px; background: #292929; }
+.package-sidebar-icon img { width: 20px; height: 20px; object-fit: contain; }
+.package-sidebar-row > span { flex: 1; min-width: 0; }
+.package-sidebar-row small { display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #969696; font-size: 10px; line-height: 1.4; margin-top: 4px; }
+.package-sidebar-row em { display: flex; align-items: center; justify-content: space-between; margin-top: 5px; color: #969696; font-size: 10px; font-style: normal; }
+.package-sidebar-install { padding: 3px; color: #ededed; }
+.package-sidebar-account { display: flex; gap: 10px; align-items: center; margin-top: auto; padding: 5px 9px; }
+.package-chat-welcome { min-width: 0; flex: 1; display: flex; flex-direction: column; justify-content: center; gap: 22px; padding: 24px; }
+.package-chat-welcome > h4 { text-align: center; font-size: 20px; }

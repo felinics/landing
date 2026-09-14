@@ -1,5 +1,5 @@
 // @vitest-environment jsdom
-import { createApp, h, nextTick, reactive } from 'vue'
+import { createApp, h, nextTick, reactive, ref } from 'vue'
 import { createI18n } from 'vue-i18n'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import type { ToolCallBlock } from '@/store/chat-list'
@@ -11,6 +11,31 @@ vi.mock('@/i18n', () => ({
   default: { global: { t: (key: string) => key } },
   i18nRef: (key: string) => ({ value: key }),
 }))
+
+// The real composable needs a pinia settings store and the shiki bundle; the
+// DOM assertions only need the parsed diff rows, so feed the real parser's
+// output through with the raw text as the (unhighlighted) row html.
+vi.mock('@/composables/useShikiHighlighter', async (importOriginal) => {
+  const actual = await importOriginal<typeof import('@/composables/useShikiHighlighter')>()
+  return {
+    ...actual,
+    useShikiHighlighter: () => {
+      const diffRows = ref<{ kind: string, lineNumber: number, html: string }[]>([])
+      return {
+        loading: ref(false),
+        html: ref(''),
+        diffRows,
+        highlightContextDiff: async (diff: string) => {
+          diffRows.value = actual.parseUnifiedDiffRows(diff).map((row) => ({ ...row, html: row.text }))
+        },
+        highlight: async () => {},
+        highlightLang: async () => {},
+        highlightDiff: async () => {},
+        highlightLanguage: async () => {},
+      }
+    },
+  }
+})
 import ToolCallInline from './tool-call-inline.vue'
 
 const mounted: ReturnType<typeof createApp>[] = []
@@ -65,12 +90,34 @@ describe.each([false, true])('tool failure detail (inGroup=%s)', (inGroup) => {
     await open(root)
     expect(root.textContent).toContain('Delivery unavailable')
   })
+  it('lets an empty-content write expand to show its deletion diff', async () => {
+    const { root, block } = mountTool('write', { path: '/data/f.txt', content: '' }, { ok: true }, inGroup)
+    block.diff = '--- a/f.txt\n+++ b/f.txt\n@@ -1 +0,0 @@\n-old line\n'
+    await nextTick()
+    const header = await open(root)
+    expect(header.textContent).toContain('-1')
+    expect(root.textContent).toContain('old line')
+  })
 })
 
 it.each([['en', 'Tool execution failed.'], ['zh', '工具执行失败。'], ['ja', 'ツールの実行に失敗しました。']])('localizes a failure without diagnostics (%s)', async (locale, text) => {
   const { root } = mountTool('web_search', { query: 'review' }, { isError: true }, false, locale)
   await open(root)
   expect(root.textContent).toContain(text)
+})
+// The backend emits "cancelled" (two l) while external runtimes may send the
+// American spelling — both must hit the same localized label rather than
+// falling through to the raw status.
+it.each([
+  ['cancelled', 'Canceled'],
+  ['canceled', 'Canceled'],
+  ['expired', 'Expired'],
+])('localizes approval status %s', async (status, label) => {
+  const { root, block } = mountTool('read', { path: '/f.txt' }, { ok: true })
+  block.approval = { approval_id: `ap-${status}`, status }
+  await nextTick()
+  expect(root.textContent).toContain(label)
+  expect(root.textContent).not.toContain(status)
 })
 it('switches an open specialized detail when the streamed result completes', async () => {
   const { root, block } = mountTool('web_search', { query: 'review' }, null)

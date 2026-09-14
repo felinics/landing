@@ -19,6 +19,7 @@
         :data-placeholder="triggerLabel ? undefined : ''"
         type="button"
         :aria-expanded="open"
+        :aria-invalid="invalid || undefined"
         :aria-label="resolvedPlaceholder"
         :class="[selectTriggerClass, 'w-full']"
       >
@@ -73,6 +74,7 @@ import {
 // same way.
 const props = withDefaults(defineProps<{
   botId: string
+  invalid?: boolean
   placeholder?: string
   // Restrict the list to these session modes (chat | discuss | schedule | …).
   // Empty means every mode the API returns.

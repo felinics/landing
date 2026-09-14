@@ -47,7 +47,8 @@ patterns, and the verification checklist for every surface in this package.
 src/
 ├── App.vue                    # Root component (RouterView + Toaster + settings init)
 ├── main.ts                    # App entry (plugins, global components, API client setup)
-├── router.ts                  # Route definitions, auth guard, chunk error recovery
+├── routes.ts                  # Shared Web/Desktop business route factory
+├── router.ts                  # Web history, auth guard, chunk error recovery
 ├── style.css                  # Tailwind imports (delegates to @felinic/ui/style.css)
 ├── i18n.ts                    # vue-i18n configuration
 ├── assets/                    # Static assets (logo.svg)
@@ -191,7 +192,7 @@ src/
 │   │       ├── tts-model-select.vue         # TTS model selector
 │   │       ├── channel-settings-panel.vue   # Channel settings panel
 │   │       ├── container-create-progress.vue # Container creation progress
-│   │       ├── bot-dependencies.vue         # Workspace dependencies tab (target select, check updates, grouped rows, dialogs)
+│   │       ├── bot-apps.vue                 # Bot Apps in its isolated workspace (check updates, details, dialogs)
 │   │       ├── dependency-row.vue           # One dependency row: icon, version/status badges, primary action + menu
 │   │       ├── dependency-kv-list.vue       # Read-only key/value block shared by the dependency dialogs
 │   │       ├── dependency-confirm-dialog.vue # Confirm install / update / align / reinstall of a workspace dependency
@@ -249,6 +250,11 @@ src/
 
 ## Routes
 
+Business routes are defined once in `src/routes.ts` through
+`createAppRoutes('web' | 'desktop')`. Add or rename shared pages there so both
+hosts receive the same route names, params, lazy imports, and metadata. Keep
+router creation and host-specific guards in each host's bootstrap.
+
 The app uses a two-section layout architecture:
 
 ### Chat Section (`/`)
@@ -277,7 +283,8 @@ Chat routes register **null stub components** in the router. The real UI (`MainS
 | `/settings/transcription` | — | redirect | Legacy alias → `voice` |
 | `/settings/email` | email | `email/index.vue` | Email provider management |
 | `/settings/supermarket` | supermarket | `supermarket/index.vue` | Template/skill marketplace |
-| `/settings/supermarket/skills/:registryId/:packageId` | supermarket-package-detail | `supermarket/package-detail.vue` | Registry Skill Package detail |
+| `/settings/supermarket/category/:categoryId` | supermarket-category | `supermarket/category.vue` | App category |
+| `/settings/supermarket/:registryId/:appId` | supermarket-app-detail | `supermarket/app-detail.vue` | App detail |
 | `/settings/usage` | usage | `usage/index.vue` | Token usage statistics |
 | `/settings/people` | people | `people/index.vue` | User management (admin only) |
 | `/settings/appearance` | appearance | `appearance/index.vue` | Theme, locale, and appearance settings |
@@ -286,7 +293,7 @@ Chat routes register **null stub components** in the router. The real UI (`MainS
 | `/settings/platform` | platform | `platform/index.vue` | Platform management |
 | `/settings/about` | about | `about/index.vue` | About page |
 
-`/settings` redirects to `/settings/bots` by default.
+`/settings` remains addressable as the mobile navigation list on Web; Desktop redirects it to `/settings/bots`.
 
 ### Standalone Routes
 
@@ -415,6 +422,8 @@ const form = useForm({
 
 ### Icon Usage
 
+Memoh 图标层的目标契约见 [`packages/icons/README.md`](../../packages/icons/README.md)。下述 Lucide / 品牌图标划分描述现有接入方式；新增光学校准或定制图标遵循该契约，在图标层实现，不在页面或菜单调用处补偿。现有直接导入在迁移期间保留。
+
 - **Lucide** (primary): Direct component imports from `lucide-vue-next`. Example: `import { Plus, Search, Bot } from 'lucide-vue-next'` → `<Plus class="size-4" />`. Used for all UI icons (actions, navigation, status indicators, etc.).
 - **`@memohai/icon`** (brand icons): Workspace package (`packages/icons/`) providing AI provider, search engine, and channel platform SVG icons as Vue components. Example: `import { Openai, Claude } from '@memohai/icon'`.
 - **Do NOT use FontAwesome** for new code. Legacy FontAwesome usage remains only in commented-out code blocks. Always use Lucide for UI icons and `@memohai/icon` for brand logos.
@@ -503,7 +512,11 @@ Live conversation turns are read over the **WebSocket**. SSE carries identifiers
 
 #### Sessions activity SSE
 - **Endpoint**: `GET /bots/{bot_id}/sessions/events` — bot-wide lightweight activity stream; `session_touched` / `session_title_changed` / `session_created` for sidebar live-sort. Never carries message bodies.
+- **First frame**: `activity_ready {cache_invalidation}` — sent right after subscription so events racing connection setup are queued behind it. `cache_invalidation: true` declares the server emits `session_invalidated` for every runtime admission and history deletion; `false` (or a missing ready frame on older servers) means no coverage and every revisit must reload under the mask.
+- `session_invalidated {session_id}` — a session's visible projection changed while another tab/client could have been holding a cached copy; empty `session_id` invalidates all sessions of the bot. Marks the transcript stale so the next revisit reloads instead of trusting its cache.
+- `dropped` — emitted when the server's per-subscriber buffer overflowed; the client conservatively marks all sessions stale because it cannot know which events were lost.
 - `session_touched` with `reason: background_task` also refreshes persisted messages for an already loaded session. Notifications can arrive without a live turn; use the transcript merge path so active output survives. Coalesce pending notifications and perform a trailing refresh for the final outcome.
+- **Optimistic revisit contract**: a hidden session's cached transcript may render immediately on revisit only while coverage holds (ready frame declared `cache_invalidation`, stream still connected, no `dropped`, no pending `session_invalidated`). Any disconnect or capability gap revokes coverage until the next ready frame — there is no client-side grace window.
 - **Parsing**: handled by the generated SDK (`@memohai/sdk` `sse.get`); wrappers live in `composables/api/useChat.message-api.ts`.
 - **Retry**: `useRetryingStream` composable drives reconnection with exponential backoff.
 - There is no per-session SSE. A session's messages and run state come from the session runtime over the WebSocket, so that every subscriber of a session — this tab, another tab, another device — is reading the same projection instead of each building its own.

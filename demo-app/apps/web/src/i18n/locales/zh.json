@@ -95,10 +95,9 @@
     "preview": "预览"
   },
   "computerAccess": {
-    "nativeAlwaysOn": "始终对此 Bot 可用",
     "emptyBots": "还没有 Bot。",
-    "emptyComputers": "还没有已连接的电脑。",
-    "connectCta": "连接电脑",
+    "yourComputer": "你的电脑",
+    "notConnected": "未连接",
     "updateFailed": "更新访问权失败",
     "done": "完成",
     "subtitleRuntime": "哪些 Bot 可以使用它？",
@@ -112,7 +111,6 @@
     "finish": "完成"
   },
   "errors": {
-    "media": { "reference_unavailable": "文件未能分享，请让 Agent 重新生成或再次分享。" },
     "queue": {
       "steer_unsupported": "当前运行不支持插入消息，请等它结束后再发送。"
     },
@@ -143,7 +141,11 @@
     },
     "agent": {
       "response_timeout": "模型未能及时响应，请重试。",
-      "response_interrupted": "模型响应意外中断，请重试。"
+      "response_interrupted": "模型响应意外中断，请重试。",
+      "provider_overloaded": "模型服务当前过载，请稍后重试。",
+      "provider_rate_limited": "已达到模型服务的速率上限，请稍后再发送。",
+      "provider_quota_exhausted": "模型服务账户的余额或配额已用尽。",
+      "provider_auth_failed": "模型服务拒绝了当前凭据，请检查该服务商的 API Key。"
     },
     "queue_request_invalid": "请在已有会话中使用 /steer 或 /queue，并在命令后输入内容。",
     "queue_no_active_run": "当前回复已结束，请将内容作为新消息发送。",
@@ -197,9 +199,9 @@
     },
     "registry": {
       "unavailable": "暂时无法连接 Supermarket，请稍后重试。",
-      "package_not_found": "该技能包已不存在。",
-      "package_invalid": "该技能包无效，无法安装。",
-      "package_install_failed": "技能包安装失败，请重试。"
+      "app_not_found": "该应用已不存在。",
+      "app_invalid": "该应用无效，无法安装。",
+      "app_install_failed": "应用安装失败，请重试。"
     },
     "workspace": {
       "unreachable": "暂时无法连接工作区，请稍后重试。",
@@ -214,7 +216,6 @@
       "busy": "该依赖正在进行其他操作，请稍后再试。",
       "workspace_not_running": "工作区未运行，请先启动。",
       "workspace_missing": "尚未创建工作区，请先创建。",
-      "remote_offline": "该电脑离线。",
       "rollback_unavailable": "没有可回滚的旧版本。",
       "operation_failed": "依赖操作失败，请查看日志后重试。",
       "catalog_unavailable": "暂时无法获取依赖目录，请稍后重试。",
@@ -272,6 +273,37 @@
     "external_runtime": {
       "auth_required": "Codex 尚未连接账号。请前往 Agent 设置连接 ChatGPT，或配置 API Key。",
       "unavailable": "外部 Agent 运行时暂不可用。请检查 Agent 配置和工作区后重试。"
+    },
+    "app": {
+      "not_found": "未找到该应用安装记录。",
+      "request_invalid": "应用请求无效。",
+      "busy": "该应用的另一个操作正在进行中。",
+      "operation_failed": "应用操作失败。"
+    },
+    "agent_authorization": {
+      "expired": "授权已过期，请重新连接账号。",
+      "not_ready": "请先完成账号连接，再创建 Bot。",
+      "limit": "请关闭其他待完成的授权，然后重试。",
+      "failed": "账号授权失败，请重试。",
+      "code_invalid": "授权码无效或已过期，请复制 Claude 页面上的完整授权码，或重新连接。"
+    },
+    "workdir": {
+      "git_busy": "有 Agent 正在使用此工作目录，请等待执行结束后再切换分支。",
+      "git_branch_unavailable": "该本地分支已不可用，请刷新后选择已有分支。",
+      "git_switch_failed": "Git 无法切换分支，请检查未提交的修改，以及目标分支是否被其他 Worktree 使用。",
+      "git_unavailable": "无法读取 Git 工作目录，请检查工作区后重试。"
+    },
+    "runtime_control": {
+      "goal_requires_default_mode": "请先退出计划模式，再创建或继续目标。",
+      "steer_failed": "补充指令未能送达。请等本轮结束后重新发送。",
+      "unsupported": "当前运行时不支持此操作。",
+      "command_unavailable": "此命令已不可用，请刷新后重试。",
+      "mode_unavailable": "此模式已不可用，请刷新后重新选择。",
+      "thread_unavailable": "请先开始对话，再执行此操作。",
+      "failed": "操作未能完成，请重试。",
+      "forbidden": "你没有访问此会话的权限。",
+      "request_invalid": "请求无效，请刷新后重试。",
+      "cancelled": "操作已中止。"
     }
   },
   "auth": {
@@ -311,6 +343,11 @@
     }
   },
   "sidebar": {
+    "updateChip": {
+      "updating": "更新中",
+      "restart": "重启",
+      "error": "更新出错"
+    },
     "session": "会话列表",
     "chat": "对话",
     "bots": "智能体",
@@ -339,6 +376,7 @@
     "keyboard": "快捷键",
     "supermarket": "应用市场",
     "about": "关于",
+    "userMenu": "账号菜单",
     "switchBot": "切换智能体",
     "manageBots": "管理智能体"
   },
@@ -608,6 +646,15 @@
     "empty": "暂无成员"
   },
   "about": {
+    "updatingVersion": "正在更新至 v{version}",
+    "readyToRestart": "更新已就绪",
+    "applyingUpdate": "正在安装更新",
+    "autoUpdatePausedDescription": "已暂停自动检查与安装。",
+    "updateReadyPaused": "更新已就绪。自动安装已关闭，重启以安装。",
+    "preparingUpdate": "正在准备更新…",
+    "installingUpdate": "正在重启…",
+    "autoUpdateDescription": "后台下载，退出 Memoh 时自动安装。",
+    "autoUpdate": "自动更新",
     "tagline": "开源多智能体平台",
     "description": "多个 AI Agent，各自拥有独立的电脑与长期记忆。",
     "updatesSection": "更新",
@@ -626,12 +673,10 @@
     "checkFailed": "检查更新失败",
     "desktopUpdatesUnavailable": "自动更新不可用",
     "desktopUpdatesUnavailableDesc": "当前构建未配置更新源。",
-    "desktopUpdateAvailableDesc": "下载此版本后，重启 Memoh 即可安装。",
-    "downloadUpdate": "下载更新",
     "downloadingUpdate": "正在下载… {progress}%",
-    "desktopUpdateDownloadedDesc": "更新已准备就绪，重启 Memoh 即可安装。",
+    "desktopUpdateDownloadedDesc": "更新已就绪。可以立即重启，或在退出 Memoh 时自动安装。",
     "restartToUpdate": "重启并更新",
-    "retryUpdate": "重试",
+    "retryUpdate": "重试更新",
     "desktopUpdateFailed": "Desktop 更新失败",
     "github": "GitHub",
     "docs": "技术文档",
@@ -644,7 +689,10 @@
     "license": "AGPLv3 · © 2026 MemohAI"
   },
   "chat": {
-    "mediaPreparing": "正在准备媒体",
+    "runtimeStatus": {
+      "compacting": "正在压缩上下文…",
+      "api_retry": "{seconds} 秒后重试（{attempt}/{max_retries}）…"
+    },
     "selectSession": "选择会话",
     "welcome": {
       "folder": "要在 {name} 里做点什么？",
@@ -754,7 +802,6 @@
       "steerDescription": "在下一个安全步骤加入当前回复",
       "followUpDescription": "当前回复结束后自动发送",
       "steerPlaceholder": "输入要插入当前回复的内容…",
-      "followUpPlaceholder": "输入下一条消息…",
       "enqueueSteer": "插入当前回复",
       "enqueueFollowUp": "添加到接下来",
       "steerQueued": "已加入当前回复队列",
@@ -786,11 +833,11 @@
     "pastedViewerTitle": "粘贴内容",
     "agent": "Agent",
     "continueOn": {
-      "label": "继续位置",
+      "label": "电脑",
       "addComputer": "添加电脑",
+      "addYourComputer": "添加你的电脑",
       "manageAccess": "管理访问权",
-      "manageComputers": "管理电脑",
-      "noAccess": "此 Bot 暂无电脑访问权"
+      "manageComputers": "管理电脑"
     },
     "computerLoading": "正在加载电脑",
     "computerLoadFailed": "无法加载电脑",
@@ -798,9 +845,23 @@
     "folder": "文件夹",
     "folders": "文件夹",
     "folderUnavailable": "不可用的文件夹",
+    "runtimeProject": {
+      "chooseBranch": "切换分支",
+      "noBranches": "暂无本地分支",
+      "detachedHead": "分离的 HEAD",
+      "expand": "查看工作区",
+      "collapse": "收起工作区",
+      "choose": "选择项目",
+      "clear": "不在项目中工作",
+      "none": "未选择项目",
+      "workspace": "Memoh 工作区",
+      "empty": "请先在侧边栏添加文件夹，再选择项目。"
+    },
     "folderDetachDraft": "不放入文件夹",
     "folderNewSession": "在 {name} 中新建会话",
-    "attachFiles": "上传文件",
+    "apps": "Apps",
+    "manageConnectors": "管理连接器",
+    "attachFiles": "上传文件或图片",
     "dropToAttach": "将文件拖到这里加入对话",
     "dropFolderUnsupported": "附件不支持文件夹，可拖到左侧文件面板上传。",
     "pdfTooLargeForNative": "PDF 超过 12MB,将以路径形式存入工作区,模型无法直接查看其内容。",
@@ -877,6 +938,7 @@
       "unanswered": "未作答"
     },
     "tools": {
+      "elapsedRunning": "执行中 · {seconds} 秒",
       "read": "读取",
       "read_image": "查看图片",
       "read_document": "阅读文档",
@@ -1025,6 +1087,9 @@
       "approve": "允许",
       "reject": "拒绝",
       "pendingApproval": "等待审核",
+      "approvalDeclined": "已拒绝",
+      "approvalCanceled": "已取消",
+      "approvalExpired": "已过期",
       "executionLocation": "执行位置",
       "pendingUserInput": "等待输入",
       "userInputSubmitted": "已回答",
@@ -1256,11 +1321,9 @@
       "helpDescription": "显示可用的快捷操作",
       "skillListDescription": "显示本轮可用的 Skills",
       "newDescription": "开始新会话",
-      "permissionDescription": "查看或切换当前 Agent 会话的权限模式",
-      "permissionModesTitle": "权限模式",
       "permissionModesText": "请选择该 Agent 声明的模式。更改仅作用于当前会话。",
-      "permissionModeChangedTitle": "权限模式已切换",
-      "permissionModeChangedText": "当前 Agent 会话已使用所选权限模式。工具授权仍需单独确认。",
+      "permissionModeChangedTitle": "会话模式已更新",
+      "permissionModeChangedText": "已应用所选会话模式。",
       "permissionCurrentMode": "当前模式",
       "compactDescription": "压缩当前会话上下文（已用 {percent}%）",
       "compactDescriptionNoStats": "压缩当前会话上下文",
@@ -1337,6 +1400,8 @@
     },
     "openPreviewToSide": "在侧边打开预览",
     "previewTab": "预览：{name}",
+    "contextUsedTokens": "{used} / {window} tokens",
+    "contextUsedPercent": "已使用 {percent}% 上下文",
     "sessionInfoRingAria": "会话信息",
     "sessionInfoRingAriaUsage": "会话信息，上下文已用 {percent}%",
     "sessionInfoTooltipHint": "悬停查看会话信息",
@@ -1437,7 +1502,37 @@
         "rtt": "RTT"
       }
     },
-    "modelDefaultNamed": "默认（{model}）"
+    "modelDefaultNamed": "默认（{model}）",
+    "planMode": {
+      "commandLabel": "计划模式",
+      "label": "计划",
+      "enable": "开启计划模式",
+      "disable": "关闭计划模式",
+      "placeholder": "描述你的任务以生成计划…",
+      "changeFailed": "无法切换计划模式，请重试。"
+    },
+    "runtimeModeNextTurn": "在下次运行开始时生效。",
+    "runtimeModeModelUnavailable": "当前模型不支持此权限模式，请选择其他模式或模型。",
+    "permissionMode": "权限模式",
+    "goal": {
+      "label": "目标",
+      "description": "设置一个持续推进的目标",
+      "placeholder": "描述你的目标，以及怎样才算完成",
+      "cancelDraft": "取消目标输入",
+      "sentAsGoal": "已作为目标发送",
+      "pause": "暂停目标",
+      "resume": "继续目标",
+      "clear": "清除目标",
+      "textOnly": "请用纯文本设置目标，不附带附件或技能。",
+      "status": {
+        "active": "正在推进目标",
+        "paused": "目标已暂停",
+        "blocked": "目标受阻",
+        "usageLimited": "已达到用量上限",
+        "budgetLimited": "已达到 Token 预算",
+        "complete": "目标已完成"
+      }
+    }
   },
   "models": {
     "title": "模型",
@@ -1954,7 +2049,7 @@
   "bots": {
     "toolApproval": {
       "title": "工具调用审核",
-      "intro": "分别设置这个 Bot 在工作区和每台已连接电脑上可以执行的操作。",
+      "intro": "分别设置这个 Bot 在工作区和每台已连接电脑上可以执行的操作。这些规则只约束 Memoh 提供的工具；Claude Code 与 Codex 的内置工具遵循各自的权限模式，它们发来的询问会以卡片展示，由持有对应工作区权限的用户决定。",
       "loading": "正在加载审核规则...",
       "loadFailed": "无法加载工具审核",
       "loadFailedDescription": "请检查服务器连接后重试。",
@@ -2078,6 +2173,9 @@
       "settingsDesc": "时区等"
     },
     "agentCreate": {
+      "prepare": "准备 Agent",
+      "prepareDescription": "检查工作空间并安装运行这个 Agent 所需的依赖。",
+      "authorizeAfterCreate": "创建 Bot 后继续为这个 Agent 授权。",
       "typeAriaLabel": "Agent 类型",
       "oauthSettingsHint": "授权在创建后进行，可随时在 Bot 设置中完成。",
       "requiredError": "请填写「{field}」",
@@ -2098,7 +2196,8 @@
         "creating": "正在创建工作区",
         "restoring": "正在恢复记忆与数据",
         "ready": "Bot 已就绪",
-        "applyingSettings": "正在应用模型与记忆设置"
+        "applyingSettings": "正在应用模型与记忆设置",
+        "installingAgent": "正在安装 {name}"
       }
     },
     "editBot": "编辑 Bot",
@@ -2303,6 +2402,7 @@
       "reminderAction": "去设置"
     },
     "tabs": {
+      "advanced": "高级",
       "overviewSubtitle": "这个 bot 此刻活在哪、怎么配的",
       "overview": "概览",
       "general": "通用",
@@ -2315,18 +2415,16 @@
       "channels": "平台",
       "remoteRuntime": "电脑",
       "container": "工作区",
-      "dependencies": "依赖",
       "mcp": "MCP",
       "compaction": "上下文压缩",
       "schedule": "定时任务",
       "history": "对话历史",
-      "connectors": "连接器",
-      "skills": "技能",
       "email": "邮件",
       "files": "文件",
       "access": "访问控制",
       "terminal": "终端",
-      "settings": "设置"
+      "settings": "设置",
+      "apps": "应用"
     },
     "agent": {
       "add": "添加 Agent",
@@ -2374,8 +2472,16 @@
       "modelsLoadFailed": "无法加载 Agent 模型。请检查 Agent 配置后重试。",
       "openSettings": "打开 Agent 设置",
       "dependencyChecking": "正在检查依赖…",
-      "dependencyRemoteOffline": "该 Bot 连接的电脑已离线，上线后才能检查依赖。",
-      "dependencyInstalledEnableHint": "已安装 {name}，现在可以启用该 Agent。"
+      "dependencyInstalledEnableHint": "已安装 {name}，现在可以启用该 Agent。",
+      "claudeAccount": "Claude 账号",
+      "claudeAccountDescription": "使用 Claude 订阅账号授权 Claude Code。",
+      "claudeAuthorizationHint": "打开授权页面并登录 Claude，复制页面显示的完整授权码，粘贴到下方即可完成授权。",
+      "openAuthorizationPage": "打开授权页面",
+      "authorizationCode": "授权码",
+      "authorizationCodePlaceholder": "粘贴完整授权码",
+      "completeAuthorization": "完成授权",
+      "defaultPermissionMode": "默认权限模式",
+      "defaultPermissionModeDescription": "新会话使用此模式，会话内的选择会覆盖默认值。该模式只管 Agent 的内置工具；Memoh 提供的工具始终按「工具调用审核」规则执行。"
     },
     "dependencies": {
       "title": "工作区依赖",
@@ -2397,7 +2503,8 @@
         "removing": "卸载中",
         "updateAvailable": "有更新 {version}",
         "unsupported": "不支持",
-        "unsupportedTooltip": "当前工作区平台不支持该依赖。"
+        "unsupportedTooltip": "当前工作区平台不支持该依赖。",
+        "retired": "已下架"
       },
       "action": {
         "install": "安装",
@@ -2415,8 +2522,6 @@
         "start": "启动工作区",
         "missingTitle": "尚未创建工作区",
         "goToContainer": "去工作区",
-        "remoteOfflineTitle": "电脑「{name}」离线",
-        "remoteOfflineDescription": "该电脑上线后才能管理依赖。",
         "discoveryErrorTitle": "暂时无法探测工作区里的依赖",
         "discoveryErrorRetry": "重试"
       },
@@ -2432,11 +2537,10 @@
         "version": "版本",
         "versionPlaceholder": "最新版本",
         "versionHelp": "留空则安装最新版。",
-        "remoteWarningTitle": "将在你的电脑「{name}」上执行",
-        "remoteWarningDescription": "脚本会在这台电脑上下载并写入文件。",
         "installConfirm": "安装",
         "updateConfirm": "更新",
-        "installAndEnable": "安装并启用"
+        "installAndEnable": "安装并启用",
+        "versionInvalid": "请输入 1.2.3 或 latest 这样的版本标识。"
       },
       "progress": {
         "installing": "正在安装 {name}",
@@ -2449,7 +2553,10 @@
         "failedHint": "状态已记为失败，可在依赖列表中重试。完整日志可复制。",
         "runInBackground": "后台运行",
         "version": "版本",
-        "entrypoint": "入口"
+        "entrypoint": "入口",
+        "log": "操作日志",
+        "unknownTitle": "结果未确认",
+        "unknownHint": "操作结果尚未确认，请刷新依赖列表查看状态。"
       },
       "script": {
         "title": "将在工作区执行的脚本",
@@ -2536,7 +2643,7 @@
       "primaryDescription": "未另行选择时，文件和命令都在这里执行。",
       "primarySaveFailed": "无法切换默认位置",
       "defaultBadge": "默认",
-      "nativeWorkspace": "云端电脑",
+      "nativeWorkspace": "Cloud Computer",
       "serverDescription": "此 Bot 的内置工作区，由 Memoh 托管。",
       "thisComputerOff": "使用这台电脑",
       "thisComputerOffDescription": "请先在「电脑」页面允许这台电脑，再在这里开启访问。",
@@ -3321,75 +3428,6 @@
         "note": "备注"
       }
     },
-    "skills": {
-      "title": "技能",
-      "discoveryTitle": "技能路径",
-      "discoveryDescription": "配置该 Bot 的托管技能存放位置，并指定需要扫描的外部技能路径。",
-      "managedPathLabel": "托管路径",
-      "managedPathDescription": "所有由 Memoh 托管的技能文件都将存放在此。",
-      "managedPathHint": "“复制到托管路径”可将外部技能复制至此，执行时托管副本具有最高优先级。",
-      "discoveryPathsLabel": "外部技能路径",
-      "discoveryPathsDescription": "Memoh 会自动扫描这些绝对路径下的可用外部技能。每行一个。",
-      "discoveryPathPlaceholder": "/root/.agents/skills",
-      "discoveryAddPath": "添加路径",
-      "discoveryEmpty": "目前未配置外部技能路径。仅扫描托管与旧版的内置技能。",
-      "discoveryDefaultHint": "默认外部路径：{paths}",
-      "discoveryReset": "重置",
-      "discoverySummaryDefault": "默认",
-      "discoverySummaryCustom": "{count} 个路径",
-      "discoverySummaryUnsaved": "有未保存修改",
-      "discoveryPathRequired": "路径不能为空",
-      "discoveryPathAbsolute": "路径必须是绝对路径",
-      "discoveryPathReserved": "此路径已被 Memoh 托管技能或旧版技能使用。",
-      "discoveryPathDuplicate": "路径重复",
-      "discoverySaveSuccess": "技能路径已保存",
-      "discoverySaveFailed": "保存技能路径失败",
-      "addSkill": "新建技能",
-      "libraryTitle": "技能库",
-      "packageBadge": "Package",
-      "openPackage": "打开 Package",
-      "backToLibrary": "返回",
-      "viewSkill": "查看 Skill",
-      "uninstallPackage": "卸载 Package",
-      "uninstallPackageConfirm": "确定卸载这个 Package 吗？",
-      "uninstallPackageSuccess": "Package 已卸载",
-      "uninstallPackageFailed": "卸载 Package 失败",
-      "packageSkillsUnavailable": "Package 中的 Skill 当前不可用",
-      "close": "关闭",
-      "emptyTitle": "技能库为空",
-      "emptyDescription": "请创建新的托管技能，或配置外部扫描路径以引入现有技能。",
-      "managedBadge": "托管",
-      "discoveredBadge": "外部",
-      "effectiveBadge": "生效中",
-      "shadowedBadge": "被覆盖",
-      "shadowedHint": "同名托管副本会优先于这个来源生效。",
-      "disabledBadge": "已禁用",
-      "legacyBadge": "旧版",
-      "compatBadge": "外部",
-      "description": "描述",
-      "descriptionPlaceholder": "输入技能描述",
-      "content": "内容",
-      "contentPlaceholder": "输入技能内容/提示词",
-      "deleteConfirm": "是否永久删除此托管技能？",
-      "overrideTitle": "编辑此技能将自动创建一份托管副本。",
-      "adoptAction": "复制到托管路径",
-      "adoptBlocked": "已有托管副本",
-      "disableAction": "禁用这个技能来源",
-      "enableAction": "启用这个技能来源",
-      "adoptSuccess": "技能已复制到托管路径",
-      "adoptFailed": "复制到托管路径失败",
-      "disableSuccess": "技能已禁用",
-      "disableFailed": "禁用技能失败",
-      "enableSuccess": "技能已启用",
-      "enableFailed": "启用技能失败",
-      "shadowedBy": "被以下规则覆盖：",
-      "deleteSuccess": "技能已删除",
-      "deleteFailed": "删除技能失败",
-      "saveSuccess": "技能已保存",
-      "saveFailed": "保存技能失败",
-      "loadFailed": "加载技能失败",
-      "intro": "管理此机器人的专属技能。本地托管副本具有最高优先级。"
-    },
     "compaction": {
       "title": "压缩记录",
       "settingsTitle": "压缩设置",
@@ -3607,23 +3645,14 @@
   },
   "supermarket": {
     "title": "市场",
-    "searchPlaceholder": "搜索 Skills...",
-    "searchPlaceholderWithConnectors": "搜索 Skills 和连接器...",
+    "searchPlaceholder": "搜索应用...",
     "skillsSection": "Skills",
-    "packagesSection": "Packages",
-    "connectorsSection": "连接器",
-    "dependenciesSection": "依赖",
     "noResults": "未找到结果",
-    "noPackageResults": "未找到 Package",
-    "noConnectorResults": "未找到连接器",
-    "noDependencyResults": "未找到依赖",
+    "noAppResults": "未找到应用",
     "install": "安装",
     "installToBot": "安装到 Bot",
     "selectBot": "选择 Bot",
     "selectBotPlaceholder": "选择要安装到的 Bot...",
-    "selectWorkspaceTarget": "工作区",
-    "dependencyInstallTitle": "安装 {name}",
-    "viewBotDependencies": "查看 Bot 依赖",
     "envVariables": "环境变量",
     "envDescription": "配置所需的环境变量",
     "installSuccess": "安装成功",
@@ -3637,7 +3666,7 @@
     "homepage": "主页",
     "files": "文件",
     "viewDetails": "查看详情",
-    "packageInstallTitle": "安装 Package",
+    "appInstallTitle": "安装应用",
     "loadError": "从市场加载失败",
     "submit": "提交",
     "information": "信息",
@@ -3645,7 +3674,7 @@
     "registry": "Registry",
     "allRegistries": "全部",
     "registryFilter": "按 Registry 筛选",
-    "package": "Package",
+    "app": "应用",
     "previousPage": "上一页",
     "nextPage": "下一页",
     "developer": "开发者",
@@ -3655,10 +3684,30 @@
     "website": "网站",
     "instructions": "说明",
     "backToSupermarket": "返回市场",
-    "includedSkills": "包含的 Skills",
-    "packageNotFound": "未找到 Package",
+    "appNotFound": "未找到应用",
     "noDescription": "暂无描述",
-    "unnamedSkill": "未命名 Skill"
+    "unnamedSkill": "未命名 Skill",
+    "dependenciesHint": "安装到 Bot 的工作区，并与需要它们的其他应用共享。",
+    "dependenciesLoadError": "依赖信息加载失败，请重试。",
+    "dependencyUnavailable": "暂无此依赖的信息。",
+    "dependencyPending": "加载中…",
+    "connectorsHint": "安装时即可完成连接器授权。",
+    "connectorsUnavailableHint": "服务器未配置 Connect-It，这些连接器将保持未授权状态。",
+    "connectorAuthHint": "安装时授权。",
+    "license": "许可证",
+    "repository": "仓库",
+    "revision": "版本修订",
+    "installPreview": "安装将会",
+    "installPreviewDependency": "缺失时安装到工作区",
+    "installPreviewConnector": "安装时授权",
+    "installPreviewConnectorOptional": "可稍后授权（可选）",
+    "viewAll": "查看全部",
+    "sidebar": {
+      "installed": "已安装",
+      "manageRequired": "需要此 Bot 的管理权限才能安装应用。",
+      "manage": "管理",
+      "discovered": "工作区中已有"
+    }
   },
   "connectors": {
     "title": "连接器",
@@ -3680,7 +3729,7 @@
     "reauthorize": "重新授权",
     "disconnect": "断开连接",
     "disconnectTitle": "断开这个连接器？",
-    "disconnectDescription": "这会从 Bot 中移除 {name}，并删除已保存的连接。",
+    "disconnectDescription": "这会删除已保存的 {name} 连接，使用它的应用需要重新授权。",
     "disconnected": "已断开连接器",
     "disconnectFailed": "断开连接器失败",
     "loadFailed": "加载连接器失败",
@@ -3819,5 +3868,253 @@
     "expiresIn": "{time} 后过期",
     "codeExpired": "验证码已过期",
     "copyFailed": "复制验证码失败"
+  },
+  "apps": {
+    "diagnostics": {
+      "failed": "操作失败",
+      "partial": "需要处理",
+      "viewDetails": "查看详情",
+      "errorDetails": "错误详情",
+      "copyError": "复制错误信息",
+      "partialHint": "部分组件失败或尚未授权。请检查下方组件，完成应用设置。"
+    },
+    "title": "应用",
+    "checkUpdates": "检查更新",
+    "checkUpdatesDone": "更新检查完成",
+    "checkUpdatesFailed": "无法检查更新",
+    "browse": "浏览市场",
+    "emptyTitle": "尚未安装应用",
+    "emptyDescription": "为 Bot 安装应用，增加新的能力。",
+    "emptyAction": "打开市场",
+    "loadFailed": "无法加载应用",
+    "busy": "此工作区还有另一个应用操作在进行中。",
+    "viewBotApps": "查看 Bot 应用",
+    "components": "{count} 个组件",
+    "workspaceNotRunningDescription": "安装和更新应用需要运行中的工作区。列表显示的是最近记录的状态。",
+    "action": {
+      "restore": "恢复安装",
+      "install": "安装",
+      "resume": "继续安装",
+      "update": "更新",
+      "remove": "卸载",
+      "viewProgress": "查看进度",
+      "open": "在市场中查看"
+    },
+    "section": {
+      "skills": "{count} 个 Skill",
+      "dependencies": "{count} 个依赖",
+      "connectors": "{count} 个连接器"
+    },
+    "dependency": {
+      "shared": "共享",
+      "unknown": "目录中不存在"
+    },
+    "connector": {
+      "needsAuth": "需要授权",
+      "optional": "可选",
+      "shared": "所有工作区共享",
+      "authorize": "去授权",
+      "authDescription": "连接 {name} 使用的服务。",
+      "unavailableTitle": "连接器不可用",
+      "unavailableDescription": "当前配置的 Connect-It 未提供此类型的连接器。"
+    },
+    "remove": {
+      "title": "卸载 {name}？",
+      "description": "移除该应用的 Skills。依赖与连接只有在没有其他应用引用时才会一并释放。",
+      "willRemove": "将被移除",
+      "willKeep": "保留",
+      "willDisconnect": "将断开连接",
+      "alsoRemoveRequired": "同时移除仅被它使用的自动安装应用",
+      "reason": {
+        "shared": "被其他应用使用",
+        "image": "随工作区镜像自带",
+        "absent": "未安装"
+      }
+    },
+    "progress": {
+      "recoveryHint": "若要继续失败的卸载，请选择“卸载”。“恢复安装”会重新配置应用，并可能重新安装已移除的组件。",
+      "installing": "正在安装 {name}",
+      "updating": "正在更新 {name}",
+      "resuming": "正在继续安装 {name}",
+      "removing": "正在卸载 {name}",
+      "doneTitle": "完成",
+      "partialTitle": "已安装，部分项目需要处理",
+      "partialHint": "部分组件失败或仍需授权。处理完成后可在应用页继续安装。",
+      "failedTitle": "操作失败",
+      "failedHint": "已记录为失败，可在应用页重试。完整日志可复制。",
+      "unknownTitle": "结果未确认",
+      "unknownHint": "操作结果尚未确认，请刷新应用列表查看状态。",
+      "preparing": "准备中…",
+      "noLog": "没有脚本输出。",
+      "log": "操作日志",
+      "runInBackground": "后台运行",
+      "reconnecting": "与服务器的连接中断，正在确认结果…",
+      "preparingAuthorization": "正在准备授权…",
+      "awaitingAuthorization": "请在打开的窗口中完成授权。",
+      "authorize": "连接 {name} 以完成安装。",
+      "authorizationLoadFailed": "无法加载授权信息，请重试。"
+    },
+    "steps": {
+      "skills": "Skills",
+      "dependency": "依赖 {name}",
+      "connector": "连接器 {name}"
+    },
+    "stepStatus": {
+      "running": "进行中",
+      "installed": "已安装",
+      "linked": "已关联",
+      "needs_auth": "需要授权",
+      "failed": "失败",
+      "skipped": "已跳过",
+      "removed": "已移除",
+      "kept": "已保留",
+      "unlinked": "已解除关联",
+      "disconnected": "已断开",
+      "updated": "已更新"
+    },
+    "background": {
+      "installed": "{name} 已安装",
+      "partial": "{name} 已安装，部分项目需要处理",
+      "updated": "{name} 已更新",
+      "removed": "{name} 已卸载",
+      "failed": "{name}：操作失败"
+    },
+    "enableFlow": {
+      "installDescription": "将 {name} 应用安装到工作区，然后启用该 Agent。"
+    },
+    "sections": {
+      "skills": "Skills",
+      "dependencies": "依赖",
+      "connectors": "连接器"
+    },
+    "update": {
+      "title": "更新 {name}",
+      "description": "选择要更新的项目。依赖会更新到最新版本，应用发布会替换其 Skills。",
+      "release": "应用发布",
+      "confirm": "更新 {count} 项",
+      "none": "没有可更新的项目。"
+    }
+  },
+  "runtime": {
+    "claudeCode": {
+      "modes": {
+        "inherit": {
+          "name": "跟随工作区配置",
+          "description": "使用工作区中的权限配置。"
+        },
+        "default": {
+          "name": "手动确认",
+          "description": "需要授权的操作由你确认。"
+        },
+        "acceptEdits": {
+          "name": "自动接受编辑",
+          "description": "自动允许工作目录内的编辑和常见文件操作。"
+        },
+        "auto": {
+          "name": "自动审批",
+          "description": "由 Claude 判断操作是否允许，减少人工审批。"
+        },
+        "bypassPermissions": {
+          "name": "跳过权限检查",
+          "description": "跳过普通审批；显式规则和 Memoh 工具权限仍然生效。"
+        }
+      },
+      "commands": {
+        "status": {
+          "description": "查看最近一次 Claude 会话状态"
+        },
+        "skills": {
+          "description": "查看此 Claude 会话记录的技能"
+        },
+        "mcp": {
+          "description": "查看此 Claude 会话记录的 MCP 服务状态"
+        },
+        "compact": {
+          "description": "压缩 Claude 会话上下文",
+          "running_text": "压缩中",
+          "completed_text": "压缩已完成"
+        },
+        "goal": {
+          "description": "设置持续执行的目标",
+          "input_hint": "描述你的目标"
+        }
+      }
+    },
+    "codex": {
+      "modes": {
+        "strict": {
+          "name": "请求批准",
+          "description": "编辑外部文件和使用互联网时始终询问"
+        },
+        "policy": {
+          "name": "帮我批准",
+          "description": "仅在检测到可能不安全的操作时询问"
+        },
+        "yolo": {
+          "name": "完全访问",
+          "description": "不受限制地访问互联网和工作区中的任何文件"
+        }
+      },
+      "commands": {
+        "review": {
+          "description": "审查工作区改动",
+          "input_hint": "可选的审查说明"
+        },
+        "status": {
+          "description": "查看会话状态、Token 用量和账户额度"
+        },
+        "skills": {
+          "description": "查看可用技能"
+        },
+        "mcp": {
+          "description": "查看 MCP 服务状态"
+        },
+        "compact": {
+          "description": "压缩会话上下文",
+          "running_text": "压缩中",
+          "completed_text": "压缩已完成"
+        },
+        "goal": {
+          "description": "设置持续执行的目标",
+          "input_hint": "描述你的目标"
+        }
+      }
+    },
+    "planModes": {
+      "default": {
+        "name": "默认"
+      },
+      "plan": {
+        "name": "规划"
+      }
+    },
+    "result": {
+      "notices": {
+        "last_observed": "最近一次会话记录"
+      },
+      "fields": {
+        "session_id": "会话",
+        "model": "模型",
+        "permission_mode": "权限",
+        "input_tokens": "输入",
+        "output_tokens": "输出",
+        "cache_read_input_tokens": "缓存读取",
+        "cache_creation_input_tokens": "缓存写入",
+        "thread_id": "会话",
+        "status": "状态",
+        "tokens": "Token",
+        "context_window": "上下文窗口",
+        "limits": "账户额度",
+        "primary": "主要额度已用",
+        "secondary": "次要额度已用"
+      },
+      "empty": "暂无记录。",
+      "unknown": "暂无数据",
+      "details": "查看 JSON"
+    }
+  },
+  "elicitation": {
+    "done": "已完成",
+    "cancel": "取消"
   }
 }

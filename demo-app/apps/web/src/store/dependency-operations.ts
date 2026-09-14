@@ -46,7 +46,7 @@ export interface DependencyOperation {
   /** `operationKey(botId, depId)`. */
   key: string
   botId: string
-  targetId: string
+
   sessionId?: string
   item: DependencyItem
   action: DependencyOperationAction
@@ -63,8 +63,7 @@ export interface DependencyOperation {
 export interface StartDependencyOperationInput {
   definitionRevision?: string
   botId: string
-  /** '' → the bot's current workspace target. */
-  targetId: string
+
   /** Source conversation for authorized operation notifications only. */
   sessionId?: string
   item: DependencyItem
@@ -99,14 +98,7 @@ export function operationKey(botId: string, depId: string): string {
 }
 
 function optimisticStatus(action: DependencyOperationAction): DependencyStatus {
-  switch (action) {
-    case 'remove':
-      return 'removing'
-    case 'update':
-      return 'updating'
-    default:
-      return 'installing'
-  }
+  return action === 'update' ? 'updating' : 'installing'
 }
 
 export const useDependencyOperationsStore = defineStore('dependency-operations', () => {
@@ -176,7 +168,7 @@ export const useDependencyOperationsStore = defineStore('dependency-operations',
   // badge spin immediately, and every target of the bot is invalidated after.
   function patchCachedStatus(operation: DependencyOperation, status: DependencyStatus) {
     const queryCache = useQueryCache()
-    const key = botDependenciesQueryKey(operation.botId, operation.targetId)
+    const key = botDependenciesQueryKey(operation.botId)
     const current = queryCache.getQueryData<DependencyListResponse>(key)
     if (!current?.items) return
     queryCache.setQueryData<DependencyListResponse>(key, {
@@ -196,15 +188,13 @@ export const useDependencyOperationsStore = defineStore('dependency-operations',
     void router.push({
       name: 'bot-detail',
       params: { botName: botId },
-      query: { tab: 'dependencies' },
+      query: { tab: 'apps' },
     }).catch(() => {})
   }
 
   function doneMessage(operation: DependencyOperation): string {
     const args = { name: dependencyDisplayName(operation.item, unref(i18n.global.locale)) }
     switch (operation.action) {
-      case 'remove':
-        return t('bots.dependencies.background.removed', args)
       case 'update':
         return t('bots.dependencies.background.updated', args)
       case 'reinstall':
@@ -222,7 +212,7 @@ export const useDependencyOperationsStore = defineStore('dependency-operations',
         description: operation.error,
         duration: ACTIONABLE_TOAST_MS,
         action: {
-          label: t('supermarket.viewBotDependencies'),
+          label: t('apps.viewBotApps'),
           onClick: () => viewDependencies(operation.botId),
         },
       })
@@ -237,7 +227,7 @@ export const useDependencyOperationsStore = defineStore('dependency-operations',
       toast.success(doneMessage(operation), {
         duration: ACTIONABLE_TOAST_MS,
         action: {
-          label: t('supermarket.viewBotDependencies'),
+          label: t('apps.viewBotApps'),
           onClick: () => viewDependencies(operation.botId),
         },
       })
@@ -267,7 +257,6 @@ export const useDependencyOperationsStore = defineStore('dependency-operations',
         operation.botId,
         operation.item.id ?? '',
         operation.action,
-        operation.targetId || undefined,
         { version: operation.version, definitionRevision: operation.definitionRevision || undefined, sessionId: operation.sessionId, signal },
       )
       for await (const event of stream) {
@@ -348,7 +337,6 @@ export const useDependencyOperationsStore = defineStore('dependency-operations',
     const operation = reactive<DependencyOperation>({
       key,
       botId: input.botId,
-      targetId: input.targetId,
       sessionId: input.sessionId,
       item: input.item,
       action: input.action,

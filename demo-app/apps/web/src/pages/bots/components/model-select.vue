@@ -7,6 +7,7 @@
         :data-placeholder="displayLabel ? undefined : ''"
         type="button"
         :aria-expanded="open"
+        :aria-invalid="invalid || undefined"
         :aria-label="placeholder || 'Select model'"
         :class="[selectTriggerClass, 'w-full']"
       >
@@ -54,6 +55,7 @@ const props = defineProps<{
   models: ModelsGetResponse[]
   providers: ProvidersGetResponse[]
   modelType: ModelsModelType
+  invalid?: boolean
   placeholder?: string
   noneLabel?: string
   showReasoning?: boolean

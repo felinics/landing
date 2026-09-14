@@ -34,7 +34,7 @@ export type DesktopUpdateStatus =
   | 'idle'
   | 'checking'
   | 'up-to-date'
-  | 'available'
+  | 'installing'
   | 'downloading'
   | 'downloaded'
   | 'error'
@@ -48,17 +48,21 @@ export interface DesktopUpdateInfo {
 
 export interface DesktopUpdateState {
   status: DesktopUpdateStatus
+  autoUpdate: boolean
   currentVersion: string
   latestVersion: string | null
   progress: number | null
   error: string | null
+  // Mirrors apps/desktop/src/shared/updates.ts — notes from the update feed,
+  // null when none; hide the notes affordance on null.
+  releaseNotes: string | null
 }
 
 export interface DesktopUpdateBridge {
   getInfo(): Promise<DesktopUpdateInfo>
   getState(): Promise<DesktopUpdateState>
   check(): Promise<DesktopUpdateState>
-  download(): Promise<DesktopUpdateState>
+  setAutoUpdate(enabled: boolean): Promise<DesktopUpdateState>
   install(): Promise<DesktopUpdateState>
   onStateChanged(listener: (state: DesktopUpdateState) => void): () => void
 }

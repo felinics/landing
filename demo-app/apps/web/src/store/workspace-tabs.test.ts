@@ -2370,6 +2370,119 @@ describe('workspace layout store', () => {
       expect(written['bot-1'].layout).toEqual(desktopPersistedLayout)
     })
 
+    it.each(['file', 'preview', 'terminal', 'browser'] as const)(
+      'returns to chat from a %s-only stack without replacing its panel',
+      async (component) => {
+        mobileBreakpoint.setMobile(true)
+        const store = useWorkspaceTabsStore()
+        const dock = createFakeDock()
+        store.registerApi(dock as never)
+        await flushDraftChatFallback()
+        store.openFile('/data/return.md') // Replaces the ephemeral draft chat.
+        const file = dock.getPanel('file:/data/return.md')!
+        if (component !== 'file') {
+          if (component === 'preview') store.openPreview('/data/return.md')
+          if (component === 'terminal') store.openTerminal()
+          if (component === 'browser') store.openBrowser()
+          file.api.close()
+        }
+        await flushDraftChatFallback()
+        expect(dock.panels).toHaveLength(1)
+        const original = dock.activePanel!
+        expect(original.component).toBe(component)
+        // Explicit navigation must not inherit the empty-dock restore guard.
+        store.activateChatPanel()
+        store.activateChatPanel()
+        await flushDraftChatFallback()
+        expect(dock.activePanel?.component).toBe('chat')
+        expect(dock.getPanel(original.id)).toBe(original)
+        expect(dock.panels.filter(panel => panel.component === 'chat')).toHaveLength(1)
+        // Opening another file must not immediately evict the recovered chat.
+        store.openFile('/data/another.md')
+        store.activateChatPanel()
+        expect(dock.activePanel?.component).toBe('chat')
+        expect(dock.panels.filter(panel => panel.component === 'chat')).toHaveLength(1)
+      },
+    )
+
+    it('returns to chat while retaining dirty files', async () => {
+      mobileBreakpoint.setMobile(true)
+      const store = useWorkspaceTabsStore()
+      const dock = createFakeDock()
+      store.registerApi(dock as never)
+      await flushDraftChatFallback()
+      store.openFile('/data/dirty.md')
+      store.setFileDirty('file:/data/dirty.md', true)
+      const file = dock.getPanel('file:/data/dirty.md')!
+      store.activateChatPanel()
+      await flushDraftChatFallback()
+      expect(dock.activePanel?.component).toBe('chat')
+      expect(dock.getPanel(file.id)).toBe(file)
+      expect(store.fileDirty[file.id]).toBe(true)
+      expect(store.pendingClose).toBeNull()
+    })
+
+    it('restores an explicit session selection without evicting a non-chat panel', async () => {
+      mobileBreakpoint.setMobile(true)
+      const store = useWorkspaceTabsStore()
+      const dock = createFakeDock()
+      store.registerApi(dock as never)
+      await flushDraftChatFallback()
+      store.openFile('/data/return.md')
+      const file = dock.getPanel('file:/data/return.md')!
+      useChatSelectionStore().setSession('s1', { explicitSelection: true })
+      chatStoreMock.sessionId = 's1'
+      chatStoreMock.hasExplicitSessionSelection = true
+      store.activateChatPanel()
+      store.activateChatPanel()
+      await flushDraftChatFallback()
+      expect(dock.activePanel?.params.sessionId).toBe('s1')
+      expect(dock.getPanel(file.id)).toBe(file)
+      expect(dock.panels.filter(panel => panel.component === 'chat')).toHaveLength(1)
+    })
+
+    it.each(['auto-selected', 'deleted'] as const)(
+      'does not revive an %s session when returning to chat',
+      async (kind) => {
+        mobileBreakpoint.setMobile(true)
+        const store = useWorkspaceTabsStore()
+        const dock = createFakeDock()
+        store.registerApi(dock as never)
+        await flushDraftChatFallback()
+        store.openFile('/data/return.md')
+        if (kind === 'deleted') {
+          emitDeletedSession('s1')
+          await nextTick()
+        }
+        useChatSelectionStore().setSession('s1', { explicitSelection: kind === 'deleted' })
+        chatStoreMock.sessionId = 's1'
+        chatStoreMock.hasExplicitSessionSelection = kind === 'deleted'
+        store.activateChatPanel()
+        await flushDraftChatFallback()
+        expect(dock.activePanel?.component).toBe('chat')
+        expect(dock.activePanel?.params.sessionId).toBeNull()
+        expect(dock.getPanel('file:/data/return.md')).toBeDefined()
+      },
+    )
+
+    it('waits for a bot switch instead of returning into the previous workspace', async () => {
+      mobileBreakpoint.setMobile(true)
+      const store = useWorkspaceTabsStore()
+      const dock = createFakeDock()
+      store.registerApi(dock as never)
+      await flushDraftChatFallback()
+      store.openFile('/data/previous-bot.md')
+      const original = dock.activePanel
+      useChatSelectionStore().setBot('bot-without-layout')
+      store.activateChatPanel()
+      expect(dock.activePanel).toBe(original)
+      expect(dock.panels.some(panel => panel.component === 'chat')).toBe(false)
+      await flushDraftChatFallback()
+      store.activateChatPanel()
+      expect(dock.activePanel?.component).toBe('chat')
+      expect(dock.getPanel('file:/data/previous-bot.md')).toBeUndefined()
+    })
+
     it('focuses the existing terminal instead of stacking unreachable new ones', async () => {
       mobileBreakpoint.setMobile(true)
       const store = useWorkspaceTabsStore()

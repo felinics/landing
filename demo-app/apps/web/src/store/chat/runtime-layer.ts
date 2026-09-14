@@ -21,6 +21,7 @@ export interface ChatRuntimeLayerDeps
   showError: ChatDecisionDeps['showError']
   createControlId: ChatDecisionDeps['createControlId']
   onBotSessionsActivityEvent: ChatRealtimeCallbacks['onBotSessionsActivityEvent']
+  onActivityStreamCoverageChanged?: ChatRealtimeCallbacks['onActivityStreamCoverageChanged']
 }
 
 export function createChatRuntimeLayer(deps: ChatRuntimeLayerDeps) {
@@ -44,6 +45,7 @@ export function createChatRuntimeLayer(deps: ChatRuntimeLayerDeps) {
     onRuntimeProjection: (botId, sessionId, change) =>
       forwardRuntimeProjection(botId, sessionId, change),
     onBotSessionsActivityEvent: deps.onBotSessionsActivityEvent,
+    onActivityStreamCoverageChanged: deps.onActivityStreamCoverageChanged,
   })
   const decisions = createChatDecisions({
     normalizeTarget: target => deps.normalizeTarget(target),

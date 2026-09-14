@@ -176,6 +176,8 @@ export const useChatStore = defineStore('chat', () => {
         await refreshCurrentSession(botId, targetSessionId)
       }
     },
+    markSessionViewStale: chatViews.markSessionStale,
+    markAllSessionViewsStale: chatViews.markAllSessionsStale,
   })
   // `loadingChats` covers the bot-level boot path (sessions list fetch), so
   // the sidebar can show its skeleton + suppress its empty-state placeholder
@@ -202,7 +204,7 @@ export const useChatStore = defineStore('chat', () => {
   })
   const commandEventRegistry = createCommandEventRegistry({ currentBotId, sessionId })
   const {
-    commandEvent, commandEventForScope, rememberCommandEvent, showCommandError,
+    commandEvent, commandEventForScope, rememberCommandEvent, beginCommandEvent, showCommandError,
     clearCommandEvent, rescopeSessionCommandEventToComposer, resetCommandEvents,
   } = commandEventRegistry
   const userSentInSession = ref<{
@@ -253,6 +255,7 @@ export const useChatStore = defineStore('chat', () => {
     resolveErrorMessage: resolveApiErrorMessage,
     showError: message => toast.error(message),
     onBotSessionsActivityEvent: handleBotSessionsActivityEvent,
+    onActivityStreamCoverageChanged: chatViews.setActivityStreamCoverage,
   })
   const {
     startWebSocket,
@@ -316,7 +319,7 @@ export const useChatStore = defineStore('chat', () => {
     pendingACPRuntimeStatus, pendingACPRuntimeEnsuring, pendingExternalAgentStateFor,
     pendingExternalAgentMatchesInput,
     stageExternalAgentSession, stageDefaultExternalAgentSession, resetToEmptyComposer,
-    ensurePendingACPRuntime, setPendingACPModel, setPendingACPMode, setPendingACPReasoning,
+    ensurePendingACPRuntime, setPendingACPModel, setPendingACPMode, setPendingRuntimeMode, setPendingACPReasoning,
     saveLiveDraftExternalAgentStage, activateDraftExternalAgentStage, discardEvictedDraft,
   } = externalAgents.orchestration
   const {
@@ -604,7 +607,7 @@ export const useChatStore = defineStore('chat', () => {
     _hasLoadedOlder: hasLoadedOlder,
 
     startupSendFailure, startupSendFailureFor,
-    commandEvent, commandEventForScope, rememberCommandEvent, showCommandError,
+    commandEvent, commandEventForScope, rememberCommandEvent, beginCommandEvent, showCommandError,
     fsChangedAt, markFsChanged, affectsPath, fsEventForPath,
     backgroundTaskFor,
     initialize, initializeWithRecovery, refreshBots, selectBot, selectSession, createNewSession,
@@ -612,7 +615,7 @@ export const useChatStore = defineStore('chat', () => {
     forkedSessionRequested, guiToolUseRequested, deletedSession,
     stageExternalAgentSession, stageDefaultExternalAgentSession, cacheDefaultExternalAgentSession,
     resetToEmptyComposer, ensurePendingACPRuntime,
-    setPendingACPModel, setPendingACPMode, setPendingACPReasoning, clearPendingExternalAgentSession,
+    setPendingACPModel, setPendingACPMode, setPendingRuntimeMode, setPendingACPReasoning, clearPendingExternalAgentSession,
     createExternalAgentSession, updateCurrentSessionAgent, updateCurrentSessionToMemoh,
     acpRuntimeKey, ensureACPRuntime, setACPRuntimeMode, setACPRuntimeModel, setACPRuntimeReasoning,
     removeSession, renameSession, forkTurn,

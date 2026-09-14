@@ -35,7 +35,7 @@
           :aria-label="agentLabel"
         >
           <component
-            :is="acpAgentIcon(agentProvider, true)"
+            :is="externalAgentIcon(agentProvider, true)"
             class="size-4"
             aria-hidden="true"
           />
@@ -125,14 +125,14 @@
               <DropdownMenuItem
                 @select="$emit('rename', session)"
               >
-                <Pencil class="mr-2 size-3.5" />
+                <Pencil />
                 {{ t('common.rename') }}
               </DropdownMenuItem>
               <DropdownMenuItem
                 variant="destructive"
                 @select="$emit('delete', session)"
               >
-                <Trash2 class="mr-2 size-3.5" />
+                <Trash2 />
                 {{ t('common.delete') }}
               </DropdownMenuItem>
             </DropdownMenuContent>
@@ -149,19 +149,19 @@
         :disabled="isActive"
         @select="$emit('openNewTab', session)"
       >
-        <MessageSquare class="mr-2 size-3.5" />
+        <OpenInTabIcon />
         {{ t('common.open') }}
       </ContextMenuItem>
       <ContextMenuSeparator />
       <ContextMenuItem @select="$emit('rename', session)">
-        <Pencil class="mr-2 size-3.5" />
+        <Pencil />
         {{ t('common.rename') }}
       </ContextMenuItem>
       <ContextMenuItem
         variant="destructive"
         @select="$emit('delete', session)"
       >
-        <Trash2 class="mr-2 size-3.5" />
+        <Trash2 />
         {{ t('common.delete') }}
       </ContextMenuItem>
     </ContextMenuContent>
@@ -169,9 +169,11 @@
 </template>
 
 <script setup lang="ts">
+import { externalAgentDisplayName, externalAgentIcon } from '@/utils/external-agent'
 import { computed, ref } from 'vue'
-import { Clock, LoaderCircle, MessageSquare, MoreHorizontal, Pencil, Trash2 } from 'lucide-vue-next'
+import { Clock, LoaderCircle, MoreHorizontal, Pencil, Trash2 } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
+import { OpenInTabIcon } from '@memohai/icon/ui'
 import type { SessionSummary } from '@/composables/api/useChat'
 import {
   ContextMenu,
@@ -184,7 +186,6 @@ import {
   DropdownMenuContent,
   DropdownMenuItem,
 } from '@felinic/ui'
-import { acpAgentDisplayName, acpAgentIcon } from '@/utils/acp'
 import { sessionAgentProvider } from '@/utils/bot-agent'
 import { splitScriptRuns } from '@/utils/script-runs'
 import { isAgentRuntimeType, normalizedRuntimeType, normalizedSessionMode, routeConversationLabel } from '@/store/chat-list.utils'
@@ -270,7 +271,7 @@ const agentProvider = computed(() => sessionAgentProvider(
 ))
 const isAgentSession = computed(() => isAgentRuntimeType(normalizedRuntimeType(props.session)))
 const isScheduleSession = computed(() => normalizedSessionMode(props.session) === 'schedule')
-const agentLabel = computed(() => acpAgentDisplayName(agentProvider.value, t('chat.sessionTypeACPAgent')))
+const agentLabel = computed(() => externalAgentDisplayName(agentProvider.value, t('chat.sessionTypeACPAgent')))
 
 // The old two-line subLabel is folded into the native tooltip: channel handle
 // for IM sessions, agent name for ACP sessions.

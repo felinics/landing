@@ -70,7 +70,6 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
               <p class="footer-tagline" v-html="th('footer.tagline')" />
             </div>
 
-            <!-- Product, resources, and community destinations. -->
             <div class="footer-links">
               <div class="footer-link-group">
                 <h2 class="footer-link-heading">{{ t('footer.product') }}</h2>
@@ -102,18 +101,18 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
                 <a href="https://github.com/felinics/connect-it" target="_blank" rel="noopener noreferrer" class="footer-link">Connect It</a>
                 <a href="https://github.com/felinics/ui" target="_blank" rel="noopener noreferrer" class="footer-link">Felinic UI</a>
               </div>
+              <nav class="footer-link-group" :aria-label="t('footer.legal')">
+                <h2 class="footer-link-heading">{{ t('footer.legal') }}</h2>
+                <RouterLink class="footer-link" :to="{ path: '/legal/terms', query: { lang: locale } }">{{ t('legal.titles.terms') }}</RouterLink>
+                <RouterLink class="footer-link" :to="{ path: '/legal/privacy', query: { lang: locale } }">{{ t('legal.titles.privacy') }}</RouterLink>
+                <RouterLink class="footer-link" :to="{ path: '/legal/cross-border', query: { lang: locale } }">{{ t('legal.titles.cross-border') }}</RouterLink>
+              </nav>
             </div>
           </div>
 
-          <!-- Bottom row: legal line -->
           <div class="footer-bottom">
             <div class="footer-company">
               <span class="footer-copyright">{{ t('footer.copyright') }}</span>
-              <nav class="footer-legal" :aria-label="t('legal.documents')">
-                <RouterLink :to="{ path: '/legal/terms', query: { lang: locale } }">{{ t('legal.titles.terms') }}</RouterLink>
-                <RouterLink :to="{ path: '/legal/privacy', query: { lang: locale } }">{{ t('legal.titles.privacy') }}</RouterLink>
-                <RouterLink :to="{ path: '/legal/cross-border', query: { lang: locale } }">{{ t('legal.titles.cross-border') }}</RouterLink>
-              </nav>
             </div>
             <div
               v-if="isMemohNet"
@@ -185,7 +184,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 }
 .footer-links {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 32px;
 }
 .footer-link-group {
@@ -235,8 +234,6 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
   line-height: 1.6;
   color: var(--muted-foreground);
 }
-.footer-legal { display: flex; flex-wrap: wrap; gap: 8px 16px; font-size: 11px; line-height: 1.7; color: var(--muted-foreground); }
-.footer-legal a:hover { color: var(--foreground); text-decoration: underline; text-underline-offset: 4px; }
 .github-icon {
   background-color: currentColor;
   mask: url("/brands/github.svg") center / contain no-repeat;

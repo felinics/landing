@@ -1,1 +1,0 @@
-import{l as e}from"./dist-P0Oz3Jgd.js";function t(){return e(`(width < 768px)`,{window:typeof window>`u`?void 0:window})}export{t};

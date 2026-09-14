@@ -1,0 +1,1 @@
+import{d as e}from"./dist-iJIRGVaY.js";function t(){return e(`(width < 768px)`,{window:typeof window>`u`?void 0:window})}export{t};

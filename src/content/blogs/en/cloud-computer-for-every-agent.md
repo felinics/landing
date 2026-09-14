@@ -24,7 +24,7 @@ A cloud computer gives you two things a laptop can't.
 
 Together, those two things change the kind of work you can give an agent. You stop running one-off tasks and start keeping an always-on coworker.
 
-It also differs from a throwaway sandbox: the workspace has a graphical desktop, so you can watch the agent work and take over when it stalls; and you can put ACP agents you already use — Claude Code, Codex, Hermes — on the same cloud computer.
+It also differs from a throwaway sandbox: the workspace has a graphical desktop, so you can watch the agent work and take over when it stalls; and you can put ACP agents you already use — Claude Code, Codex — on the same cloud computer.
 
 ![Each bot has an isolated container workspace: filesystem, processes, network, and resources live on its own computer](/blogs/cloud-computer-for-every-agent/02-computer.png)
 
@@ -65,7 +65,7 @@ Sample prompt:
 
 ### 2. Bring your own coding agent
 
-You don't have to throw away tools you already like. Through ACP, put Claude Code, Codex, or Hermes inside the bot's container workspace, using your own subscription or API key — or models provided by Memoh.
+You don't have to throw away tools you already like. Through ACP, put Claude Code or Codex inside the bot's container workspace, using your own subscription or API key — or models provided by Memoh.
 
 Coding, installing dependencies, running commands, and landing changes all happen on this cloud computer. You dispatch the work from the web UI, Desktop, or any connected channel.
 
@@ -147,7 +147,7 @@ On Cloud and self-hosted deploys, the agent's workspace runs in an isolated cont
 
 **Can I put Claude Code or Codex on it?**
 
-Yes. Enable an ACP agent on the bot's Agents page and finish setup with an API key or OAuth. They run inside that bot's container workspace and share the computer with Memoh's own agent. Codex, Claude Code, and Hermes ship as built-in setup paths.
+Yes. Enable an ACP agent on the bot's Agents page and finish setup with an API key or OAuth. They run inside that bot's container workspace and share the computer with Memoh's own agent. Codex and Claude Code ship as built-in setup paths.
 
 **Can I run more than one agent?**
 

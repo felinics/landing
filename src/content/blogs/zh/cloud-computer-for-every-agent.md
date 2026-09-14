@@ -24,7 +24,7 @@ Memoh 把这台电脑直接交给 Agent。开源，可自托管，也可以直�
 
 这两点加在一起，改变的是工作方式。你不再做一次性任务，而是养一个持续在线的同事。
 
-它和常见的一次性沙盒也不一样：工作区里有图形桌面，你可以看着 Agent 操作，卡住时自己接手；你也可以把 Claude Code、Codex、Hermes 这类已经在用的 ACP Agent，放到同一台云电脑里。
+它和常见的一次性沙盒也不一样：工作区里有图形桌面，你可以看着 Agent 操作，卡住时自己接手；你也可以把 Claude Code、Codex 这类已经在用的 ACP Agent，放到同一台云电脑里。
 
 ![每个 Bot 都有独立的容器工作区：文件系统、进程、网络和资源都在自己的电脑里](/blogs/cloud-computer-for-every-agent/02-computer.png)
 
@@ -147,7 +147,7 @@ Cloud 和自托管里的 Agent 工作区跑在隔离容器中，默认进不去�
 
 **可以把 Claude Code 或 Codex 放进去吗？**
 
-可以。在 Bot 的 Agents 页启用 ACP Agent，用 API Key 或 OAuth 完成配置。它们跑在该 Bot 的容器工作区里，和 Memoh 自己的 Agent 共用这台电脑。目前内置 Codex、Claude Code 和 Hermes。
+可以。在 Bot 的 Agents 页启用 ACP Agent，用 API Key 或 OAuth 完成配置。它们跑在该 Bot 的容器工作区里，和 Memoh 自己的 Agent 共用这台电脑。目前内置 Codex 和 Claude Code。
 
 **可以同时跑多个 Agent 吗？**
 

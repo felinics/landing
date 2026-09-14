@@ -1,68 +1,94 @@
 # Memoh Landing Page
 
-Welcome to the **Memoh Landing Page** project! This repository contains the frontend scaffold for Memoh's landing page, engineered for high performance, accessibility, and a modern, AI-centric aesthetic.
+The marketing site for **Memoh** — landing page, blog, docs entry points, and desktop download flows. Built for performance, accessibility, and a modern, AI-centric aesthetic.
 
-## ✨ Features & Design
-
-Inspired by Memoh's clean and modern interface, this landing page incorporates:
-- **Modern UI/UX**: Clean interfaces with Dark/Light mode support, utilizing Action Blue/Indigo and modern AI gradients.
-- **Layout Patterns**: Features split-layout hero sections and bento-box style grids for presenting features.
-- **Accessible Components**: Built on top of Radix Vue for fully accessible, interactive primitives (e.g., accordions, dialogs, tooltips).
-- **Mobile-First Responsive Design**: Fluid and responsive layouts powered by Tailwind CSS.
-
-## 🛠 Technical Stack
-
-This project leverages a robust, modern frontend architecture based on the `felinics/Memoh` core repository:
+## Technical Stack
 
 - **Framework**: Vue 3 (Composition API & `<script setup>`)
 - **Language**: TypeScript
 - **Build Tool**: Vite
+- **Routing**: vue-router (HTML5 history mode)
+- **i18n**: vue-i18n (English / Chinese)
 - **State Management**: Pinia
-- **Styling**: Tailwind CSS (with CSS Variables integration)
+- **Styling**: Tailwind CSS (with CSS variables)
 - **UI Primitives**: Radix Vue (Reka UI)
 - **Icons**: Lucide Vue Next
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 src/
-├── assets/      # Static assets and global CSS styles
-├── components/  # Atomic, reusable UI components and page sections
-├── store/       # Pinia stores for state management
-├── App.vue      # Root application component
-└── main.ts      # Application entry point
+├── assets/          # Static assets and global CSS styles
+├── components/      # Reusable UI components and page sections
+├── content/
+│   └── blogs/       # Blog posts in Markdown (en/ and zh/ locales)
+├── lib/
+│   ├── blogs.ts     # Blog loader: frontmatter parsing, locales, slug aliases
+│   └── desktopDownloads.ts  # Manifest-first desktop download resolution
+├── pages/           # Route-level pages (home, blogs, download, ...)
+├── router.ts        # Routes, including legacy blog URL redirects
+├── store/           # Pinia stores
+├── App.vue          # Root application component
+└── main.ts          # Application entry point
+public/
+└── blogs/<slug>/    # Images and media for each blog post
+workers/             # Cloudflare Worker for legacy desktop download proxy
 ```
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
-Make sure you have Node.js and `npm` installed on your local machine.
+Node.js and `npm` installed locally.
 
 ### Installation
 
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/felinics/Memoh.git
-   ```
-2. Navigate to the landing page directory and install the dependencies:
-   ```bash
-   npm install
-   ```
+```bash
+git clone https://github.com/felinics/landing.git
+cd landing
+npm install
+```
 
 ### Development
 
-Start the development server with Hot Module Replacement (HMR):
 ```bash
 npm run dev
 ```
 
 ### Build for Production
 
-Create a production-ready, minified build:
 ```bash
 npm run build
 ```
+
+## Blog Content
+
+Blog posts live in `src/content/blogs/{locale}/{slug}.md`, where `locale` is `en` or `zh` and `slug` is a descriptive, English, kebab-case name (for example `cloud-computer-for-every-agent`). **Do not use dates as filenames.** The slug becomes the public URL: `/blogs/<slug>`.
+
+### Adding a post
+
+1. Create `src/content/blogs/en/<slug>.md` (and optionally `zh/<slug>.md` for the Chinese version — same slug, so the page switches with the site locale).
+2. Add frontmatter:
+
+   ```markdown
+   ---
+   title: Introducing Memoh
+   author: Yanbo
+   date: 2026-09-15
+   ---
+   ```
+
+   `date` (YYYY-MM-DD) controls display date and list ordering (newest first).
+3. Put images in `public/blogs/<slug>/` and reference them as `/blogs/<slug>/image.png`.
+
+### Legacy URLs
+
+Older posts used date-based URLs (e.g. `/blogs/2026-09-15`). These keep working through two layers:
+
+- Redirect routes in `src/router.ts` (old date path → new slug path)
+- `slugAliases` in `src/lib/blogs.ts` as a fallback lookup
+
+When renaming a post's slug, add both a redirect route and an alias entry so existing links never break.
 
 ## Desktop Downloads
 

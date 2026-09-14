@@ -19,8 +19,12 @@ export type BlogPost = {
 }
 
 const slugAliases: Record<string, string> = {
-  '2026-09-11': '2026-09-15',
-  '2026-09-11-en': '2026-09-15',
+  '2026-02-16': 'introduction-to-memoh',
+  '2026-05-02': 'discuss-mode',
+  '2026-05-15': 'workspace-desktop',
+  '2026-09-11': 'cloud-computer-for-every-agent',
+  '2026-09-11-en': 'cloud-computer-for-every-agent',
+  '2026-09-15': 'cloud-computer-for-every-agent',
 }
 
 const parseFrontmatter = (raw: string) => {
@@ -102,7 +106,7 @@ const parseBlogPost = (path: string, raw: string): BlogPost | undefined => {
     locale: parsedPath.locale,
     title: meta.title || parsedPath.slug,
     author: meta.author || 'Team Memoh',
-    dateKey: dateMatch?.[1] ?? parsedPath.slug,
+    dateKey: meta.date || dateMatch?.[1] || parsedPath.slug,
     excerpt: getExcerpt(bodyWithoutTitle),
     readingMinutes: getReadingMinutes(bodyWithoutTitle),
     body: bodyWithoutTitle,
@@ -143,9 +147,9 @@ export const formatBlogDate = (dateKey: string, locale: string) => {
 export const getBlogPosts = (locale: string) => {
   const normalized = normalizeLocale(locale)
   return [...postsBySlug.keys()]
-    .sort((a, b) => b.localeCompare(a))
     .map((slug) => pickPost(slug, normalized))
     .filter((post): post is BlogPost => Boolean(post))
+    .sort((a, b) => b.dateKey.localeCompare(a.dateKey))
 }
 
 export const getBlogPost = (slug: string, locale: string) =>

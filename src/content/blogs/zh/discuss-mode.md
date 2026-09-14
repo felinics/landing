@@ -1,6 +1,7 @@
 ---
 title: 介绍Memoh的Discuss模式 - 我们如何实现一个更主动的群聊机器人
 author: Acbox
+date: 2026-05-02
 ---
 
 # 介绍Memoh的Discuss模式 - 我们如何实现一个更主动的群聊机器人

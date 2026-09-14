@@ -1,6 +1,7 @@
 ---
 title: 提供桌面，我们可以做到更多 - 介绍Memoh的桌面电脑功能
 author: Ran Chen
+date: 2026-05-15
 ---
 
 # 提供桌面，我们可以做到更多 - 介绍Memoh的桌面电脑功能
@@ -42,7 +43,7 @@ Memoh 的 workspace 桌面运行在 bot 的 container 里，不直接控制用�
 
 对 bot 来说，这是一个可以操作的运行环境。
 
-![在 Memoh 里打开 workspace display 的 demo](/blogs/2026-05-15/desktop-settings.gif)
+![在 Memoh 里打开 workspace display 的 demo](/blogs/workspace-desktop/desktop-settings.gif)
 
 _Display pane 里展示的是 bot workspace 的图形桌面，浏览器就在这个桌面里运行。_
 
@@ -66,7 +67,7 @@ Browser Use 通过 Chrome DevTools Protocol（CDP）连接 workspace 里的 Chro
 
 Memoh 给 agent 暴露了几个工具：
 
-![在 Display pane 里操作有头浏览器的 demo](/blogs/2026-05-15/display-browser.gif)
+![在 Display pane 里操作有头浏览器的 demo](/blogs/workspace-desktop/display-browser.gif)
 
 _Display pane 里打开的是 workspace 里的 Chrome。用户看到的页面和 bot 操作的是同一个浏览器状态。_
 
@@ -98,7 +99,7 @@ Memoh 的策略是：能用 Browser Use 就用 Browser Use，因为它更稳定�
 
 连接成功后，用户能看到当前 workspace 的主显示器。
 
-![在 workspace display 里打开终端的 demo](/blogs/2026-05-15/display-terminal.gif)
+![在 workspace display 里打开终端的 demo](/blogs/workspace-desktop/display-terminal.gif)
 
 _同一个 Display session 里可以看到浏览器、终端和其它图形界面。_
 

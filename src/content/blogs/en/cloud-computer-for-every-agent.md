@@ -1,6 +1,7 @@
 ---
 title: Introducing Memoh: A Cloud Computer for Every Agent
-author: Team Memoh
+author: Yanbo
+date: 2026-09-15
 ---
 
 # Introducing Memoh: A Cloud Computer for Every Agent
@@ -25,7 +26,7 @@ Together, those two things change the kind of work you can give an agent. You st
 
 It also differs from a throwaway sandbox: the workspace has a graphical desktop, so you can watch the agent work and take over when it stalls; and you can put ACP agents you already use — Claude Code, Codex, Hermes — on the same cloud computer.
 
-![Each bot has an isolated container workspace: filesystem, processes, network, and resources live on its own computer](/blogs/2026-09-15/02-computer.png)
+![Each bot has an isolated container workspace: filesystem, processes, network, and resources live on its own computer](/blogs/cloud-computer-for-every-agent/02-computer.png)
 
 _The workspace is the agent's computer. Files, commands, desktop, and network all follow that bot._
 
@@ -56,7 +57,7 @@ Once the setup wall is gone, the question is which job you want it to own for a 
 
 A bot is useful when it doesn't drop. Support, on-call, lead triage, community ops — the hard part has always been a machine that never sleeps, reliable channel connections, and sessions that don't vanish when you close your laptop.
 
-Memoh attaches Telegram, Discord, Lark, WeChat, Slack, and email to the same agent. In a group it does not have to answer every line — [Discuss mode](/blogs/2026-05-02) already lets it decide whether to speak. What you briefed in the web UI is still there in Telegram.
+Memoh attaches Telegram, Discord, Lark, WeChat, Slack, and email to the same agent. In a group it does not have to answer every line — [Discuss mode](/blogs/discuss-mode) already lets it decide whether to speak. What you briefed in the web UI is still there in Telegram.
 
 Sample prompt:
 
@@ -76,7 +77,7 @@ Sample prompt:
 
 Login pages, admin consoles, OAuth, file pickers — that work is not in an API. A Memoh workspace can light up a screen: the agent clicks on it, you can watch, and if it stalls you take over.
 
-How that desktop reaches a headed browser, when to use Browser Use, and when to fall back to pixel-level GUI control is in [the May workspace-desktop post](/blogs/2026-05-15). After this launch, that is not an add-on. It ships with the cloud computer. Close the laptop; the screen stays in the cloud.
+How that desktop reaches a headed browser, when to use Browser Use, and when to fall back to pixel-level GUI control is in [the May workspace-desktop post](/blogs/workspace-desktop). After this launch, that is not an add-on. It ships with the cloud computer. Close the laptop; the screen stays in the cloud.
 
 Sample prompt:
 
@@ -86,7 +87,7 @@ Sample prompt:
 
 Chat is no longer a disposable sandbox. Reports, scripts, screenshots, spreadsheets, last week's drafts — they stay under `/data`. The agent can search them, read them, and keep editing. Long-term memory follows the workspace too: searchable across sessions and channels by default, with Mem0 or OpenViking if you want them.
 
-![Workspace files persist: spreadsheets, screenshots, scripts, and memory files live on the same computer](/blogs/2026-09-15/04-files.png)
+![Workspace files persist: spreadsheets, screenshots, scripts, and memory files live on the same computer](/blogs/cloud-computer-for-every-agent/04-files.png)
 
 _Files written today are still there next week. The agent does not start from zero every time._
 
@@ -100,7 +101,7 @@ Scheduled tasks fire on cron. They don't need you to be in the chat. Morning bri
 
 Dependencies, connectors, and skills live on that same computer. Install Node.js, Python, or a GitHub connector from Supermarket, and the agent uses them next time. Write code, run a dev server, and open a preview in the cloud.
 
-![Scheduled tasks live on the bot and fire on time, without anyone clicking](/blogs/2026-09-15/05-schedule.png)
+![Scheduled tasks live on the bot and fire on time, without anyone clicking](/blogs/cloud-computer-for-every-agent/05-schedule.png)
 
 _The job hangs on the agent's computer, not on your laptop._
 

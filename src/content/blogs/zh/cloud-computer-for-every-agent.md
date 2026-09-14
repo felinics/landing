@@ -1,6 +1,7 @@
 ---
 title: 介绍 Memoh：给每个 Agent 一台云电脑
-author: Team Memoh
+author: Yanbo
+date: 2026-09-15
 ---
 
 # 介绍 Memoh：给每个 Agent 一台云电脑
@@ -25,7 +26,7 @@ Memoh 把这台电脑直接交给 Agent。开源，可自托管，也可以直�
 
 它和常见的一次性沙盒也不一样：工作区里有图形桌面，你可以看着 Agent 操作，卡住时自己接手；你也可以把 Claude Code、Codex、Hermes 这类已经在用的 ACP Agent，放到同一台云电脑里。
 
-![每个 Bot 都有独立的容器工作区：文件系统、进程、网络和资源都在自己的电脑里](/blogs/2026-09-15/02-computer.png)
+![每个 Bot 都有独立的容器工作区：文件系统、进程、网络和资源都在自己的电脑里](/blogs/cloud-computer-for-every-agent/02-computer.png)
 
 _工作区就是 Agent 的电脑。文件、命令、桌面和网络都跟这个 Bot 走。_
 
@@ -56,7 +57,7 @@ Desktop 不会被 Cloud 取代。任务发生在你自己的文件和应用上�
 
 Bot 的价值不在演示，而在它不掉线。客服、值班、线索筛选、社区管理，真正难的是一台不合盖的机器、可靠的渠道连接，以及不会在你关电脑时一起消失的会话。
 
-Memoh 把 Telegram、Discord、飞书、微信、Slack、邮件接到同一个 Agent 上。群聊里它不必每句都回——[Discuss 模式](/blogs/2026-05-02)已经让它自己判断要不要开口。你在 Web 里交代过的事，换到 Telegram 仍然还在。
+Memoh 把 Telegram、Discord、飞书、微信、Slack、邮件接到同一个 Agent 上。群聊里它不必每句都回——[Discuss 模式](/blogs/discuss-mode)已经让它自己判断要不要开口。你在 Web 里交代过的事，换到 Telegram 仍然还在。
 
 示例：
 
@@ -76,7 +77,7 @@ Memoh 把 Telegram、Discord、飞书、微信、Slack、邮件接到同一个 A
 
 登录页、后台、OAuth、文件选择器——这些活不在 API 里。Memoh 的工作区可以亮起一块屏幕：Agent 在上面点，你也能看，卡住了就自己接手。
 
-桌面怎么接到有头浏览器、网页操作和图形界面怎么分工，我们在[5 月的工作区桌面一文](/blogs/2026-05-15)里写过。发布之后，它不再是一个可选项，而是这台云电脑默认带着的能力。笔记本合上了，这块屏幕还在云上。
+桌面怎么接到有头浏览器、网页操作和图形界面怎么分工，我们在[5 月的工作区桌面一文](/blogs/workspace-desktop)里写过。发布之后，它不再是一个可选项，而是这台云电脑默认带着的能力。笔记本合上了，这块屏幕还在云上。
 
 示例：
 
@@ -86,7 +87,7 @@ Memoh 把 Telegram、Discord、飞书、微信、Slack、邮件接到同一个 A
 
 每次聊天不再是一次性沙盒。报告、脚本、截图、数据表、上周写的草稿，都还在 `/data` 里。Agent 可以搜索、读取、接着改。长期记忆也跟工作区走，跨会话、跨渠道默认可检索，也可以接入 Mem0 或 OpenViking。
 
-![工作区文件会留下来：表格、截图、脚本和记忆文件都在同一台电脑上](/blogs/2026-09-15/04-files.png)
+![工作区文件会留下来：表格、截图、脚本和记忆文件都在同一台电脑上](/blogs/cloud-computer-for-every-agent/04-files.png)
 
 _今天写入的文件，下周还在。Agent 不是每次从零开始。_
 
@@ -100,7 +101,7 @@ _今天写入的文件，下周还在。Agent 不是每次从零开始。_
 
 依赖、Connector 和 Skill 也在同一台电脑上。从 Supermarket 装好 Node.js、Python 或 GitHub Connector，Agent 下次直接用。写代码、跑开发服务器、打开预览，都可以在云上完成。
 
-![计划任务写在 Bot 上，到点就跑，不需要人去点](/blogs/2026-09-15/05-schedule.png)
+![计划任务写在 Bot 上，到点就跑，不需要人去点](/blogs/cloud-computer-for-every-agent/05-schedule.png)
 
 _任务挂在 Agent 的电脑上，而不是你的笔记本上。_
 

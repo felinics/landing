@@ -1,6 +1,7 @@
 ---
 title: Introduction to Memoh - The Case for an Always-On, Containerized Home Agent
 author: Team Memoh
+date: 2026-02-16
 ---
 
 # Introduction to Memoh - The Case for an Always-On, Containerized Home Agent
@@ -54,15 +55,15 @@ We run Memoh as a containerized stack: isolated services for storage (files/DB/v
 
 - **Multi-bot Management**: Create multiple bots; humans and bots, or bots with each other, can chat privately, in groups, or collaborate.
 
-  ![Multi-bot Management](/blogs/2026-02-16/01-multi-bots.png)
+  ![Multi-bot Management](/blogs/introduction-to-memoh/01-multi-bots.png)
 
 - **Containerized**: Each bot runs in its own isolated container. Bots can freely execute commands, edit files, and access the network within their containers—like having their own computer.
 
-  ![Containerized](/blogs/2026-02-16/02-containerized.png)
+  ![Containerized](/blogs/introduction-to-memoh/02-containerized.png)
 
 - **Memory Engineering**: Every chat is stored in the database, with the last 24 hours of context loaded by default. Each conversation turn is stored as memory and can be retrieved by bots through semantic search.
 
-  ![Memory Engineering](/blogs/2026-02-16/03-memory-engineering.png)
+  ![Memory Engineering](/blogs/introduction-to-memoh/03-memory-engineering.png)
 
 - **Various Platforms**: Supports Telegram, Lark (Feishu), and more.
 - **Simple and Easy to Use**: Configure bots and settings for Provider, Model, Memory, Channel, MCP, and Skills through a graphical interface—no coding required to set up your own AI bot.

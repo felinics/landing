@@ -7,6 +7,24 @@
     "desktop": "Desktop",
     "download": "Download"
   },
+  "blog": {
+    "badge": "Memoh Blog",
+    "indexTitle": "Notes from the agent platform.",
+    "indexDescription": "Product updates, architecture deep dives, and implementation notes from the Memoh team.",
+    "latest": "Latest",
+    "readArticle": "Read article",
+    "minRead": "{n} min read",
+    "min": "{n} min",
+    "back": "Back to blogs",
+    "rendering": "Rendering code blocks...",
+    "more": "More from Memoh",
+    "notFoundTitle": "Post not found",
+    "notFoundDescription": "The blog post you opened does not exist in this landing site.",
+    "seoTitle": "Memoh Blog",
+    "seoPostTitle": "{title} | Memoh Blog",
+    "seoNotFoundTitle": "Post not found | Memoh Blog",
+    "seoDescription": "Field notes, architecture writeups, and product updates from the Memoh team."
+  },
   "desktop": {
     "seo": {
       "title": "Memoh Desktop - Download for macOS, Windows & Linux",

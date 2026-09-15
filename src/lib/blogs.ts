@@ -80,7 +80,7 @@ const getReadingMinutes = (body: string) => {
   return Math.max(2, Math.round(units / 320))
 }
 
-const parseLocalePath = (path: string) => {
+const parseLocalePath = (path: string): { slug: string; locale: BlogLocale } | undefined => {
   const parts = path.replace(/\\/g, '/').split('/')
   const file = parts.pop()?.replace(/\.md$/, '')
   const locale = parts.pop()

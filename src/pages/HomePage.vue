@@ -17,7 +17,6 @@ const { locale, t } = useI18n()
 const { th } = useTa()
 const siteUrl = 'https://memoh.ai/'
 const socialImage = 'https://memoh.ai/logo.png'
-const docsUrl = computed(() => locale.value === 'zh' ? 'https://docs.memoh.ai/zh' : 'https://docs.memoh.ai')
 
 useSeoMeta({
   title: () => t('seo.title'),
@@ -176,14 +175,6 @@ const moreLogos = [
           <ArrowRight :size="16" />
         </a>
         <DesktopDownloadButton surface="page" />
-        <a
-          :href="docsUrl"
-          target="_blank"
-          rel="noopener noreferrer"
-          class="cta-btn-secondary whitespace-nowrap inline-flex items-center justify-center h-[48px] px-8 rounded-full font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/70"
-        >
-          {{ $t('cta_bottom.docs') }}
-        </a>
       </div>
     </div>
   </section>
@@ -223,30 +214,6 @@ const moreLogos = [
 .cta-btn-primary:active::after {
   opacity: 1;
   background-color: rgba(0, 0, 0, 0.12);
-}
-
-.cta-btn-secondary {
-  position: relative;
-  color: var(--foreground);
-  isolation: isolate;
-}
-.cta-btn-secondary::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  border-radius: inherit;
-  border: 1px solid oklch(1 0 0 / 0.15);
-  background-color: transparent;
-  transition: scale 0.3s linear(0, .3505, .7432, .9336, .9951, 1.0062, 1.0045, 1.0019, 1.0005, 1),
-              background-color 0.18s ease-out;
-}
-.cta-btn-secondary:hover::before {
-  scale: 1.005 1.015;
-  background-color: oklch(1 0 0 / 0.06);
-}
-.cta-btn-secondary:active::before {
-  scale: 0.98;
 }
 
 </style>

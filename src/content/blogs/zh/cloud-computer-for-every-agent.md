@@ -101,10 +101,6 @@ _今天写入的文件，下周还在。Agent 不是每次从零开始。_
 
 依赖、Connector 和 Skill 也在同一台电脑上。从 Supermarket 装好 Node.js、Python 或 GitHub Connector，Agent 下次直接用。写代码、跑开发服务器、打开预览，都可以在云上完成。
 
-![计划任务写在 Bot 上，到点就跑，不需要人去点](/blogs/cloud-computer-for-every-agent/05-schedule.png)
-
-_任务挂在 Agent 的电脑上，而不是你的笔记本上。_
-
 示例：
 
 > 每天工作日早上 9 点，总结过去 24 小时的 GitHub 发版和 Issue，发到飞书群。另外帮我在云电脑上做一个阅读清单网页，跑起来后把预览链接给我。

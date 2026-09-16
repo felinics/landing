@@ -101,10 +101,6 @@ Scheduled tasks fire on cron. They don't need you to be in the chat. Morning bri
 
 Dependencies, connectors, and skills live on that same computer. Install Node.js, Python, or a GitHub connector from Supermarket, and the agent uses them next time. Write code, run a dev server, and open a preview in the cloud.
 
-![Scheduled tasks live on the bot and fire on time, without anyone clicking](/blogs/cloud-computer-for-every-agent/05-schedule.png)
-
-_The job hangs on the agent's computer, not on your laptop._
-
 Sample prompt:
 
 > Every weekday at 9am, summarize GitHub releases and issues from the last 24 hours and send them to the Lark group. Also build a reading-list web page on the cloud computer, run it, and give me the preview link.

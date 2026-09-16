@@ -7,6 +7,7 @@ import './pricing/fonts.css'
 
 const { locale } = useI18n()
 const zh = computed(() => locale.value === 'zh')
+const getStarted = () => window.location.assign('https://app.memoh.net')
 const plans = computed(() => [
   { name: 'Go', price: 5, credits: 2500, tagline: zh.value ? '从日常对话和轻量任务开始。' : 'For everyday conversations and lighter tasks.', cpu: 8, ram: 16, disk: 40, members: 1 },
   { name: 'Pro', price: 60, credits: 30000, tagline: zh.value ? '为日常工作和持续运行的 Agent 准备。' : 'For daily work and always-ready agents.', cpu: 16, ram: 32, disk: 120, members: 3 },
@@ -48,8 +49,8 @@ const plans = computed(() => [
             :highlighted="plan.name === 'Go'"
             :highlight-label="zh ? '推荐' : 'Recommended'"
             :current-label="zh ? '当前套餐' : 'Current plan'"
-            cta-label="Coming Soon"
-            :cta-disabled="true"
+            cta-label="Get Started"
+            @select="getStarted"
           />
         </div>
       </div>

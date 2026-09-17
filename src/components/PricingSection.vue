@@ -7,11 +7,16 @@ import './pricing/fonts.css'
 
 const { locale } = useI18n()
 const zh = computed(() => locale.value === 'zh')
-const getStarted = () => window.location.assign('https://app.memoh.net')
+const appOrigin = import.meta.env.VITE_MEMOH_APP_URL || 'https://app.memoh.net'
+function getStarted(plan: string) {
+  const url = new URL('/plans', appOrigin)
+  url.searchParams.set('plan', plan)
+  window.location.assign(url.href)
+}
 const plans = computed(() => [
-  { name: 'Go', price: 5, credits: 2500, tagline: zh.value ? '从日常对话和轻量任务开始。' : 'For everyday conversations and lighter tasks.', cpu: 8, ram: 16, disk: 40, members: 1 },
-  { name: 'Pro', price: 60, credits: 30000, tagline: zh.value ? '为日常工作和持续运行的 Agent 准备。' : 'For daily work and always-ready agents.', cpu: 16, ram: 32, disk: 120, members: 3 },
-  { name: 'Premium', price: 150, credits: 75000, tagline: zh.value ? '为更复杂的任务提供更多算力和空间。' : 'More compute and room for demanding work.', cpu: 32, ram: 64, disk: 300, members: 8 },
+  { code: 'go', name: 'Go', price: 5, credits: 2500, tagline: zh.value ? '从日常对话和轻量任务开始。' : 'For everyday conversations and lighter tasks.', cpu: 8, ram: 16, disk: 40, members: 1 },
+  { code: 'pro', name: 'Pro', price: 60, credits: 30000, tagline: zh.value ? '为日常工作和持续运行的 Agent 准备。' : 'For daily work and always-ready agents.', cpu: 16, ram: 32, disk: 120, members: 3 },
+  { code: 'premium', name: 'Premium', price: 150, credits: 75000, tagline: zh.value ? '为更复杂的任务提供更多算力和空间。' : 'More compute and room for demanding work.', cpu: 32, ram: 64, disk: 300, members: 8 },
 ].map(plan => ({ ...plan, features: [
   { text: `${plan.cpu} ${zh.value ? '核 CPU Total' : 'CPU cores total'}`, emphasis: true },
   { text: `${plan.ram} GB ${zh.value ? '内存 Total' : 'RAM total'}`, emphasis: true },
@@ -50,7 +55,7 @@ const plans = computed(() => [
             :highlight-label="zh ? '推荐' : 'Recommended'"
             :current-label="zh ? '当前套餐' : 'Current plan'"
             cta-label="Get Started"
-            @select="getStarted"
+            @select="getStarted(plan.code)"
           />
         </div>
       </div>

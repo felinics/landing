@@ -195,6 +195,7 @@
     }
   },
   "pricing": {
+    "title": "Pricing",
     "go": { "tagline": "For everyday conversations and lighter tasks." },
     "pro": { "tagline": "For daily work and always-ready agents." },
     "premium": { "tagline": "More compute and room for demanding work." },
@@ -210,7 +211,8 @@
     },
     "perMonth": "/mo",
     "recommended": "Recommended",
-    "currentPlan": "Current plan"
+    "currentPlan": "Current plan",
+    "cta": "Get Started"
   },
   "cta_bottom": {
     "title": "Try Memoh",

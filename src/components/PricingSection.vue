@@ -29,7 +29,7 @@ const plans = computed(() => [
 <template>
   <section id="pricing" class="w-full px-4 py-16 md:px-8 md:py-24" aria-labelledby="pricing-title">
     <div class="mx-auto w-full max-w-[1080px]">
-      <h2 id="pricing-title" class="mb-10 text-balance text-center font-medium text-[clamp(28px,3.2vw,42px)] leading-[1.2] tracking-[-0.045em] text-foreground">Pricing</h2>
+      <h2 id="pricing-title" class="mb-10 text-balance text-center font-medium text-[clamp(28px,3.2vw,42px)] leading-[1.2] tracking-[-0.045em] text-foreground">{{ t('pricing.title') }}</h2>
       <div class="cloud-pricing">
         <div class="pricing-grid">
           <PlanCard
@@ -44,7 +44,7 @@ const plans = computed(() => [
             :highlighted="plan.name === 'Go'"
             :highlight-label="t('pricing.recommended')"
             :current-label="t('pricing.currentPlan')"
-            cta-label="Get Started"
+            :cta-label="t('pricing.cta')"
             @select="getStarted"
           />
         </div>

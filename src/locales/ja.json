@@ -195,6 +195,7 @@
     }
   },
   "pricing": {
+    "title": "料金プラン",
     "go": { "tagline": "日常の会話や軽めのタスクから始めたい方に。" },
     "pro": { "tagline": "毎日の仕事と、常に動き続けるエージェントのために。" },
     "premium": { "tagline": "負荷の高い作業のための、より多くの計算力と余裕を。" },
@@ -210,7 +211,8 @@
     },
     "perMonth": "/月",
     "recommended": "おすすめ",
-    "currentPlan": "現在のプラン"
+    "currentPlan": "現在のプラン",
+    "cta": "今すぐ始める"
   },
   "cta_bottom": {
     "title": "Memoh を試す",

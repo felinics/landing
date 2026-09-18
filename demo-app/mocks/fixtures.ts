@@ -1,12 +1,17 @@
 import { codexModels, claudeCodeModels } from './agent-models'
 import { demoAgents, bots, now, installedSkills, dependencies, type RecordData } from './data'
+import { demoLocale } from './locale'
+
+const ja = demoLocale === 'ja'
 
 export function seedBotRoutes(): Map<string, any> {
   const routes=new Map<string,any>()
   for(const bot of bots) {
     const base=`/bots/${bot.id}`
     const put=(path:string,value:any)=>routes.set(base+path,value)
-    const memories=['Alex prefers quiet mornings for deep work.','The reading tracker is this week’s main project.','Use short paragraphs and explain tradeoffs clearly.','Save research sources alongside the notes.','Take a walk after lunch.','Keep Friday afternoons open for reflection.']
+    const memories=(ja
+      ? ['Alex は静かな午前中にディープワークをするのが好き。','読書トラッカーが今週のメインプロジェクト。','短い段落で、トレードオフをわかりやすく説明する。','リサーチの出典はノートと一緒に保存する。','昼食後に散歩をする。','金曜の午後はふりかえりのために空けておく。']
+      : ['Alex prefers quiet mornings for deep work.','The reading tracker is this week’s main project.','Use short paragraphs and explain tradeoffs clearly.','Save research sources alongside the notes.','Take a walk after lunch.','Keep Friday afternoons open for reflection.'])
       .map((memory,i)=>({id:`memory-${i}`,memory,bot_id:bot.id,score:0.95,created_at:now,updated_at:now,metadata:{category:i<3?'preferences':'notes'}}))
     put('/memory',{results:memories,relations:[],retrieval_mode:'graph'})
     put('/memory/graph',{nodes:memories.map(m=>({id:m.id,label:m.memory.split(' ').slice(0,4).join(' '),memory:m.memory,count:1,memory_ids:[m.id]})),edges:memories.slice(1).map(m=>({source:'memory-0',target:m.id,rel:'related',weight:1}))})
@@ -16,7 +21,9 @@ export function seedBotRoutes(): Map<string, any> {
     put('/token-usage',{chat:days,discuss:days.map(d=>({...d,input_tokens:2400,output_tokens:680,cache_read_tokens:1200,reasoning_tokens:100})),schedule:days.map(d=>({...d,input_tokens:1800,output_tokens:540,cache_read_tokens:800,reasoning_tokens:80})),acp_agent:[],by_model:[{model_id:'model-1',model_name:'DeepSeek V4.1 Flash',model_slug:'deepseek-v4.1-flash',provider_name:'DeepSeek',input_tokens:325000,output_tokens:89000,cache_read_tokens:183000,reasoning_tokens:13000}]})
     put('/token-usage/records',{items:days.slice(-12).reverse().map((d,i)=>({...d,id:`usage-${i}`,created_at:`${d.day}T08:00:00Z`,session_type:'chat',session_id:'session-welcome',model_id:'model-1',model_name:'DeepSeek V4.1 Flash',provider_name:'DeepSeek'})),total:12})
     put('/mcp',{items:[{id:'mcp-files',bot_id:bot.id,name:'Filesystem',type:'stdio',config:{command:'npx',args:['-y','@modelcontextprotocol/server-filesystem','/data']},is_active:true,status:'connected',auth_type:'none',tools_cache:[{name:'read_file',description:'Read a workspace file',inputSchema:{type:'object',properties:{}}}],created_at:now,updated_at:now}]})
-    put('/schedule',{items:[{id:'schedule-1',bot_id:bot.id,name:'Morning brief',description:'A little clarity to start the day',pattern:'0 9 * * 1-5',command:'Summarize my priorities and recent notes.',enabled:true,runtime_type:'native',run_target:'new_session',model_id:'model-1',current_calls:14,max_calls:0,created_at:now,updated_at:now},{id:'schedule-2',bot_id:bot.id,name:'Weekly reflection',description:'Look back and make space for next week',pattern:'0 16 * * 5',command:'Prepare a weekly summary.',enabled:true,runtime_type:'native',run_target:'new_session',model_id:'model-0',current_calls:3,max_calls:0,created_at:now,updated_at:now}]})
+    put('/schedule',{items:ja
+      ?[{id:'schedule-1',bot_id:bot.id,name:'朝のブリーフィング',description:'一日を見通しよく始めるために',pattern:'0 9 * * 1-5',command:'今日の優先事項と最近のノートをまとめて。',enabled:true,runtime_type:'native',run_target:'new_session',model_id:'model-1',current_calls:14,max_calls:0,created_at:now,updated_at:now},{id:'schedule-2',bot_id:bot.id,name:'週次のふりかえり',description:'ふり返って、来週の余白をつくる',pattern:'0 16 * * 5',command:'一週間のまとめを作って。',enabled:true,runtime_type:'native',run_target:'new_session',model_id:'model-0',current_calls:3,max_calls:0,created_at:now,updated_at:now}]
+      :[{id:'schedule-1',bot_id:bot.id,name:'Morning brief',description:'A little clarity to start the day',pattern:'0 9 * * 1-5',command:'Summarize my priorities and recent notes.',enabled:true,runtime_type:'native',run_target:'new_session',model_id:'model-1',current_calls:14,max_calls:0,created_at:now,updated_at:now},{id:'schedule-2',bot_id:bot.id,name:'Weekly reflection',description:'Look back and make space for next week',pattern:'0 16 * * 5',command:'Prepare a weekly summary.',enabled:true,runtime_type:'native',run_target:'new_session',model_id:'model-0',current_calls:3,max_calls:0,created_at:now,updated_at:now}]})
     put('/connectors',{items:[{alias:'GitHub',connection_id:'connection-github',connector_type:'github',enabled:true,auth_method:'oauth',status:'active'},{alias:'Notion',connection_id:'connection-notion',connector_type:'notion',enabled:true,auth_method:'oauth',status:'active'}]})
     put('/agents/agent-codex/models', codexModels)
     put('/agents/agent-claude/models', claudeCodeModels)

@@ -5,7 +5,9 @@
     "blogs": "Blogs",
     "supermarket": "Supermarket",
     "desktop": "Desktop",
-    "download": "Download"
+    "download": "Download",
+    "selectLanguage": "Select language",
+    "toggleTheme": "Toggle theme"
   },
   "blog": {
     "badge": "Memoh Blog",
@@ -21,8 +23,8 @@
     "notFoundTitle": "Post not found",
     "notFoundDescription": "The blog post you opened does not exist in this landing site.",
     "seoTitle": "Memoh Blog",
-    "seoPostTitle": "{title} | Memoh Blog",
-    "seoNotFoundTitle": "Post not found | Memoh Blog",
+    "seoPostTitle": "{title} {'|'} Memoh Blog",
+    "seoNotFoundTitle": "Post not found {'|'} Memoh Blog",
     "seoDescription": "Field notes, architecture writeups, and product updates from the Memoh team."
   },
   "desktop": {
@@ -83,7 +85,9 @@
     "cta": "Join waitlist",
     "desktop": "Desktop App",
     "desktopHint": "Choose macOS / Windows / Linux",
-    "skip": "Skip ⏭"
+    "skip": "Skip ⏭",
+    "demoLoading": "Opening Memoh…",
+    "demoTitle": "Interactive Memoh demo"
   },
   "s1": {
     "title": "A computer of its own",
@@ -123,7 +127,8 @@
   },
   "s3": {
     "title": "Talk to it from anywhere",
-    "subtitle": "One agent, every channel."
+    "subtitle": "One agent, every channel.",
+    "more": "And more"
   },
   "proof": {
     "network": {
@@ -188,6 +193,26 @@
         "a2": "7pm, the usual spot."
       }
     }
+  },
+  "pricing": {
+    "title": "Pricing",
+    "go": { "tagline": "For everyday conversations and lighter tasks." },
+    "pro": { "tagline": "For daily work and always-ready agents." },
+    "premium": { "tagline": "More compute and room for demanding work." },
+    "features": {
+      "cpu": "{n} CPU cores total",
+      "ram": "{n} GB RAM total",
+      "credits": "{n} credits for tokens / month",
+      "disk": "{n} GB persistent volume storage total (excluding rootfs)",
+      "members": "Up to {n} member | Up to {n} members",
+      "unlimitedBots": "Create unlimited Bots",
+      "models": "Use DeepSeek, Kimi, GPT, Claude, and more",
+      "everythingIn": "Everything in {plan}"
+    },
+    "perMonth": "/mo",
+    "recommended": "Recommended",
+    "currentPlan": "Current plan",
+    "cta": "Get Started"
   },
   "cta_bottom": {
     "title": "Try Memoh",

@@ -5,7 +5,9 @@
     "blogs": "博客",
     "supermarket": "应用超市",
     "desktop": "桌面版",
-    "download": "下载"
+    "download": "下载",
+    "selectLanguage": "选择语言",
+    "toggleTheme": "切换主题"
   },
   "blog": {
     "badge": "Memoh 博客",
@@ -21,8 +23,8 @@
     "notFoundTitle": "文章不存在",
     "notFoundDescription": "你打开的博客文章不在这个站点里。",
     "seoTitle": "Memoh 博客",
-    "seoPostTitle": "{title} | Memoh 博客",
-    "seoNotFoundTitle": "文章不存在 | Memoh 博客",
+    "seoPostTitle": "{title} {'|'} Memoh 博客",
+    "seoNotFoundTitle": "文章不存在 {'|'} Memoh 博客",
     "seoDescription": "Memoh 团队的产品更新、架构笔记与实现记录。"
   },
   "desktop": {
@@ -83,7 +85,9 @@
     "cta": "开始",
     "desktop": "桌面版",
     "desktopHint": "选择 macOS / Windows / Linux",
-    "skip": "跳过动画 ⏭"
+    "skip": "跳过动画 ⏭",
+    "demoLoading": "正在打开 Memoh…",
+    "demoTitle": "Memoh 交互演示"
   },
   "s1": {
     "title": "一台属于%TA%的电脑",
@@ -123,7 +127,8 @@
   },
   "s3": {
     "title": "在哪都能找到%TA%",
-    "subtitle": "一个 Agent，所有渠道"
+    "subtitle": "一个 Agent，所有渠道",
+    "more": "以及更多平台"
   },
   "proof": {
     "network": {
@@ -188,6 +193,26 @@
         "a2": "晚 7 点，老地方。"
       }
     }
+  },
+  "pricing": {
+    "title": "Pricing",
+    "go": { "tagline": "从日常对话和轻量任务开始。" },
+    "pro": { "tagline": "为日常工作和持续运行的 Agent 准备。" },
+    "premium": { "tagline": "为更复杂的任务提供更多算力和空间。" },
+    "features": {
+      "cpu": "{n} 核 CPU Total",
+      "ram": "{n} GB 内存 Total",
+      "credits": "每月 {n} credits 的 Token 额度",
+      "disk": "{n} GB 持久化 Volume 总容量（不含 rootfs）",
+      "members": "最多 {n} 人",
+      "unlimitedBots": "创建无限多的 Bot",
+      "models": "使用 DeepSeek、Kimi、GPT、Claude 等模型",
+      "everythingIn": "包含 {plan} 套餐的所有权益"
+    },
+    "perMonth": "/ 月",
+    "recommended": "推荐",
+    "currentPlan": "当前套餐",
+    "cta": "Get Started"
   },
   "cta_bottom": {
     "title": "试试 Memoh",

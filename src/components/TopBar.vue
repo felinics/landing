@@ -27,7 +27,18 @@ const iconBtnClass = computed(() =>
 
 const { isDark, toggle: toggleDark } = useThemePreference()
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
+
+const languages = [
+  { code: 'en', label: 'English' },
+  { code: 'zh', label: '中文' },
+  { code: 'ja', label: '日本語' },
+] as const
+
+const localeTag = computed(() => {
+  const match = languages.find((lang) => lang.code === locale.value)
+  return (match?.code ?? 'en').toUpperCase()
+})
 
 const isLangOpen = ref(false)
 const langMenuRef = ref<HTMLElement | null>(null)
@@ -86,9 +97,9 @@ const selectLang = (lang: string) => {
           <button @click="toggleLangMenu"
                   class="flex items-center justify-center gap-1.5 px-2 h-9 rounded-md bg-transparent transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none"
                   :class="iconBtnClass"
-                  aria-label="Select language">
+                  :aria-label="t('nav.selectLanguage')">
             <Languages class="w-4 h-4 shrink-0" />
-            <span class="text-[10px] font-bold tracking-tighter">{{ locale === 'zh' ? 'ZH' : 'EN' }}</span>
+            <span class="text-[10px] font-bold tracking-tighter">{{ localeTag }}</span>
             <ChevronDown class="w-3 h-3 shrink-0 opacity-50 transition-transform duration-200" :class="{ 'rotate-180': isLangOpen }" />
           </button>
 
@@ -102,17 +113,13 @@ const selectLang = (lang: string) => {
           >
             <div v-if="isLangOpen"
                  class="lang-menu absolute top-full right-0 mt-1.5 w-36 z-50 p-1.5 flex flex-col gap-0.5">
-              <button @click="selectLang('en')"
+              <button v-for="lang in languages"
+                      :key="lang.code"
+                      @click="selectLang(lang.code)"
                       class="lang-item flex items-center justify-between gap-2 w-full rounded-[8px] px-2.5 py-1.5 text-sm text-left transition-colors duration-200"
-                      :class="locale === 'en' ? 'text-foreground' : 'text-muted-foreground'">
-                <span>English</span>
-                <Check v-if="locale === 'en'" class="w-4 h-4 shrink-0" />
-              </button>
-              <button @click="selectLang('zh')"
-                      class="lang-item flex items-center justify-between gap-2 w-full rounded-[8px] px-2.5 py-1.5 text-sm text-left transition-colors duration-200"
-                      :class="locale === 'zh' ? 'text-foreground' : 'text-muted-foreground'">
-                <span>中文</span>
-                <Check v-if="locale === 'zh'" class="w-4 h-4 shrink-0" />
+                      :class="locale === lang.code ? 'text-foreground' : 'text-muted-foreground'">
+                <span :lang="lang.code">{{ lang.label }}</span>
+                <Check v-if="locale === lang.code" class="w-4 h-4 shrink-0" />
               </button>
             </div>
           </Transition>
@@ -121,7 +128,7 @@ const selectLang = (lang: string) => {
         <button v-if="!hideThemeToggle" @click="toggleDark()"
                 class="flex items-center justify-center w-9 h-9 min-w-[36px] min-h-[36px] rounded-md bg-transparent transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 shadow-none"
                 :class="iconBtnClass"
-                aria-label="Toggle theme">
+                :aria-label="t('nav.toggleTheme')">
           <Sun v-if="isDark" class="w-4 h-4 shrink-0" />
           <Moon v-else class="w-4 h-4 shrink-0" />
         </button>

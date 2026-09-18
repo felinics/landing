@@ -1,5 +1,6 @@
 import { DemoTerminalSocket } from './terminal'
 import { demoFetch } from './http'
+import { demoLocale } from './locale'
 
 // The embedded app must never share auth, preferences or caches with its host.
 // A fresh visit starts a fresh demo; settings mutations remain valid for the visit.
@@ -20,8 +21,7 @@ localStorage.setItem('workspace-workbench-open', 'true')
 localStorage.setItem('vueuse-color-scheme', 'dark')
 document.documentElement.classList.add('dark')
 document.documentElement.style.colorScheme = 'dark'
-const locale = new URLSearchParams(location.search).get('lang') === 'zh' ? 'zh' : 'en'
-localStorage.setItem('language', locale)
+localStorage.setItem('language', demoLocale)
 sessionStorage.setItem('chat-bot-id', 'bot-memoh')
 sessionStorage.setItem('chat-session-id', 'session-welcome')
 sessionStorage.setItem('chat-explicit-selection', 'true')

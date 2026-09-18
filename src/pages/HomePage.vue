@@ -40,6 +40,7 @@ useHead({
     { rel: 'canonical', href: siteUrl },
     { rel: 'alternate', hreflang: 'en', href: siteUrl },
     { rel: 'alternate', hreflang: 'zh', href: siteUrl },
+    { rel: 'alternate', hreflang: 'ja', href: siteUrl },
     { rel: 'alternate', hreflang: 'x-default', href: siteUrl },
   ],
   script: [
@@ -141,7 +142,7 @@ const moreLogos = [
 
           <!-- And more · logo strip -->
           <div class="flex flex-col items-center gap-3 pb-2 text-center">
-            <p class="text-base text-white font-medium leading-snug">{{ locale === 'zh' ? '以及更多平台' : 'And more' }}</p>
+            <p class="text-base text-white font-medium leading-snug">{{ t('s3.more') }}</p>
             <div class="flex flex-wrap items-center justify-center gap-3">
               <span
                 v-for="logo in moreLogos"

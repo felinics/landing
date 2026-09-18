@@ -39,6 +39,7 @@ useHead({
     { rel: 'canonical', href: pageUrl },
     { rel: 'alternate', hreflang: 'en', href: pageUrl },
     { rel: 'alternate', hreflang: 'zh', href: pageUrl },
+    { rel: 'alternate', hreflang: 'ja', href: pageUrl },
     { rel: 'alternate', hreflang: 'x-default', href: pageUrl },
   ],
 })

@@ -20,7 +20,8 @@ localStorage.setItem('workspace-workbench-open', 'true')
 localStorage.setItem('vueuse-color-scheme', 'dark')
 document.documentElement.classList.add('dark')
 document.documentElement.style.colorScheme = 'dark'
-const locale = new URLSearchParams(location.search).get('lang') === 'zh' ? 'zh' : 'en'
+const langParam = new URLSearchParams(location.search).get('lang')
+const locale = langParam === 'zh' || langParam === 'ja' ? langParam : 'en'
 localStorage.setItem('language', locale)
 sessionStorage.setItem('chat-bot-id', 'bot-memoh')
 sessionStorage.setItem('chat-session-id', 'session-welcome')

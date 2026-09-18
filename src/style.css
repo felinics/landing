@@ -25,6 +25,13 @@
   --color-chat-user-bubble-fg: var(--chat-user-bubble-fg);
 }
 
+/* Japanese UI: swap the Simplified-Chinese Noto fallbacks for their Japanese
+   counterparts so kana and kanji use Japanese glyph forms instead of SC ones. */
+html:lang(ja) {
+  --font-sans: "Inter", "Noto Sans JP", sans-serif;
+  --font-serif: "Source Serif 4", "Noto Serif JP", serif;
+}
+
 @layer base {
   :root {
     --background: #ffffff;

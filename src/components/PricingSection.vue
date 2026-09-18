@@ -5,28 +5,23 @@ import PlanCard from './pricing/PlanCard.vue'
 import './pricing/cloud-pricing.css'
 import './pricing/fonts.css'
 
-const { locale } = useI18n()
-const zh = computed(() => locale.value === 'zh')
+const { t } = useI18n()
 const getStarted = () => window.location.assign('https://app.memoh.net')
 const plans = computed(() => [
-  { name: 'Go', price: 5, credits: 2500, tagline: zh.value ? '从日常对话和轻量任务开始。' : 'For everyday conversations and lighter tasks.', cpu: 8, ram: 16, disk: 40, members: 1 },
-  { name: 'Pro', price: 60, credits: 30000, tagline: zh.value ? '为日常工作和持续运行的 Agent 准备。' : 'For daily work and always-ready agents.', cpu: 16, ram: 32, disk: 120, members: 3 },
-  { name: 'Premium', price: 150, credits: 75000, tagline: zh.value ? '为更复杂的任务提供更多算力和空间。' : 'More compute and room for demanding work.', cpu: 32, ram: 64, disk: 300, members: 8 },
+  { name: 'Go', price: 5, credits: 2500, tagline: t('pricing.go.tagline'), cpu: 8, ram: 16, disk: 40, members: 1 },
+  { name: 'Pro', price: 60, credits: 30000, tagline: t('pricing.pro.tagline'), cpu: 16, ram: 32, disk: 120, members: 3 },
+  { name: 'Premium', price: 150, credits: 75000, tagline: t('pricing.premium.tagline'), cpu: 32, ram: 64, disk: 300, members: 8 },
 ].map(plan => ({ ...plan, features: [
-  { text: `${plan.cpu} ${zh.value ? '核 CPU Total' : 'CPU cores total'}`, emphasis: true },
-  { text: `${plan.ram} GB ${zh.value ? '内存 Total' : 'RAM total'}`, emphasis: true },
-  { text: zh.value ? `每月 ${plan.credits} credits 的 Token 额度` : `${plan.credits} credits for tokens / month`, emphasis: true },
-  { text: zh.value
-    ? `${plan.disk} GB 持久化 Volume 总容量（不含 rootfs）`
-    : `${plan.disk} GB persistent volume storage total (excluding rootfs)` },
-  { text: zh.value ? `最多 ${plan.members} 人` : `Up to ${plan.members} ${plan.members === 1 ? 'member' : 'members'}` },
+  { text: t('pricing.features.cpu', { n: plan.cpu }), emphasis: true },
+  { text: t('pricing.features.ram', { n: plan.ram }), emphasis: true },
+  { text: t('pricing.features.credits', { n: plan.credits }), emphasis: true },
+  { text: t('pricing.features.disk', { n: plan.disk }) },
+  { text: t('pricing.features.members', { n: plan.members }, plan.members) },
   ...(plan.name === 'Go' ? [
-    { text: zh.value ? '创建无限多的 Bot' : 'Create unlimited Bots' },
-    { text: zh.value ? '使用 DeepSeek、Kimi、GPT、Claude 等模型' : 'Use DeepSeek, Kimi, GPT, Claude, and more' },
+    { text: t('pricing.features.unlimitedBots') },
+    { text: t('pricing.features.models') },
   ] : [
-    { text: zh.value
-      ? `包含 ${plan.name === 'Pro' ? 'Go' : 'Pro'} 套餐的所有权益`
-      : `Everything in ${plan.name === 'Pro' ? 'Go' : 'Pro'}` },
+    { text: t('pricing.features.everythingIn', { plan: plan.name === 'Pro' ? 'Go' : 'Pro' }) },
   ]),
 ] })))
 </script>
@@ -44,11 +39,11 @@ const plans = computed(() => [
             :name="plan.name"
             :tagline="plan.tagline"
             :price="`$${plan.price}`"
-            :price-suffix="zh ? '/ 月' : '/mo'"
+            :price-suffix="t('pricing.perMonth')"
             :features="plan.features"
             :highlighted="plan.name === 'Go'"
-            :highlight-label="zh ? '推荐' : 'Recommended'"
-            :current-label="zh ? '当前套餐' : 'Current plan'"
+            :highlight-label="t('pricing.recommended')"
+            :current-label="t('pricing.currentPlan')"
             cta-label="Get Started"
             @select="getStarted"
           />

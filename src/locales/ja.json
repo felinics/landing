@@ -1,0 +1,368 @@
+{
+  "nav": {
+    "docs": "ドキュメント",
+    "github": "GitHub",
+    "blogs": "ブログ",
+    "supermarket": "マーケットプレイス",
+    "desktop": "デスクトップ版",
+    "download": "ダウンロード",
+    "selectLanguage": "言語を選択",
+    "toggleTheme": "テーマを切り替え"
+  },
+  "blog": {
+    "badge": "Memoh ブログ",
+    "indexTitle": "エージェントプラットフォームの現場から。",
+    "indexDescription": "Memoh チームによるプロダクトアップデート、アーキテクチャ解説、実装ノート。",
+    "latest": "最新",
+    "readArticle": "記事を読む",
+    "minRead": "読了まで {n} 分",
+    "min": "{n} 分",
+    "back": "ブログ一覧へ戻る",
+    "rendering": "コードブロックをレンダリング中…",
+    "more": "Memoh のその他の記事",
+    "notFoundTitle": "記事が見つかりません",
+    "notFoundDescription": "お探しのブログ記事はこのサイトには存在しません。",
+    "seoTitle": "Memoh ブログ",
+    "seoPostTitle": "{title} {'|'} Memoh ブログ",
+    "seoNotFoundTitle": "記事が見つかりません {'|'} Memoh ブログ",
+    "seoDescription": "Memoh チームによるプロダクトアップデート、アーキテクチャ解説、実装ノート。"
+  },
+  "desktop": {
+    "seo": {
+      "title": "Memoh デスクトップ版 - macOS・Windows・Linux 向けダウンロード",
+      "description": "Memoh デスクトップアプリを macOS（Apple Silicon・Intel）、Windows、Linux 向けにダウンロード。エージェント OS をあなたのコンピューターでネイティブに実行できます。"
+    },
+    "title": "Memoh をあなたのデスクトップに",
+    "subtitle": "エージェントのワークスペースを、すべて自分のコンピューター上で実行。macOS・Windows・Linux 向けに設計され、ローカルのファイルとサービスは手元のマシンに留まります。",
+    "download": "デスクトップ版をダウンロード",
+    "moreDownloads": "他のデスクトップ版を選ぶ",
+    "otherPlatforms": "その他のプラットフォーム",
+    "downloadError": "最新のダウンロード情報を取得できませんでした。もう一度お試しください。",
+    "recommended": "推奨",
+    "docs": "ドキュメント",
+    "downloadFor": "{os} 版をダウンロード",
+    "allDownloads": "すべてのダウンロードオプション",
+    "version": {
+      "latest": "最新バージョン",
+      "latestTag": "最新",
+      "loading": "確認中",
+      "prerelease": "プレリリース",
+      "published": "{date} リリース",
+      "stable": "安定版"
+    },
+    "os": {
+      "macArm": "macOS (Apple Silicon)",
+      "macIntel": "macOS (Intel)",
+      "win": "Windows (x64)",
+      "linuxDebAmd64": "Linux .deb (amd64)",
+      "linuxAppImageX86": "Linux AppImage (x86_64)",
+      "linuxRpmX86": "Linux .rpm (x86_64)"
+    }
+  },
+  "download": {
+    "seo": {
+      "title": "Memoh デスクトップ版をダウンロード - macOS・Windows・Linux",
+      "description": "お使いのシステムに合った Memoh デスクトップ版インストーラーを選択できます。macOS（Apple Silicon・Intel）、Windows、Linux に対応しています。"
+    },
+    "title": "Memoh をダウンロード",
+    "subtitle": "macOS、Windows、Linux に対応。",
+    "forYourDevice": "お使いのデバイス向けのおすすめ",
+    "groups": {
+      "mac": "macOS",
+      "win": "Windows",
+      "linux": "Linux"
+    }
+  },
+  "seo": {
+    "title": "Memoh — マルチエージェントプラットフォーム",
+    "description": "すべてのエージェントに、デスクトップ・ファイルシステム・ネットワークを備えた専用のクラウドコンピューターを。いつでも稼働、いつでもそばに。"
+  },
+  "hero": {
+    "title": "あなたのエージェントにクラウドコンピューターを",
+    "subtitle": "Memoh はクラウドファーストのマルチエージェントプラットフォーム。\nすべてのエージェントが専用のデスクトップ・ファイル・ネットワークを持ち、24 時間 365 日稼働します。",
+    "ctaPrimary": "今すぐ始める",
+    "ctaSecondary": "GitHub",
+    "cta": "ウェイトリストに参加",
+    "desktop": "デスクトップ版",
+    "desktopHint": "macOS / Windows / Linux を選択",
+    "skip": "スキップ ⏭",
+    "demoLoading": "Memoh を起動しています…",
+    "demoTitle": "Memoh インタラクティブデモ"
+  },
+  "s1": {
+    "title": "エージェント専用のコンピューター",
+    "subtitle": "すべてのエージェントが、24 時間 365 日稼働する本物のコンピューター上に専用のデスクトップ・ファイル・ネットワークを持ちます。",
+    "c1": {
+      "title": "自分のエージェントを持ち込む",
+      "desc": "Codex や Claude Code など、ACP 対応のエージェントを Memoh のクラウドコンピューターにデプロイ。自分のサブスクリプションはもちろん、Memoh が提供するモデルも利用できます。"
+    },
+    "c2": {
+      "title": "作業は任せて、いつでも引き継げる",
+      "desc": "エージェントは自分のデスクトップで Web サイトを開き、動画を探し、アプリを操作します。その様子をいつでも見守れるほか、デスクトップを引き継いで自分で操作を続けることもできます。"
+    },
+    "c3": {
+      "title": "あらゆるツールを、ひとつの場所に",
+      "desc": "依存パッケージ、アプリのコネクター、エージェントスキルをワンクリックで管理。すべてクラウドコンピューター上にホストされ、エージェントがいつでも使えます。"
+    },
+    "c4": {
+      "title": "クラウドで開発、いつでもプレビュー",
+      "desc": "コードの記述から開発環境の実行まで、すべてクラウドコンピューター上で完結。プレビューをいつでも開いて、できあがっていくアプリを試せます。"
+    }
+  },
+  "s2": {
+    "title": "あなたが不在でも、動き続ける",
+    "subtitle": "クラウドで動いているから、あなたの PC がスリープしても止まりません。\n用があるときは、向こうから知らせてくれます。",
+    "c1": {
+      "title": "自分で動く",
+      "desc": "定期タスクや定時チェックを、人の操作なしで実行します。"
+    },
+    "c2": {
+      "title": "先に知らせてくれる",
+      "desc": "大事なことがあれば、エージェントの方からメッセージが届きます。"
+    },
+    "c3": {
+      "title": "続きから再開",
+      "desc": "セッションはリセットされません。前回の続きからそのまま進みます。"
+    }
+  },
+  "s3": {
+    "title": "どこからでも話しかけられる",
+    "subtitle": "ひとつのエージェント、すべてのチャネル。",
+    "more": "さらに多くのプラットフォームに対応"
+  },
+  "proof": {
+    "network": {
+      "try": "example.com を取得して、何が返ってくるか見てみますね。",
+      "fetch": "取得",
+      "say": "ネットにつながっています！これが Web から取得した example.com です。"
+    },
+    "schedule": {
+      "today": "今日",
+      "tomorrow": "明日",
+      "t1": { "name": "朝のダイジェスト", "desc": "毎日" },
+      "t2": { "name": "リリースを見張る", "desc": "平日" },
+      "t3": { "name": "受信トレイを整理", "desc": "毎日" }
+    },
+    "proactive": {
+      "online": "オンライン",
+      "t1": "昨日 23:14",
+      "t2": "09:02",
+      "t3": "14:20",
+      "ask": "あのリリースが出たら知らせて",
+      "ack": "了解です、見張っておきますね。",
+      "say": "見張っていたリリースが公開されました。変更点を整理してワークスペースに置いてあります。",
+      "say2": "そういえば 15 時からデザインレビューです。前回のあなたのメモを出しておきました。"
+    },
+    "memory": {
+      "u1": "あの PR、結局どうなった？",
+      "recall": "記憶を検索",
+      "recallTarget": "先週 · あの PR",
+      "a1": "見つけました。今朝マージされています。同じ PR、これで 3 回目の修正でしたね。",
+      "u2": "要点をメモしておいて。あとで続きをやろう",
+      "write": "書き込み",
+      "a2": "保存しました。次回は前回の続きからすぐ始められます。"
+    },
+    "channel": {
+      "you": "あなた",
+      "online": "オンライン",
+      "desktop": {
+        "u1": "週報の下書きをお願い",
+        "a1": "下書きを作成して、デスクトップに保存しました。",
+        "u2": "先週の数字も入れて",
+        "a2": "反映しました。3 つのグラフとも今週分に更新済みです。"
+      },
+      "telegram": {
+        "u1": "18 時に荷物の受け取りをリマインドして",
+        "a1": "了解です。18 時にお知らせします。",
+        "u2": "今夜の天気は？",
+        "a2": "今夜は雨です。傘をお忘れなく。",
+        "u3": "荷物は明日の朝に変更して",
+        "a3": "変更しました。明日 9 時にリマインドします。"
+      },
+      "wechat": {
+        "u1": "「辛苦了」ってどういう意味？",
+        "a1": "「おつかれさま」の意味です。仕事終わりのあいさつでよく使われます。",
+        "u2": "なんて返すのがいい？",
+        "a2": "「你也辛苦了」と返すと自然ですよ。"
+      },
+      "discord": {
+        "channel": "# 雑談",
+        "u1": "{'@'}Felinic 今日のまとめお願い",
+        "a1": "3 件です。リリース、名称変更、金曜の食事会。",
+        "u2": "金曜って何時？",
+        "a2": "19 時、いつもの場所で。"
+      }
+    }
+  },
+  "pricing": {
+    "go": { "tagline": "日常の会話や軽めのタスクから始めたい方に。" },
+    "pro": { "tagline": "毎日の仕事と、常に動き続けるエージェントのために。" },
+    "premium": { "tagline": "負荷の高い作業のための、より多くの計算力と余裕を。" },
+    "features": {
+      "cpu": "CPU 合計 {n} コア",
+      "ram": "メモリ合計 {n} GB",
+      "credits": "毎月 {n} credits 分のトークン枠",
+      "disk": "永続ボリューム合計 {n} GB（rootfs を除く）",
+      "members": "最大 {n} 人",
+      "unlimitedBots": "Bot を無制限に作成",
+      "models": "DeepSeek、Kimi、GPT、Claude などのモデルを利用",
+      "everythingIn": "{plan} プランのすべての内容を含む"
+    },
+    "perMonth": "/月",
+    "recommended": "おすすめ",
+    "currentPlan": "現在のプラン"
+  },
+  "cta_bottom": {
+    "title": "Memoh を試す",
+    "btn": "今すぐ始める",
+    "docs": "ドキュメントを読む"
+  },
+  "waitlist": {
+    "seo": {
+      "title": "Memoh ウェイトリストに参加",
+      "description": "Memoh のウェイトリストに参加して、クラウドエージェントワークスペースへの早期アクセスを手に入れましょう。"
+    },
+    "kicker": "早期アクセス",
+    "title": "Memoh のウェイトリストに参加。",
+    "subtitle": "メールアドレスを残していただければ、ホスト版 Memoh の受け入れ枠が広がり次第ご連絡します。",
+    "notes": {
+      "one": {
+        "title": "クラウドワークスペース",
+        "body": "ホスト版エージェントコンピューターの公開状況をお知らせします。"
+      },
+      "two": {
+        "title": "早期プロダクトノート",
+        "body": "一般公開の前に、変更点をいち早くお届けします。"
+      },
+      "three": {
+        "title": "余計なメールなし",
+        "body": "アクセス案内のための短いリストです。ニュースレターの乱発はしません。"
+      }
+    },
+    "form": {
+      "title": "アクセスをリクエスト",
+      "subtitle": "メールアドレスひとつで OK です。",
+      "email": "メールアドレス",
+      "placeholder": "メールアドレス",
+      "submit": "ウェイトリストに参加",
+      "submitting": "送信中…",
+      "joined": "参加済み",
+      "success": "ウェイトリストに登録されました。追ってご連絡します。",
+      "error": "ウェイトリストに参加できませんでした。もう一度お試しください。",
+      "disclaimer": "参加すると、早期アクセスについて Memoh からご連絡する場合があることに同意したものとみなされます。"
+    }
+  },
+  "footer": {
+    "selfHosting": "セルフホスティング",
+    "releases": "リリース",
+    "contributing": "コントリビュート",
+    "community": "コミュニティ",
+    "discussions": "ディスカッション",
+    "reportIssue": "問題を報告",
+    "businessContact": "ビジネスのお問い合わせ",
+    "social": "ソーシャル",
+    "ecosystem": "エコシステム",
+    "copyright": "© 2026 MEMOH AI PTE. LTD. All rights reserved.",
+    "address": "BUKIT BATOK CRESCENT, WCEGA TOWER, #17-75, Singapore 658065",
+    "privacy": "プライバシー",
+    "terms": "利用規約",
+    "tagline": "マルチエージェントプラットフォーム\nすべてのエージェントが自分のコンピューターを持ち、いつでも動いている",
+    "getStarted": "ウェイトリストに参加",
+    "product": "プロダクト",
+    "resources": "リソース",
+    "legal": "法的情報"
+  },
+  "egg": {
+    "hint": "なでてみて",
+    "petted": "なでなで {n} 回"
+  },
+  "notFound": {
+    "seo": {
+      "title": "ページが見つかりません — Memoh",
+      "description": "お探しのページは存在しません。"
+    },
+    "title": "ページが見つかりません",
+    "desc": "リンクが切れているか、ページが移動した可能性があります。",
+    "back": "ホームに戻る"
+  },
+  "computerDemo": {
+    "toolOpenPage": "Web ページを開く",
+    "toolEditing": "編集中",
+    "toolEdited": "編集済み",
+    "toolBrowsing": "閲覧中",
+    "toolBrowsed": "閲覧済み",
+    "toolBuildCounts": "ファイル操作 1 件、コマンド 1 件",
+    "toolRun": "実行",
+    "toolFocusSearch": "検索フィールドにフォーカス",
+    "toolTypeYoutube": "「youtube」と入力",
+    "toolPressEnter": "Enter キーを押す",
+    "newSession": "新しいセッション",
+    "welcome": "どこから始めましょうか？",
+    "attachFiles": "ファイルを添付",
+    "askAnything": "何をしましょうか？",
+    "play": "アニメーションを再生",
+    "pause": "アニメーションを一時停止",
+    "replay": "アニメーションをもう一度再生",
+    "defaultPermission": "デフォルト",
+    "agentAlt": "新しいセッションでは、入力欄の下で Memoh、Claude Code、Codex を選択できます。",
+    "desktopAlt": "チャットに YouTube を開くリクエストが届き、デスクトップが Chromium を開いて Google で YouTube を検索します。",
+    "apps": "アプリ",
+    "packagesAlt": "マーケットプレイスのサイドバーを閲覧し、選択中の Bot に uv をインストールしてアプリを管理します。GitHub の例では、コネクターの認証が別途必要なことを示します。",
+    "buildAlt": "エージェントが読書リストの Web サイトを作成。localhost のリンクを開くと、Memoh の新しいタブでプレビューが表示されます。",
+    "youtubeRequest": "YouTube を開いて。",
+    "youtubeReply": "ブラウザーで開きますね。",
+    "youtubeResult": "お気に入りの動画や音楽をお楽しみください。",
+    "openBrowser": "ブラウザー",
+    "searchPackages": "パッケージを検索…",
+    "all": "すべて",
+    "runtimes": "ランタイム",
+    "nodeDescription": "npm と npx を含む JavaScript ランタイム。",
+    "pythonDescription": "pip を含む Python インタープリター。",
+    "uvDescription": "Python のパッケージ・プロジェクト管理ツール。",
+    "installToBot": "Botにインストールする",
+    "dependencies": "依存関係",
+    "information": "情報",
+    "version": "バージョン",
+    "source": "ソース",
+    "browseSupermarket": "マーケットプレイスを見る",
+    "githubDescription": "GitHub のリポジトリ、Issue、Pull Request にアクセスします。",
+    "needsConnection": "未接続",
+    "connected": "接続済み",
+    "authorize": "認証する",
+    "installPackage": "パッケージをインストール",
+    "installingPackage": "パッケージをインストール中",
+    "selectBot": "Botを選択してください",
+    "installWill": "インストールすると",
+    "installUv": "uv と Python プロジェクト管理ツールをインストールします。",
+    "installNode": "ワークスペースに Node.js がない場合はインストールします。",
+    "cancel": "キャンセル",
+    "install": "インストール",
+    "installed": "インストール済み",
+    "installing": "インストール中…",
+    "buildRequest": "読書リストの Web サイトを作って。",
+    "createFiles": "ファイルを作成",
+    "runCommand": "コマンドを実行",
+    "buildReply": "読書リストができました。こちらでプレビューできます：",
+    "readingList": "読書リスト",
+    "library": "マイライブラリ",
+    "addBook": "本を追加",
+    "findBook": "本を探す…",
+    "toRead": "読みたい",
+    "finished": "読了"
+  },
+  "legal": {
+    "titles": {
+      "terms": "サービス利用規約",
+      "privacy": "プライバシーポリシー",
+      "cross-border": "越境データ移転条項"
+    },
+    "back": "ホームに戻る",
+    "updated": "更新日",
+    "language": "文書の言語",
+    "documents": "法的文書",
+    "contents": "このページの目次",
+    "download": "Markdown をダウンロード",
+    "loading": "文書を読み込んでいます…",
+    "loadError": "文書を読み込めませんでした。ページを更新するか、Markdown ファイルをダウンロードしてお読みください。"
+  }
+}

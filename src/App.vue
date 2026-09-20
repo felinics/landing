@@ -82,6 +82,10 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
                 <a href="https://github.com/felinics/Memoh/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.contributing') }}</a>
               </div>
               <div class="footer-link-group">
+                <h2 class="footer-link-heading">{{ t('footer.support') }}</h2>
+                <a href="https://help.memoh.ai" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.helpCenter') }}</a>
+              </div>
+              <div class="footer-link-group">
                 <h2 class="footer-link-heading">{{ t('footer.community') }}</h2>
                 <a href="https://github.com/felinics/Memoh" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('nav.github') }}</a>
                 <a href="https://github.com/felinics/Memoh/discussions" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.discussions') }}</a>
@@ -182,7 +186,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 }
 .footer-links {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 32px;
 }
 .footer-link-group {

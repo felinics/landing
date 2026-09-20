@@ -359,10 +359,10 @@ When idle, the platform scales resource usage down to save compute — but sessi
   {
     id: 'agents-and-models',
     icon: 'bot',
-    title: { en: 'Agents, models & memory', zh: 'Agent、模型与记忆' },
+    title: { en: 'Agents & models', zh: 'Agent、模型' },
     description: {
-      en: 'Bring your own agent, switch models, and how memory works.',
-      zh: '自带 Agent、切换模型，以及记忆如何工作。',
+      en: 'Bring your own agent, switch models, and how they work.',
+      zh: '自带 Agent、切换模型，以及如何工作。',
     },
     articles: [
       {
@@ -405,22 +405,6 @@ All agents share the same cloud computer and the same workspace files — switch
 - An **Agent Skill** teaches the agent how to do something — packaged workflows and domain know-how.
 
 Once installed, both are hosted on the cloud computer for the agent to use whenever needed.`,
-        },
-      },
-      {
-        id: 'how-memory-works',
-        question: { en: "How does the agent's memory work?", zh: 'Agent 的记忆是如何工作的？' },
-        answer: {
-          zh: `Memoh 的会话不会清零 —— 下次开口可以直接从上次聊到的地方继续。
-
-在此之上，Agent 会把重要的结论和约定写进**长期记忆**，需要时自动检索。比如你问"上次那个 PR 后来怎么样了"，它会先搜索记忆，再给你答案。
-
-记忆归属于 Bot 并跨渠道共享：在 Telegram 里说过的事，回到桌面端它也记得。`,
-          en: `Sessions in Memoh never reset — the next conversation picks up exactly where the last one ended.
-
-Beyond that, the agent writes important conclusions and agreements into **long-term memory** and recalls them automatically. Ask "whatever happened to that PR from last week?" and it searches memory before answering.
-
-Memory belongs to the Bot and is shared across channels: something you said on Telegram is still known on desktop.`,
         },
       },
     ],

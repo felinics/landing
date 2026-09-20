@@ -214,13 +214,17 @@ Whichever way you start, you can then connect the Bot to Telegram, Discord and o
 - **有电脑**：它有真实的桌面、文件和网络，能实际打开网站、安装依赖、运行代码、给你预览，而不只是输出文字；
 - **一直在**：跑在云端，你的电脑关了它也在；定时任务和周期自检不需要你去触发；
 - **会主动**：有重要的事，它会先发消息给你；
-- **记得住**：会话不清零，记忆跨渠道共享，随时接着上次聊的继续。`,
+- **记得住**：会话不清零，记忆跨渠道共享，随时接着上次聊的继续。
+
+和 Grok Bot 这类纯对话机器人相比，区别更根本：对话机器人提供的是文本问答能力，而 Memoh 提供的是一台完整的云端电脑 —— 你和 Agent 都可以在里面安装软件、运行程序、处理文件。两者的产品形态和使用方式并不相同。`,
           en: `A regular chat assistant only "exists" while the window is open. A Memoh agent owns an always-running cloud computer, which changes what it can do:
 
 - **It has a computer**: a real desktop, files and network — it opens websites, installs dependencies, runs code and shows you previews instead of just writing text;
 - **It's always on**: it runs in the cloud even when your machine is off, and scheduled tasks fire without you triggering anything;
 - **It takes initiative**: when something important happens, it messages you first;
-- **It remembers**: sessions never reset, and memory is shared across every channel.`,
+- **It remembers**: sessions never reset, and memory is shared across every channel.
+
+Compared with pure chatbots like Grok Bot, the difference is even more fundamental: a chatbot offers text Q&A, while Memoh offers a complete cloud computer — you and the agent can install software, run programs and work with files inside it. They are different products in both form and use.`,
         },
       },
       {
@@ -251,6 +255,64 @@ How many Bots you can create, and the compute each one gets, depends on your pla
 - **Web**: [app.memoh.net](https://app.memoh.net).
 
 Every entry point talks to the same agent with the same memory — pick up the conversation from anywhere.`,
+        },
+      },
+      {
+        id: 'what-can-memoh-do',
+        question: { en: 'What can I actually do with Memoh?', zh: 'Memoh 具体能做什么？' },
+        answer: {
+          zh: `Memoh 的核心是一台随时可用的云端电脑，加上住在里面的 Agent。常见用法包括：
+
+- **日常办公**：整理文件、写文档、处理邮件与日程；
+- **开发**：在云端写代码、跑开发服务器、随时预览；
+- **长期挂机任务**：盯发版、定时简报、批量抓取与整理 —— 你的电脑关了它也在跑；
+- **自动化等更多场景**：让 Agent 操作浏览器，替你完成网页上的事。
+
+你可以亲自远程操作这台电脑，也可以把活直接吩咐给 Agent。更多典型场景见[首页](/)的完整介绍，建议先浏览再选择适合自己的套餐。`,
+          en: `At its core, Memoh is an always-available cloud computer with an agent living inside. Common uses:
+
+- **Everyday work**: organizing files, writing documents, handling mail and schedules;
+- **Development**: write code in the cloud, run dev servers, preview any time;
+- **Long-running background tasks**: release watching, scheduled briefings, batch fetching and organizing — it keeps going while your machine is off;
+- **Automation and more**: let the agent drive a browser and handle web chores for you.
+
+You can operate the computer remotely yourself, or simply hand work to the agent. See the [home page](/) for a full tour of typical scenarios before picking a plan.`,
+        },
+      },
+      {
+        id: 'vs-vps',
+        question: { en: 'How is this different from renting a VPS?', zh: '云电脑和自己买的 VPS 有什么区别？' },
+        answer: {
+          zh: `一台裸 VPS 给你的是空白系统 —— 环境、桌面、运维都要自己来；Memoh 给你的是一台**开箱即用、为 Agent 设计**的云电脑：
+
+- 预装图形桌面与浏览器，依赖在 Supermarket 一键安装；
+- 内置 Agent：任务可以直接吩咐，不必事事亲自动手；
+- 与消息渠道、定时任务、长期记忆深度整合；
+- 免运维：系统维护、监控与弹性调度由平台负责。
+
+如果你只想要一台裸服务器，VPS 依然合适；想要一台"有人住在里面帮你干活"的电脑，选 Memoh。`,
+          en: `A bare VPS hands you an empty system — environment, desktop and ops are all on you. Memoh hands you a cloud computer that is **ready out of the box and built for agents**:
+
+- a graphical desktop and browser pre-installed, with one-click packages in the Supermarket;
+- a built-in agent: hand over tasks instead of doing everything by hand;
+- deep integration with messaging channels, scheduled tasks and long-term memory;
+- zero ops: maintenance, monitoring and scheduling are the platform's job.
+
+If all you want is a bare server, a VPS is still the right tool. If you want a computer with someone living in it, working for you — that's Memoh.`,
+        },
+      },
+      {
+        id: 'bring-accounts-files',
+        question: { en: 'How do I bring my existing accounts and files?', zh: '怎么接入我已有的账号和文件？' },
+        answer: {
+          zh: `- **第三方账号**：在 Supermarket 中通过 **Connector** 授权（如 GitHub），Agent 即可访问你已有的仓库、Issue 等数据 —— 按服务独立授权，可随时撤销；
+- **自带 Agent 订阅**：Claude Code、Codex 等可登录你自己的账号，沿用已有订阅；
+- **文件**：在会话中直接上传给 Agent，或让它从网盘、仓库等来源自行拉取，之后保存在它的工作区里；
+- **聊天账号**：在渠道设置中绑定你已有的 Telegram、微信、飞书等账号。`,
+          en: `- **Third-party accounts**: authorize **Connectors** in the Supermarket (GitHub and more) so the agent can work with your existing repos and issues — per-service and revocable at any time;
+- **Your agent subscriptions**: Claude Code, Codex and other BYO agents sign in with your own accounts;
+- **Files**: upload them in a conversation, or have the agent fetch from drives and repos itself — everything lands in its workspace;
+- **Chat accounts**: bind your existing Telegram, WeChat or Feishu accounts under channel settings.`,
         },
       },
     ],
@@ -346,12 +408,28 @@ When the agent starts a dev server, it hands you a localhost link; click it to o
         id: 'always-on',
         question: { en: 'Is the cloud computer always on?', zh: '云电脑会一直开着吗？' },
         answer: {
-          zh: `是。Bot 的云电脑保持 24 × 7 在线：定时任务照常触发，长任务持续推进，渠道消息随时可达。
+          zh: `对任务而言，它一直可用：定时任务照常触发，长任务持续推进，渠道消息随时可达。
 
-空闲时平台会自动降低资源占用以节省算力，但会话、文件与记忆始终保留 —— 下次开口，一切都在原地。`,
-          en: `Yes. A Bot's cloud computer stays online 24 × 7: scheduled tasks fire on time, long-running work keeps moving, and channel messages always get through.
+资源层面按活跃度智能调度：连续约 **24 小时**完全没有活动时，云电脑会自动休眠；你下次开口或任务触发时**热启动**恢复，文件、会话与记忆完整保留 —— 回来就是原样。
 
-When idle, the platform scales resource usage down to save compute — but sessions, files and memory are always preserved. Next time you speak up, everything is right where you left it.`,
+使用额度随套餐规格而定，月付套餐一般没有每日硬性时长限制，但长期满载等极端用法受公平使用政策约束，详见[定价](/#pricing)。`,
+          en: `For your work, it's always available: schedules fire on time, long-running tasks keep moving, and channel messages always get through.
+
+Under the hood, resources follow activity: after roughly **24 hours** with no activity at all, the cloud computer hibernates automatically, then **hot-restarts** the next time you speak up or a task fires — files, sessions and memory fully preserved.
+
+Usage allowances follow your plan. Monthly plans generally have no hard daily time cap, but sustained extremes like permanent full load fall under the fair-use policy — see [pricing](/#pricing).`,
+        },
+      },
+      {
+        id: 'server-locations',
+        question: { en: 'Where are the cloud computers hosted?', zh: '云电脑的服务器在哪里？' },
+        answer: {
+          zh: `服务器部署在多家主流云服务商的数据中心，主要节点位于**北美和亚太**地区。系统会根据你的网络状况与所在地区，自动分配延迟最优的节点；当前实例所在区域可以在控制面板中查看。
+
+节点分布会随基础设施扩展持续增加。`,
+          en: `Servers run in the data centers of several mainstream cloud providers, with primary nodes in **North America and Asia-Pacific**. The system automatically assigns the lowest-latency node based on your region and connection; your instance's current region is shown in the control panel.
+
+Node coverage keeps growing as the infrastructure expands.`,
         },
       },
     ],
@@ -605,6 +683,18 @@ Results are delivered through the channel you choose (desktop notifications, Tel
         },
       },
       {
+        id: 'multitask',
+        question: { en: 'Can it run multiple tasks at once?', zh: '可以同时跑多个任务吗？' },
+        answer: {
+          zh: `可以。任务在云端**异步执行**：吩咐完就可以关掉页面去忙别的，跑完或需要你拍板时，Agent 会通过你选定的渠道来找你。
+
+多个任务可以并行推进；需要更强隔离时，可以为不同职责创建不同的 Bot —— 各自拥有独立的云电脑与工作区。`,
+          en: `Yes. Tasks run **asynchronously** in the cloud: hand one over, close the page, and the agent reaches you through your chosen channel when it finishes or needs a decision.
+
+Multiple tasks move in parallel, and for stronger isolation you can create separate Bots for separate jobs — each with its own cloud computer and workspace.`,
+        },
+      },
+      {
         id: 'manage-tasks',
         question: { en: 'How do I pause, edit or delete a scheduled task?', zh: '如何暂停、修改或删除定时任务？' },
         answer: {
@@ -657,14 +747,37 @@ How often it reaches out, and through which channel, is up to you in notificatio
 - **Pro**：为日常工作和持续运行的 Agent 准备；
 - **Premium**：为更复杂的任务提供更多算力和空间。
 
-各档位对应不同的 CPU 核数、内存与每月 credits 额度，最新规格与价格见[定价页](/#pricing)。`,
+订阅同时包含 **token 额度（credits）**与**云电脑资源**：各档位对应不同的 CPU 核数、内存、存储空间与每月 credits 额度，最新规格与价格见[定价页](/#pricing)。`,
           en: `Memoh comes in three plans:
 
 - **Go**: start with everyday conversations and light tasks;
 - **Pro**: built for daily work and always-running agents;
 - **Premium**: more compute and space for heavier workloads.
 
-Each tier maps to different CPU cores, memory and monthly credits — see the [pricing page](/#pricing) for current specs and prices.`,
+Every subscription bundles **token allowance (credits)** with **cloud-computer resources**: tiers differ in CPU cores, memory, storage and monthly credits — see the [pricing page](/#pricing) for current specs and prices.`,
+        },
+      },
+      {
+        id: 'why-affordable',
+        question: {
+          en: 'Why is it so affordable — and is that sustainable?',
+          zh: '为什么价格能做到这么低？可持续吗？',
+        },
+        answer: {
+          zh: `低价来自架构，而不是补贴：
+
+- **资源池化与弹性调度**：在多用户之间错峰复用服务器资源，把空闲浪费降到最低；
+- **自有数据中心资源**与自动化运维，压低了边际成本；
+- 入门档（如 Go）通过合理的资源调度保持可持续，更高档位则带来健康的利润结构。
+
+所以低价不等于低质量 —— 服务稳定性与数据安全始终是优先事项；入门价位是长期定位，不是短期补贴换量。`,
+          en: `The low price comes from architecture, not subsidies:
+
+- **Resource pooling and elastic scheduling**: server capacity is reused across users and off-peak hours, cutting idle waste to a minimum;
+- **our own data-center capacity** plus automated operations keep marginal costs low;
+- the entry tier (Go) stays sustainable through careful scheduling, while higher tiers carry a healthy margin.
+
+So cheap doesn't mean low quality — stability and data safety remain first priorities, and the entry price is a long-term position, not a short-term land grab.`,
         },
       },
       {
@@ -673,10 +786,34 @@ Each tier maps to different CPU cores, memory and monthly credits — see the [p
         answer: {
           zh: `credits 是使用 **Memoh 提供的模型**时消耗的 Token 额度，按订阅计划每月发放、每月刷新。
 
-如果你自带 Agent 订阅（如 Claude Code、Codex），模型调用走你自己的账号，**不消耗 credits**；云电脑的 CPU、内存等算力则始终由计划规格决定。`,
+如果你自带 Agent 订阅（如 Claude Code、Codex），模型调用走你自己的账号，**不消耗 credits**；云电脑的 CPU、内存等算力则始终由计划规格决定。
+
+### 换算参考
+
+**1 美元的 token 额度 = 500 credits**。按主流模型价格折算，每 500 credits 大约对应：
+
+| 模型 | 输入 | 输出 |
+| --- | --- | --- |
+| OpenAI GPT-5.6 Luna | 约 500 万 tokens | 约 83 万 tokens |
+| DeepSeek V4 Flash | 约 1700–2500 万 tokens | 约 800–1000 万 tokens |
+| Anthropic Claude Sonnet 5 | 约 50 万 tokens | 约 10 万 tokens |
+
+实际消耗按各模型的公开价格折算，以账单页显示为准。`,
           en: `Credits are the token allowance consumed when you use **models provided by Memoh**. They're granted monthly with your plan and refresh every cycle.
 
-If you bring your own agent subscription (Claude Code, Codex, …), model calls go through your own account and **don't consume credits**. The cloud computer's CPU and memory always come from your plan's specs.`,
+If you bring your own agent subscription (Claude Code, Codex, …), model calls go through your own account and **don't consume credits**. The cloud computer's CPU and memory always come from your plan's specs.
+
+### Conversion reference
+
+**$1 of token allowance = 500 credits**. At mainstream model prices, 500 credits roughly buys:
+
+| Model | Input | Output |
+| --- | --- | --- |
+| OpenAI GPT-5.6 Luna | ~5M tokens | ~830K tokens |
+| DeepSeek V4 Flash | ~17–25M tokens | ~8–10M tokens |
+| Anthropic Claude Sonnet 5 | ~500K tokens | ~100K tokens |
+
+Actual consumption follows each model's public pricing; your billing page is the source of truth.`,
         },
       },
       {
@@ -715,6 +852,18 @@ You can:
 - **Downgrades and cancellations** apply at the end of the current billing cycle, with service unaffected until then.
 
 After cancellation, your data is handled per the retention terms in the [privacy policy](/legal/privacy).`,
+        },
+      },
+      {
+        id: 'payment-methods',
+        question: { en: 'How do payment and renewal work?', zh: '支持哪些支付方式？怎么续费？' },
+        answer: {
+          zh: `- **支付方式**：订阅通过 **Stripe** 支付，支持主流信用卡与借记卡；暂不支持加密货币支付；
+- **续费**：订阅按计费周期**自动扣款**；可随时在 **设置 → 订阅** 中取消，取消于当期结束时生效；
+- **年付**：年付方案正在准备中，近期推出，目前先提供月付。`,
+          en: `- **Payment**: subscriptions are billed through **Stripe**, covering major credit and debit cards; cryptocurrency payments are not supported yet;
+- **Renewal**: plans renew by **automatic charge** each billing cycle; cancel any time under **Settings → Subscription** and it takes effect at the end of the current period;
+- **Annual plans**: in the works and coming soon — monthly billing is what's offered today.`,
         },
       },
       {
@@ -841,6 +990,26 @@ Agent 只能操作属于它自己的那台云电脑，接触不到平台上其�
           en: `Yes. Every Bot runs in its own isolated environment — file systems and networks are invisible to each other, including between your own Bots.
 
 An agent can only operate its own cloud computer; it has no access to any other user's or Bot's data on the platform.`,
+        },
+      },
+      {
+        id: 'prohibited-uses',
+        question: { en: 'What uses are prohibited?', zh: '云电脑有哪些禁止用途？' },
+        answer: {
+          zh: `云电脑必须在合法合规范围内使用。以下行为被明确禁止：
+
+- 搭建代理 / VPN 等网络穿透服务；
+- 长期对外开设公共服务（如对外开 Minecraft 服务器）；
+- 发送垃圾信息、挖矿，以及其他违法违规用途。
+
+平台会持续监控异常流量与资源占用；一经发现违规，将视情节限制功能、暂停或终止服务，且不予退款。详见[服务协议](/legal/terms)。`,
+          en: `The cloud computer must be used lawfully. The following are explicitly prohibited:
+
+- running proxies / VPNs or other tunneling services;
+- hosting long-lived public-facing services (e.g. a public Minecraft server);
+- spam, crypto mining, and any other illegal or abusive use.
+
+The platform continuously monitors abnormal traffic and resource usage; violations lead to feature limits, suspension or termination — without refund — depending on severity. See the [Terms of Service](/legal/terms).`,
         },
       },
       {

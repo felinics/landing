@@ -201,4 +201,41 @@ useSeoMeta({
   font-family: var(--font-mono);
   font-size: 0.88em;
 }
+
+/* lib/markdown.ts wraps tables in .blog-table-wrap regardless of page. */
+.help-body :deep(.blog-table-wrap) {
+  margin: 1.5rem 0;
+  overflow-x: auto;
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+}
+
+.help-body :deep(table) {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 420px;
+  font-size: 0.92rem;
+}
+
+.help-body :deep(th),
+.help-body :deep(td) {
+  border-bottom: 1px solid var(--border);
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.help-body :deep(th) {
+  background: var(--muted);
+  color: var(--foreground);
+  font-weight: 650;
+}
+
+.help-body :deep(td) {
+  color: var(--muted-foreground);
+}
+
+.help-body :deep(tr:last-child td) {
+  border-bottom: 0;
+}
 </style>

@@ -90,7 +90,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
                 <a href="https://github.com/felinics/Memoh" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('nav.github') }}</a>
                 <a href="https://github.com/felinics/Memoh/discussions" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.discussions') }}</a>
                 <a href="https://github.com/felinics/Memoh/issues" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.reportIssue') }}</a>
-                <a href="mailto:business@memoh.net" class="footer-link">{{ t('footer.businessContact') }}</a>
+                <a href="mailto:support@memoh.net" class="footer-link">{{ t('footer.businessContact') }}</a>
               </div>
               <div class="footer-link-group">
                 <h2 class="footer-link-heading">{{ t('footer.social') }}</h2>

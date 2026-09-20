@@ -16,7 +16,7 @@ const ui = computed(() => getHelpUi(locale.value))
     </div>
     <div class="flex flex-wrap items-center gap-3">
       <a
-        href="mailto:business@memoh.net"
+        href="mailto:support@memoh.net"
         class="inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium bg-foreground text-background transition-transform hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
         <Mail :size="15" />

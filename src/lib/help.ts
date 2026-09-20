@@ -656,10 +656,10 @@ After cancellation, your data is handled per the retention terms in the [privacy
         answer: {
           zh: `在 **设置 → 账单** 中可以查看和下载每期收据。
 
-如需企业发票、合并结算或其他商务合作，请联系 [business@memoh.net](mailto:business@memoh.net)。`,
+如需企业发票、合并结算或其他商务合作，请联系 [support@memoh.net](mailto:support@memoh.net)。`,
           en: `View and download receipts for every billing period under **Settings → Billing**.
 
-For corporate invoicing, consolidated billing or other business needs, contact [business@memoh.net](mailto:business@memoh.net).`,
+For corporate invoicing, consolidated billing or other business needs, contact [support@memoh.net](mailto:support@memoh.net).`,
         },
       },
     ],
@@ -801,11 +801,11 @@ Once revoked, the agent immediately loses access to that service.`,
         question: { en: 'How do I delete my data or account?', zh: '如何删除我的数据或账户？' },
         answer: {
           zh: `- **删除某个 Bot**：会同时销毁它的云电脑、文件与记忆；
-- **删除账户**：在 **设置 → 账户** 中发起，或联系 [business@memoh.net](mailto:business@memoh.net)。
+- **删除账户**：在 **设置 → 账户** 中发起，或联系 [support@memoh.net](mailto:support@memoh.net)。
 
 数据保留与删除的具体时限见[隐私政策](/legal/privacy)。`,
           en: `- **Deleting a Bot** destroys its cloud computer, files and memory together;
-- **Deleting your account** can be initiated under **Settings → Account**, or by contacting [business@memoh.net](mailto:business@memoh.net).
+- **Deleting your account** can be initiated under **Settings → Account**, or by contacting [support@memoh.net](mailto:support@memoh.net).
 
 Exact retention and deletion timelines are described in the [privacy policy](/legal/privacy).`,
         },

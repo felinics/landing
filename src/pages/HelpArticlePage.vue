@@ -123,6 +123,34 @@ useSeoMeta({
   line-height: 1.78;
 }
 
+.help-body :deep(h2),
+.help-body :deep(h3),
+.help-body :deep(h4) {
+  margin: 2rem 0 0.75rem;
+  color: var(--foreground);
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+
+.help-body :deep(h2) {
+  font-size: 1.35rem;
+}
+
+.help-body :deep(h3) {
+  font-size: 1.15rem;
+}
+
+.help-body :deep(h4) {
+  font-size: 1rem;
+}
+
+.help-body :deep(h2:first-child),
+.help-body :deep(h3:first-child),
+.help-body :deep(h4:first-child) {
+  margin-top: 0;
+}
+
 .help-body :deep(p) {
   margin: 1rem 0;
   color: var(--muted-foreground);

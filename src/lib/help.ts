@@ -172,16 +172,34 @@ On top of that, Memoh adds multi-channel access (desktop, Telegram, Discord, WeC
         id: 'how-to-get-started',
         question: { en: 'How do I get started with Memoh?', zh: '如何开始使用 Memoh？' },
         answer: {
-          zh: `1. 打开 [app.memoh.net](https://app.memoh.net) 注册并登录；如果当前处于受邀阶段，可以先[加入等待列表](/waitlist)。
-2. 创建你的第一个 Bot，平台会自动为它分配一台云电脑。
-3. 在对话框里直接吩咐任务，比如"帮我做一个阅读清单网页"，或"每天早上 9 点给我发晨间简报"。
+          zh: `### 首选：桌面版
 
-之后你可以下载[桌面版](/download)，或把 Bot 接入 Telegram、Discord 等渠道，在你习惯的地方随时找到它。`,
-          en: `1. Open [app.memoh.net](https://app.memoh.net) and sign in; if access is invite-gated at the moment, [join the waitlist](/waitlist) first.
-2. Create your first Bot — the platform provisions a cloud computer for it automatically.
-3. Just tell it what you need, e.g. "build me a reading-list web page" or "send me a morning brief at 9 am every day".
+1. 前往[下载页](/download)，安装适合你系统的 Memoh 桌面版（支持 macOS、Windows 与 Linux）；
+2. 打开应用，注册并登录；如果当前处于受邀阶段，可以先[加入等待列表](/waitlist)；
+3. 创建你的第一个 Bot，平台会自动为它分配一台云电脑；
+4. 在对话框里直接吩咐任务，比如"帮我做一个阅读清单网页"，或"每天早上 9 点给我发晨间简报"。
 
-From there, install the [desktop app](/download) or connect the Bot to Telegram, Discord and other channels so it's reachable wherever you already chat.`,
+桌面版提供系统级通知、全局快捷键与本地运行模式，Agent 主动找你时第一时间就能收到。
+
+### 其次：网页版
+
+不方便安装应用时，用浏览器打开 [app.memoh.net](https://app.memoh.net) —— 注册、创建 Bot、吩咐任务的流程完全一样，进度与记忆和桌面版实时同步，之后随时可以换到桌面版继续。
+
+无论从哪个入口开始，之后都可以把 Bot 接入 Telegram、Discord 等渠道，在你习惯的地方随时找到它。`,
+          en: `### Recommended: the desktop app
+
+1. Head to the [download page](/download) and install Memoh for your system (macOS, Windows or Linux);
+2. Open the app and sign in; if access is invite-gated at the moment, [join the waitlist](/waitlist) first;
+3. Create your first Bot — the platform provisions a cloud computer for it automatically;
+4. Just tell it what you need, e.g. "build me a reading-list web page" or "send me a morning brief at 9 am every day".
+
+The desktop app adds system notifications, global shortcuts and local mode, so the moment your agent reaches out, you'll know.
+
+### Alternative: the web app
+
+Can't install anything right now? Open [app.memoh.net](https://app.memoh.net) in a browser — signing up, creating Bots and giving tasks all work exactly the same, fully in sync with the desktop app, and you can switch to desktop at any time.
+
+Whichever way you start, you can then connect the Bot to Telegram, Discord and other channels so it's reachable wherever you already chat.`,
         },
       },
       {
@@ -225,13 +243,13 @@ How many Bots you can create, and the compute each one gets, depends on your pla
         id: 'which-platforms',
         question: { en: 'Where can I use Memoh?', zh: '可以在哪些平台使用 Memoh？' },
         answer: {
-          zh: `- **网页**：[app.memoh.net](https://app.memoh.net)；
-- **桌面版**：macOS（Apple Silicon 与 Intel）、Windows、Linux，见[下载页](/download)；
+          zh: `- **桌面版（推荐）**：macOS（Apple Silicon 与 Intel）、Windows、Linux，见[下载页](/download)；
+- **网页**：[app.memoh.net](https://app.memoh.net)；
 - **消息渠道**：Telegram、Discord、微信等，更多平台陆续开放。
 
 所有入口背后是同一个 Agent、同一份记忆 —— 在哪里开口都能接上。`,
-          en: `- **Web**: [app.memoh.net](https://app.memoh.net);
-- **Desktop**: macOS (Apple Silicon & Intel), Windows and Linux — see the [download page](/download);
+          en: `- **Desktop (recommended)**: macOS (Apple Silicon & Intel), Windows and Linux — see the [download page](/download);
+- **Web**: [app.memoh.net](https://app.memoh.net);
 - **Messaging channels**: Telegram, Discord, WeChat, with more platforms on the way.
 
 Every entry point talks to the same agent with the same memory — pick up the conversation from anywhere.`,

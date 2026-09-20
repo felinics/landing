@@ -244,13 +244,11 @@ How many Bots you can create, and the compute each one gets, depends on your pla
         question: { en: 'Where can I use Memoh?', zh: '可以在哪些平台使用 Memoh？' },
         answer: {
           zh: `- **桌面版（推荐）**：macOS（Apple Silicon 与 Intel）、Windows、Linux，见[下载页](/download)；
-- **网页**：[app.memoh.net](https://app.memoh.net)；
-- **消息渠道**：Telegram、Discord、微信等，更多平台陆续开放。
+- **网页**：[app.memoh.net](https://app.memoh.net)。
 
 所有入口背后是同一个 Agent、同一份记忆 —— 在哪里开口都能接上。`,
           en: `- **Desktop (recommended)**: macOS (Apple Silicon & Intel), Windows and Linux — see the [download page](/download);
-- **Web**: [app.memoh.net](https://app.memoh.net);
-- **Messaging channels**: Telegram, Discord, WeChat, with more platforms on the way.
+- **Web**: [app.memoh.net](https://app.memoh.net).
 
 Every entry point talks to the same agent with the same memory — pick up the conversation from anywhere.`,
         },

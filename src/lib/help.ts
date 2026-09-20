@@ -479,6 +479,93 @@ Reminders, quick tasks and questions all work in chat — say "remind me to pick
         },
       },
       {
+        id: 'connect-wechat',
+        question: { en: 'How do I connect Memoh to WeChat?', zh: '如何把 Memoh 接入微信？' },
+        answer: {
+          zh: `在 Bot 设置中打开**渠道 → 微信**，选择扫码登录：页面会生成一个二维码，用微信扫码并确认后即完成绑定，之后直接在微信里和你的 Agent 聊天即可。二维码过期了点击"刷新"重新生成。
+
+微信生态还有两种企业向的接入方式，作为独立渠道分别配置：
+
+- **微信服务号**：填入公众平台的 AppID、AppSecret 与服务器配置 Token；
+- **企业微信**：填入智能机器人的 BotID 与 Secret。`,
+          en: `In your Bot's settings, open **Channels → WeChat** and choose QR login: a QR code appears, and scanning plus confirming it in WeChat completes the binding — from then on, just chat with your agent inside WeChat. If the code expires, hit "Refresh" to generate a new one.
+
+The WeChat ecosystem also offers two business-oriented options, configured as separate channels:
+
+- **WeChat Official Account**: fill in the AppID, AppSecret and server-config Token from the Official Account platform;
+- **WeCom**: fill in the smart bot's BotID and Secret.`,
+        },
+      },
+      {
+        id: 'connect-feishu',
+        question: { en: 'How do I connect Memoh to Feishu (Lark)?', zh: '如何把 Memoh 接入飞书？' },
+        answer: {
+          zh: `1. 在[飞书开放平台](https://open.feishu.cn)创建企业自建应用，开启机器人能力；
+2. 把应用的 **App ID** 和 **App Secret** 填入 Memoh 的**渠道 → 飞书**；
+3. 默认通过**长连接（WebSocket）**接收消息，无需公网回调地址，保存后在飞书里单聊或群里 @ 它即可。
+
+使用国际版 Lark 时把区域切换为 **Lark**；如需改用 Webhook 回调模式，再补充 Encrypt Key 与 Verification Token。`,
+          en: `1. Create a custom app on the [Feishu open platform](https://open.feishu.cn) and enable its bot capability;
+2. Fill the app's **App ID** and **App Secret** into Memoh under **Channels → Feishu**;
+3. Messages arrive over a **WebSocket long connection** by default — no public callback URL needed. Save, then DM it or @mention it in any Feishu group.
+
+Using international Lark? Switch the region to **Lark**. To use webhook mode instead, also provide the Encrypt Key and Verification Token.`,
+        },
+      },
+      {
+        id: 'connect-dingtalk',
+        question: { en: 'How do I connect Memoh to DingTalk?', zh: '如何把 Memoh 接入钉钉？' },
+        answer: {
+          zh: `1. 在[钉钉开放平台](https://open.dingtalk.com)创建企业内部应用，添加机器人能力；
+2. 把应用的 **AppKey** 和 **AppSecret** 填入 Memoh 的**渠道 → 钉钉**；
+3. Memoh 通过钉钉的 **Stream 模式**接收消息，无需配置公网回调地址，保存后在钉钉里单聊或群里 @ 它即可对话。`,
+          en: `1. Create an internal app on the [DingTalk open platform](https://open.dingtalk.com) and add the bot capability;
+2. Fill the app's **AppKey** and **AppSecret** into Memoh under **Channels → DingTalk**;
+3. Memoh receives messages via DingTalk **Stream mode** — no public callback URL to configure. Save, then chat with it directly or @mention it in a group.`,
+        },
+      },
+      {
+        id: 'connect-slack',
+        question: { en: 'How do I connect Memoh to Slack?', zh: '如何把 Memoh 接入 Slack？' },
+        answer: {
+          zh: `1. 在 [api.slack.com/apps](https://api.slack.com/apps) 创建应用，开启 **Socket Mode** 并生成 App-Level Token（\`xapp-\` 开头）；
+2. 在 OAuth & Permissions 中把应用安装到工作区，获取 **Bot Token**（\`xoxb-\` 开头）；
+3. 把两个 Token 填入 Memoh 的**渠道 → Slack**，保存后把机器人拉进频道，@ 它即可对话。
+
+Socket Mode 下同样无需公网回调地址。`,
+          en: `1. Create an app at [api.slack.com/apps](https://api.slack.com/apps), enable **Socket Mode** and generate an App-Level Token (starts with \`xapp-\`);
+2. Install the app to your workspace under OAuth & Permissions and grab the **Bot Token** (starts with \`xoxb-\`);
+3. Fill both tokens into Memoh under **Channels → Slack**, save, invite the bot to a channel and @mention it.
+
+Socket Mode means no public callback URL here either.`,
+        },
+      },
+      {
+        id: 'connect-other-channels',
+        question: {
+          en: 'How do I connect QQ, LINE, Matrix or Misskey?',
+          zh: 'QQ、LINE、Matrix、Misskey 如何接入？',
+        },
+        answer: {
+          zh: `这些渠道同样在**渠道设置**中添加，填入对应平台的凭据即可：
+
+- **QQ**：QQ 开放平台机器人的 AppID 与 ClientSecret；
+- **LINE**：LINE Developers 的 Channel Secret 与 Channel Access Token，并按提示配置 Webhook 地址；
+- **Matrix**：Homeserver 地址、账号的 Access Token 与 User ID；
+- **Misskey**：实例地址与 Access Token。
+
+每个渠道都可以独立启用或停用，互不影响。`,
+          en: `These channels are added the same way under **channel settings** — fill in each platform's credentials:
+
+- **QQ**: the AppID and ClientSecret of your QQ open-platform bot;
+- **LINE**: the Channel Secret and Channel Access Token from LINE Developers, plus the webhook URL as prompted;
+- **Matrix**: your homeserver URL, the account's Access Token and User ID;
+- **Misskey**: the instance URL and an Access Token.
+
+Each channel can be enabled or disabled independently.`,
+        },
+      },
+      {
         id: 'cross-channel-sync',
         question: { en: 'Do conversations sync across channels?', zh: '多个渠道的对话会同步吗？' },
         answer: {

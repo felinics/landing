@@ -430,30 +430,28 @@ Memory belongs to the Bot and is shared across channels: something you said on T
     icon: 'send',
     title: { en: 'Messaging channels', zh: '消息渠道' },
     description: {
-      en: 'Reach your agent from Telegram, Discord, WeChat and more.',
-      zh: '在 Telegram、Discord、微信等常用工具里找到你的 Agent。',
+      en: 'Reach your agent from Telegram, Slack, WeChat, Feishu and more.',
+      zh: '在 Telegram、Slack、微信、飞书等常用工具里找到你的 Agent。',
     },
     articles: [
       {
         id: 'supported-channels',
         question: { en: 'Which chat channels does Memoh support?', zh: 'Memoh 支持哪些聊天渠道？' },
         answer: {
-          zh: `目前支持：
+          zh: `Memoh 内置网页与桌面端对话入口，并支持接入以下聊天平台：
 
-- 网页与桌面端（macOS / Windows / Linux）；
-- **Telegram**；
-- **Discord**；
-- **微信**；
+- **社交与协作**：Telegram、Discord、Slack、LINE；
+- **国内平台**：微信、微信服务号、企业微信、QQ、飞书、钉钉；
+- **开放协议与社区**：Matrix、Misskey。
 
-更多平台正在路上。一个 Agent 可以同时接入多个渠道，对话与记忆完全同步。`,
-          en: `Currently supported:
+一个 Agent 可以同时接入多个渠道，对话与记忆完全同步。`,
+          en: `Besides the built-in web and desktop chat, Memoh connects to the following platforms:
 
-- Web and desktop apps (macOS / Windows / Linux);
-- **Telegram**;
-- **Discord**;
-- **WeChat**;
+- **Social & collaboration**: Telegram, Discord, Slack, LINE;
+- **China-based platforms**: WeChat, WeChat Official Account, WeCom, QQ, Feishu, DingTalk;
+- **Open protocols & communities**: Matrix, Misskey.
 
-with more platforms on the way. One agent can be connected to several channels at once, with conversations and memory fully in sync.`,
+One agent can be connected to several channels at once, with conversations and memory fully in sync.`,
         },
       },
       {

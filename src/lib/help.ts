@@ -786,34 +786,10 @@ So cheap doesn't mean low quality — stability and data safety remain first pri
         answer: {
           zh: `credits 是使用 **Memoh 提供的模型**时消耗的 Token 额度，按订阅计划每月发放、每月刷新。
 
-如果你自带 Agent 订阅（如 Claude Code、Codex），模型调用走你自己的账号，**不消耗 credits**；云电脑的 CPU、内存等算力则始终由计划规格决定。
-
-### 换算参考
-
-**1 美元的 token 额度 = 500 credits**。按主流模型价格折算，每 500 credits 大约对应：
-
-| 模型 | 输入 | 输出 |
-| --- | --- | --- |
-| OpenAI GPT-5.6 Luna | 约 500 万 tokens | 约 83 万 tokens |
-| DeepSeek V4 Flash | 约 1700–2500 万 tokens | 约 800–1000 万 tokens |
-| Anthropic Claude Sonnet 5 | 约 50 万 tokens | 约 10 万 tokens |
-
-实际消耗按各模型的公开价格折算，以账单页显示为准。`,
+如果你自带 Agent 订阅（如 Claude Code、Codex），模型调用走你自己的账号，**不消耗 credits**；云电脑的 CPU、内存等算力则始终由计划规格决定。`,
           en: `Credits are the token allowance consumed when you use **models provided by Memoh**. They're granted monthly with your plan and refresh every cycle.
 
-If you bring your own agent subscription (Claude Code, Codex, …), model calls go through your own account and **don't consume credits**. The cloud computer's CPU and memory always come from your plan's specs.
-
-### Conversion reference
-
-**$1 of token allowance = 500 credits**. At mainstream model prices, 500 credits roughly buys:
-
-| Model | Input | Output |
-| --- | --- | --- |
-| OpenAI GPT-5.6 Luna | ~5M tokens | ~830K tokens |
-| DeepSeek V4 Flash | ~17–25M tokens | ~8–10M tokens |
-| Anthropic Claude Sonnet 5 | ~500K tokens | ~100K tokens |
-
-Actual consumption follows each model's public pricing; your billing page is the source of truth.`,
+If you bring your own agent subscription (Claude Code, Codex, …), model calls go through your own account and **don't consume credits**. The cloud computer's CPU and memory always come from your plan's specs.`,
         },
       },
       {

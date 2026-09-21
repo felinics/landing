@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, nextTick, onBeforeUnmount, onMounted } from 'vue'
+import { useRoute } from 'vue-router'
 import { ArrowRight } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 import { useHead, useSeoMeta } from '@unhead/vue'
@@ -58,6 +59,33 @@ useHead({
     },
   ],
 })
+
+// The home page scrolls inside App.vue's .home-scroll container, not the
+// document, so native #hash anchoring (e.g. /#pricing from help articles or
+// external links) never lands here. Resolve it by hand: scrollIntoView walks
+// nested scroll containers, native anchoring does not.
+const route = useRoute()
+
+const scrollToHash = (hash: string) => {
+  const target = hash ? document.getElementById(hash.slice(1)) : null
+  target?.scrollIntoView({ block: 'start' })
+}
+
+const onHashChange = () => scrollToHash(window.location.hash)
+
+onMounted(async () => {
+  window.addEventListener('hashchange', onHashChange)
+  if (!route.hash) return
+  await nextTick()
+  requestAnimationFrame(() => {
+    scrollToHash(route.hash)
+    // Fonts and images loading after mount shift layout on a cold load;
+    // re-align once they settle.
+    setTimeout(() => scrollToHash(route.hash), 450)
+  })
+})
+
+onBeforeUnmount(() => window.removeEventListener('hashchange', onHashChange))
 
 const s2Proofs = [
   { key: 'cron', comp: ProofSchedule },

@@ -1022,7 +1022,7 @@ The platform continuously monitors abnormal traffic and resource usage; violatio
 
 - 按服务**逐个授权**，绝不打包索权；
 - 只申请完成任务所需的最小权限；
-- 凭据加密存储，且**可随时在 Supermarket 中撤销**。
+- 凭据加密存储，且**可随时在应用市场中撤销**。
 
 撤销后 Agent 立即失去对该服务的访问能力。`,
           en: `Connectors use each service's official authorization flow (e.g. OAuth):

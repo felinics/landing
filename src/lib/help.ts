@@ -179,7 +179,7 @@ On top of that, Memoh adds multi-channel access (desktop, Telegram, Discord, WeC
 3. 创建你的第一个 Bot，平台会自动为它分配一台云电脑；
 4. 在对话框里直接吩咐任务，比如"帮我做一个阅读清单网页"，或"每天早上 9 点给我发晨间简报"。
 
-桌面版提供系统级通知、全局快捷键与本地运行模式，Agent 主动找你时第一时间就能收到。
+桌面版提供系统级通知、全局快捷键，并可把这台电脑共享给 Agent 干活，它主动找你时第一时间就能收到。
 
 ### 其次：网页版
 
@@ -193,7 +193,7 @@ On top of that, Memoh adds multi-channel access (desktop, Telegram, Discord, WeC
 3. Create your first Bot — the platform provisions a cloud computer for it automatically;
 4. Just tell it what you need, e.g. "build me a reading-list web page" or "send me a morning brief at 9 am every day".
 
-The desktop app adds system notifications, global shortcuts and local mode, so the moment your agent reaches out, you'll know.
+The desktop app adds system notifications, global shortcuts and the option to share this computer with your agents, so the moment your agent reaches out, you'll know.
 
 ### Alternative: the web app
 
@@ -285,7 +285,7 @@ You can operate the computer remotely yourself, or simply hand work to the agent
         answer: {
           zh: `一台裸 VPS 给你的是空白系统 —— 环境、桌面、运维都要自己来；Memoh 给你的是一台**开箱即用、为 Agent 设计**的云电脑：
 
-- 预装图形桌面与浏览器，依赖在 Supermarket 一键安装；
+- 预装图形桌面与浏览器，依赖在应用市场一键安装；
 - 内置 Agent：任务可以直接吩咐，不必事事亲自动手；
 - 与消息渠道、定时任务、长期记忆深度整合；
 - 免运维：系统维护、监控与弹性调度由平台负责。
@@ -305,14 +305,14 @@ If all you want is a bare server, a VPS is still the right tool. If you want a c
         id: 'bring-accounts-files',
         question: { en: 'How do I bring my existing accounts and files?', zh: '怎么接入我已有的账号和文件？' },
         answer: {
-          zh: `- **第三方账号**：在 Supermarket 中通过 **Connector** 授权（如 GitHub），Agent 即可访问你已有的仓库、Issue 等数据 —— 按服务独立授权，可随时撤销；
+          zh: `- **第三方账号**：在应用市场中通过 **Connector** 授权（如 GitHub），Agent 即可访问你已有的仓库、Issue 等数据 —— 按服务独立授权，可随时撤销；
 - **自带 Agent 订阅**：Claude Code、Codex 等可登录你自己的账号，沿用已有订阅；
 - **文件**：在会话中直接上传给 Agent，或让它从网盘、仓库等来源自行拉取，之后保存在它的工作区里；
-- **聊天账号**：在渠道设置中绑定你已有的 Telegram、微信、飞书等账号。`,
+- **聊天账号**：在机器人的**平台**标签页绑定你已有的 Telegram、微信、飞书等账号。`,
           en: `- **Third-party accounts**: authorize **Connectors** in the Supermarket (GitHub and more) so the agent can work with your existing repos and issues — per-service and revocable at any time;
 - **Your agent subscriptions**: Claude Code, Codex and other BYO agents sign in with your own accounts;
 - **Files**: upload them in a conversation, or have the agent fetch from drives and repos itself — everything lands in its workspace;
-- **Chat accounts**: bind your existing Telegram, WeChat or Feishu accounts under channel settings.`,
+- **Chat accounts**: bind your existing Telegram, WeChat or Feishu accounts on the bot's **Platforms** tab.`,
         },
       },
     ],
@@ -335,7 +335,7 @@ If all you want is a bare server, a VPS is still the right tool. If you want a c
 - **图形桌面**：预装浏览器，Agent 可以像人一样打开网站、操作应用；
 - **独立文件系统**：工作区里的代码、文档与产出物；
 - **网络访问**：抓取网页、调用外部服务；
-- **可安装的运行时**：Node.js、Python、uv 等，按需在 Supermarket 中一键安装。
+- **可安装的运行时**：Node.js、Python、uv 等，按需在应用市场中一键安装。
 
 CPU 核数与内存等规格由你的订阅计划决定，详见[定价](/#pricing)。`,
           en: `Every Bot runs on an isolated cloud computer with:
@@ -364,7 +364,7 @@ When a human touch is needed (a login challenge, double-checking a critical step
         id: 'install-packages',
         question: { en: 'How do I install packages and apps for my agent?', zh: '如何为 Agent 安装依赖和应用？' },
         answer: {
-          zh: `打开 **Supermarket**（应用超市），所有东西都托管在云电脑里，随时供 Agent 使用：
+          zh: `打开**应用市场**（Supermarket），所有东西都托管在云电脑里，随时供 Agent 使用：
 
 - **软件包**：Node.js、Python、uv 等运行时，选择目标 Bot 后一键"安装到 Bot"；
 - **Connector**：连接 GitHub 等外部服务，按服务单独授权；
@@ -390,6 +390,32 @@ Agents can also install dependencies themselves mid-task, and you can watch it h
           en: `Each Bot's files live in its own cloud workspace, isolated from every other Bot; storage comes with your plan.
 
 You can upload files to the agent directly, and ask it to organize, archive and send any file back to you. Deleting a Bot destroys its workspace along with it.`,
+        },
+      },
+      {
+        id: 'scale-up-bot',
+        question: { en: "Can I scale up a Bot's resources?", zh: '可以给 Bot 扩容吗？' },
+        answer: {
+          zh: `**现阶段的扩容方式是升级订阅套餐。**云电脑的 CPU 核数、内存与存储空间由套餐规格决定，暂不支持在套餐之外单独加购某一项资源。
+
+具体来说：
+
+1. 在 **设置 → 订阅** 中升级到更高档位（Go → Pro → Premium）；
+2. 升级**立即生效**，按剩余计费周期折算差价；
+3. 生效后，Bot 的云电脑会自动应用新的资源规格 —— 文件、依赖、会话与记忆全部原样保留，**无需迁移或重建**；
+4. 更高档位同时带来更多的每月 credits 额度。
+
+各档位的具体规格对比见[定价页](/#pricing)。目前暂不支持按单项资源加购，或只为某一个 Bot 单独升配；如果你的负载超出了最高档位的规格，可以联系 [support@memoh.net](mailto:support@memoh.net) 沟通方案。`,
+          en: `**Right now, scaling up means upgrading your plan.** The cloud computer's CPU cores, memory and storage follow your plan's specs — buying extra resources à la carte isn't supported yet.
+
+In practice:
+
+1. Upgrade to a higher tier (Go → Pro → Premium) under **Settings → Subscription**;
+2. Upgrades take effect **immediately**, prorated for the rest of the billing cycle;
+3. Once active, the Bot's cloud computer picks up the new specs automatically — files, dependencies, sessions and memory all stay in place, **no migration or rebuild needed**;
+4. Higher tiers also come with a larger monthly credits allowance.
+
+See the [pricing page](/#pricing) for a spec-by-spec comparison. Per-resource add-ons and per-Bot upgrades aren't available yet; if your workload outgrows the top tier, contact [support@memoh.net](mailto:support@memoh.net) to talk options.`,
         },
       },
       {
@@ -471,7 +497,7 @@ All agents share the same cloud computer and the same workspace files — switch
         id: 'skills-and-connectors',
         question: { en: 'What are Agent Skills and Connectors?', zh: '什么是 Agent Skill 和 Connector？' },
         answer: {
-          zh: `两者都在 Supermarket 中管理，但分工不同：
+          zh: `两者都在应用市场中管理，但分工不同：
 
 - **Connector** 负责"连接外部服务"。比如 GitHub Connector 让 Agent 能访问你的仓库、Issue 和 Pull Request。每个 Connector 需要单独授权，可随时撤销；
 - **Agent Skill** 负责"教会 Agent 做事的方法"，为它增加特定的工作流程和领域技能。
@@ -503,7 +529,7 @@ Once installed, both are hosted on the cloud computer for the agent to use whene
           zh: `Memoh 内置网页与桌面端对话入口，并支持接入以下聊天平台：
 
 - **社交与协作**：Telegram、Discord、Slack、LINE；
-- **国内平台**：微信、微信服务号、企业微信、QQ、飞书、钉钉；
+- **国内平台**：微信、微信公众号、企业微信、QQ、飞书、钉钉；
 - **开放协议与社区**：Matrix、Misskey。
 
 一个 Agent 可以同时接入多个渠道，对话与记忆完全同步。`,
@@ -520,10 +546,10 @@ One agent can be connected to several channels at once, with conversations and m
         id: 'connect-telegram',
         question: { en: 'How do I connect Memoh to Telegram?', zh: '如何把 Memoh 接入 Telegram？' },
         answer: {
-          zh: `在 Bot 设置中打开**渠道 → Telegram**，按提示完成绑定，然后就可以在 Telegram 里直接和它对话了。
+          zh: `在 Bot 设置中打开**平台 → Telegram**，按提示完成绑定，然后就可以在 Telegram 里直接和它对话了。
 
 提醒事项、随手安排任务、问答查询都可以在聊天里完成 —— 比如"提醒我 6 点取快递"，到点它会来叫你。`,
-          en: `In your Bot's settings, open **Channels → Telegram** and follow the linking steps. From then on you can talk to it right inside Telegram.
+          en: `In your Bot's settings, open **Platforms → Telegram** and follow the linking steps. From then on you can talk to it right inside Telegram.
 
 Reminders, quick tasks and questions all work in chat — say "remind me to pick up the package at 6" and it will ping you on time.`,
         },
@@ -532,10 +558,10 @@ Reminders, quick tasks and questions all work in chat — say "remind me to pick
         id: 'connect-discord',
         question: { en: 'How do I connect Memoh to Discord?', zh: '如何把 Memoh 接入 Discord？' },
         answer: {
-          zh: `在**渠道 → Discord** 中完成授权，并把机器人邀请进你的服务器。
+          zh: `在**平台 → Discord** 中完成授权，并把机器人邀请进你的服务器。
 
 在频道里 **@ 它**即可对话，比如让它总结今天频道里聊了什么；私信也同样可用。`,
-          en: `Authorize under **Channels → Discord** and invite the bot into your server.
+          en: `Authorize under **Platforms → Discord** and invite the bot into your server.
 
 **@mention** it in any channel to talk — for example, ask it to summarize what was discussed today. Direct messages work too.`,
         },
@@ -544,13 +570,13 @@ Reminders, quick tasks and questions all work in chat — say "remind me to pick
         id: 'connect-wechat',
         question: { en: 'How do I connect Memoh to WeChat?', zh: '如何把 Memoh 接入微信？' },
         answer: {
-          zh: `在 Bot 设置中打开**渠道 → 微信**，选择扫码登录：页面会生成一个二维码，用微信扫码并确认后即完成绑定，之后直接在微信里和你的 Agent 聊天即可。二维码过期了点击"刷新"重新生成。
+          zh: `在 Bot 设置中打开**平台 → 微信**，选择扫码登录：页面会生成一个二维码，用微信扫码并确认后即完成绑定，之后直接在微信里和你的 Agent 聊天即可。二维码过期了点击"刷新"重新生成。
 
 微信生态还有两种企业向的接入方式，作为独立渠道分别配置：
 
-- **微信服务号**：填入公众平台的 AppID、AppSecret 与服务器配置 Token；
+- **微信公众号**：填入公众平台的 AppID、AppSecret 与服务器配置 Token；
 - **企业微信**：填入智能机器人的 BotID 与 Secret。`,
-          en: `In your Bot's settings, open **Channels → WeChat** and choose QR login: a QR code appears, and scanning plus confirming it in WeChat completes the binding — from then on, just chat with your agent inside WeChat. If the code expires, hit "Refresh" to generate a new one.
+          en: `In your Bot's settings, open **Platforms → WeChat** and choose QR login: a QR code appears, and scanning plus confirming it in WeChat completes the binding — from then on, just chat with your agent inside WeChat. If the code expires, hit "Refresh" to generate a new one.
 
 The WeChat ecosystem also offers two business-oriented options, configured as separate channels:
 
@@ -563,12 +589,12 @@ The WeChat ecosystem also offers two business-oriented options, configured as se
         question: { en: 'How do I connect Memoh to Feishu (Lark)?', zh: '如何把 Memoh 接入飞书？' },
         answer: {
           zh: `1. 在[飞书开放平台](https://open.feishu.cn)创建企业自建应用，开启机器人能力；
-2. 把应用的 **App ID** 和 **App Secret** 填入 Memoh 的**渠道 → 飞书**；
+2. 把应用的 **App ID** 和 **App Secret** 填入 Memoh 的**平台 → 飞书**；
 3. 默认通过**长连接（WebSocket）**接收消息，无需公网回调地址，保存后在飞书里单聊或群里 @ 它即可。
 
 使用国际版 Lark 时把区域切换为 **Lark**；如需改用 Webhook 回调模式，再补充 Encrypt Key 与 Verification Token。`,
           en: `1. Create a custom app on the [Feishu open platform](https://open.feishu.cn) and enable its bot capability;
-2. Fill the app's **App ID** and **App Secret** into Memoh under **Channels → Feishu**;
+2. Fill the app's **App ID** and **App Secret** into Memoh under **Platforms → Feishu**;
 3. Messages arrive over a **WebSocket long connection** by default — no public callback URL needed. Save, then DM it or @mention it in any Feishu group.
 
 Using international Lark? Switch the region to **Lark**. To use webhook mode instead, also provide the Encrypt Key and Verification Token.`,
@@ -579,10 +605,10 @@ Using international Lark? Switch the region to **Lark**. To use webhook mode ins
         question: { en: 'How do I connect Memoh to DingTalk?', zh: '如何把 Memoh 接入钉钉？' },
         answer: {
           zh: `1. 在[钉钉开放平台](https://open.dingtalk.com)创建企业内部应用，添加机器人能力；
-2. 把应用的 **AppKey** 和 **AppSecret** 填入 Memoh 的**渠道 → 钉钉**；
+2. 把应用的 **AppKey** 和 **AppSecret** 填入 Memoh 的**平台 → 钉钉**；
 3. Memoh 通过钉钉的 **Stream 模式**接收消息，无需配置公网回调地址，保存后在钉钉里单聊或群里 @ 它即可对话。`,
           en: `1. Create an internal app on the [DingTalk open platform](https://open.dingtalk.com) and add the bot capability;
-2. Fill the app's **AppKey** and **AppSecret** into Memoh under **Channels → DingTalk**;
+2. Fill the app's **AppKey** and **AppSecret** into Memoh under **Platforms → DingTalk**;
 3. Memoh receives messages via DingTalk **Stream mode** — no public callback URL to configure. Save, then chat with it directly or @mention it in a group.`,
         },
       },
@@ -592,12 +618,12 @@ Using international Lark? Switch the region to **Lark**. To use webhook mode ins
         answer: {
           zh: `1. 在 [api.slack.com/apps](https://api.slack.com/apps) 创建应用，开启 **Socket Mode** 并生成 App-Level Token（\`xapp-\` 开头）；
 2. 在 OAuth & Permissions 中把应用安装到工作区，获取 **Bot Token**（\`xoxb-\` 开头）；
-3. 把两个 Token 填入 Memoh 的**渠道 → Slack**，保存后把机器人拉进频道，@ 它即可对话。
+3. 把两个 Token 填入 Memoh 的**平台 → Slack**，保存后把机器人拉进频道，@ 它即可对话。
 
 Socket Mode 下同样无需公网回调地址。`,
           en: `1. Create an app at [api.slack.com/apps](https://api.slack.com/apps), enable **Socket Mode** and generate an App-Level Token (starts with \`xapp-\`);
 2. Install the app to your workspace under OAuth & Permissions and grab the **Bot Token** (starts with \`xoxb-\`);
-3. Fill both tokens into Memoh under **Channels → Slack**, save, invite the bot to a channel and @mention it.
+3. Fill both tokens into Memoh under **Platforms → Slack**, save, invite the bot to a channel and @mention it.
 
 Socket Mode means no public callback URL here either.`,
         },
@@ -609,7 +635,7 @@ Socket Mode means no public callback URL here either.`,
           zh: 'QQ、LINE、Matrix、Misskey 如何接入？',
         },
         answer: {
-          zh: `这些渠道同样在**渠道设置**中添加，填入对应平台的凭据即可：
+          zh: `这些渠道同样在机器人的**平台**标签页中添加，填入对应平台的凭据即可：
 
 - **QQ**：QQ 开放平台机器人的 AppID 与 ClientSecret；
 - **LINE**：LINE Developers 的 Channel Secret 与 Channel Access Token，并按提示配置 Webhook 地址；
@@ -617,7 +643,7 @@ Socket Mode means no public callback URL here either.`,
 - **Misskey**：实例地址与 Access Token。
 
 每个渠道都可以独立启用或停用，互不影响。`,
-          en: `These channels are added the same way under **channel settings** — fill in each platform's credentials:
+          en: `These channels are added the same way on the bot's **Platforms** tab — fill in each platform's credentials:
 
 - **QQ**: the AppID and ClientSecret of your QQ open-platform bot;
 - **LINE**: the Channel Secret and Channel Access Token from LINE Developers, plus the webhook URL as prompted;
@@ -660,14 +686,14 @@ Ask for something on Telegram, then open the desktop app to check progress and k
 - "工作日盯着这个仓库的发版"
 - "每天睡前帮我整理收件箱"
 
-Agent 会创建对应的定时任务。你也可以在任务面板中查看、编辑全部任务。`,
+Agent 会创建对应的定时任务。也可以在机器人的**定时任务**标签页查看、编辑全部任务。`,
           en: `Just say it in plain language, for example:
 
 - "Send me a morning brief at 9 am every day"
 - "Watch this repo for releases on weekdays"
 - "Tidy my inbox every night"
 
-The agent sets up the schedule for you. You can also review and edit every task in the tasks panel.`,
+The agent sets up the schedule for you. You can also review and edit every task on the bot's **Schedule** tab.`,
         },
       },
       {
@@ -704,14 +730,14 @@ Multiple tasks move in parallel, and for stronger isolation you can create separ
 - "先停掉盯仓库那个任务"
 - "把整理收件箱的任务删了"
 
-也可以在任务面板中手动开关、编辑和删除任意任务。`,
+也可以在**定时任务**标签页手动开关、编辑和删除任意任务。`,
           en: `The fastest way is to just tell the agent:
 
 - "Move the morning brief to 8:30"
 - "Pause the repo watcher for now"
 - "Delete the inbox-cleanup task"
 
-You can also toggle, edit and delete any task by hand in the tasks panel.`,
+You can also toggle, edit and delete any task by hand on the bot's **Schedule** tab.`,
         },
       },
       {
@@ -720,10 +746,10 @@ You can also toggle, edit and delete any task by hand in the tasks panel.`,
         answer: {
           zh: `会 —— 这正是 Memoh 的核心能力之一。你盯的版本发布了、日程即将开始、任务失败需要你拍板时，Agent 会先发消息给你，而不是等你想起来去问。
 
-主动消息的频率与送达渠道都可以在通知设置里调整，嫌吵可以随时收紧。`,
+嫌吵的话，直接告诉它少发点、或只在某个渠道找你即可；背后的定时任务也可以随时暂停。`,
           en: `Yes — it's one of Memoh's core abilities. When a release you're watching ships, a meeting is about to start, or a task fails and needs your call, the agent messages you first instead of waiting to be asked.
 
-How often it reaches out, and through which channel, is up to you in notification settings.`,
+If it gets chatty, just tell it to reach out less or stick to one channel — and any schedule behind it can be paused at any time.`,
         },
       },
     ],
@@ -893,14 +919,14 @@ The page detects your device and recommends the right build automatically.`,
 
 - 系统级通知与全局快捷键；
 - 开机自启，Agent 消息第一时间可达；
-- **本地运行模式**：让智能体工作区完全在你的电脑上本地运行，本地文件与服务留在本机。
+- **这台电脑**：把你正在用的这台机器共享给 Agent，让它在你授权的范围内读写本机文件、执行命令 —— Agent 本体仍运行在云端。
 
 轻度使用选网页版即可，重度使用推荐桌面版。`,
           en: `Core features are identical. The desktop app adds:
 
 - system notifications and global shortcuts;
 - launch at login, so agent messages reach you instantly;
-- **local mode**: run the agent workspace entirely on your own machine, keeping local files and services on-device.
+- **This computer**: share the machine you're on with your agents, so they can read local files and run commands within the access you grant — the agent itself still runs in the cloud.
 
 The web app is fine for light use; for daily work we recommend the desktop app.`,
         },

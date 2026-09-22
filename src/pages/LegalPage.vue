@@ -13,12 +13,14 @@ const router = useRouter()
 const language = computed(() => locale.value === 'zh' ? 'zh' : 'en')
 
 // A shared URL selects a language; the existing site language switch still works.
+// The query carries the SITE locale (en/zh/ja); the document body only exists in
+// zh/en, so `language` maps every other locale to the English text.
 watch(() => route.query.lang, (lang) => {
-  if (lang === 'zh' || lang === 'en') locale.value = lang
+  if (lang === 'zh' || lang === 'en' || lang === 'ja') locale.value = lang
 }, { immediate: true })
 watch(locale, () => {
-  if (route.meta.legal && route.query.lang !== language.value) {
-    void router.replace({ path: route.path, query: { ...route.query, lang: language.value } })
+  if (route.meta.legal && route.query.lang !== locale.value) {
+    void router.replace({ path: route.path, query: { ...route.query, lang: locale.value } })
   }
 })
 

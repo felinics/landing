@@ -123,7 +123,11 @@ for (const [path, raw] of Object.entries(markdownModules)) {
   postsBySlug.set(post.slug, versions)
 }
 
+// Blog markdown only exists in en/zh; other UI locales (e.g. ja) fall back to en content.
 const normalizeLocale = (locale: string): BlogLocale => (locale === 'zh' ? 'zh' : 'en')
+
+// Dates still follow the UI locale even when the post body falls back to English.
+const dateFormatLocales: Record<string, string> = { zh: 'zh-CN', ja: 'ja' }
 
 const pickPost = (slug: string, locale: BlogLocale) => {
   const versions = postsBySlug.get(slug)
@@ -137,7 +141,7 @@ export const formatBlogDate = (dateKey: string, locale: string) => {
   const match = /^(\d{4}-\d{2}-\d{2})$/.exec(dateKey)
   if (!match) return dateKey
 
-  return new Intl.DateTimeFormat(normalizeLocale(locale) === 'zh' ? 'zh-CN' : 'en', {
+  return new Intl.DateTimeFormat(dateFormatLocales[locale] ?? 'en', {
     month: 'short',
     day: 'numeric',
     year: 'numeric',

@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { computed, watchEffect } from 'vue'
+import { useHead } from '@unhead/vue'
 import { useTa } from './composables/useTa'
 import { useThemePreference } from './composables/useTheme'
 import { useRoute } from 'vue-router'
@@ -10,6 +11,13 @@ import EasterEgg from './components/EasterEgg.vue'
 
 const { locale, t } = useI18n()
 const { th } = useTa()
+
+// Keep <html lang> in sync on every route (pages may refine it, LegalPage doesn't).
+useHead({
+  htmlAttrs: {
+    lang: computed(() => locale.value),
+  },
+})
 
 const route = useRoute()
 const { isDark } = useThemePreference()
@@ -154,6 +162,9 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
   padding: 0 32px 32px;
   color: var(--foreground);
   font-family: "Geist", "Noto Sans SC", sans-serif;
+}
+.site-footer:lang(ja) {
+  font-family: "Geist", "Noto Sans JP", sans-serif;
 }
 .footer-main {
   display: grid;

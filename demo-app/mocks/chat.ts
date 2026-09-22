@@ -1,6 +1,7 @@
 import type { ChatWebSocket, WSClientMessage } from '../apps/web/src/composables/api/useChat.ws'
 import type { UIStreamEventHandler, RuntimeCurrentRunView } from '../apps/web/src/composables/api/useChat.types'
 import { conversation, now, user } from './data'
+import { demoLocale } from './locale'
 
 export function connectDemoSocket(botId: string, emit: UIStreamEventHandler): ChatWebSocket {
   let connected=true
@@ -33,8 +34,13 @@ export function connectDemoSocket(botId: string, emit: UIStreamEventHandler): Ch
     const turnId=crypto.randomUUID(),runId=crypto.randomUUID()
     const userTurn={id:`${runId}-user`,turn_id:turnId,turn_position:history.length+1,role:'user' as const,text,timestamp:time,sender_user_id:user.id,sender_display_name:user.display_name}
     history.push(userTurn)
-    const zh=/[\u4e00-\u9fff]/.test(text)
-    const answer=zh
+    // Reply in the language the visitor typed; plain-Latin input falls back to the demo locale.
+    const kana=/[\u3040-\u30ff]/.test(text)
+    const zh=!kana&&/[\u4e00-\u9fff]/.test(text)
+    const lang=kana?'ja':zh?'zh':demoLocale==='ja'?'ja':'en'
+    const answer=lang==='ja'
+      ? '一緒に少しずつ進めましょう。\n\n1. **ゴールをひとつ決める。** いちばん大事な結果から始めます。\n2. **文脈をそろえる。** ノート・出典・ファイルをひとつのワークスペースに。\n3. **今日できる一歩を踏み出す。** 今日中に終わるくらい小さく。\n\nあなたの好みは覚えておきますね。**Settings** からモデル・メモリ・ツール・ワークスペースの設定も試せます。\n\n*これはブラウザー内のデモ返信で、AI サービスは呼び出していません。*'
+      : lang==='zh'
       ? '可以，我们一起把这件事拆成几个清晰的步骤。\n\n1. **明确目标**：先选一个最想完成的结果。\n2. **收集上下文**：把相关笔记和资料放进工作区。\n3. **开始行动**：从一个今天就能完成的小任务开始。\n\n我会记住你的偏好，陪你继续推进。你也可以打开 **Settings**，试试模型、记忆、工具和工作区配置。\n\n*这是浏览器中的演示回复，没有调用 AI 服务。*'
       : "Let's make a little progress together.\n\n1. **Choose a clear outcome.** Start with the thing that matters most to you.\n2. **Bring the context together.** Keep your notes, sources, and files in one workspace.\n3. **Take one useful step.** Make it small enough to finish today.\n\nI'll keep your preferences in mind as we go. You can also explore **Settings** to try models, memory, tools, and workspace configuration.\n\n*This is a browser-only demo reply; no AI service is called.*"
     const run:RuntimeCurrentRunView={run_id:runId,turn_id:turnId,invocation_id:message.invocation_id,generation:runId,status:'running',started_at:time,updated_at:time,request_user_turn:userTurn,messages:[{id:1,type:'text',content:''}]}

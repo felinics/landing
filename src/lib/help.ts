@@ -74,13 +74,8 @@ export const resolveHelpLocale = (locale: string): HelpLocale =>
 // ---------------------------------------------------------------------------
 
 const ui = {
-  badge: { en: 'Help Center', zh: '帮助中心', ja: 'ヘルプセンター' },
-  title: { en: 'How can we help?', zh: '有什么可以帮忙的？', ja: '何かお困りですか？' },
-  subtitle: {
-    en: 'Guides and answers from the Memoh team.',
-    zh: '来自 Memoh 团队的使用指南与常见问题解答。',
-    ja: 'Memoh チームによるガイドとよくある質問。',
-  },
+  title: { en: 'Help Center', zh: '帮助中心', ja: 'ヘルプセンター' },
+  subtitle: { en: 'How can we help?', zh: '有什么可以帮忙的？', ja: '何かお困りですか？' },
   searchPlaceholder: { en: 'Search for articles…', zh: '搜索帮助文章…', ja: '記事を検索…' },
   searchResults: { en: '{n} results for “{q}”', zh: '“{q}” 的 {n} 条结果', ja: '「{q}」の検索結果 {n} 件' },
   searchEmptyTitle: { en: 'No articles found', zh: '没有找到相关文章', ja: '記事が見つかりません' },

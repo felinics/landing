@@ -3,7 +3,7 @@ import { computed, ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import { useSeoMeta } from '@unhead/vue'
 import { useI18n } from 'vue-i18n'
-import { ArrowRight, LifeBuoy, Search, X } from 'lucide-vue-next'
+import { ArrowRight, Search, X } from 'lucide-vue-next'
 import { getHelpCollections, getHelpUi, searchHelpArticles } from '../lib/help'
 import { helpIcons } from '../components/help/helpIcons'
 import HelpContactCard from '../components/help/HelpContactCard.vue'
@@ -29,10 +29,6 @@ useSeoMeta({
 <template>
   <main class="help-static w-full max-w-[1080px] min-h-[calc(100vh-3.5rem)] mx-auto px-4 md:px-8 pt-[112px] md:pt-[148px] pb-[120px] relative z-10">
     <header class="mx-auto flex max-w-[640px] flex-col items-center gap-5 text-center">
-      <div class="inline-flex w-fit items-center gap-2 rounded-md border border-border bg-background px-3 py-1.5 text-xs font-medium text-muted-foreground">
-        <LifeBuoy class="w-3.5 h-3.5" />
-        {{ ui('badge') }}
-      </div>
       <h1 class="text-4xl md:text-5xl font-semibold tracking-tight text-foreground leading-[1.1]">
         {{ ui('title') }}
       </h1>

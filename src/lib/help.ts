@@ -160,9 +160,9 @@ const collections: HelpCollectionSource[] = [
 
 Each agent has:
 
-- **Its own desktop** — it can open a browser and operate apps; you can watch in real time and take over at any moment;
-- **Its own files** — everything it produces stays in its own workspace;
-- **Its own network** — it can browse the web and call external services;
+- **Its own desktop** — it can open a browser and operate apps; you can watch in real time and take over at any moment.
+- **Its own files** — everything it produces stays in its own workspace.
+- **Its own network** — it can browse the web and call external services.
 - **Always on call** — your laptop sleeps, your agent doesn't: tasks keep running without you around.
 
 On top of that, Memoh adds multi-channel access (desktop, Telegram, Discord, WeChat and more), scheduled tasks, proactive messages and long-term memory — so an agent feels like an always-on teammate, not a chat window.`,
@@ -179,7 +179,7 @@ On top of that, Memoh adds multi-channel access (desktop, Telegram, Discord, WeC
 3. 创建你的第一个 Bot，平台会自动为它分配一台云电脑；
 4. 在对话框里直接吩咐任务，比如"帮我做一个阅读清单网页"，或"每天早上 9 点给我发晨间简报"。
 
-桌面版提供系统级通知、全局快捷键，并可把这台电脑共享给 Agent 干活，它主动找你时第一时间就能收到。
+桌面版提供系统级通知与全局快捷键，Agent 主动找你时第一时间就能收到；还可以把这台电脑共享给 Agent，让它直接在本机帮你干活。
 
 ### 其次：网页版
 
@@ -188,12 +188,12 @@ On top of that, Memoh adds multi-channel access (desktop, Telegram, Discord, WeC
 无论从哪个入口开始，之后都可以把 Bot 接入 Telegram、Discord 等渠道，在你习惯的地方随时找到它。`,
           en: `### Recommended: the desktop app
 
-1. Head to the [download page](/download) and install Memoh for your system (macOS, Windows or Linux);
-2. Open the app and sign in; if access is invite-gated at the moment, [join the waitlist](/waitlist) first;
-3. Create your first Bot — the platform provisions a cloud computer for it automatically;
+1. Head to the [download page](/download) and install Memoh for your system (macOS, Windows or Linux).
+2. Open the app and sign in; if access is invite-gated at the moment, [join the waitlist](/waitlist) first.
+3. Create your first Bot — the platform provisions a cloud computer for it automatically.
 4. Just tell it what you need, e.g. "build me a reading-list web page" or "send me a morning brief at 9 am every day".
 
-The desktop app adds system notifications, global shortcuts and the option to share this computer with your agents, so the moment your agent reaches out, you'll know.
+The desktop app adds system notifications and global shortcuts, so the moment your agent reaches out, you'll know. You can also share this computer with your agents and let them work directly on your machine.
 
 ### Alternative: the web app
 
@@ -219,9 +219,9 @@ Whichever way you start, you can then connect the Bot to Telegram, Discord and o
 和 Grok Bot 这类纯对话机器人相比，区别更根本：对话机器人提供的是文本问答能力，而 Memoh 提供的是一台完整的云端电脑 —— 你和 Agent 都可以在里面安装软件、运行程序、处理文件。两者的产品形态和使用方式并不相同。`,
           en: `A regular chat assistant only "exists" while the window is open. A Memoh agent owns an always-running cloud computer, which changes what it can do:
 
-- **It has a computer**: a real desktop, files and network — it opens websites, installs dependencies, runs code and shows you previews instead of just writing text;
-- **It's always on**: it runs in the cloud even when your machine is off, and scheduled tasks fire without you triggering anything;
-- **It takes initiative**: when something important happens, it messages you first;
+- **It has a computer**: a real desktop, files and network — it opens websites, installs dependencies, runs code and shows you previews instead of just writing text.
+- **It's always on**: it runs in the cloud even when your machine is off, and scheduled tasks fire without you triggering anything.
+- **It takes initiative**: when something important happens, it messages you first.
 - **It remembers**: sessions never reset, and memory is shared across every channel.
 
 Compared with pure chatbots like Grok Bot, the difference is even more fundamental: a chatbot offers text Q&A, while Memoh offers a complete cloud computer — you and the agent can install software, run programs and work with files inside it. They are different products in both form and use.`,
@@ -251,7 +251,7 @@ How many Bots you can create, and the compute each one gets, depends on your pla
 - **网页**：[app.memoh.net](https://app.memoh.net)。
 
 所有入口背后是同一个 Agent、同一份记忆 —— 在哪里开口都能接上。`,
-          en: `- **Desktop (recommended)**: macOS (Apple Silicon & Intel), Windows and Linux — see the [download page](/download);
+          en: `- **Desktop (recommended)**: macOS (Apple Silicon & Intel), Windows and Linux — see the [download page](/download).
 - **Web**: [app.memoh.net](https://app.memoh.net).
 
 Every entry point talks to the same agent with the same memory — pick up the conversation from anywhere.`,
@@ -271,9 +271,9 @@ Every entry point talks to the same agent with the same memory — pick up the c
 你可以亲自远程操作这台电脑，也可以把活直接吩咐给 Agent。更多典型场景见[首页](/)的完整介绍，建议先浏览再选择适合自己的套餐。`,
           en: `At its core, Memoh is an always-available cloud computer with an agent living inside. Common uses:
 
-- **Everyday work**: organizing files, writing documents, handling mail and schedules;
-- **Development**: write code in the cloud, run dev servers, preview any time;
-- **Long-running background tasks**: release watching, scheduled briefings, batch fetching and organizing — it keeps going while your machine is off;
+- **Everyday work**: organizing files, writing documents, handling mail and schedules.
+- **Development**: write code in the cloud, run dev servers, preview any time.
+- **Long-running background tasks**: release watching, scheduled briefings, batch fetching and organizing — it keeps going while your machine is off.
 - **Automation and more**: let the agent drive a browser and handle web chores for you.
 
 You can operate the computer remotely yourself, or simply hand work to the agent. See the [home page](/) for a full tour of typical scenarios before picking a plan.`,
@@ -293,9 +293,9 @@ You can operate the computer remotely yourself, or simply hand work to the agent
 如果你只想要一台裸服务器，VPS 依然合适；想要一台"有人住在里面帮你干活"的电脑，选 Memoh。`,
           en: `A bare VPS hands you an empty system — environment, desktop and ops are all on you. Memoh hands you a cloud computer that is **ready out of the box and built for agents**:
 
-- a graphical desktop and browser pre-installed, with one-click packages in the Supermarket;
-- a built-in agent: hand over tasks instead of doing everything by hand;
-- deep integration with messaging channels, scheduled tasks and long-term memory;
+- a graphical desktop and browser pre-installed, with one-click packages in the Supermarket.
+- a built-in agent: hand over tasks instead of doing everything by hand.
+- deep integration with messaging channels, scheduled tasks and long-term memory.
 - zero ops: maintenance, monitoring and scheduling are the platform's job.
 
 If all you want is a bare server, a VPS is still the right tool. If you want a computer with someone living in it, working for you — that's Memoh.`,
@@ -308,11 +308,11 @@ If all you want is a bare server, a VPS is still the right tool. If you want a c
           zh: `- **第三方账号**：在应用市场中通过 **Connector** 授权（如 GitHub），Agent 即可访问你已有的仓库、Issue 等数据 —— 按服务独立授权，可随时撤销；
 - **自带 Agent 订阅**：Claude Code、Codex 等可登录你自己的账号，沿用已有订阅；
 - **文件**：在会话中直接上传给 Agent，或让它从网盘、仓库等来源自行拉取，之后保存在它的工作区里；
-- **聊天账号**：在机器人的**平台**标签页绑定你已有的 Telegram、微信、飞书等账号。`,
-          en: `- **Third-party accounts**: authorize **Connectors** in the Supermarket (GitHub and more) so the agent can work with your existing repos and issues — per-service and revocable at any time;
-- **Your agent subscriptions**: Claude Code, Codex and other BYO agents sign in with your own accounts;
-- **Files**: upload them in a conversation, or have the agent fetch from drives and repos itself — everything lands in its workspace;
-- **Chat accounts**: bind your existing Telegram, WeChat or Feishu accounts on the bot's **Platforms** tab.`,
+- **聊天账号**：在 Bot 的**平台**标签页绑定你已有的 Telegram、微信、飞书等账号。`,
+          en: `- **Third-party accounts**: authorize **Connectors** in the Supermarket (GitHub and more) so the agent can work with your existing repos and issues — per-service and revocable at any time.
+- **Your agent subscriptions**: Claude Code, Codex and other BYO agents sign in with your own accounts.
+- **Files**: upload them in a conversation, or have the agent fetch from drives and repos itself — everything lands in its workspace.
+- **Chat accounts**: bind your existing Telegram, WeChat or Feishu accounts on the Bot's **Platforms** tab.`,
         },
       },
     ],
@@ -340,9 +340,9 @@ If all you want is a bare server, a VPS is still the right tool. If you want a c
 CPU 核数与内存等规格由你的订阅计划决定，详见[定价](/#pricing)。`,
           en: `Every Bot runs on an isolated cloud computer with:
 
-- **A graphical desktop**: a browser is pre-installed, and the agent operates apps the way a person would;
-- **Its own file system**: code, documents and deliverables live in the workspace;
-- **Network access**: fetching pages and calling external services;
+- **A graphical desktop**: a browser is pre-installed, and the agent operates apps the way a person would.
+- **Its own file system**: code, documents and deliverables live in the workspace.
+- **Network access**: fetching pages and calling external services.
 - **Installable runtimes**: Node.js, Python, uv and more, one click away in the Supermarket.
 
 CPU cores and memory depend on your plan — see [pricing](/#pricing).`,
@@ -373,8 +373,8 @@ When a human touch is needed (a login challenge, double-checking a critical step
 Agent 在执行任务时也可以自己按需安装依赖，安装过程你都能在桌面视图里看到。`,
           en: `Open the **Supermarket**. Everything is hosted on the cloud computer, ready for the agent to use:
 
-- **Packages**: runtimes like Node.js, Python and uv — pick a Bot and click "Install to Bot";
-- **Connectors**: hook up external services such as GitHub, each authorized separately;
+- **Packages**: runtimes like Node.js, Python and uv — pick a Bot and click "Install to Bot".
+- **Connectors**: hook up external services such as GitHub, each authorized separately.
 - **Agent Skills**: add domain-specific abilities to your agent.
 
 Agents can also install dependencies themselves mid-task, and you can watch it happen in the desktop view.`,
@@ -410,9 +410,9 @@ You can upload files to the agent directly, and ask it to organize, archive and 
 
 In practice:
 
-1. Upgrade to a higher tier (Go → Pro → Premium) under **Settings → Subscription**;
-2. Upgrades take effect **immediately**, prorated for the rest of the billing cycle;
-3. Once active, the Bot's cloud computer picks up the new specs automatically — files, dependencies, sessions and memory all stay in place, **no migration or rebuild needed**;
+1. Upgrade to a higher tier (Go → Pro → Premium) under **Settings → Subscription**.
+2. Upgrades take effect **immediately**, prorated for the rest of the billing cycle.
+3. Once active, the Bot's cloud computer picks up the new specs automatically — files, dependencies, sessions and memory all stay in place, **no migration or rebuild needed**.
 4. Higher tiers also come with a larger monthly credits allowance.
 
 See the [pricing page](/#pricing) for a spec-by-spec comparison. Per-resource add-ons and per-Bot upgrades aren't available yet; if your workload outgrows the top tier, contact [support@memoh.net](mailto:support@memoh.net) to talk options.`,
@@ -505,7 +505,7 @@ All agents share the same cloud computer and the same workspace files — switch
 安装后都托管在云电脑里，Agent 需要时直接调用。`,
           en: `Both live in the Supermarket, with different jobs:
 
-- A **Connector** links an external service. The GitHub Connector, for instance, lets the agent work with your repos, issues and pull requests. Each Connector is authorized individually and can be revoked at any time;
+- A **Connector** links an external service. The GitHub Connector, for instance, lets the agent work with your repos, issues and pull requests. Each Connector is authorized individually and can be revoked at any time.
 - An **Agent Skill** teaches the agent how to do something — packaged workflows and domain know-how.
 
 Once installed, both are hosted on the cloud computer for the agent to use whenever needed.`,
@@ -535,8 +535,8 @@ Once installed, both are hosted on the cloud computer for the agent to use whene
 一个 Agent 可以同时接入多个渠道，对话与记忆完全同步。`,
           en: `Besides the built-in web and desktop chat, Memoh connects to the following platforms:
 
-- **Social & collaboration**: Telegram, Discord, Slack, LINE;
-- **China-based platforms**: WeChat, WeChat Official Account, WeCom, QQ, Feishu, DingTalk;
+- **Social & collaboration**: Telegram, Discord, Slack, LINE.
+- **China-based platforms**: WeChat, WeChat Official Account, WeCom, QQ, Feishu, DingTalk.
 - **Open protocols & communities**: Matrix, Misskey.
 
 One agent can be connected to several channels at once, with conversations and memory fully in sync.`,
@@ -558,10 +558,10 @@ Reminders, quick tasks and questions all work in chat — say "remind me to pick
         id: 'connect-discord',
         question: { en: 'How do I connect Memoh to Discord?', zh: '如何把 Memoh 接入 Discord？' },
         answer: {
-          zh: `在**平台 → Discord** 中完成授权，并把机器人邀请进你的服务器。
+          zh: `在**平台 → Discord** 中完成授权，并把 Bot 邀请进你的服务器。
 
 在频道里 **@ 它**即可对话，比如让它总结今天频道里聊了什么；私信也同样可用。`,
-          en: `Authorize under **Platforms → Discord** and invite the bot into your server.
+          en: `Authorize under **Platforms → Discord** and invite the Bot into your server.
 
 **@mention** it in any channel to talk — for example, ask it to summarize what was discussed today. Direct messages work too.`,
         },
@@ -580,7 +580,7 @@ Reminders, quick tasks and questions all work in chat — say "remind me to pick
 
 The WeChat ecosystem also offers two business-oriented options, configured as separate channels:
 
-- **WeChat Official Account**: fill in the AppID, AppSecret and server-config Token from the Official Account platform;
+- **WeChat Official Account**: fill in the AppID, AppSecret and server-config Token from the Official Account platform.
 - **WeCom**: fill in the smart bot's BotID and Secret.`,
         },
       },
@@ -593,8 +593,8 @@ The WeChat ecosystem also offers two business-oriented options, configured as se
 3. 默认通过**长连接（WebSocket）**接收消息，无需公网回调地址，保存后在飞书里单聊或群里 @ 它即可。
 
 使用国际版 Lark 时把区域切换为 **Lark**；如需改用 Webhook 回调模式，再补充 Encrypt Key 与 Verification Token。`,
-          en: `1. Create a custom app on the [Feishu open platform](https://open.feishu.cn) and enable its bot capability;
-2. Fill the app's **App ID** and **App Secret** into Memoh under **Platforms → Feishu**;
+          en: `1. Create a custom app on the [Feishu open platform](https://open.feishu.cn) and enable its bot capability.
+2. Fill the app's **App ID** and **App Secret** into Memoh under **Platforms → Feishu**.
 3. Messages arrive over a **WebSocket long connection** by default — no public callback URL needed. Save, then DM it or @mention it in any Feishu group.
 
 Using international Lark? Switch the region to **Lark**. To use webhook mode instead, also provide the Encrypt Key and Verification Token.`,
@@ -607,8 +607,8 @@ Using international Lark? Switch the region to **Lark**. To use webhook mode ins
           zh: `1. 在[钉钉开放平台](https://open.dingtalk.com)创建企业内部应用，添加机器人能力；
 2. 把应用的 **AppKey** 和 **AppSecret** 填入 Memoh 的**平台 → 钉钉**；
 3. Memoh 通过钉钉的 **Stream 模式**接收消息，无需配置公网回调地址，保存后在钉钉里单聊或群里 @ 它即可对话。`,
-          en: `1. Create an internal app on the [DingTalk open platform](https://open.dingtalk.com) and add the bot capability;
-2. Fill the app's **AppKey** and **AppSecret** into Memoh under **Platforms → DingTalk**;
+          en: `1. Create an internal app on the [DingTalk open platform](https://open.dingtalk.com) and add the bot capability.
+2. Fill the app's **AppKey** and **AppSecret** into Memoh under **Platforms → DingTalk**.
 3. Memoh receives messages via DingTalk **Stream mode** — no public callback URL to configure. Save, then chat with it directly or @mention it in a group.`,
         },
       },
@@ -618,12 +618,12 @@ Using international Lark? Switch the region to **Lark**. To use webhook mode ins
         answer: {
           zh: `1. 在 [api.slack.com/apps](https://api.slack.com/apps) 创建应用，开启 **Socket Mode** 并生成 App-Level Token（\`xapp-\` 开头）；
 2. 在 OAuth & Permissions 中把应用安装到工作区，获取 **Bot Token**（\`xoxb-\` 开头）；
-3. 把两个 Token 填入 Memoh 的**平台 → Slack**，保存后把机器人拉进频道，@ 它即可对话。
+3. 把两个 Token 填入 Memoh 的**平台 → Slack**，保存后把 Bot 拉进频道，@ 它即可对话。
 
 Socket Mode 下同样无需公网回调地址。`,
-          en: `1. Create an app at [api.slack.com/apps](https://api.slack.com/apps), enable **Socket Mode** and generate an App-Level Token (starts with \`xapp-\`);
-2. Install the app to your workspace under OAuth & Permissions and grab the **Bot Token** (starts with \`xoxb-\`);
-3. Fill both tokens into Memoh under **Platforms → Slack**, save, invite the bot to a channel and @mention it.
+          en: `1. Create an app at [api.slack.com/apps](https://api.slack.com/apps), enable **Socket Mode** and generate an App-Level Token (starts with \`xapp-\`).
+2. Install the app to your workspace under OAuth & Permissions and grab the **Bot Token** (starts with \`xoxb-\`).
+3. Fill both tokens into Memoh under **Platforms → Slack**, save, invite the Bot to a channel and @mention it.
 
 Socket Mode means no public callback URL here either.`,
         },
@@ -635,7 +635,7 @@ Socket Mode means no public callback URL here either.`,
           zh: 'QQ、LINE、Matrix、Misskey 如何接入？',
         },
         answer: {
-          zh: `这些渠道同样在机器人的**平台**标签页中添加，填入对应平台的凭据即可：
+          zh: `这些渠道同样在 Bot 的**平台**标签页中添加，填入对应平台的凭据即可：
 
 - **QQ**：QQ 开放平台机器人的 AppID 与 ClientSecret；
 - **LINE**：LINE Developers 的 Channel Secret 与 Channel Access Token，并按提示配置 Webhook 地址；
@@ -643,11 +643,11 @@ Socket Mode means no public callback URL here either.`,
 - **Misskey**：实例地址与 Access Token。
 
 每个渠道都可以独立启用或停用，互不影响。`,
-          en: `These channels are added the same way on the bot's **Platforms** tab — fill in each platform's credentials:
+          en: `These channels are added the same way on the Bot's **Platforms** tab — fill in each platform's credentials:
 
-- **QQ**: the AppID and ClientSecret of your QQ open-platform bot;
-- **LINE**: the Channel Secret and Channel Access Token from LINE Developers, plus the webhook URL as prompted;
-- **Matrix**: your homeserver URL, the account's Access Token and User ID;
+- **QQ**: the AppID and ClientSecret of your QQ open-platform bot.
+- **LINE**: the Channel Secret and Channel Access Token from LINE Developers, plus the webhook URL as prompted.
+- **Matrix**: your homeserver URL, the account's Access Token and User ID.
 - **Misskey**: the instance URL and an Access Token.
 
 Each channel can be enabled or disabled independently.`,
@@ -686,14 +686,14 @@ Ask for something on Telegram, then open the desktop app to check progress and k
 - "工作日盯着这个仓库的发版"
 - "每天睡前帮我整理收件箱"
 
-Agent 会创建对应的定时任务。也可以在机器人的**定时任务**标签页查看、编辑全部任务。`,
+Agent 会创建对应的定时任务。也可以在 Bot 的**定时任务**标签页查看、编辑全部任务。`,
           en: `Just say it in plain language, for example:
 
 - "Send me a morning brief at 9 am every day"
 - "Watch this repo for releases on weekdays"
 - "Tidy my inbox every night"
 
-The agent sets up the schedule for you. You can also review and edit every task on the bot's **Schedule** tab.`,
+The agent sets up the schedule for you. You can also review and edit every task on the Bot's **Schedule** tab.`,
         },
       },
       {
@@ -737,7 +737,7 @@ Multiple tasks move in parallel, and for stronger isolation you can create separ
 - "Pause the repo watcher for now"
 - "Delete the inbox-cleanup task"
 
-You can also toggle, edit and delete any task by hand on the bot's **Schedule** tab.`,
+You can also toggle, edit and delete any task by hand on the Bot's **Schedule** tab.`,
         },
       },
       {
@@ -776,8 +776,8 @@ If it gets chatty, just tell it to reach out less or stick to one channel — an
 订阅同时包含 **token 额度（credits）**与**云电脑资源**：各档位对应不同的 CPU 核数、内存、存储空间与每月 credits 额度，最新规格与价格见[定价页](/#pricing)。`,
           en: `Memoh comes in three plans:
 
-- **Go**: start with everyday conversations and light tasks;
-- **Pro**: built for daily work and always-running agents;
+- **Go**: start with everyday conversations and light tasks.
+- **Pro**: built for daily work and always-running agents.
 - **Premium**: more compute and space for heavier workloads.
 
 Every subscription bundles **token allowance (credits)** with **cloud-computer resources**: tiers differ in CPU cores, memory, storage and monthly credits — see the [pricing page](/#pricing) for current specs and prices.`,
@@ -799,11 +799,11 @@ Every subscription bundles **token allowance (credits)** with **cloud-computer r
 所以低价不等于低质量 —— 服务稳定性与数据安全始终是优先事项；入门价位是长期定位，不是短期补贴换量。`,
           en: `The low price comes from architecture, not subsidies:
 
-- **Resource pooling and elastic scheduling**: server capacity is reused across users and off-peak hours, cutting idle waste to a minimum;
-- **our own data-center capacity** plus automated operations keep marginal costs low;
-- the entry tier (Go) stays sustainable through careful scheduling, while higher tiers carry a healthy margin.
+- **Resource pooling and elastic scheduling** — server capacity is reused across users and off-peak hours, cutting idle waste to a minimum.
+- **Our own data centers and automated operations** — marginal costs stay low.
+- **A sustainable entry tier** — Go holds up through careful scheduling, while higher tiers carry a healthy margin.
 
-So cheap doesn't mean low quality — stability and data safety remain first priorities, and the entry price is a long-term position, not a short-term land grab.`,
+So cheap doesn't mean low quality — stability and data safety remain first priorities, and the entry price is a long-term position, not a short-term subsidy play.`,
         },
       },
       {
@@ -837,8 +837,8 @@ Actual consumption is converted at each model's pricing — see your billing pag
 
 You can:
 
-- wait for the allowance to refresh next billing cycle;
-- upgrade to a higher tier for more credits;
+- wait for the allowance to refresh next billing cycle.
+- upgrade to a higher tier for more credits.
 - switch to a bring-your-own agent (which doesn't consume credits) and keep going.`,
         },
       },
@@ -854,7 +854,7 @@ You can:
 取消后你的数据会按[隐私政策](/legal/privacy)中的保留策略处理。`,
           en: `Change or cancel your plan any time under **Settings → Subscription**:
 
-- **Upgrades** take effect immediately, prorated for the rest of the cycle;
+- **Upgrades** take effect immediately, prorated for the rest of the cycle.
 - **Downgrades and cancellations** apply at the end of the current billing cycle, with service unaffected until then.
 
 After cancellation, your data is handled per the retention terms in the [privacy policy](/legal/privacy).`,
@@ -867,8 +867,8 @@ After cancellation, your data is handled per the retention terms in the [privacy
           zh: `- **支付方式**：订阅通过 **Stripe** 支付，支持主流信用卡与借记卡；暂不支持加密货币支付；
 - **续费**：订阅按计费周期**自动扣款**；可随时在 **设置 → 订阅** 中取消，取消于当期结束时生效；
 - **年付**：年付方案正在准备中，近期推出，目前先提供月付。`,
-          en: `- **Payment**: subscriptions are billed through **Stripe**, covering major credit and debit cards; cryptocurrency payments are not supported yet;
-- **Renewal**: plans renew by **automatic charge** each billing cycle; cancel any time under **Settings → Subscription** and it takes effect at the end of the current period;
+          en: `- **Payment**: subscriptions are billed through **Stripe**, covering major credit and debit cards; cryptocurrency payments are not supported yet.
+- **Renewal**: plans renew by **automatic charge** each billing cycle; cancel any time under **Settings → Subscription** and it takes effect at the end of the current period.
 - **Annual plans**: in the works and coming soon — monthly billing is what's offered today.`,
         },
       },
@@ -908,8 +908,8 @@ For corporate invoicing, consolidated billing or other business needs, contact [
 页面会自动检测你的设备并推荐合适的版本。`,
           en: `Head to the [download page](/download) and pick the build for your system:
 
-- **macOS**: Apple Silicon or Intel (.dmg);
-- **Windows**: x64 installer;
+- **macOS**: Apple Silicon or Intel (.dmg).
+- **Windows**: x64 installer.
 - **Linux**: .deb, AppImage or .rpm.
 
 The page detects your device and recommends the right build automatically.`,
@@ -928,8 +928,8 @@ The page detects your device and recommends the right build automatically.`,
 轻度使用选网页版即可，重度使用推荐桌面版。`,
           en: `Core features are identical. The desktop app adds:
 
-- system notifications and global shortcuts;
-- launch at login, so agent messages reach you instantly;
+- system notifications and global shortcuts.
+- launch at login, so agent messages reach you instantly.
 - **This computer**: share the machine you're on with your agents, so they can read local files and run commands within the access you grant — the agent itself still runs in the cloud.
 
 The web app is fine for light use; for daily work we recommend the desktop app.`,
@@ -956,8 +956,8 @@ Your current version is shown under "About Memoh" in the app.`,
 - **主流 Linux 发行版**：Debian/Ubuntu 用 .deb，Fedora 用 .rpm，其他发行版可用 AppImage。
 
 Agent 本体运行在云端，桌面应用本身很轻，对本机配置几乎没有要求；只有开启"这台电脑"共享时，Agent 才会在你授权的范围内使用本机资源。`,
-          en: `- **macOS** 12 or later (Apple Silicon & Intel);
-- **Windows** 10 or later (x64);
+          en: `- **macOS** 12 or later (Apple Silicon & Intel).
+- **Windows** 10 or later (x64).
 - **Mainstream Linux distros**: .deb for Debian/Ubuntu, .rpm for Fedora, AppImage for everything else.
 
 Agents run in the cloud and the desktop app itself is lightweight, so hardware requirements are minimal; local resources are only used when you enable "This computer" sharing, within the access you grant.`,
@@ -1011,8 +1011,8 @@ An agent can only operate its own cloud computer; it has no access to any other 
 平台会持续监控异常流量与资源占用；一经发现违规，将视情节限制功能、暂停或终止服务，且不予退款。详见[服务协议](/legal/terms)。`,
           en: `The cloud computer must be used lawfully. The following are explicitly prohibited:
 
-- running proxies / VPNs or other tunneling services;
-- hosting long-lived public-facing services (e.g. a public Minecraft server);
+- running proxies / VPNs or other tunneling services.
+- hosting long-lived public-facing services (e.g. a public Minecraft server).
 - spam, crypto mining, and any other illegal or abusive use.
 
 The platform continuously monitors abnormal traffic and resource usage; violations lead to feature limits, suspension or termination — without refund — depending on severity. See the [Terms of Service](/legal/terms).`,
@@ -1031,8 +1031,8 @@ The platform continuously monitors abnormal traffic and resource usage; violatio
 撤销后 Agent 立即失去对该服务的访问能力。`,
           en: `Connectors use each service's official authorization flow (e.g. OAuth):
 
-- authorized **per service**, never bundled;
-- requesting only the minimum scopes needed for the job;
+- authorized **per service**, never bundled.
+- requesting only the minimum scopes needed for the job.
 - credentials stored encrypted, and **revocable in the Supermarket at any time**.
 
 Once revoked, the agent immediately loses access to that service.`,
@@ -1046,7 +1046,7 @@ Once revoked, the agent immediately loses access to that service.`,
 - **删除账户**：在 **设置 → 账户** 中发起，或联系 [support@memoh.net](mailto:support@memoh.net)。
 
 数据保留与删除的具体时限见[隐私政策](/legal/privacy)。`,
-          en: `- **Deleting a Bot** destroys its cloud computer, files and memory together;
+          en: `- **Deleting a Bot** destroys its cloud computer, files and memory together.
 - **Deleting your account** can be initiated under **Settings → Account**, or by contacting [support@memoh.net](mailto:support@memoh.net).
 
 Exact retention and deletion timelines are described in the [privacy policy](/legal/privacy).`,

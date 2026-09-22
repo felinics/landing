@@ -57,8 +57,10 @@ npm run dev
 
 ### 套餐入口联调
 
-Pricing 的按钮跳转到 Cloud `/plans?plan=<code>`，当前官网使用 `go`、`pro`、`premium`。
-这些值必须与 Cloud 默认 storefront 的 `code` 一致；实际购买价格与资格由 Cloud 目录决定。
+Pricing 的按钮跳转到 Cloud `/plans?plan=<code>`，当前官网使用 `go-monthly`、`pro-monthly`、`premium-monthly`。
+`<code>` 是 Cloud **定价卡**（管理台 → 订阅运营 → 定价页展示）的 code，不是套餐名或售卖方案名；
+套餐页按它精确匹配，对不上会显示“此套餐暂不可用”。运营改卡名或新增年付卡时，必须同一批次更新这里的值。
+实际购买价格与资格由 Cloud 目录决定。
 Cloud 应先上线对 `plan` 的支持，再上线官网链接。
 
 默认目标为 `https://app.memoh.net`。本地联调可指定 Cloud 前端地址：

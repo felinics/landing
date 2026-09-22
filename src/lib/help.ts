@@ -153,7 +153,7 @@ const collections: HelpCollectionSource[] = [
 - **独立桌面** —— 可以打开浏览器、操作应用；你能实时旁观，也能随时接管；
 - **独立文件** —— 工作产出、代码和资料都留在它自己的工作区里；
 - **独立网络** —— 可以访问网页、调用外部服务；
-- **24 × 7 持续运行** —— 你的电脑关了，它还在云端继续工作。
+- **随时待命** —— 你的电脑关了，它还在云端，任务照样跑。
 
 在此之上，Memoh 提供多渠道接入（桌面端、Telegram、Discord、微信等）、定时任务、主动消息和长期记忆，让 Agent 更像一位一直在线的同事，而不只是一个聊天窗口。`,
           en: `Memoh is a cloud-first multi-agent platform. The simplest way to think about it: **every AI agent gets a real computer in the cloud**.
@@ -163,7 +163,7 @@ Each agent has:
 - **Its own desktop** — it can open a browser and operate apps; you can watch in real time and take over at any moment;
 - **Its own files** — everything it produces stays in its own workspace;
 - **Its own network** — it can browse the web and call external services;
-- **24 × 7 uptime** — your laptop sleeps, your agent doesn't.
+- **Always on call** — your laptop sleeps, your agent doesn't: tasks keep running without you around.
 
 On top of that, Memoh adds multi-channel access (desktop, Telegram, Discord, WeChat and more), scheduled tasks, proactive messages and long-term memory — so an agent feels like an always-on teammate, not a chat window.`,
         },
@@ -265,7 +265,7 @@ Every entry point talks to the same agent with the same memory — pick up the c
 
 - **日常办公**：整理文件、写文档、处理邮件与日程；
 - **开发**：在云端写代码、跑开发服务器、随时预览；
-- **长期挂机任务**：盯发版、定时简报、批量抓取与整理 —— 你的电脑关了它也在跑；
+- **长期后台任务**：盯发版、定时简报、批量抓取与整理 —— 你的电脑关了它也在跑；
 - **自动化等更多场景**：让 Agent 操作浏览器，替你完成网页上的事。
 
 你可以亲自远程操作这台电脑，也可以把活直接吩咐给 Agent。更多典型场景见[首页](/)的完整介绍，建议先浏览再选择适合自己的套餐。`,
@@ -808,14 +808,18 @@ So cheap doesn't mean low quality — stability and data safety remain first pri
       },
       {
         id: 'what-are-credits',
-        question: { en: 'What are credits and how are they used?', zh: '什么是 credits？如何计算？' },
+        question: { en: 'What are credits?', zh: '什么是 credits？' },
         answer: {
           zh: `credits 是使用 **Memoh 提供的模型**时消耗的 Token 额度，按订阅计划每月发放、每月刷新。
 
-如果你自带 Agent 订阅（如 Claude Code、Codex），模型调用走你自己的账号，**不消耗 credits**；云电脑的 CPU、内存等算力则始终由计划规格决定。`,
+如果你自带 Agent 订阅（如 Claude Code、Codex），模型调用走你自己的账号，**不消耗 credits**；云电脑的 CPU、内存等算力则始终由计划规格决定。
+
+实际消耗按所用模型的价格折算，可以在账单页查看明细。`,
           en: `Credits are the token allowance consumed when you use **models provided by Memoh**. They're granted monthly with your plan and refresh every cycle.
 
-If you bring your own agent subscription (Claude Code, Codex, …), model calls go through your own account and **don't consume credits**. The cloud computer's CPU and memory always come from your plan's specs.`,
+If you bring your own agent subscription (Claude Code, Codex, …), model calls go through your own account and **don't consume credits**. The cloud computer's CPU and memory always come from your plan's specs.
+
+Actual consumption is converted at each model's pricing — see your billing page for the details.`,
         },
       },
       {
@@ -951,12 +955,12 @@ Your current version is shown under "About Memoh" in the app.`,
 - **Windows** 10 及以上（x64）；
 - **主流 Linux 发行版**：Debian/Ubuntu 用 .deb，Fedora 用 .rpm，其他发行版可用 AppImage。
 
-Agent 本体运行在云端，桌面应用只负责界面与通知，对本机配置几乎没有要求。`,
+Agent 本体运行在云端，桌面应用本身很轻，对本机配置几乎没有要求；只有开启"这台电脑"共享时，Agent 才会在你授权的范围内使用本机资源。`,
           en: `- **macOS** 12 or later (Apple Silicon & Intel);
 - **Windows** 10 or later (x64);
 - **Mainstream Linux distros**: .deb for Debian/Ubuntu, .rpm for Fedora, AppImage for everything else.
 
-Agents run in the cloud — the desktop app only handles UI and notifications, so hardware requirements are minimal.`,
+Agents run in the cloud and the desktop app itself is lightweight, so hardware requirements are minimal; local resources are only used when you enable "This computer" sharing, within the access you grant.`,
         },
       },
     ],

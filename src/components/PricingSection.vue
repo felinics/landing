@@ -6,13 +6,6 @@ import './pricing/cloud-pricing.css'
 import './pricing/fonts.css'
 
 const { t } = useI18n()
-const getStarted = () => window.location.assign('https://app.memoh.net')
-const plans = computed(() => [
-  { name: 'Go', price: 5, credits: 2500, tagline: t('pricing.go.tagline'), cpu: 8, ram: 16, disk: 40, members: 1 },
-  { name: 'Pro', price: 60, credits: 30000, tagline: t('pricing.pro.tagline'), cpu: 16, ram: 32, disk: 120, members: 3 },
-  { name: 'Premium', price: 150, credits: 75000, tagline: t('pricing.premium.tagline'), cpu: 32, ram: 64, disk: 300, members: 8 },
-const { locale } = useI18n()
-const zh = computed(() => locale.value === 'zh')
 const appOrigin = import.meta.env.VITE_MEMOH_APP_URL || 'https://app.memoh.net'
 function getStarted(plan: string) {
   const url = new URL('/plans', appOrigin)
@@ -23,9 +16,9 @@ function getStarted(plan: string) {
 // not the plan name: Cloud's /plans?plan= matches it exactly and shows "此套餐暂不可用"
 // on a miss. Renaming a card in Cloud means updating these values in the same release.
 const plans = computed(() => [
-  { code: 'go-monthly', name: 'Go', price: 5, credits: 2500, tagline: zh.value ? '从日常对话和轻量任务开始。' : 'For everyday conversations and lighter tasks.', cpu: 8, ram: 16, disk: 40, members: 1 },
-  { code: 'pro-monthly', name: 'Pro', price: 60, credits: 30000, tagline: zh.value ? '为日常工作和持续运行的 Agent 准备。' : 'For daily work and always-ready agents.', cpu: 16, ram: 32, disk: 120, members: 3 },
-  { code: 'premium-monthly', name: 'Premium', price: 150, credits: 75000, tagline: zh.value ? '为更复杂的任务提供更多算力和空间。' : 'More compute and room for demanding work.', cpu: 32, ram: 64, disk: 300, members: 8 },
+  { code: 'go-monthly', name: 'Go', price: 5, credits: 2500, tagline: t('pricing.go.tagline'), cpu: 8, ram: 16, disk: 40, members: 1 },
+  { code: 'pro-monthly', name: 'Pro', price: 60, credits: 30000, tagline: t('pricing.pro.tagline'), cpu: 16, ram: 32, disk: 120, members: 3 },
+  { code: 'premium-monthly', name: 'Premium', price: 150, credits: 75000, tagline: t('pricing.premium.tagline'), cpu: 32, ram: 64, disk: 300, members: 8 },
 ].map(plan => ({ ...plan, features: [
   { text: t('pricing.features.cpu', { n: plan.cpu }), emphasis: true },
   { text: t('pricing.features.ram', { n: plan.ram }), emphasis: true },
@@ -60,10 +53,6 @@ const plans = computed(() => [
             :highlight-label="t('pricing.recommended')"
             :current-label="t('pricing.currentPlan')"
             :cta-label="t('pricing.cta')"
-            @select="getStarted"
-            :highlight-label="zh ? '推荐' : 'Recommended'"
-            :current-label="zh ? '当前套餐' : 'Current plan'"
-            cta-label="Get Started"
             @select="getStarted(plan.code)"
           />
         </div>

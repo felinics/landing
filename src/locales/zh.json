@@ -195,7 +195,7 @@
     }
   },
   "pricing": {
-    "title": "Pricing",
+    "title": "定价",
     "go": { "tagline": "从日常对话和轻量任务开始。" },
     "pro": { "tagline": "为日常工作和持续运行的 Agent 准备。" },
     "premium": { "tagline": "为更复杂的任务提供更多算力和空间。" },
@@ -212,7 +212,7 @@
     "perMonth": "/ 月",
     "recommended": "推荐",
     "currentPlan": "当前套餐",
-    "cta": "Get Started"
+    "cta": "立即开始"
   },
   "cta_bottom": {
     "title": "试试 Memoh",

@@ -11,6 +11,10 @@ const plans = computed(() => [
   { name: 'Go', price: 5, credits: 2500, tagline: t('pricing.go.tagline'), cpu: 8, ram: 16, disk: 40, members: 1 },
   { name: 'Pro', price: 60, credits: 30000, tagline: t('pricing.pro.tagline'), cpu: 16, ram: 32, disk: 120, members: 3 },
   { name: 'Premium', price: 150, credits: 75000, tagline: t('pricing.premium.tagline'), cpu: 32, ram: 64, disk: 300, members: 8 },
+const plans = computed(() => [
+  { name: 'Go', price: 5, credits: 2500, tagline: t('pricing.go.tagline'), cpu: 8, ram: 16, disk: 40, members: 1 },
+  { name: 'Pro', price: 60, credits: 30000, tagline: t('pricing.pro.tagline'), cpu: 16, ram: 32, disk: 120, members: 3 },
+  { name: 'Premium', price: 150, credits: 75000, tagline: t('pricing.premium.tagline'), cpu: 32, ram: 64, disk: 300, members: 8 },
 const { locale } = useI18n()
 const zh = computed(() => locale.value === 'zh')
 const appOrigin = import.meta.env.VITE_MEMOH_APP_URL || 'https://app.memoh.net'
@@ -61,10 +65,6 @@ const plans = computed(() => [
             :current-label="t('pricing.currentPlan')"
             :cta-label="t('pricing.cta')"
             @select="getStarted"
-            :highlight-label="zh ? '推荐' : 'Recommended'"
-            :current-label="zh ? '当前套餐' : 'Current plan'"
-            cta-label="Get Started"
-            @select="getStarted(plan.code)"
           />
         </div>
       </div>

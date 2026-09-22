@@ -8,7 +8,6 @@ const NotFoundPage = () => import('./pages/NotFoundPage.vue')
 const LegalPage = () => import('./pages/LegalPage.vue')
 const HelpPage = () => import('./pages/HelpPage.vue')
 const HelpCollectionPage = () => import('./pages/HelpCollectionPage.vue')
-const HelpArticlePage = () => import('./pages/HelpArticlePage.vue')
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -27,7 +26,14 @@ export const router = createRouter({
     { path: '/blogs/:slug', name: 'blog-post', component: BlogsPage },
     { path: '/help', name: 'help', component: HelpPage },
     { path: '/help/:collectionId', name: 'help-collection', component: HelpCollectionPage },
-    { path: '/help/:collectionId/:articleId', name: 'help-article', component: HelpArticlePage },
+    // Answers expand in place on the collection page; keep old article URLs alive.
+    {
+      path: '/help/:collectionId/:articleId',
+      redirect: (to) => ({
+        path: `/help/${String(to.params.collectionId)}`,
+        hash: `#${String(to.params.articleId)}`,
+      }),
+    },
     { path: '/legal', redirect: '/legal/terms' },
     { path: '/legal/terms', name: 'legal-terms', component: LegalPage, props: { documentKey: 'terms' }, meta: { legal: true } },
     { path: '/legal/privacy', name: 'legal-privacy', component: LegalPage, props: { documentKey: 'privacy' }, meta: { legal: true } },

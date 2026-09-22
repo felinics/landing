@@ -92,6 +92,7 @@ const ui = {
   breadcrumbRoot: { en: 'Help Center', zh: '帮助中心' },
   collectionsTitle: { en: 'Browse by topic', zh: '按主题浏览' },
   relatedTitle: { en: 'Related articles', zh: '相关文章' },
+  loadingAnswer: { en: 'Loading…', zh: '正在加载…' },
   moreCollections: { en: 'Browse other topics', zh: '浏览其他主题' },
   contactTitle: { en: 'Can’t find what you need?', zh: '没有找到答案？' },
   contactDesc: {
@@ -214,17 +215,13 @@ Whichever way you start, you can then connect the Bot to Telegram, Discord and o
 - **有电脑**：它有真实的桌面、文件和网络，能实际打开网站、安装依赖、运行代码、给你预览，而不只是输出文字；
 - **一直在**：跑在云端，你的电脑关了它也在；定时任务和周期自检不需要你去触发；
 - **会主动**：有重要的事，它会先发消息给你；
-- **记得住**：会话不清零，记忆跨渠道共享，随时接着上次聊的继续。
-
-和 Grok Bot 这类纯对话机器人相比，区别更根本：对话机器人提供的是文本问答能力，而 Memoh 提供的是一台完整的云端电脑 —— 你和 Agent 都可以在里面安装软件、运行程序、处理文件。两者的产品形态和使用方式并不相同。`,
+- **记得住**：会话不清零，记忆跨渠道共享，随时接着上次聊的继续。`,
           en: `A regular chat assistant only "exists" while the window is open. A Memoh agent owns an always-running cloud computer, which changes what it can do:
 
 - **It has a computer**: a real desktop, files and network — it opens websites, installs dependencies, runs code and shows you previews instead of just writing text.
 - **It's always on**: it runs in the cloud even when your machine is off, and scheduled tasks fire without you triggering anything.
 - **It takes initiative**: when something important happens, it messages you first.
-- **It remembers**: sessions never reset, and memory is shared across every channel.
-
-Compared with pure chatbots like Grok Bot, the difference is even more fundamental: a chatbot offers text Q&A, while Memoh offers a complete cloud computer — you and the agent can install software, run programs and work with files inside it. They are different products in both form and use.`,
+- **It remembers**: sessions never reset, and memory is shared across every channel.`,
         },
       },
       {
@@ -386,15 +383,37 @@ Agents can also install dependencies themselves mid-task, and you can watch it h
         answer: {
           zh: `每个 Bot 的文件都保存在它自己的云端工作区里，与其他 Bot 相互隔离；存储空间随订阅计划提供。
 
-你可以直接上传文件给 Agent，也可以让它整理、打包并把任何文件发给你。删除 Bot 时，它的工作区会一并销毁。`,
+持久化规则需要注意：
+
+- **/data 目录**是持久化卷（volume），放在这里的文件会长期保留；
+- **Rootfs**（系统盘的其余部分）**不保证持久化**，可能随系统更新或实例重建被重置。
+
+重要文件请让 Agent 保存到 /data 下。你可以直接上传文件给 Agent，也可以让它整理、打包并把任何文件发给你。删除 Bot 时，它的工作区会一并销毁。`,
           en: `Each Bot's files live in its own cloud workspace, isolated from every other Bot; storage comes with your plan.
 
-You can upload files to the agent directly, and ask it to organize, archive and send any file back to you. Deleting a Bot destroys its workspace along with it.`,
+One persistence rule to know:
+
+- The **/data directory** is a persistent volume — files placed there are kept long-term.
+- The **rootfs** (the rest of the system disk) is **not guaranteed to persist** and may be reset by system updates or instance rebuilds.
+
+Have the agent keep anything important under /data. You can upload files to the agent directly, and ask it to organize, archive and send any file back to you. Deleting a Bot destroys its workspace along with it.`,
+        },
+      },
+      {
+        id: 'persistent-disk-size',
+        question: { en: 'What does the persistent disk size refer to?', zh: '持久化磁盘大小指的是什么？' },
+        answer: {
+          zh: `套餐与创建 Bot 时看到的"持久化磁盘大小"，指的是 **/data 持久化卷（volume）的容量**，在创建 Bot 的过程中设置。
+
+它**不包括 Rootfs**：系统本身与预装环境占用的空间不计入这个额度，Rootfs 也不保证持久化 —— 需要长期保留的文件请放在 /data 下。`,
+          en: `The "persistent disk size" shown on plans and during Bot creation refers to the **capacity of the /data persistent volume**, set while creating the Bot.
+
+It does **not include the rootfs**: space taken by the system and the pre-installed environment doesn't count against this quota, and the rootfs isn't guaranteed to persist — keep long-lived files under /data.`,
         },
       },
       {
         id: 'scale-up-bot',
-        question: { en: "Can I scale up a Bot's resources?", zh: '可以给 Bot 扩容吗？' },
+        question: { en: "Can I add more resources to a Bot's workspace?", zh: '可以给 Bot 的工作空间增加配置吗？' },
         answer: {
           zh: `**现阶段的扩容方式是升级订阅套餐。**云电脑的 CPU 核数、内存与存储空间由套餐规格决定，暂不支持在套餐之外单独加购某一项资源。
 
@@ -436,12 +455,8 @@ When the agent starts a dev server, it hands you a localhost link; click it to o
         answer: {
           zh: `对任务而言，它一直可用：定时任务照常触发，长任务持续推进，渠道消息随时可达。
 
-资源层面按活跃度智能调度：连续约 **24 小时**完全没有活动时，云电脑会自动休眠；你下次开口或任务触发时**热启动**恢复，文件、会话与记忆完整保留 —— 回来就是原样。
-
 使用额度随套餐规格而定，月付套餐一般没有每日硬性时长限制，但长期满载等极端用法受公平使用政策约束，详见[定价](/#pricing)。`,
           en: `For your work, it's always available: schedules fire on time, long-running tasks keep moving, and channel messages always get through.
-
-Under the hood, resources follow activity: after roughly **24 hours** with no activity at all, the cloud computer hibernates automatically, then **hot-restarts** the next time you speak up or a task fires — files, sessions and memory fully preserved.
 
 Usage allowances follow your plan. Monthly plans generally have no hard daily time cap, but sustained extremes like permanent full load fall under the fair-use policy — see [pricing](/#pricing).`,
         },
@@ -493,24 +508,6 @@ Prefer not to bring one? Use Memoh's built-in agent with platform-provided model
 All agents share the same cloud computer and the same workspace files — switching agents never loses your context or artifacts.`,
         },
       },
-      {
-        id: 'skills-and-connectors',
-        question: { en: 'What are Agent Skills and Connectors?', zh: '什么是 Agent Skill 和 Connector？' },
-        answer: {
-          zh: `两者都在应用市场中管理，但分工不同：
-
-- **Connector** 负责"连接外部服务"。比如 GitHub Connector 让 Agent 能访问你的仓库、Issue 和 Pull Request。每个 Connector 需要单独授权，可随时撤销；
-- **Agent Skill** 负责"教会 Agent 做事的方法"，为它增加特定的工作流程和领域技能。
-
-安装后都托管在云电脑里，Agent 需要时直接调用。`,
-          en: `Both live in the Supermarket, with different jobs:
-
-- A **Connector** links an external service. The GitHub Connector, for instance, lets the agent work with your repos, issues and pull requests. Each Connector is authorized individually and can be revoked at any time.
-- An **Agent Skill** teaches the agent how to do something — packaged workflows and domain know-how.
-
-Once installed, both are hosted on the cloud computer for the agent to use whenever needed.`,
-        },
-      },
     ],
   },
   {
@@ -529,15 +526,13 @@ Once installed, both are hosted on the cloud computer for the agent to use whene
           zh: `Memoh 内置网页与桌面端对话入口，并支持接入以下聊天平台：
 
 - **社交与协作**：Telegram、Discord、Slack、LINE；
-- **国内平台**：微信、微信公众号、企业微信、QQ、飞书、钉钉；
-- **开放协议与社区**：Matrix、Misskey。
+- **国内平台**：微信、微信公众号、企业微信、QQ、飞书、钉钉。
 
 一个 Agent 可以同时接入多个渠道，对话与记忆完全同步。`,
           en: `Besides the built-in web and desktop chat, Memoh connects to the following platforms:
 
 - **Social & collaboration**: Telegram, Discord, Slack, LINE.
 - **China-based platforms**: WeChat, WeChat Official Account, WeCom, QQ, Feishu, DingTalk.
-- **Open protocols & communities**: Matrix, Misskey.
 
 One agent can be connected to several channels at once, with conversations and memory fully in sync.`,
         },
@@ -631,24 +626,20 @@ Socket Mode means no public callback URL here either.`,
       {
         id: 'connect-other-channels',
         question: {
-          en: 'How do I connect QQ, LINE, Matrix or Misskey?',
-          zh: 'QQ、LINE、Matrix、Misskey 如何接入？',
+          en: 'How do I connect QQ or LINE?',
+          zh: 'QQ、LINE 如何接入？',
         },
         answer: {
           zh: `这些渠道同样在 Bot 的**平台**标签页中添加，填入对应平台的凭据即可：
 
 - **QQ**：QQ 开放平台机器人的 AppID 与 ClientSecret；
-- **LINE**：LINE Developers 的 Channel Secret 与 Channel Access Token，并按提示配置 Webhook 地址；
-- **Matrix**：Homeserver 地址、账号的 Access Token 与 User ID；
-- **Misskey**：实例地址与 Access Token。
+- **LINE**：LINE Developers 的 Channel Secret 与 Channel Access Token，并按提示配置 Webhook 地址。
 
 每个渠道都可以独立启用或停用，互不影响。`,
           en: `These channels are added the same way on the Bot's **Platforms** tab — fill in each platform's credentials:
 
 - **QQ**: the AppID and ClientSecret of your QQ open-platform bot.
 - **LINE**: the Channel Secret and Channel Access Token from LINE Developers, plus the webhook URL as prompted.
-- **Matrix**: your homeserver URL, the account's Access Token and User ID.
-- **Misskey**: the instance URL and an Access Token.
 
 Each channel can be enabled or disabled independently.`,
         },
@@ -831,6 +822,7 @@ Actual consumption is converted at each model's pricing — see your billing pag
 你可以：
 
 - 等待下个计费周期额度自动刷新；
+- 单独充值 credits 余额；
 - 升级到更高档位获得更多额度；
 - 切换到自带订阅的 Agent（不消耗 credits）继续使用。`,
           en: `When your monthly credits run out, new requests to Memoh-provided models pause — but your cloud computer, files, memory and configured tasks are all fully preserved.
@@ -838,8 +830,29 @@ Actual consumption is converted at each model's pricing — see your billing pag
 You can:
 
 - wait for the allowance to refresh next billing cycle.
+- top up extra credits.
 - upgrade to a higher tier for more credits.
 - switch to a bring-your-own agent (which doesn't consume credits) and keep going.`,
+        },
+      },
+      {
+        id: 'top-up-credits',
+        question: { en: 'How do I top up extra credits?', zh: '如何充值 credits 余额？' },
+        answer: {
+          zh: `除了每月随套餐发放的额度，你也可以单独充值 credits：
+
+1. 打开 **设置 → 账单**，选择**充值 credits**；
+2. 选择充值金额，通过 Stripe 完成支付（与订阅使用同样的支付方式）；
+3. 充值即时到账，套餐内额度用完后自动使用充值余额。
+
+余额的有效期与扣减顺序以账单页说明为准。`,
+          en: `Besides the monthly allowance that comes with your plan, you can top up credits separately:
+
+1. Open **Settings → Billing** and choose **Top up credits**.
+2. Pick an amount and pay through Stripe (the same payment method as your subscription).
+3. Credits land instantly and are used automatically once your plan allowance runs out.
+
+Validity and deduction order follow what's shown on the billing page.`,
         },
       },
       {

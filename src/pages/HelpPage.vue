@@ -27,7 +27,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <main class="w-full max-w-[1080px] min-h-[calc(100vh-3.5rem)] mx-auto px-4 md:px-8 pt-[112px] md:pt-[148px] pb-[120px] relative z-10">
+  <main class="help-static w-full max-w-[1080px] min-h-[calc(100vh-3.5rem)] mx-auto px-4 md:px-8 pt-[112px] md:pt-[148px] pb-[120px] relative z-10">
     <header class="mx-auto flex max-w-[640px] flex-col items-center gap-5 text-center">
       <div class="inline-flex w-fit items-center gap-2 rounded-md border border-border bg-background px-3 py-1.5 text-xs font-medium text-muted-foreground">
         <LifeBuoy class="w-3.5 h-3.5" />
@@ -47,13 +47,13 @@ useSeoMeta({
           type="search"
           :placeholder="ui('searchPlaceholder')"
           :aria-label="ui('searchPlaceholder')"
-          class="h-12 w-full rounded-xl border border-border bg-background pl-11 pr-11 text-sm md:text-base text-foreground placeholder:text-muted-foreground shadow-sm transition-shadow focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          class="h-12 w-full rounded-xl border border-border bg-background pl-11 pr-11 text-sm md:text-base text-foreground placeholder:text-muted-foreground shadow-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
         />
         <button
           v-if="isSearching"
           type="button"
           :aria-label="ui('clearSearch')"
-          class="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
+          class="absolute right-3 top-1/2 -translate-y-1/2 rounded-md p-1 text-muted-foreground hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
           @click="query = ''"
         >
           <X class="h-4 w-4" />
@@ -61,7 +61,7 @@ useSeoMeta({
       </div>
     </header>
 
-    <!-- Search results -->
+    <!-- Search results: link into the collection page with the answer expanded -->
     <section v-if="isSearching" class="mx-auto mt-10 flex max-w-[760px] flex-col gap-4">
       <p class="text-sm text-muted-foreground">
         {{ ui('searchResults', { n: results.length, q: trimmedQuery }) }}
@@ -71,15 +71,15 @@ useSeoMeta({
         <RouterLink
           v-for="result in results"
           :key="`${result.collectionId}/${result.id}`"
-          :to="`/help/${result.collectionId}/${result.id}`"
-          class="group flex items-center gap-4 px-5 py-4 transition-colors hover:bg-muted/50 focus-visible:outline-none focus-visible:bg-muted/50"
+          :to="`/help/${result.collectionId}#${result.id}`"
+          class="flex items-center gap-4 px-5 py-4 hover:bg-muted/50 focus-visible:outline-none focus-visible:bg-muted/50"
         >
           <div class="flex min-w-0 flex-1 flex-col gap-1">
             <span class="text-xs text-muted-foreground">{{ result.collectionTitle }}</span>
             <h2 class="text-sm md:text-base font-medium text-foreground leading-snug">{{ result.question }}</h2>
             <p class="truncate text-sm text-muted-foreground">{{ result.snippet }}</p>
           </div>
-          <ArrowRight class="h-4 w-4 shrink-0 text-muted-foreground transition-transform group-hover:translate-x-0.5" />
+          <ArrowRight class="h-4 w-4 shrink-0 text-muted-foreground" />
         </RouterLink>
       </div>
 
@@ -97,7 +97,7 @@ useSeoMeta({
           v-for="collection in collections"
           :key="collection.id"
           :to="`/help/${collection.id}`"
-          class="group flex flex-col gap-4 rounded-xl border border-border bg-background p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+          class="flex flex-col gap-4 rounded-xl border border-border bg-background p-6 hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
         >
           <div class="flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-muted text-foreground">
             <component :is="helpIcons[collection.icon]" class="h-5 w-5" />
@@ -116,3 +116,13 @@ useSeoMeta({
     </div>
   </main>
 </template>
+
+<style scoped>
+/* The help center is deliberately animation-free — override the global
+   `* { transition: colors 300ms }` from style.css for everything inside. */
+.help-static,
+.help-static :deep(*) {
+  transition: none !important;
+  animation: none !important;
+}
+</style>

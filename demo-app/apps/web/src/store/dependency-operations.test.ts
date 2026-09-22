@@ -89,9 +89,9 @@ describe('useDependencyOperationsStore', () => {
     streamDependencyOperation.mockReturnValue(stream.generator)
     const store = useDependencyOperationsStore()
 
-    const result = store.start({ botId: 'bot-1', targetId: '', item: codex, action: 'install', version: ' 1.2.3 ' })
+    const result = store.start({ botId: 'bot-1', item: codex, action: 'install', version: ' 1.2.3 ' })
     expect(result.kind).toBe('started')
-    expect(streamDependencyOperation).toHaveBeenCalledWith('bot-1', 'codex', 'install', undefined, expect.objectContaining({ version: '1.2.3' }))
+    expect(streamDependencyOperation).toHaveBeenCalledWith('bot-1', 'codex', 'install', expect.objectContaining({ version: '1.2.3' }))
 
     stream.emit({ type: 'log', stream: 'stderr', data: 'npm warn something very long' })
     await settleMicrotasks()
@@ -109,11 +109,11 @@ describe('useDependencyOperationsStore', () => {
     expect(toastSuccess).toHaveBeenCalledTimes(1)
     const [message, options] = toastSuccess.mock.calls[0] as [string, { action?: { label: string; onClick: () => void } }]
     expect(message).toBe('bots.dependencies.background.installed:Codex')
-    expect(options.action?.label).toBe('supermarket.viewBotDependencies')
+    expect(options.action?.label).toBe('apps.viewBotApps')
     const navigated = new Promise<void>(resolve => router.afterEach(() => resolve()))
     options.action?.onClick()
     await navigated
-    expect(router.currentRoute.value.fullPath).toBe('/settings/bots/bot-1?tab=dependencies')
+    expect(router.currentRoute.value.fullPath).toBe('/settings/bots/bot-1?tab=apps')
   })
 
   it('leaves the verdict to an open dialog and forgets the record when it closes', async () => {
@@ -121,7 +121,7 @@ describe('useDependencyOperationsStore', () => {
     streamDependencyOperation.mockReturnValue(stream.generator)
     const store = useDependencyOperationsStore()
 
-    const result = store.start({ botId: 'bot-1', targetId: 't-2', item: node, action: 'remove' })
+    const result = store.start({ botId: 'bot-1', item: node, action: 'reinstall' })
     expect(result.kind).toBe('started')
     const key = operationKey('bot-1', 'node')
     store.view(key, 'panel')
@@ -149,22 +149,22 @@ describe('useDependencyOperationsStore', () => {
     streamDependencyOperation.mockReturnValue(stream.generator)
     const store = useDependencyOperationsStore()
 
-    const first = store.start({ botId: 'bot-1', targetId: '', item: codex, action: 'install' })
-    const again = store.start({ botId: 'bot-1', targetId: '', item: codex, action: 'install', version: '9.9.9' })
+    const first = store.start({ botId: 'bot-1', item: codex, action: 'install' })
+    const again = store.start({ botId: 'bot-1', item: codex, action: 'install', version: '9.9.9' })
     expect(again.kind).toBe('running')
     expect(again.kind === 'running' && first.kind === 'started' && again.operation === first.operation).toBe(true)
     expect(streamDependencyOperation).toHaveBeenCalledTimes(1)
 
     // Another dependency of the same bot is refused while one streams (the
     // Server would answer busy); another bot is not affected.
-    const other = store.start({ botId: 'bot-1', targetId: '', item: node, action: 'install' })
+    const other = store.start({ botId: 'bot-1', item: node, action: 'install' })
     expect(other.kind).toBe('busy')
     expect(other.kind === 'busy' && other.operation.item.id).toBe('codex')
-    expect(store.start({ botId: '', targetId: '', item: node, action: 'install' }).kind).toBe('invalid')
+    expect(store.start({ botId: '', item: node, action: 'install' }).kind).toBe('invalid')
 
     const second = controlledStream()
     streamDependencyOperation.mockReturnValueOnce(second.generator)
-    expect(store.start({ botId: 'bot-2', targetId: '', item: node, action: 'install' }).kind).toBe('started')
+    expect(store.start({ botId: 'bot-2', item: node, action: 'install' }).kind).toBe('started')
     expect(streamDependencyOperation).toHaveBeenCalledTimes(2)
 
     stream.end()
@@ -178,7 +178,7 @@ describe('useDependencyOperationsStore', () => {
     const store = useDependencyOperationsStore()
     const key = operationKey('bot-1', 'codex')
 
-    store.start({ botId: 'bot-1', targetId: '', item: codex, action: 'reinstall', version: '0.1.0', definitionRevision: 'reviewed-revision', sessionId: 'session-1' })
+    store.start({ botId: 'bot-1', item: codex, action: 'reinstall', version: '0.1.0', definitionRevision: 'reviewed-revision', sessionId: 'session-1' })
     store.view(key, 'panel')
     first.emit({ type: 'log', stream: 'stdout', data: 'downloading' })
     first.emit({ type: 'error', message: 'script exited 1' })
@@ -195,7 +195,7 @@ describe('useDependencyOperationsStore', () => {
     expect(store.retry(key)).toBe(true)
     expect(operation?.status).toBe('running')
     expect(operation?.lines).toEqual([])
-    expect(streamDependencyOperation).toHaveBeenLastCalledWith('bot-1', 'codex', 'reinstall', undefined, expect.objectContaining({ version: '0.1.0', definitionRevision: 'reviewed-revision', sessionId: 'session-1' }))
+    expect(streamDependencyOperation).toHaveBeenLastCalledWith('bot-1', 'codex', 'reinstall', expect.objectContaining({ version: '0.1.0', definitionRevision: 'reviewed-revision', sessionId: 'session-1' }))
 
     // Retry is only for a failed record.
     expect(store.retry(key)).toBe(false)
@@ -219,7 +219,7 @@ describe('useDependencyOperationsStore', () => {
     const store = useDependencyOperationsStore()
     const onBackgroundDone = vi.fn()
 
-    store.start({ botId: 'bot-1', targetId: '', item: codex, action: 'install', onBackgroundDone })
+    store.start({ botId: 'bot-1', item: codex, action: 'install', onBackgroundDone })
     stream.emit({ type: 'done', version: '1.0.0' })
     stream.end()
     await settleMicrotasks()
@@ -234,7 +234,7 @@ describe('useDependencyOperationsStore', () => {
     streamDependencyOperation.mockReturnValue(stream.generator)
     const store = useDependencyOperationsStore()
     const key = operationKey('bot-1', 'codex')
-    store.start({ botId: 'bot-1', targetId: '', item: codex, action: 'install' })
+    store.start({ botId: 'bot-1', item: codex, action: 'install' })
     store.view(key, 'panel')
     stream.emit({ type: 'started', dependency_id: 'codex' })
     if (outcome === 'server-unknown') {
@@ -253,7 +253,7 @@ describe('useDependencyOperationsStore', () => {
     streamDependencyOperation.mockReturnValue(stream.generator)
     const store = useDependencyOperationsStore()
 
-    store.start({ botId: 'bot-1', targetId: '', item: codex, action: 'install' })
+    store.start({ botId: 'bot-1', item: codex, action: 'install' })
     expect(store.runningFor('bot-1')).toBeDefined()
     store.reset()
     expect(store.runningFor('bot-1')).toBeUndefined()

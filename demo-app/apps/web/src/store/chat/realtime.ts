@@ -38,6 +38,10 @@ export interface ChatRealtimeCallbacks {
     change: RuntimeProjectionChange,
   ) => void
   onBotSessionsActivityEvent: (botId: string, event: BotSessionActivityEvent) => void
+  // Coverage requires the server's ready frame, including runtime admission
+  // invalidation support. Legacy servers and disconnected streams stay
+  // conservative even when REST history requests continue to succeed.
+  onActivityStreamCoverageChanged?: (botId: string, covered: boolean) => void
 }
 
 export interface ChatRealtimeTransport {
@@ -68,6 +72,7 @@ export function createChatRealtimeController(
   let activeWebSocketBotId = ''
   let webSocketGeneration = 0
   let botSessionsActivityGeneration = 0
+  let activityStreamBotId = ''
   const sessionRuntimeConnections = new Map<string, SessionRuntimeConnection>()
   const botSessionsActivityStream = transport.createRetryingStream()
   const runtimeClient = createRuntimeClient({
@@ -237,25 +242,36 @@ export function createChatRealtimeController(
   function stopBotSessionsActivityStream() {
     botSessionsActivityGeneration += 1
     botSessionsActivityStream.stop()
+    const bid = activityStreamBotId
+    activityStreamBotId = ''
+    if (bid) callbacks.onActivityStreamCoverageChanged?.(bid, false)
   }
 
   function startBotSessionsActivityStream(botId: string) {
     stopBotSessionsActivityStream()
     const bid = botId.trim()
     if (!bid) return
+    activityStreamBotId = bid
+    callbacks.onActivityStreamCoverageChanged?.(bid, false)
 
     const generation = botSessionsActivityGeneration
     botSessionsActivityStream.start(async (signal) => {
       if (generation !== botSessionsActivityGeneration || signal.aborted) return
+      let attemptActive = true
       try {
         await transport.streamBotSessionsActivityEvents(bid, signal, (event) => {
-          if (generation !== botSessionsActivityGeneration) return
+          if (!attemptActive || signal.aborted || generation !== botSessionsActivityGeneration) return
+          if (event.type === 'activity_ready') {
+            callbacks.onActivityStreamCoverageChanged?.(bid, event.cache_invalidation === true)
+          }
           callbacks.onBotSessionsActivityEvent(bid, event)
         })
       } finally {
-        // A disconnected stream cannot vouch for a still-running compaction.
-        // The server sends a fresh snapshot when this stream reconnects.
+        attemptActive = false
         if (generation === botSessionsActivityGeneration) {
+          // Even a short gap can lose an edit notification. Coverage stays
+          // false until a new subscription explicitly confirms it is ready.
+          callbacks.onActivityStreamCoverageChanged?.(bid, false)
           callbacks.onBotSessionsActivityEvent(bid, { type: 'session_compaction', session_ids: [] })
         }
       }

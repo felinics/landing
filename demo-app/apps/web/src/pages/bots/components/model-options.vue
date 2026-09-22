@@ -8,25 +8,35 @@
          those zones and the menu died mid-flight. The flyout now closes only
          on explicit actions — model pick, list scroll, typing, outside click
          / Esc (see commitModel / scroll listener / searchTerm watcher). -->
-    <div :class="menuSearchHeaderClass">
+    <div
+      v-if="showSearch"
+      :class="menuSearchHeaderClass"
+    >
       <input
+        ref="searchInput"
         v-model="searchTerm"
         role="combobox"
         :aria-controls="listboxId"
         :aria-expanded="open"
         :aria-activedescendant="activeIndex >= 0 ? `${listboxId}-${activeIndex}` : undefined"
         :placeholder="$t('bots.settings.searchModel')"
-        aria-label="Search models"
+        :aria-label="$t('bots.settings.searchModel')"
         :class="menuSearchInputClass"
         @keydown="onKeydown"
       >
     </div>
 
-    <div
-      :id="listboxId"
-      ref="scrollEl"
-      :class="virtualListboxClass"
-      role="listbox"
+    <MenuScrollArea
+      ref="scrollElArea"
+      layout="virtual"
+      :viewport-attrs="{
+        id: listboxId,
+        role: 'listbox',
+        tabindex: showSearch ? -1 : 0,
+        'aria-label': $t('chat.modelOverride'),
+        'aria-activedescendant': !showSearch && activeIndex >= 0 ? `${listboxId}-${activeIndex}` : undefined,
+        onKeydown: showSearch ? undefined : onKeydown,
+      }"
     >
       <div
         v-if="rows.length === 0"
@@ -55,7 +65,9 @@
 
           <ModelDescriptionTooltip
             v-else
-            :description="vRow.row.option.description"
+            :description="vRow.row.option.description || vRow.row.option.label"
+            side="right"
+            :side-offset="12"
             :open="openDescriptionTooltipKey === vRow.row.key"
             @update:open="setDescriptionTooltipOpen(vRow.row.key, $event)"
           >
@@ -63,6 +75,7 @@
               :id="`${listboxId}-${vRow.virtual.index}`"
               type="button"
               role="option"
+              :tabindex="showSearch ? undefined : -1"
               :aria-selected="modelValue === vRow.row.option.value"
               :aria-setsize="optionCount"
               :aria-posinset="vRow.row.posinset"
@@ -73,7 +86,6 @@
             >
               <span
                 class="min-w-0 flex-1 truncate text-left"
-                :title="vRow.row.option.label"
               >{{ vRow.row.option.label }}</span>
               <Check
                 v-if="modelValue === vRow.row.option.value"
@@ -83,7 +95,7 @@
           </ModelDescriptionTooltip>
         </div>
       </div>
-    </div>
+    </MenuScrollArea>
 
     <!-- Reasoning effort lives in the model menu, not beside it: the tiers a model
          offers depend on the model, so picking one without the other is a two-stop
@@ -130,15 +142,14 @@
         :class="menuChromeClass"
         @pointerleave="reasoningHoverValue = null"
       >
-        <div
-          ref="reasoningScrollEl"
-          :class="virtualListboxClass"
-        >
+        <MenuScrollArea ref="reasoningScrollElArea">
           <div class="flex flex-col gap-0.5">
             <ModelDescriptionTooltip
               v-for="option in availableReasoningOptions"
               :key="option.value"
               :description="option.description"
+              side="right"
+              :side-offset="12"
               :open="openDescriptionTooltipKey === `reasoning:${option.value}`"
               @update:open="setDescriptionTooltipOpen(`reasoning:${option.value}`, $event)"
             >
@@ -152,13 +163,13 @@
                 <Lightbulb :style="{ opacity: EFFORT_OPACITY[option.value] ?? 0.5 }" />
                 <span class="min-w-0 flex-1 truncate text-left">{{ option.label || $t(option.labelKey ?? 'chat.reasoningOff') }}</span>
                 <Check
-                  v-if="selectedReasoningValue === option.value"
+                  v-if="currentReasoningValue === option.value"
                   class="ml-2 size-4 shrink-0"
                 />
               </button>
             </ModelDescriptionTooltip>
           </div>
-        </div>
+        </MenuScrollArea>
       </div>
     </PopoverContent>
   </Popover>
@@ -179,7 +190,7 @@ import {
   menuSearchHeaderClass,
   menuSearchInputClass,
   menuSeparatorClass,
-  virtualListboxClass,
+  MenuScrollArea,
 } from '@felinic/ui'
 import type { ModelsGetResponse, ModelsModelType, ProvidersGetResponse } from '@memohai/sdk'
 import { useListboxKeyboard } from '@/composables/useListboxKeyboard'
@@ -222,14 +233,7 @@ interface ItemRow {
   posinset: number
 }
 
-interface NoneRow {
-  type: 'none'
-  key: string
-  option: ModelOption
-  posinset: number
-}
-
-type Row = HeaderRow | ItemRow | NoneRow
+type Row = HeaderRow | ItemRow
 
 interface ReasoningOption {
   value: string
@@ -263,10 +267,15 @@ const props = defineProps<{
 // which breaks callers that bind :model-value + @update:model-value explicitly.
 const modelValue = defineModel<string>({ default: '' })
 const reasoningEffort = defineModel<string>('reasoningEffort', { default: '' })
+const emit = defineEmits<{ select: [value: string] }>()
 
 const searchTerm = ref('')
-const scrollEl = ref<HTMLElement | null>(null)
-const reasoningScrollEl = ref<HTMLElement | null>(null)
+const searchInput = ref<HTMLInputElement | null>(null)
+defineExpose({ focusSearch: () => (searchInput.value ?? scrollEl.value)?.focus({ preventScroll: true }) })
+const scrollElArea = ref<InstanceType<typeof MenuScrollArea> | null>(null)
+const scrollEl = computed(() => scrollElArea.value?.viewportElement ?? null)
+const reasoningScrollElArea = ref<InstanceType<typeof MenuScrollArea> | null>(null)
+const reasoningScrollEl = computed(() => reasoningScrollElArea.value?.viewportElement ?? null)
 const reasoningOpen = ref(false)
 // Pointer-driven highlight state for the effort trigger and the flyout rows.
 // Both are plain buttons wearing menuItemClass, whose highlight only renders
@@ -291,6 +300,12 @@ const providerMap = computed(() => {
 const typeFilteredModels = computed(() =>
   props.models.filter((m) => m.type === props.modelType),
 )
+// Count the available catalog, not filtered search results: typing must never
+// remove the input from under the caret. Provider headings/defaults aren't models.
+const showSearch = computed(() => typeFilteredModels.value.length >= 20)
+watch(showSearch, (visible) => {
+  if (!visible) searchTerm.value = ''
+})
 
 const options = computed<ModelOption[]>(() =>
   typeFilteredModels.value.map((model) => {
@@ -327,6 +342,9 @@ const noneOption = computed<ModelOption | undefined>(() =>
       }
     : undefined,
 )
+
+// Use the available catalog so searching down to one provider keeps its heading.
+const showGroupLabels = computed(() => new Set(options.value.map(option => option.groupKey)).size > 1)
 
 const filteredOptions = computed(() => {
   const keyword = searchTerm.value.trim().toLowerCase()
@@ -371,14 +389,14 @@ const rows = computed<Row[]>(() => {
   if (noneOption.value) {
     posinset += 1
     result.push({
-      type: 'none',
+      type: 'item',
       key: 'none',
       option: noneOption.value,
       posinset,
     })
   }
   for (const group of filteredGroups.value) {
-    if (group.label) {
+    if (group.label && showGroupLabels.value) {
       result.push({ type: 'header', key: `header:${group.key}`, label: group.label })
     }
     for (const option of group.items) {
@@ -438,6 +456,9 @@ const measureRow = (el: unknown) => {
 function commitModel(value: string) {
   reasoningOpen.value = false
   if (value !== modelValue.value) modelValue.value = value
+  // Selection is distinct from a value change: reselecting the current model
+  // must still let the host dismiss its menu.
+  emit('select', value)
 }
 
 const listboxId = useId()
@@ -445,7 +466,7 @@ const { activeIndex, onKeydown, reset: resetActive } = useListboxKeyboard<Row>({
   rows,
   scrollToIndex: (index) => virtualizer.value.scrollToIndex(index),
   onSelect: (row) => {
-    if (row.type === 'item' || row.type === 'none') commitModel(row.option.value)
+    if (row.type === 'item') commitModel(row.option.value)
   },
 })
 
@@ -494,21 +515,22 @@ const availableReasoningOptions = computed<ReasoningOption[]>(() => {
 
 const canSelectReasoning = computed(() => availableReasoningOptions.value.length > 0)
 
-const selectedReasoningValue = computed(() =>
-  reasoningEffort.value || REASONING_EFFORT_DISABLE,
-)
-
-const currentReasoningValue = computed(() =>
-  canSelectReasoning.value ? selectedReasoningValue.value : REASONING_EFFORT_DISABLE,
-)
+const currentReasoningValue = computed(() => {
+  // External runtimes own their effort vocabulary. An unset value inherits
+  // their defaults; it does not mean the native composer's "off" state.
+  if (props.reasoningOptions !== undefined) return reasoningEffort.value
+  return canSelectReasoning.value ? reasoningEffort.value || REASONING_EFFORT_DISABLE : REASONING_EFFORT_DISABLE
+})
 
 const currentReasoningOption = computed(() =>
   availableReasoningOptions.value.find(option => option.value === currentReasoningValue.value),
 )
 
-const currentReasoningLabel = computed(() => currentReasoningOption.value?.label ?? '')
+const currentReasoningLabel = computed(() => currentReasoningOption.value?.label
+  ?? (props.reasoningOptions !== undefined ? currentReasoningValue.value : ''))
 const currentReasoningLabelKey = computed(() =>
-  currentReasoningOption.value?.labelKey ?? EFFORT_LABELS[currentReasoningValue.value] ?? 'chat.reasoningOff',
+  currentReasoningOption.value?.labelKey ?? EFFORT_LABELS[currentReasoningValue.value]
+  ?? (props.reasoningOptions !== undefined ? 'chat.reasoningEffort' : 'chat.reasoningOff'),
 )
 
 function setEffort(level: string) {

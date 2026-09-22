@@ -31,23 +31,14 @@
         :description="config.auth === 'api_key' ? $t('bots.agent.apiKeyDescription') : $t('bots.agent.oauthTokenDescription')"
         stack="sm"
       >
-        <div class="flex w-full flex-col gap-2 sm:w-96 sm:flex-row">
-          <PasswordInput
-            v-model="credentialSecret"
-            autocomplete="new-password"
-            class="min-w-0 flex-1"
-            :placeholder="$t('bots.settings.agentCredentialSecretPlaceholder')"
-            @keydown.enter.prevent="saveCredential"
-          />
-          <Button
-            type="button"
-            size="sm"
-            :loading="savingCredential"
-            :disabled="!credentialSecret.trim()"
-            @click="saveCredential"
-          >
-            {{ credentialConnected ? $t('bots.settings.agentCredentialReplace') : $t('bots.settings.agentCredentialSave') }}
-          </Button>
+        <AgentCredentialInput
+          v-model="credentialSecret"
+          :loading="savingCredential"
+          :connected="credentialConnected"
+          :placeholder="config.auth === 'oauth_token' ? $t('bots.agent.oauthToken') : undefined"
+          class="sm:w-96"
+          @save="saveCredential"
+        >
           <ConfirmPopover
             v-if="credentialConnected"
             :title="$t('bots.settings.agentCredentialDisconnectConfirm')"
@@ -67,7 +58,7 @@
               </Button>
             </template>
           </ConfirmPopover>
-        </div>
+        </AgentCredentialInput>
       </SettingsRow>
 
       <SettingsRow
@@ -97,6 +88,30 @@
           @keydown.enter.prevent="commitConfig"
         />
       </SettingsRow>
+      <SettingsRow
+        v-if="defaultModes?.supported"
+        :label="$t('bots.agent.defaultPermissionMode')"
+        :description="$t('bots.agent.defaultPermissionModeDescription')"
+        stack="sm"
+      >
+        <Select
+          :model-value="config.permission_mode || defaultModes.current_mode_id"
+          @update:model-value="setDefaultPermission"
+        >
+          <SelectTrigger class="w-full sm:w-56">
+            <SelectValue>{{ defaultMode?.name }}</SelectValue>
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem
+              v-for="mode in defaultModes.available_modes"
+              :key="mode.id"
+              :value="mode.id!"
+            >
+              <span :class="mode.warning ? 'text-warning-foreground' : ''">{{ mode.name }}</span>
+            </SelectItem>
+          </SelectContent>
+        </Select>
+      </SettingsRow>
     </SettingsSection>
 
     <SettingsSection
@@ -116,13 +131,19 @@
             loading-mode="manual"
             @click="deviceLogin ? cancelDeviceLogin() : startDeviceLogin()"
           >
-            <template v-if="deviceLogin">
-              {{ $t('common.cancel') }}
-            </template>
-            <template v-else>
-              <KeyRound />
-              {{ credentialConnected ? $t('bots.agent.reconnect') : $t('provider.oauth.connect') }}
-            </template>
+            <LabelSwap :active="authorizing ? 'connecting' : deviceLogin ? 'cancel' : 'connect'">
+              <template #connect>
+                <KeyRound />
+                {{ credentialConnected ? $t('bots.agent.reconnect') : $t('provider.oauth.connect') }}
+              </template>
+              <template #connecting>
+                <Spinner />
+                {{ $t('provider.oauth.connecting') }}
+              </template>
+              <template #cancel>
+                {{ $t('common.cancel') }}
+              </template>
+            </LabelSwap>
           </Button>
           <ConfirmPopover
             v-if="credentialConnected"
@@ -171,12 +192,13 @@
 import { computed, onBeforeUnmount, reactive, ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { useQueryCache } from '@pinia/colada'
+import { useQuery, useQueryCache } from '@pinia/colada'
 import {
   Button,
   ConfirmPopover,
   DeviceCodePanel,
   Input,
+  LabelSwap,
   Select,
   SelectContent,
   SelectItem,
@@ -184,11 +206,13 @@ import {
   SelectValue,
   SettingsRow,
   SettingsSection,
+  Spinner,
   toast,
 } from '@felinic/ui'
 import { KeyRound } from 'lucide-vue-next'
 import {
   deleteBotsByBotIdAgentsByIdCredential,
+  getBotsByBotIdAgentsByIdRuntimeControls,
   patchBotsByBotIdAgentsById,
   postBotsByBotIdAgentsByIdCodexLoginDeviceAuthorize,
   postBotsByBotIdAgentsByIdCodexLoginDeviceCancel,
@@ -196,7 +220,8 @@ import {
   putBotsByBotIdAgentsByIdCredential,
   type BotagentsBotAgent,
 } from '@memohai/sdk'
-import PasswordInput from '@/components/password-input/index.vue'
+import AgentCredentialInput from './agent-credential-input.vue'
+import { localizeRuntimeControls } from '@/utils/runtime-control-presentation'
 import { isApiErrorCode, resolveApiErrorMessage } from '@/utils/api-error'
 import {
   BOT_AGENT_RUNTIME_CODEX,
@@ -207,6 +232,7 @@ interface DirectAgentConfig {
   auth: string
   base_url: string
   model: string
+  permission_mode: string
   reasoning_effort: string
 }
 
@@ -221,13 +247,35 @@ const props = defineProps<{
   agent: BotagentsBotAgent
 }>()
 const emit = defineEmits<{ authorized: [] }>()
-const { t } = useI18n()
+const { t, te } = useI18n()
 const router = useRouter()
 const queryCache = useQueryCache()
 
 const runtime = computed(() => normalizeBotAgentRuntime(props.agent.runtime))
 const isCodex = computed(() => runtime.value === BOT_AGENT_RUNTIME_CODEX)
-const config = reactive<DirectAgentConfig>({ auth: '', base_url: '', model: '', reasoning_effort: '' })
+const config = reactive<DirectAgentConfig>({ auth: '', base_url: '', model: '', reasoning_effort: '', permission_mode: '' })
+const defaultControls = useQuery({
+  key: () => ['bot-agent-runtime-controls', props.botId, props.agent.id ?? '', props.agent.metadata?.permission_mode ?? ''],
+  enabled: () => !!props.agent.id,
+  query: async ({ signal }) => {
+    const { data } = await getBotsByBotIdAgentsByIdRuntimeControls({
+      path: { bot_id: props.botId, id: props.agent.id! },
+      signal, throwOnError: true,
+    })
+    return data
+  },
+})
+const defaultModes = computed(() => localizeRuntimeControls(
+  defaultControls.data.value,
+  (key, fallback) => te(key) || te(key, 'en') ? t(key) : fallback,
+)?.modes)
+const defaultMode = computed(() => defaultModes.value?.available_modes?.find(mode => mode.id === (config.permission_mode || defaultModes.value?.current_mode_id)))
+async function setDefaultPermission(value: unknown) {
+  if (typeof value !== 'string') return
+  const previous = config.permission_mode
+  config.permission_mode = value
+  if (!await commitConfig()) config.permission_mode = previous
+}
 const credentialSecret = ref('')
 const savingCredential = ref(false)
 const credentialConnected = computed(() => !!props.agent.agent_credential_id)
@@ -238,6 +286,7 @@ function readConfig() {
   config.base_url = String(source.base_url ?? '')
   config.model = String(source.model ?? '')
   config.reasoning_effort = String(source.reasoning_effort ?? '')
+  config.permission_mode = String(source.permission_mode ?? '')
 }
 
 watch([() => props.agent.metadata, runtime], readConfig, { immediate: true })
@@ -275,6 +324,7 @@ async function commitConfig(): Promise<boolean> {
     provider: runtime.value,
     auth: config.auth,
   }
+  if (config.permission_mode) metadata.permission_mode = config.permission_mode
   if (config.base_url.trim()) metadata.base_url = config.base_url.trim()
   else delete metadata.base_url
   if (config.model.trim()) metadata.model = config.model.trim()

@@ -50,7 +50,7 @@ vi.mock('@felinic/ui', async () => {
     _props: Record<string, unknown>,
     { emit, slots }: { emit: (event: 'click') => void, slots: Slots },
   ) => {
-    return h('button', { onClick: () => emit('click') }, slots.default?.())
+    return h('button', { ..._props, onClick: () => emit('click') }, slots.default?.())
   }, {
     emits: ['click'],
   })
@@ -67,6 +67,11 @@ vi.mock('@felinic/ui', async () => {
   }
 })
 
+const nextStep = vi.fn()
+const prevStep = vi.fn()
+vi.mock('@/composables/useOnboarding', () => ({ useOnboarding: () => ({ nextStep, prevStep }) }))
+vi.mock('@/store/install-created-agent', () => ({ installCreatedAgent: vi.fn() }))
+
 function setupStore() {
   const pinia = createPinia()
   setActivePinia(pinia)
@@ -77,14 +82,14 @@ function setupStore() {
   return { pinia, store }
 }
 
-async function mountKeptProgress() {
+async function mountKeptProgress(onboarding = false) {
   const { pinia, store } = setupStore()
   const ProgressPage = (await import('./new-progress.vue')).default
   const show = ref(true)
   const app = createApp({
     name: 'ProgressRouteTestHost',
     setup() {
-      return () => h(KeepAlive, null, () => show.value ? h(ProgressPage) : h('div'))
+      return () => h(KeepAlive, null, () => show.value ? h(ProgressPage, { onboarding }) : h('div'))
     },
   })
   const root = document.createElement('div')
@@ -114,6 +119,9 @@ describe('bot create progress route', () => {
   beforeEach(() => {
     vi.useFakeTimers()
     routerReplace.mockReset()
+    nextStep.mockReset()
+    prevStep.mockReset()
+    sessionStorage.clear()
     // Real vue-router returns a Promise that resolves when navigation commits.
     routerReplace.mockResolvedValue(undefined)
     invalidateQueries.mockReset()
@@ -169,6 +177,48 @@ describe('bot create progress route', () => {
 
     mounted.app.unmount()
     mounted.root.remove()
+  })
+
+  it('shows only the terminal while installing, then opens the Bot automatically', async () => {
+    const mounted = await mountKeptProgress()
+    mounted.store.createdAgent = { id: 'agent-1', runtime: 'codex' }
+    mounted.store.lines = [{ id: 'install', kind: 'installing-agent', status: 'running', message: 'Codex' }]
+    await nextTick()
+    await vi.advanceTimersByTimeAsync(1000)
+    expect(routerReplace).not.toHaveBeenCalled()
+    expect(mounted.root.textContent).toContain('bots.create.line.installingAgent:Codex')
+    expect(mounted.root.querySelectorAll('button, [role="dialog"], input')).toHaveLength(0)
+    mounted.store.status = 'ready'
+    await nextTick()
+    await vi.advanceTimersByTimeAsync(700)
+    expect(routerReplace).toHaveBeenCalledWith({ name: 'bot-detail', params: { botName: 'prog' } })
+    mounted.app.unmount(); mounted.root.remove()
+  })
+
+  it('advances the dedicated onboarding progress step only after setup is ready', async () => {
+    const mounted = await mountKeptProgress(true)
+    mounted.store.createdAgent = { id: 'agent-1', runtime: 'claude-code', enabled: true }
+    mounted.store.lines = [{ id: 'install', kind: 'installing-agent', status: 'running', message: 'Claude Code' }]
+    await nextTick()
+    await vi.advanceTimersByTimeAsync(1000)
+    expect(nextStep).not.toHaveBeenCalled()
+    expect(mounted.root.querySelectorAll('button, [role="dialog"], input')).toHaveLength(0)
+    mounted.store.status = 'ready'
+    await nextTick()
+    await vi.advanceTimersByTimeAsync(700)
+    expect(nextStep).toHaveBeenCalledTimes(1)
+    expect(routerReplace).not.toHaveBeenCalled()
+    mounted.app.unmount(); mounted.root.remove()
+  })
+
+  it('keeps installation failures on the progress page with a retry action', async () => {
+    const mounted = await mountKeptProgress()
+    mounted.store.status = 'setup-error'
+    await nextTick()
+    await vi.advanceTimersByTimeAsync(1000)
+    expect(routerReplace).not.toHaveBeenCalled()
+    expect(mounted.root.querySelector('button')?.textContent).toBe('bots.create.retry')
+    mounted.app.unmount(); mounted.root.remove()
   })
 
   it('redirects back to the create form when reactivated without an in-memory stream', async () => {

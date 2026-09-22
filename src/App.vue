@@ -18,7 +18,7 @@ const isDownloadRoute = computed(() => route.path.startsWith('/download'))
 const isBlogsRoute = computed(() => route.path.startsWith('/blogs'))
 const isWaitlistRoute = computed(() => route.path.startsWith('/waitlist'))
 const isHomeRoute = computed(() => route.path === '/')
-const isPlainContentRoute = computed(() => isDownloadRoute.value || isBlogsRoute.value || isWaitlistRoute.value)
+const isPlainContentRoute = computed(() => isDownloadRoute.value || isBlogsRoute.value || isWaitlistRoute.value || route.meta.legal === true)
 
 // Single owner of the <html> `dark` class. The landing page always *renders*
 // dark, but must never overwrite the user's saved preference — so we force the
@@ -37,7 +37,6 @@ const isMemohNet = computed(() => {
   return hostname === 'memoh.net'
 })
 
-const docsUrl = computed(() => locale.value === 'zh' ? 'https://docs.memoh.ai/zh' : 'https://docs.memoh.ai')
 const miitBeianUrl = 'https://beian.miit.gov.cn/'
 const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 
@@ -70,16 +69,13 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
               <p class="footer-tagline" v-html="th('footer.tagline')" />
             </div>
 
-            <!-- Product, resources, and community destinations. -->
             <div class="footer-links">
               <div class="footer-link-group">
                 <h2 class="footer-link-heading">{{ t('footer.product') }}</h2>
                 <router-link to="/download" class="footer-link">{{ t('nav.download') }}</router-link>
-                <a href="https://docs.memoh.ai/self-hosted/" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.selfHosting') }}</a>
               </div>
               <div class="footer-link-group">
                 <h2 class="footer-link-heading">{{ t('footer.resources') }}</h2>
-                <a :href="docsUrl" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('nav.docs') }}</a>
                 <router-link to="/blogs" class="footer-link">{{ t('nav.blogs') }}</router-link>
                 <a href="https://github.com/felinics/Memoh/releases" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.releases') }}</a>
                 <a href="https://github.com/felinics/Memoh/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.contributing') }}</a>
@@ -102,10 +98,15 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
                 <a href="https://github.com/felinics/connect-it" target="_blank" rel="noopener noreferrer" class="footer-link">Connect It</a>
                 <a href="https://github.com/felinics/ui" target="_blank" rel="noopener noreferrer" class="footer-link">Felinic UI</a>
               </div>
+              <nav class="footer-link-group" :aria-label="t('footer.legal')">
+                <h2 class="footer-link-heading">{{ t('footer.legal') }}</h2>
+                <RouterLink class="footer-link" :to="{ path: '/legal/terms', query: { lang: locale } }">{{ t('legal.titles.terms') }}</RouterLink>
+                <RouterLink class="footer-link" :to="{ path: '/legal/privacy', query: { lang: locale } }">{{ t('legal.titles.privacy') }}</RouterLink>
+                <RouterLink class="footer-link" :to="{ path: '/legal/cross-border', query: { lang: locale } }">{{ t('legal.titles.cross-border') }}</RouterLink>
+              </nav>
             </div>
           </div>
 
-          <!-- Bottom row: legal line -->
           <div class="footer-bottom">
             <div class="footer-company">
               <span class="footer-copyright">{{ t('footer.copyright') }}</span>
@@ -180,7 +181,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 }
 .footer-links {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
+  grid-template-columns: repeat(6, minmax(0, 1fr));
   gap: 32px;
 }
 .footer-link-group {

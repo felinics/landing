@@ -75,10 +75,23 @@ export interface UseSidebarInfiniteScrollOptions {
   enableViewportPrefetch?: boolean
 }
 
+const prefetchDistance = 200
+
 export function useSidebarInfiniteScroll(options: UseSidebarInfiniteScrollOptions) {
   const loadMoreSentinel = ref<HTMLElement | null>(null)
   const contentHeight = ref(0)
   const viewportHeight = ref(0)
+
+  /** Match the observer's marker range, excluding padding after the marker. */
+  function isNearEnd() {
+    const viewport = options.scrollEl.value
+    if (!viewport || viewport.clientHeight <= 0) return false
+    const sentinel = loadMoreSentinel.value
+    if (!sentinel) return viewport.scrollHeight <= viewport.clientHeight
+    const marker = sentinel.getBoundingClientRect()
+    const bounds = viewport.getBoundingClientRect()
+    return marker.top <= bounds.bottom + prefetchDistance && marker.bottom >= bounds.top
+  }
 
   function measureScroll() {
     const el = options.scrollEl.value
@@ -112,7 +125,7 @@ export function useSidebarInfiniteScroll(options: UseSidebarInfiniteScrollOption
     },
     {
       root: options.scrollEl,
-      rootMargin: '0px 0px 200px 0px',
+      rootMargin: `0px 0px ${prefetchDistance}px 0px`,
       threshold: 0,
     },
   )
@@ -161,5 +174,6 @@ export function useSidebarInfiniteScroll(options: UseSidebarInfiniteScrollOption
     showSentinel,
     resetScrollTop,
     measureScroll,
+    isNearEnd,
   }
 }

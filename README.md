@@ -55,6 +55,21 @@ npm install
 npm run dev
 ```
 
+### 套餐入口联调
+
+Pricing 的按钮跳转到 Cloud `/plans?plan=<code>`，当前官网使用 `go`、`pro`、`premium`。
+这些值必须与 Cloud 默认 storefront 的 `code` 一致；实际购买价格与资格由 Cloud 目录决定。
+Cloud 应先上线对 `plan` 的支持，再上线官网链接。
+
+默认目标为 `https://app.memoh.net`。本地联调可指定 Cloud 前端地址：
+
+```bash
+VITE_MEMOH_APP_URL=http://127.0.0.1:8094 pnpm dev --host 127.0.0.1 --port 5194
+```
+
+此变量只影响 Pricing 套餐按钮，不改变普通 Get Started 或下载入口。
+支付验收还需要 Cloud 测试工作区、可购买的套餐和 Stripe 测试配置；本地前端本身不提供支付后端。
+
 ### Build for Production
 
 ```bash

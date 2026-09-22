@@ -1,58 +1,79 @@
 <template>
   <Popover v-model:open="open">
-    <!-- 不走 Button shape="circle":这是承载 SVG 进度环 + hover 展开 popover
-         的复合触发器,刻意无 hover 填充(安静的状态环,不是操作钮);
-         rounded-full 几何与 circle 令牌一致,chrome 关系不同,留在本地。 -->
-    <PopoverTrigger
-      ref="triggerRef"
-      as="button"
-      type="button"
-      :class="[
-        'inline-flex items-center justify-center size-9 rounded-full text-foreground transition-[opacity,scale] duration-200 ease-out disabled:opacity-50 disabled:pointer-events-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring motion-reduce:transition-none',
-        ($attrs.class as string | undefined) ?? '',
-      ]"
-      :disabled="!sessionId"
-      :aria-label="ringLabel"
-      @mouseenter="handleMouseEnter"
-      @mouseleave="handleMouseLeave"
+    <!-- Use a native element reference: nested tooltip/popover roots must not share their anchor. -->
+    <span
+      ref="anchorRef"
+      v-bind="$attrs"
+      class="inline-flex self-center"
     >
-      <svg
-        viewBox="0 0 24 24"
-        class="size-6 -rotate-90"
-        aria-hidden="true"
-      >
-        <circle
-          cx="12"
-          cy="12"
-          :r="radius"
-          fill="none"
-          stroke="currentColor"
-          :stroke-width="strokeWidth"
-          class="opacity-20"
-        />
-        <circle
-          cx="12"
-          cy="12"
-          :r="radius"
-          fill="none"
-          :class="ringColorClass"
-          stroke="currentColor"
-          stroke-linecap="round"
-          :stroke-width="strokeWidth"
-          :stroke-dasharray="circumference"
-          :stroke-dashoffset="dashOffset"
-          class="transition-all"
-        />
-      </svg>
-    </PopoverTrigger>
+      <TooltipProvider :delay-duration="200">
+        <Tooltip :disabled="open">
+          <TooltipTrigger as-child>
+            <PopoverTrigger as-child>
+              <!-- TODO(ui): Review persistent open-state highlighting for ghost triggers
+                   across the component library. Keep the shared behavior here until
+                   that review; any change should cover all affected triggers. -->
+              <Button
+                variant="ghost"
+                tone="muted"
+                size="icon-sm"
+                class="size-6 rounded-sm max-md:size-11"
+                :class="{ 'text-foreground': open }"
+                :disabled="!sessionId"
+                :aria-label="ringLabel"
+              >
+                <svg
+                  viewBox="0 0 24 24"
+                  class="size-3.5 -rotate-90"
+                  aria-hidden="true"
+                >
+                  <circle
+                    cx="12"
+                    cy="12"
+                    :r="radius"
+                    fill="none"
+                    stroke="currentColor"
+                    :stroke-width="strokeWidth"
+                    class="opacity-40"
+                  />
+                  <circle
+                    cx="12"
+                    cy="12"
+                    :r="radius"
+                    fill="none"
+                    :class="ringColorClass"
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    :stroke-width="strokeWidth"
+                    :stroke-dasharray="circumference"
+                    :stroke-dashoffset="dashOffset"
+                    class="transition-[stroke-dashoffset] motion-reduce:transition-none"
+                  />
+                </svg>
+              </Button>
+            </PopoverTrigger>
+          </TooltipTrigger>
+          <TooltipContent
+            side="top"
+            align="end"
+          >
+            <div>{{ contextWindow == null ? t('chat.sessionInfoRingAria') : t('chat.contextUsedPercent', { percent: Math.round(contextPercent) }) }}</div>
+            <div class="opacity-70">
+              {{ contextWindow == null
+                ? t('chat.infoContextTokensNoWindow', { used: formatTokenCount(contextTokens) })
+                : t('chat.contextUsedTokens', { used: formatTokenCount(contextTokens), window: formatTokenCount(contextWindow) }) }}
+            </div>
+          </TooltipContent>
+        </Tooltip>
+      </TooltipProvider>
+    </span>
     <PopoverContent
-      class="flex w-80 flex-col p-0 max-h-[60vh] overflow-hidden"
+      :reference="anchorRef ?? undefined"
+      class="flex w-80 flex-col p-0 max-h-(--reka-popover-content-available-height) overflow-hidden"
       align="end"
       side="top"
       :side-offset="8"
-      @mouseenter="handleContentMouseEnter"
-      @mouseleave="handleMouseLeave"
-      @open-auto-focus="handleOpenAutoFocus"
+      :collision-padding="8"
     >
       <SessionInfoPanel
         :visible="open"
@@ -62,9 +83,7 @@
       />
     </PopoverContent>
   </Popover>
-  <!-- Sibling of the Popover: the modal's pointer-events lock closes the
-       hover popover, which unmounts the panel — a dialog nested there would
-       unmount with it. -->
+  <!-- The lifecycle dialog outlives the popover that launched it. -->
   <ContextLifecycleDialog
     v-if="lifecycleEverOpened"
     v-model:open="lifecycleOpen"
@@ -75,10 +94,10 @@
 <script setup lang="ts">
 import { computed, defineAsyncComponent, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Popover, PopoverContent, PopoverTrigger } from '@felinic/ui'
+import { Button, Popover, PopoverContent, PopoverTrigger, Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@felinic/ui'
 import SessionInfoPanel from './session-info-panel.vue'
 import { useSessionInfo } from '../composables/useSessionInfo'
-import { contextPressureToneClass } from '../composables/context-categories'
+import { contextPressureToneClass, formatTokenCount } from '../composables/context-categories'
 
 defineOptions({ inheritAttrs: false })
 
@@ -94,10 +113,9 @@ const { t } = useI18n()
 const open = ref(false)
 const lifecycleOpen = ref(false)
 const lifecycleEverOpened = ref(false)
-const triggerRef = ref<{ $el?: HTMLElement } | null>(null)
+const anchorRef = ref<HTMLElement | null>(null)
 
 function openLifecycle() {
-  clearTimers()
   open.value = false
   lifecycleEverOpened.value = true
   lifecycleOpen.value = true
@@ -107,84 +125,30 @@ function openLifecycle() {
 // after the dialog releases its focus trap, and override its default target.
 function restoreTriggerFocus(event: Event) {
   event.preventDefault()
-  triggerRef.value?.$el?.focus?.()
-}
-
-// Hover opens without moving focus; a click or Enter on the trigger lets the
-// popover take focus so its actions are reachable from the keyboard.
-let openedByHover = false
-function handleOpenAutoFocus(event: Event) {
-  if (openedByHover) event.preventDefault()
-  openedByHover = false
+  anchorRef.value?.querySelector('button')?.focus()
 }
 
 const visibleRef = computed(() => props.visible ?? true)
 const overrideModelIdRef = computed(() => props.overrideModelId ?? '')
 const fallbackContextWindowRef = computed(() => props.fallbackContextWindow ?? null)
-const { contextPercent, contextWindow, sessionId } = useSessionInfo({
+const { contextPercent, contextWindow, contextTokens, sessionId } = useSessionInfo({
   visible: visibleRef,
   overrideModelId: overrideModelIdRef,
   fallbackContextWindow: fallbackContextWindowRef,
 })
 
 const radius = 10
-const strokeWidth = 2.5
+const strokeWidth = 3
 const circumference = computed(() => 2 * Math.PI * radius)
 const dashOffset = computed(() => {
   const pct = Math.max(0, Math.min(100, contextPercent.value))
   return circumference.value * (1 - pct / 100)
 })
 
-const ringColorClass = computed(() => contextPressureToneClass(contextPercent.value, 'text'))
+// Normal usage inherits the button's hover color; pressure keeps its warning tone.
+const ringColorClass = computed(() => contextPercent.value >= 70 ? contextPressureToneClass(contextPercent.value, 'text') : '')
 const ringLabel = computed(() => (contextWindow.value == null
   ? t('chat.sessionInfoRingAria')
   : t('chat.sessionInfoRingAriaUsage', { percent: Math.round(contextPercent.value) })))
 
-let openTimer: ReturnType<typeof setTimeout> | null = null
-let closeTimer: ReturnType<typeof setTimeout> | null = null
-
-function clearTimers() {
-  if (openTimer) {
-    clearTimeout(openTimer)
-    openTimer = null
-  }
-  if (closeTimer) {
-    clearTimeout(closeTimer)
-    closeTimer = null
-  }
-}
-
-function handleMouseEnter() {
-  if (!sessionId.value) return
-  if (closeTimer) {
-    clearTimeout(closeTimer)
-    closeTimer = null
-  }
-  if (open.value) return
-  openTimer = setTimeout(() => {
-    openedByHover = true
-    open.value = true
-    openTimer = null
-  }, 150)
-}
-
-function handleContentMouseEnter() {
-  if (closeTimer) {
-    clearTimeout(closeTimer)
-    closeTimer = null
-  }
-}
-
-function handleMouseLeave() {
-  if (openTimer) {
-    clearTimeout(openTimer)
-    openTimer = null
-  }
-  closeTimer = setTimeout(() => {
-    open.value = false
-    closeTimer = null
-  }, 200)
-}
-
-defineExpose({ clearTimers })
 </script>

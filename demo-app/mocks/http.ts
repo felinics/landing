@@ -1,11 +1,21 @@
 import { seedBotRoutes, listRows } from './fixtures'
+import appIcons from './app-icons.json'
 import contracts from './contracts.json'
-import { bots, providers, models, settings, sessions, user, now, conversation, dependencies, packages, installedSkills, files, directories, type RecordData } from './data'
+import { workspaceTargets, workdirsFor, bots, providers, models, settings, sessions, user, now, conversation, dependencies, packages, installedSkills, files, directories, type RecordData } from './data'
 
 const nativeFetch = globalThis.fetch.bind(globalThis)
 const responses = contracts as Record<string, any>
 export const requests: { method: string; path: string; handled: boolean }[] = []
 const saved = seedBotRoutes()
+// Catalog, installation preview and installed rows share the same demo entities.
+const appCatalog = dependencies.map(dep => ({
+ icon:appIcons.icons[dep.id as keyof typeof appIcons.icons], app_id:dep.id!, registry_id:'memoh', name:dep.name!, description:dep.description,
+ version:'1.0.0', revision:'demo-v1', schema_version:'1.0', category:'development',
+ category_name:'Development', categories:[], tags:[], author:{name:'Memoh',email:''},
+ dependencies:[dep.id!], dependency_count:1, connectors:[], connector_count:0,
+ skills:[], skill_count:0,
+}))
+for (const bot of bots) saved.set(`/bots/${bot.id}/apps`, {workspace_state:'running', items:appCatalog.filter(app=>['claude-code','codex','node'].includes(app.app_id)).map(app=>({...app,installation_id:`${bot.id}-${app.app_id}`,status:'installed',reason:'user',installed_at:now,dependencies:app.dependencies.map(id=>({id,dependency:structuredClone(dependencies.find(dep=>dep.id===id))}))}))})
 const clone = <T>(value: T): T => structuredClone(value)
 const items = (values: any[]) => ({ items: values, total: values.length })
 const providerRows = (names: string[], prefix: string) => names.map((name,i) => ({ id:`${prefix}-${i}`, name, provider:name.toLowerCase(), client_type:name.toLowerCase(), enable:true, is_default:i===0, config:{ api_key:'demo-key' }, created_at:now, updated_at:now }))
@@ -21,7 +31,7 @@ const collections: Record<string, any[]> = {
  '/speech-models': [{id:'speech-0',name:'Alloy',model_id:'gpt-4o-mini-tts',provider_id:'speech-provider-0',enable:true,config:{voice:'alloy'}}],
  '/transcription-models': [{id:'transcription-0',name:'Whisper',model_id:'whisper-1',provider_id:'transcription-provider-0',enable:true}],
  '/video-models': [{id:'video-0',name:'Sora',model_id:'sora',provider_id:'video-provider-0',enable:true}],
- '/users/me/runtimes': [{id:'runtime-1',name:'My MacBook',hostname:'alex-macbook',os:'darwin',arch:'arm64',online:true,workspace_base:'/Users/alex/projects',capabilities:['exec','fs'],client_version:'0.19.0',created_at:now}],
+ '/users/me/runtimes': [{id:'runtime-alex-mini',name:"Alex's Mac Mini",hostname:'alex-mac-mini',os:'darwin',arch:'arm64',online:true,workspace_base:'/Users/alex/projects',capabilities:['exec','fs'],client_version:'0.19.0',created_at:now}],
 }
 const routeEntries = Object.entries(responses).map(([key,value]) => {
  const [method, template] = key.split(' ') as [string,string]
@@ -72,6 +82,13 @@ function read(path: string, query: URLSearchParams): any {
   const prefix=path.slice(0,-5), rows=collections[prefix]??[]
   return rows.map(p=>({...p,type:p.provider??p.client_type,provider:p.provider??p.client_type,config_schema:{type:'object',properties:{api_key:{type:'string',title:'API key'}}}}))
  }
+ if(path==='/supermarket/apps') {
+  const q=(query.get('q')??'').toLowerCase(), page=Math.max(1,Number(query.get('page'))||1), limit=Math.max(1,Number(query.get('limit'))||30)
+  const rows=appCatalog.filter(app=>`${app.name} ${app.description}`.toLowerCase().includes(q))
+  return {data:rows.slice((page-1)*limit,page*limit),page,limit,total:rows.length}
+ }
+ if(path==='/supermarket/categories') return {data:[{id:'development',name:'Development',names:{en:'Development',zh:'开发工具'},app_count:appCatalog.length,order:0,registries:[{id:'memoh',count:appCatalog.length}]}]}
+ if(path.startsWith('/supermarket/registries/') && path.includes('/apps/')) return appCatalog.find(app=>path===`/supermarket/registries/${app.registry_id}/apps/${app.app_id}`)??{}
  if(path==='/supermarket/packages') return {data:packages,page:1,limit:50,total:packages.length}
  if(path==='/supermarket/registries') return {registries:[{id:'memoh',name:'Memoh',description:'A collection of skills for everyday work',url:'',enabled:true}],items:[{id:'memoh',name:'Memoh'}]}
  if(path==='/supermarket/skills') return {data:packages.map(p=>({...p,skill_id:p.package_id,install_id:p.package_id,files:['SKILL.md'],author:{name:'Memoh'},source:{},artifact:{},category:'productivity',category_name:'Productivity'})),page:1,limit:50,total:packages.length}
@@ -83,15 +100,16 @@ function read(path: string, query: URLSearchParams): any {
   const [,bid,tail]=match as [string,string,string]
   const bot=bots.find(b=>b.id===bid||b.name===bid)??bots[0]!
   if(tail==='') return bot
+  if(tail.endsWith('/runtime-controls')) return {capabilities:{compact:false,goal:false,permission_modes:false,plan_mode:false},commands:[],modes:{supported:false,available_modes:[]},plan_mode:{supported:false,available_modes:[]}}
   if(tail==='/settings') return {...settings}
   if(tail==='/agents') return items([{id:'agent-native',bot_id:bid,name:'Memoh',runtime:'native',enabled:true,metadata:{},created_at:now,updated_at:now},{id:'agent-codex',bot_id:bid,name:'Codex',runtime:'codex',enabled:true,metadata:{},created_at:now,updated_at:now},{id:'agent-claude',bot_id:bid,name:'Claude Code',runtime:'claudecode',enabled:true,metadata:{},created_at:now,updated_at:now}])
-  if(tail==='/workspace-targets') return {targets:[{target_id:'container',kind:'container',name:'Workspace',online:true,primary:true,status:'running'}]}
-  if(tail==='/workdirs') return {items:[{id:`${bid}-workdir`,bot_id:bid,name:'Workspace',path:'/data',target_kind:'container',workspace_target_id:'container',archived:false,created_at:now,updated_at:now}]}
+  if(tail==='/workspace-targets') return {targets:workspaceTargets}
+  if(tail==='/workdirs') return {workdirs:workdirsFor(bid)}
   if(tail==='/sessions') return items(sessions.filter(s=>s.bot_id===bid))
   if(tail==='/sessions/model-preference-seed') return {model_id:'model-1',chat_model_id:'model-1',reasoning_effort:'high'}
   if(/^\/sessions\/[^/]+$/.test(tail)) return sessions.find(s=>s.id===tail.split('/')[2])??{}
   if(tail==='/messages') return items(query.has('before')||query.has('before_message_id')?[]:conversation(query.get('session_id')??'session-welcome'))
-  if(tail.endsWith('/status') && tail.startsWith('/sessions/')) return {message_count:12,skills:['research','writing'],context_usage:{used_tokens:8420,max_tokens:200000,context_window:200000},cache_stats:{}}
+  if(tail.endsWith('/status') && tail.startsWith('/sessions/')) return {message_count:12,skills:['research','writing'],context_usage:{used_tokens:106700,context_window:1024000,breakdown:[{kind:'system_prompt',token_estimate:1500},{kind:'workspace_instruction',token_estimate:580},{kind:'skills_catalog',token_estimate:220},{kind:'memory_recall',token_estimate:218},{kind:'conversation_event',token_estimate:39}],tool_defs:[{token_estimate:75300}],compaction:{enabled:true,auto_tokens:819200},budget_plan:{window:1024000,output_reserve:16384}},cache_stats:{cache_hit_rate:78.2,cache_read_tokens:379800}}
   if(tail==='/container') return {container_id:`demo-${bid}`,image:'memoh/workspace:latest',status:'running',task_running:true,container_path:'/data',runtime_backend:'docker',workspace_backend:'container',created_at:now,updated_at:now}
   if(tail.match(/^\/dependencies\/[^/]+\/script$/)) return {script:'# Browser-only demonstration\necho "Ready to install"',definition_revision:'demo-v1',dependency_id:tail.split('/')[2],version:'latest'}
   if(tail==='/container/terminal') return {available:true,shell:'/bin/bash'}
@@ -144,6 +162,13 @@ export async function demoFetch(input: RequestInfo | URL, init?: RequestInit): P
  if(method==='GET') return Response.json(read(path,url.searchParams)??{})
  let body:RecordData={}
  try{body=await request.json()}catch{}
+ if(/^\/bots\/[^/]+\/apps$/.test(path) && method==='POST') {
+  const app=appCatalog.find(app=>app.registry_id===body.registry_id && app.app_id===body.app_id && app.revision===body.revision)
+  if(!app) return Response.json({message:'Unknown demo app release'},{status:400})
+  const rows=saved.get(path).items
+  if(!rows.some((row:RecordData)=>row.app_id===app.app_id && row.registry_id===app.registry_id)) rows.push({...app,installation_id:crypto.randomUUID(),status:'installed',reason:'user',installed_at:now,dependencies:app.dependencies.map(id=>({id,dependency:clone(dependencies.find(dep=>dep.id===id))}))})
+  return eventStream(request,[{type:'started',kind:'app',id:app.app_id},{type:'step',kind:'dependency',id:app.dependencies[0]},{type:'step_done',kind:'dependency',id:app.dependencies[0],status:'installed'},{type:'done',status:'installed',version:app.version}])
+ }
  if(path.endsWith('/container')&&method==='POST') {
   const container={...read(path,url.searchParams),status:'running',task_running:true}
   saved.set(path,container)
@@ -188,7 +213,7 @@ export async function demoFetch(input: RequestInfo | URL, init?: RequestInit): P
  const rows=collections[path]??(path==='/bots'?bots:path.match(/^\/bots\/[^/]+\/sessions$/)?sessions:null)
  if(method==='POST'&&rows) {
   response={...body,id:crypto.randomUUID(),created_at:now,updated_at:now}
-  if(path.endsWith('/sessions')) Object.assign(response,{bot_id:path.split('/')[2],runtime_type:'native',type:'chat',session_mode:'chat',bot_agent_id:'agent-native',metadata:{},runtime_metadata:{}})
+  if(path.endsWith('/sessions')) Object.assign(response,{bot_id:path.split('/')[2],runtime_type:body.runtime_type??'native',type:body.type??'chat',session_mode:body.session_mode??'chat',bot_agent_id:body.bot_agent_id??'',metadata:body.metadata??{},runtime_metadata:body.runtime_metadata??{}})
   if(path==='/bots') Object.assign(response,{status:'ready',is_active:true,current_user_permissions:['chat','manage','workspace_read','workspace_write']})
   rows.push(response)
  } else {

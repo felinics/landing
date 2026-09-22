@@ -69,6 +69,8 @@ export interface SessionCompactionEvent {
 }
 
 export type BotSessionActivityEvent =
+  | { type: 'activity_ready', cache_invalidation: boolean }
+  | { type: 'session_invalidated', session_id: string }
   | SessionTouchedEvent
   | SessionTitleChangedEvent
   | SessionCreatedEvent
@@ -103,6 +105,7 @@ export interface RequestedSkillRequest {
 }
 
 export interface CommandActionListItem {
+  i18n_key?: string
   id?: string
   title: string
   description?: string
@@ -110,6 +113,9 @@ export interface CommandActionListItem {
 }
 
 export interface CommandActionResult {
+  data?: unknown
+  notice?: string
+  text_key?: string
   kind: string
   title?: string
   text?: string
@@ -188,10 +194,15 @@ export interface UIToolMessage {
   tool_call_id: string
   running: boolean
   progress?: unknown[]
+  /** Last elapsed time reported by the executing runtime. */
+  elapsed_time_seconds?: number
   approval?: UIToolApproval
   execution_location?: UIExecutionLocation
   user_input?: UIUserInput
   background_task?: UIBackgroundTask
+  // UI-only unified diff attached to the tool call at execution time
+  // (edit/write tools). Never part of the model-facing tool result.
+  diff?: string
 }
 
 export interface UIExecutionLocation {
@@ -265,6 +276,7 @@ export interface UIUserInputQuestion {
 }
 
 export interface UIUserInputOption {
+  label_key?: string
   id: string
   label: string
   description?: string
@@ -298,7 +310,21 @@ export interface UINoticeMessage {
   args?: Record<string, string>
 }
 
-export type UIMessage = UITextMessage | UIReasoningMessage | UIToolMessage | UIAttachmentsMessage | UIErrorMessage | UINoticeMessage
+export interface UICommandMessage {
+  id: number
+  type: 'command'
+  name?: string
+  content: string
+}
+
+export interface UIStatusMessage {
+  id: number
+  type: 'status'
+  name?: string
+  args?: Record<string, string>
+}
+
+export type UIMessage = UITextMessage | UIReasoningMessage | UIToolMessage | UIAttachmentsMessage | UIErrorMessage | UINoticeMessage | UICommandMessage | UIStatusMessage
 
 export interface UISkillActivationSkill {
   name: string
@@ -336,6 +362,7 @@ export interface UIUserTurn {
 }
 
 export interface UIAssistantTurn {
+  runtime_forkable?: boolean
   turn_id: string
   turn_position?: number
   role: 'assistant'
@@ -425,6 +452,7 @@ export interface RuntimeRunOperation {
 }
 
 export interface RuntimeCurrentRunView {
+  configuration_only?: boolean
   run_id: string
   turn_id: string
   // The originating send's client-issued id, echoed so live frames can be

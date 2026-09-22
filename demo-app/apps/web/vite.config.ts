@@ -13,6 +13,8 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  build: { outDir: '../../../public/memoh-demo', emptyOutDir: true },
+  // Keep prior hashed chunks available to already-open iframes during rebuilds.
+  // Clearing this served directory briefly routes the iframe to the host's 404.
+  build: { outDir: '../../../public/memoh-demo', emptyOutDir: false },
   server: { host: '127.0.0.1', port: 5181 },
 })

@@ -16,7 +16,7 @@
           {{ $t('bots.create.terminalTitle', { name: displayName }) }}
         </h1>
         <p class="mt-0.5 text-xs text-muted-foreground">
-          {{ status === 'error' ? $t('bots.create.failedSubtitle') : $t('bots.create.terminalSubtitle') }}
+          {{ (status === 'error' || status === 'setup-error') ? $t('bots.create.failedSubtitle') : $t('bots.create.terminalSubtitle') }}
         </p>
       </div>
     </div>
@@ -27,17 +27,17 @@
     />
 
     <div
-      v-if="status === 'error'"
+      v-if="status === 'error' || status === 'setup-error'"
       class="mt-6 flex justify-end gap-3"
     >
       <Button
+        v-if="status === 'error'"
         variant="outline"
         @click="handleBack"
       >
         {{ $t('bots.create.back') }}
       </Button>
       <Button
-        :disabled="status !== 'error'"
         @click="handleRetry"
       >
         {{ $t('bots.create.retry') }}
@@ -56,19 +56,37 @@ import { useQueryCache } from '@pinia/colada'
 import { getBotsQueryKey } from '@memohai/sdk/colada'
 import { useAvatarInitials } from '@/composables/useAvatarInitials'
 import { useBotCreateProgressStore } from '@/store/bot-create-progress'
+import { readCreatedAgentSession, writeCreatedAgentSession } from './created-agent-session'
+import { useOnboarding } from '@/composables/useOnboarding'
+import { readOnboardingBotResult, writeOnboardingBotResult } from '@/pages/onboarding/session'
 import BotCreateTerminal from './components/bot-create-terminal.vue'
 
+const props = defineProps<{ onboarding?: boolean }>()
+const onboardingSteps = useOnboarding()
 const router = useRouter()
 const { t } = useI18n()
 const queryCache = useQueryCache()
 const store = useBotCreateProgressStore()
-const { status, lines, display, bot, setupError } = storeToRefs(store)
+const { status, lines, display, bot, setupError, createdAgent, authorizationId, modelConfigured } = storeToRefs(store)
+if (store.status === 'idle') {
+  const saved = readCreatedAgentSession(props.onboarding)
+  const previous = props.onboarding ? readOnboardingBotResult() : null
+  if (saved) store.restore(saved, props.onboarding)
+  else if (previous?.agent && ['codex', 'claude-code'].includes(previous.agent.agentId)) {
+    store.restore({ botId: previous.botId, botName: '', displayName: '', agentId: previous.agent.botAgentId,
+      runtime: previous.agent.agentId as 'codex' | 'claude-code', authorizationId: previous.agent.authorizationId, setupError: null }, true)
+  } else if (previous) {
+    store.bot = { id: previous.botId }
+    store.modelConfigured = previous.modelConfigured
+    store.status = 'ready'
+  }
+}
 
 const displayName = computed(() => display.value?.display_name || '')
 const avatarFallback = useAvatarInitials(() => displayName.value)
 
 let navigated = false
-let readyRedirectTimer: ReturnType<typeof window.setTimeout> | null = null
+let readyRedirectTimer: number | null = null
 
 function clearReadyRedirectTimer() {
   if (readyRedirectTimer === null) return
@@ -84,6 +102,18 @@ async function goToBot() {
   if (navigated) return
   clearReadyRedirectTimer()
   navigated = true
+  if (props.onboarding && bot.value?.id) {
+    const runtime = createdAgent.value?.runtime
+    writeOnboardingBotResult({ botId: bot.value.id, modelConfigured: modelConfigured.value,
+      ...((runtime === 'codex' || runtime === 'claude-code') && { agent: {
+        agentId: runtime, botAgentId: createdAgent.value?.id ?? '', authorizationId: authorizationId.value,
+      } }),
+    })
+    void queryCache.invalidateQueries({ key: getBotsQueryKey() })
+    onboardingSteps.nextStep()
+    store.reset()
+    return
+  }
   const target = bot.value?.name ?? bot.value?.id
   if (setupError.value) {
     toast.error(setupError.value)
@@ -101,6 +131,7 @@ async function goToBot() {
   }
   // Reset only after navigation has committed, so the still-mounted terminal
   // never flashes empty before the view swaps.
+  writeCreatedAgentSession(null)
   store.reset()
 }
 
@@ -115,7 +146,8 @@ function scheduleReadyRedirect() {
 
 function guardLiveProgress() {
   if (status.value === 'idle') {
-    router.replace({ name: 'bot-new' })
+    if (props.onboarding) onboardingSteps.prevStep()
+    else router.replace({ name: 'bot-new' })
     return
   }
   if (status.value === 'ready' && !navigated) {
@@ -136,8 +168,7 @@ watch(
 )
 
 onMounted(() => {
-  // Direct navigation or a refresh drops the in-memory stream, so send the user
-  // back to the form rather than showing an empty terminal.
+  // Restored Agent setup resumes on the same Bot; an empty route returns to the form.
   guardLiveProgress()
 })
 
@@ -152,6 +183,7 @@ function handleRetry() {
 
 function handleBack() {
   store.reset()
-  router.replace({ name: 'bot-new' })
+  if (props.onboarding) onboardingSteps.prevStep()
+  else router.replace({ name: 'bot-new' })
 }
 </script>

@@ -4,7 +4,11 @@
       <TooltipTrigger as-child>
         <slot />
       </TooltipTrigger>
-      <TooltipContent class="max-w-80 whitespace-pre-wrap text-left leading-relaxed">
+      <TooltipContent
+        :side="side"
+        :side-offset="sideOffset"
+        class="max-w-80 whitespace-pre-wrap text-left leading-relaxed"
+      >
         {{ normalizedDescription }}
       </TooltipContent>
     </Tooltip>
@@ -18,6 +22,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@felin
 
 const props = defineProps<{
   description?: string | null
+  side?: 'top' | 'right' | 'bottom' | 'left'
+  sideOffset?: number
 }>()
 
 const open = defineModel<boolean>('open', { default: false })

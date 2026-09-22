@@ -60,7 +60,7 @@ const typed = (time: number) =>
             >
           </div>
         </div>
-        <MemohComposer
+        <MemohComposer folder="Reading Tracker" computer="Cloud Computer"
           :text="time < 6.5 ? typed(time) : ''"
           :focused="time >= 1.6 && time < 6.5"
           :busy="time >= 6.5 && time < 11"

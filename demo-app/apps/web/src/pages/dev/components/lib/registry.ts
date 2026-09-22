@@ -13,6 +13,7 @@ import SectionOverlays from '../sections/SectionOverlays.vue'
 import SectionNavigation from '../sections/SectionNavigation.vue'
 import SectionDataDisplay from '../sections/SectionDataDisplay.vue'
 import SectionFeedback from '../sections/SectionFeedback.vue'
+import SectionUpdateChip from '../sections/SectionUpdateChip.vue'
 import SectionLayout from '../sections/SectionLayout.vue'
 
 export interface WallSection {
@@ -32,5 +33,6 @@ export const wallSections: WallSection[] = [
   { id: 'navigation', label: 'Navigation', component: markRaw(SectionNavigation) },
   { id: 'data-display', label: 'Data Display', component: markRaw(SectionDataDisplay) },
   { id: 'feedback', label: 'Feedback', component: markRaw(SectionFeedback) },
+  { id: 'update-chip', label: 'Update chip', component: markRaw(SectionUpdateChip) },
   { id: 'layout', label: 'Layout', component: markRaw(SectionLayout) },
 ]

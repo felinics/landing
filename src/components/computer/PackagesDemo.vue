@@ -2,9 +2,13 @@
 import { useI18n } from "vue-i18n";
 import {
   Search,
+  Blocks,
+  MessageCircle,
+  Files,
+  Calendar,
+  Download,
   ArrowLeft,
   Github,
-  ChevronDown,
   MoreHorizontal,
   X,
   Check,
@@ -14,6 +18,13 @@ import DemoPlayer from "./DemoPlayer.vue";
 import DemoCursor from "./DemoCursor.vue";
 import PackageTile from "./PackageTile.vue";
 import MacTrafficLights from "./MacTrafficLights.vue";
+import MemohComposer from "./MemohComposer.vue";
+import { useDemoCheckpoints } from "./useDemoCheckpoints";
+const { holdAt, arrive, reset } = useDemoCheckpoints([
+  { at: 2.6, target: '.package-sidebar-install' },
+  { at: 7.6, target: '.package-modal-actions .primary' },
+  { at: 18.6, target: '.package-dependency .ui-button' },
+]);
 const { t } = useI18n();
 </script>
 <template>
@@ -22,71 +33,29 @@ const { t } = useI18n();
     :pace="0.88"
     :rest="2.1"
     :duration="22"
+    :hold-at="holdAt"
+    @reset="reset"
     :still="14"
     :label="t('computerDemo.packagesAlt')"
     v-slot="{ time, playing }"
   >
     <div class="package-app">
       <div class="package-titlebar"><MacTrafficLights /></div>
-      <div v-if="time < 3" class="package-page reveal">
-        <div class="package-heading">
-          <h4>Supermarket</h4>
-          <span class="ui-button"><Github />Submit</span>
-        </div>
-        <div class="package-search">
-          <Search />{{ t("computerDemo.searchPackages") }}
-        </div>
-        <div class="package-filters">
-          <span>{{ t("computerDemo.all") }}</span
-          ><span>Memoh</span><span>OpenAI</span>
-        </div>
-        <h5>{{ t("computerDemo.runtimes") }}</h5>
-        <div class="package-grid">
-          <PackageTile
-            name="Node.js"
-            icon="/demo/node.svg"
-            :description="t('computerDemo.nodeDescription')"
-          /><PackageTile
-            name="Python"
-            icon="/demo/python.svg"
-            :description="t('computerDemo.pythonDescription')"
-          /><PackageTile
-            name="uv"
-            icon="/demo/uv.svg"
-            :description="t('computerDemo.uvDescription')"
-          />
-        </div>
-      </div>
-      <div v-else-if="time < 12" class="package-page reveal">
-        <div class="package-back"><ArrowLeft />Supermarket</div>
-        <div class="package-detail-heading">
-          <img src="/demo/node.svg" alt="" />
-          <div>
-            <h4>Node.js <small>v1.0.0</small></h4>
-            <p>Memoh · Memoh</p>
-          </div>
-          <span class="ui-button primary">{{
-            t("computerDemo.installToBot")
-          }}</span>
-        </div>
-        <p class="package-description">
-          {{ t("computerDemo.nodeDescription") }}
-        </p>
-        <h5>{{ t("computerDemo.dependencies") }}</h5>
-        <div class="package-dependency">
-          <span
-            >Node.js<small>{{ t("computerDemo.nodeDescription") }}</small></span
-          ><span class="package-version">24.21.0</span>
-        </div>
-        <h5>{{ t("computerDemo.information") }}</h5>
-        <div class="package-information">
-          <span>{{ t("computerDemo.version") }}<b>1.0.0</b></span
-          ><span>{{ t("computerDemo.source") }}<b>Memoh</b></span>
-        </div>
+      <div v-if="time < 12" class="package-workbench">
+        <aside class="package-sidebar">
+          <div class="package-sidebar-nav"><MessageCircle /><Files /><Calendar /><span><Blocks />Supermarket</span></div>
+          <div class="package-search"><Search />{{ t('computerDemo.searchPackages') }}</div>
+          <small>{{ t('computerDemo.installed') }}</small>
+          <div v-for="app in [{name:'Claude Code',icon:'/brands/claude-code-color.svg'},{name:'Codex',icon:'/brands/codex-blob.svg'},{name:'Node.js',icon:'/demo/node.svg'}]" :key="app.name" class="package-sidebar-row"><i class="package-sidebar-icon"><img :src="app.icon" alt="" /></i><span>{{ app.name }}<em>Memoh</em></span></div>
+          <small>Supermarket</small>
+          <div class="package-sidebar-row"><i class="package-sidebar-icon"><img src="/demo/uv.svg" alt="" /></i><span>uv<small>{{ t('computerDemo.uvDescription') }}</small><em>Memoh <span class="package-sidebar-install"><Download /></span></em></span></div>
+          <div class="package-sidebar-account">A <span>Alex Chen</span></div>
+        </aside>
+        <div class="package-chat-welcome"><h4>{{ t('computerDemo.welcome') }}</h4><MemohComposer folder="Design Studio" computer="Alex's Mac Mini" model="DeepSeek V4.1 Flash" /></div>
       </div>
       <div v-else-if="time < 16" class="package-page reveal">
         <div class="package-heading">
-          <h4>Packages</h4>
+          <h4>{{ t("computerDemo.apps") }}</h4>
           <span class="ui-button primary">{{
             t("computerDemo.browseSupermarket")
           }}</span>
@@ -111,7 +80,7 @@ const { t } = useI18n();
         </div>
       </div>
       <div v-else class="package-page reveal">
-        <div class="package-back"><ArrowLeft />Packages</div>
+        <div class="package-back"><ArrowLeft />{{ t("computerDemo.apps") }}</div>
         <div class="package-detail-heading">
           <span class="package-detail-icon"><Github /></span>
           <div><h4>GitHub</h4></div>
@@ -136,7 +105,7 @@ const { t } = useI18n();
           ><span v-else class="package-switch"><i /></span>
         </div>
       </div>
-      <div v-if="time >= 5 && time < 12" class="package-modal-backdrop reveal">
+      <div v-if="time >= 3 && time < 12" class="package-modal-backdrop reveal">
         <div class="package-modal">
           <div class="package-heading">
             <h4>
@@ -150,13 +119,11 @@ const { t } = useI18n();
             </h4>
             <X />
           </div>
-          <p>Node.js <span class="muted">v1.0.0</span></p>
-          <template v-if="time < 8"
-            ><label>{{ t("computerDemo.selectBot") }}</label>
-            <div class="package-select">Package Demo<ChevronDown /></div>
+          <p>uv <span class="muted">v1.0.0</span></p>
+          <template v-if="time < 8">
             <div class="package-install-note">
               <strong>{{ t("computerDemo.installWill") }}</strong>
-              <p>{{ t("computerDemo.installNode") }}</p>
+              <p>{{ t("computerDemo.installUv") }}</p>
             </div>
             <div class="package-modal-actions">
               <span class="ui-button">{{ t("computerDemo.cancel") }}</span
@@ -170,7 +137,7 @@ const { t } = useI18n();
               <Check v-if="time > 10.5" /><LoaderCircle
                 v-else
                 class="spinning"
-              /><span>Node.js</span
+              /><span>uv</span
               ><span class="muted">{{
                 t(
                   time > 10.5
@@ -180,7 +147,7 @@ const { t } = useI18n();
               }}</span>
             </div>
             <div class="package-log">
-              $ node --version<br /><span v-if="time > 10.5">v24.21.0</span>
+              $ uv --version<br /><span v-if="time > 10.5">uv 0.8.15</span>
             </div></template
           >
         </div>
@@ -190,10 +157,8 @@ const { t } = useI18n();
       :playing="playing"
       :target="
         time < 3
-          ? '.package-tile'
-          : time < 5
-            ? '.package-detail-heading .ui-button'
-            : time < 8
+          ? '.package-sidebar-install'
+          : time < 8
               ? '.package-modal-actions .primary'
               : time < 16
                 ? '.package-tile'
@@ -205,10 +170,10 @@ const { t } = useI18n();
       :y="time < 3 ? 61 : time < 5 ? 25 : time < 12 ? 80 : time < 16 ? 34 : 61"
       :click="
         (time > 2.6 && time < 3) ||
-        (time > 4.6 && time < 5) ||
         (time > 7.6 && time < 8) ||
         (time > 18.6 && time < 19)
       "
+      @arrive="arrive"
     />
   </DemoPlayer>
 </template>

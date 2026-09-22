@@ -20,17 +20,18 @@
   </div>
 
   <template v-else>
-    <SettingsSection v-if="rows.length || subject === 'bot'">
+    <SettingsSection
+      v-if="rows.length || subject === 'bot'"
+      bordered
+    >
       <!-- Bot direction always lists the native workspace first: it is part
-           of every bot and can never be revoked, so it gets a caption instead
-           of a switch. -->
+           of every bot and can never be revoked, so its switch stays enabled and cannot be edited. -->
       <SettingsRow
         v-if="subject === 'bot'"
         :label="t('bots.remoteRuntime.nativeWorkspace')"
-        :description="t('computerAccess.nativeAlwaysOn')"
       >
         <template #leading>
-          <Cloud class="size-4 text-muted-foreground" />
+          <CloudIcon class="size-4 text-muted-foreground" />
         </template>
         <Switch
           :model-value="true"
@@ -58,7 +59,7 @@
               {{ avatarInitials(row.name) }}
             </AvatarFallback>
           </Avatar>
-          <Laptop
+          <ComputerIcon
             v-else
             class="size-4 text-muted-foreground"
           />
@@ -83,18 +84,23 @@
         </div>
       </SettingsRow>
 
-      <!-- Bot direction with zero account computers: the connect CTA lives in
-           the same frame, one row under the native workspace. -->
+      <!-- Bot direction with zero account computers: a ghost row standing in
+           for the computer the user could connect — it looks like a real row,
+           but the trailing slot is the add action, not a switch. -->
       <SettingsRow
         v-if="subject === 'bot' && rows.length === 0"
-        :label="t('computerAccess.emptyComputers')"
+        :label="t('computerAccess.yourComputer')"
+        :description="t('computerAccess.notConnected')"
       >
+        <template #leading>
+          <ComputerIcon class="size-4 text-muted-foreground" />
+        </template>
         <Button
           variant="outline"
           size="sm"
-          @click="goToRuntimes"
+          @click="emit('addComputer')"
         >
-          {{ t('computerAccess.connectCta') }}
+          {{ t('chat.continueOn.addComputer') }}
         </Button>
       </SettingsRow>
     </SettingsSection>
@@ -113,7 +119,6 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
 import { useQuery } from '@pinia/colada'
 import type { BotsBot } from '@memohai/sdk'
 import { getBotsQuery } from '@memohai/sdk/colada'
@@ -128,7 +133,7 @@ import {
   Switch,
   toast,
 } from '@felinic/ui'
-import { Cloud, Laptop } from 'lucide-vue-next'
+import { CloudIcon, ComputerIcon } from '@memohai/icon/ui'
 import { avatarInitials } from '@/composables/useAvatarInitials'
 import { resolveApiErrorMessage } from '@/utils/api-error'
 import { useAccountRuntimes, useComputerAccessActions, useComputerAccessGrants } from './use-computer-access'
@@ -140,6 +145,11 @@ import { useAccountRuntimes, useComputerAccessActions, useComputerAccessGrants }
 const props = defineProps<{
   runtime?: { id: string, name: string } | null
   bot?: { id: string, name: string } | null
+}>()
+
+const emit = defineEmits<{
+  /** The zero-state ghost row's add action — the host opens the connect wizard. */
+  addComputer: []
 }>()
 
 type AccessRow = {
@@ -155,7 +165,6 @@ type AccessRow = {
 )
 
 const { t } = useI18n()
-const router = useRouter()
 
 const subject = computed<'runtime' | 'bot'>(() => (props.runtime ? 'runtime' : 'bot'))
 
@@ -243,9 +252,5 @@ function retry(): void {
   void refetchGrants()
   if (subject.value === 'runtime') void refetchBots()
   else void refetchRuntimes()
-}
-
-function goToRuntimes(): void {
-  void router.push({ name: 'runtimes' })
 }
 </script>

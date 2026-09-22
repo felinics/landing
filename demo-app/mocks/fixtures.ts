@@ -1,5 +1,5 @@
 import { codexModels, claudeCodeModels } from './agent-models'
-import { bots, now, installedSkills, dependencies, type RecordData } from './data'
+import { demoAgents, bots, now, installedSkills, dependencies, type RecordData } from './data'
 
 export function seedBotRoutes(): Map<string, any> {
   const routes=new Map<string,any>()
@@ -20,7 +20,7 @@ export function seedBotRoutes(): Map<string, any> {
     put('/connectors',{items:[{alias:'GitHub',connection_id:'connection-github',connector_type:'github',enabled:true,auth_method:'oauth',status:'active'},{alias:'Notion',connection_id:'connection-notion',connector_type:'notion',enabled:true,auth_method:'oauth',status:'active'}]})
     put('/agents/agent-codex/models', codexModels)
     put('/agents/agent-claude/models', claudeCodeModels)
-    put('/agents',{items:[{id:'agent-codex',bot_id:bot.id,name:'Codex',runtime:'codex',enabled:true,agent_credential_id:'credential-demo',metadata:{provider:'codex',auth:'api_key'},created_at:now,updated_at:now},{id:'agent-claude',bot_id:bot.id,name:'Claude Code',runtime:'claude-code',enabled:true,metadata:{provider:'claude-code',auth:'workspace'},created_at:now,updated_at:now}]})
+    put('/agents',{items:demoAgents.map(agent=>({...agent,bot_id:bot.id}))})
     put('/container/skills',{skills:installedSkills})
     const cap={hard_limit_supported:true,soft_limit_supported:true}
     put('/container/metrics',{backend:'docker',supported:true,sampled_at:now,status:{exists:true,task_running:true},metrics:{cpu:{usage_percent:12.4,usage_nanocores:124000000},memory:{usage_bytes:384*1024*1024,limit_bytes:2048*1024*1024,usage_percent:18.75},storage:{used_bytes:128*1024*1024,path:'/data'}},resource_limits:{desired:{cpu_millicores:2000,memory_bytes:2147483648,storage_bytes:10737418240},applied:{cpu_millicores:2000,memory_bytes:2147483648,storage_bytes:10737418240},capabilities:{cpu:cap,memory:cap,storage:cap},observed:{cpu_usage_percent:12.4,memory_usage_bytes:402653184,memory_limit_bytes:2147483648,storage_used_bytes:134217728},status:'applied',backend:'docker',runtime_backend:'docker',workspace_backend:'container'}})

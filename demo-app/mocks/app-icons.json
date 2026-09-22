@@ -1,0 +1,51 @@
+{
+  "icons": {
+    "node": {
+      "card": {
+        "digest": "3856aaf4a29f690822d2d27653015019893fa082a57f382043429b8b649bc892"
+      },
+      "detail": {
+        "digest": "3856aaf4a29f690822d2d27653015019893fa082a57f382043429b8b649bc892"
+      }
+    },
+    "python": {
+      "card": {
+        "digest": "651b4d5b41dbf56d36f2df5ac704d2b86c692af7e165db5c3f27aabdf14d07e8"
+      },
+      "detail": {
+        "digest": "651b4d5b41dbf56d36f2df5ac704d2b86c692af7e165db5c3f27aabdf14d07e8"
+      }
+    },
+    "uv": {
+      "card": {
+        "digest": "1526e0f7060de53a8533bd4bd6d3b2e2de3f5a6b099efa4fad4262f7330a967f"
+      },
+      "detail": {
+        "digest": "1526e0f7060de53a8533bd4bd6d3b2e2de3f5a6b099efa4fad4262f7330a967f"
+      }
+    },
+    "codex": {
+      "card": {
+        "digest": "af684aa7864a9a4177f0508874c3181bebadb1362199b0d30400b932e9d95edb"
+      },
+      "detail": {
+        "digest": "af684aa7864a9a4177f0508874c3181bebadb1362199b0d30400b932e9d95edb"
+      }
+    },
+    "claude-code": {
+      "card": {
+        "digest": "2f6b21851c4b5def01153a08372e0919c51c790a4bd20f5e05c7512ac7890b93"
+      },
+      "detail": {
+        "digest": "2f6b21851c4b5def01153a08372e0919c51c790a4bd20f5e05c7512ac7890b93"
+      }
+    }
+  },
+  "assets": {
+    "3856aaf4a29f690822d2d27653015019893fa082a57f382043429b8b649bc892": "/memoh-demo/demo-icons/node.svg",
+    "651b4d5b41dbf56d36f2df5ac704d2b86c692af7e165db5c3f27aabdf14d07e8": "/memoh-demo/demo-icons/python.svg",
+    "1526e0f7060de53a8533bd4bd6d3b2e2de3f5a6b099efa4fad4262f7330a967f": "/memoh-demo/demo-icons/uv.svg",
+    "af684aa7864a9a4177f0508874c3181bebadb1362199b0d30400b932e9d95edb": "/memoh-demo/demo-icons/codex.svg",
+    "2f6b21851c4b5def01153a08372e0919c51c790a4bd20f5e05c7512ac7890b93": "/memoh-demo/demo-icons/claude-code.svg"
+  }
+}

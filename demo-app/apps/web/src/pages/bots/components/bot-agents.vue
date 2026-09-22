@@ -132,20 +132,6 @@
         </SettingsRow>
       </SettingsSection>
 
-      <AddBotAgentDialog
-        v-model:open="addOpen"
-        :bot-id="botId"
-        :profiles="profiles"
-        :agents="agents"
-        :bot-metadata="botMetadata"
-        @created="onAgentCreated"
-      />
-
-      <DependencyEnableFlow
-        ref="enableFlow"
-        :bot-id="botId"
-      />
-
       <ConfirmDeleteDialog
         :open="!!deleteTarget"
         :title="t('bots.agent.deleteTitle')"
@@ -202,10 +188,24 @@
       </SettingsShell>
     </DetailPane>
   </SwapTransition>
+  <DependencyEnableFlow
+    ref="enableFlow"
+    :bot-id="botId"
+  />
+  <AddBotAgentDialog
+    v-model:open="addOpen"
+    :bot-id="botId"
+    :profiles="profiles"
+    :agents="agents"
+    :bot-metadata="botMetadata"
+    @created="onAgentCreated"
+  />
 </template>
 
 <script setup lang="ts">
-import { computed, reactive, ref, useTemplateRef, watch } from 'vue'
+import { externalAgentDisplayName, normalizeAgentID } from '@/utils/external-agent'
+import { computed, nextTick, reactive, ref, useTemplateRef, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 import { useMutation, useQuery, useQueryCache } from '@pinia/colada'
 import {
@@ -228,7 +228,8 @@ import {
   Switch,
   toast,
 } from '@felinic/ui'
-import { MoreHorizontal, Plus, Settings, Trash2 } from 'lucide-vue-next'
+import { MoreHorizontal, Plus, Trash2 } from 'lucide-vue-next'
+import { SettingsIcon as Settings } from '@memohai/icon/ui'
 import {
   deleteBotsByBotIdAgentsById,
   getAcpProfiles,
@@ -251,11 +252,9 @@ import { externalAgentModelsQueryKey } from '@/composables/useAgentModelCatalog'
 import { useViewSwap } from '@/composables/useViewSwap'
 import { resolveApiErrorMessage } from '@/utils/api-error'
 import {
-  acpAgentDisplayName,
   emptyACPAgentForm,
   ensureACPAgentForm,
   findMissingRequiredManagedField,
-  normalizeACPAgentID,
   normalizeACPForm,
   readACPConfig,
   withACPMetadata,
@@ -294,6 +293,22 @@ const { view, direction, openDetail, backToList } = useViewSwap()
 const selectedID = ref('')
 const selectedName = ref('')
 
+const route = useRoute()
+const router = useRouter()
+const addRequested = computed(() => route.name === 'bot-detail'
+  && route.query.tab === 'agents'
+  && route.query.addAgent === props.botId)
+watch(addRequested, async (requested) => {
+  if (!requested) return
+  // Wait for the existing dialog to mount, including when this tab was cached.
+  await nextTick()
+  if (!addRequested.value) return
+  addOpen.value = true
+  const query = { ...route.query }
+  delete query.addAgent
+  await router.replace({ query })
+}, { immediate: true, flush: 'post' })
+
 const { data: profileData } = useQuery({
   key: () => ['acp-profiles'],
   query: async () => {
@@ -329,7 +344,7 @@ const botMetadata = computed(() => bot.value?.metadata as Record<string, unknown
 const selectedAgent = computed(() => agents.value.find(agent => agent.id === selectedID.value) ?? null)
 const selectedProfile = computed(() => {
   const provider = botAgentProvider(selectedAgent.value)
-  return profiles.value.find(profile => normalizeACPAgentID(profile.id) === provider) ?? null
+  return profiles.value.find(profile => normalizeAgentID(profile.id) === provider) ?? null
 })
 const selectedDirectRuntime = computed(() => {
   const runtime = normalizeBotAgentRuntime(selectedAgent.value?.runtime)
@@ -393,13 +408,13 @@ watch(agents, (list) => {
 
 function profileFor(agent: BotagentsBotAgent): AcpprofilePublicProfile | null {
   const provider = botAgentProvider(agent)
-  return profiles.value.find(profile => normalizeACPAgentID(profile.id) === provider) ?? null
+  return profiles.value.find(profile => normalizeAgentID(profile.id) === provider) ?? null
 }
 
 function providerLabel(agent: BotagentsBotAgent): string {
   const profile = profileFor(agent)
   const provider = botAgentProvider(agent)
-  return profile?.display_name?.trim() || acpAgentDisplayName(provider, provider)
+  return profile?.display_name?.trim() || externalAgentDisplayName(provider, provider)
 }
 
 function agentForm(profile: AcpprofilePublicProfile): ACPAgentForm {
@@ -564,7 +579,7 @@ function applyMetadataToForm(metadata: Record<string, unknown> | undefined, list
     if (!next.agents[key]) delete form.agents[key]
   }
   for (const profile of list) {
-    const id = normalizeACPAgentID(profile.id)
+    const id = normalizeAgentID(profile.id)
     if (!id) continue
     form.agents[id] = next.agents[id] ?? emptyACPAgentForm(profile)
   }

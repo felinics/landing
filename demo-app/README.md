@@ -19,12 +19,16 @@ API server, remote desktop service, or running terminal behind the iframe.
 - Transport: local fetch, chat stream, upload, and terminal adapters. Unknown API
   routes and external fetches fail locally instead of reaching a backend.
 - Initial scene: original Chat with a seeded welcome conversation and sidebar.
+- Examples: three Agents (Memoh, Claude Code, Codex), four distinct project folders, Cloud Computer and
+  Alex's Mac Mini are defined in `mocks/scenario.json`. These are simulated choices.
 - Navigation: Settings and Bot Settings are decorative. The memory router only
   admits Chat routes; settings source files remain vendored for provenance.
 - Appearance: dark mode, Electron-style traffic lights inside the iframe.
 
 From the landing workspace, `npm run dev` and `npm run build` build this static
 app first. `npm run test:demo` runs local transport/state regression checks.
+Rebuilds retain prior hashed assets so open iframes can finish lazy imports;
+`public/memoh-demo` is generated and a clean checkout starts without old assets.
 For standalone development: `pnpm --dir demo-app dev`.
 
 The copied frontend has existing upstream typecheck errors. Production builds

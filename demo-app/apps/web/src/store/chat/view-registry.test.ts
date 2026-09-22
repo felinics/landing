@@ -73,12 +73,13 @@ function pendingUserInputTurn(id: string): ChatAssistantTurn {
 
 function makeRegistry(options: { cacheLimit?: number, streaming?: Set<string> } = {}) {
   const onEvict = vi.fn()
+  const fetchMessages = vi.fn().mockResolvedValue([])
   const registry = createChatViewRegistry({
     cacheLimit: options.cacheLimit,
     rememberBackgroundTask: task => task,
     applyPendingBackgroundEventsToTool: () => {},
     bumpFsChangedAtIfFsMutation: () => {},
-    fetchMessages: vi.fn().mockResolvedValue([]),
+    fetchMessages,
       locateMessage: vi.fn().mockResolvedValue({
         items: [],
         target_id: '',
@@ -87,7 +88,7 @@ function makeRegistry(options: { cacheLimit?: number, streaming?: Set<string> } 
     isSessionStreaming: (botId, sessionId) => options.streaming?.has(`${botId}:${sessionId}`) === true,
     onEvict,
   })
-  return { registry, onEvict }
+  return { registry, onEvict, fetchMessages }
 }
 
 describe('chat view registry', () => {
@@ -260,5 +261,75 @@ describe('chat view registry', () => {
     expect(registry.getSession('bot-1', 'asking')).toBeDefined()
     expect(registry.getSession('bot-1', 'oldest')).toBeUndefined()
     expect(onEvict).toHaveBeenCalledWith(expect.objectContaining({ sessionId: 'oldest' }))
+  })
+})
+
+describe('stale-while-hidden marks', () => {
+  it('marks a hidden session view stale and clears it after a refresh', async () => {
+    const { registry } = makeRegistry()
+    const view = registry.getOrCreate({ botId: 'bot-1', sessionId: 'session-1', viewId: 'chat:1' })
+
+    registry.markSessionStale('bot-1', 'session-1')
+    expect(view.staleWhileHidden).toBe(true)
+
+    await view.transcript.loadInitialMessages('bot-1', 'session-1', async applyHistory => applyHistory())
+    expect(view.staleWhileHidden).toBe(false)
+  })
+
+  it('marks a visible view too: coverage can end before it hides (bot switch)', () => {
+    const { registry } = makeRegistry()
+    const view = registry.getOrCreate({ botId: 'bot-1', sessionId: 'session-1', viewId: 'chat:1' })
+    registry.bindPanel('chat:1', { botId: 'bot-1', sessionId: 'session-1', viewId: 'chat:1' }, true)
+
+    // The mark is inert while the view stays visible, but it must follow the
+    // view into hiding — otherwise a bot switch would let a stale cache
+    // through the optimistic path on revisit.
+    registry.markAllSessionsStale('bot-1')
+    expect(view.staleWhileHidden).toBe(true)
+  })
+
+  it('marks every hidden view of the interrupted bot and leaves other bots alone', () => {
+    const { registry } = makeRegistry()
+    const own = registry.getOrCreate({ botId: 'bot-1', sessionId: 'session-1', viewId: 'chat:1' })
+    const other = registry.getOrCreate({ botId: 'bot-2', sessionId: 'session-2', viewId: 'chat:2' })
+
+    registry.markAllSessionsStale('bot-1')
+
+    expect(own.staleWhileHidden).toBe(true)
+    expect(other.staleWhileHidden).toBe(false)
+  })
+
+  it('marks a view that was hidden after being visible', () => {
+    const { registry } = makeRegistry()
+    const view = registry.getOrCreate({ botId: 'bot-1', sessionId: 'session-1', viewId: 'chat:1' })
+    registry.bindPanel('chat:1', { botId: 'bot-1', sessionId: 'session-1', viewId: 'chat:1' }, true)
+    registry.setPanelVisible('chat:1', false)
+
+    registry.markSessionStale('bot-1', 'session-1')
+    expect(view.staleWhileHidden).toBe(true)
+  })
+
+  it('keeps a stale mark that landed while the refresh was still in flight', async () => {
+    const { registry, fetchMessages } = makeRegistry()
+    const view = registry.getOrCreate({ botId: 'bot-1', sessionId: 'session-1', viewId: 'chat:1' })
+    let release!: (turns: []) => void
+    fetchMessages.mockImplementationOnce(() => new Promise<[]>((resolve) => { release = resolve }))
+
+    // A revisit starts revalidating; before the fetched history commits, a
+    // touch marks the view stale. That mark postdates the fetch's snapshot —
+    // the history being committed may not include the write — so the refresh
+    // must not clear it.
+    const loading = view.transcript.loadInitialMessages('bot-1', 'session-1', async applyHistory => applyHistory())
+    await Promise.resolve()
+    registry.markSessionStale('bot-1', 'session-1')
+    release([])
+    await loading
+
+    expect(view.staleWhileHidden).toBe(true)
+
+    // A refresh started after the mark covers it and clears the flag.
+    fetchMessages.mockResolvedValueOnce([])
+    await view.transcript.loadInitialMessages('bot-1', 'session-1', async applyHistory => applyHistory())
+    expect(view.staleWhileHidden).toBe(false)
   })
 })

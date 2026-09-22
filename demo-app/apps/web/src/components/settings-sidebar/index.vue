@@ -38,47 +38,54 @@
         </NavItem>
       </SidebarHeader>
 
-      <SidebarContent>
-        <!-- One block per nav group; the group list itself lives in navGroups.
+      <SidebarContent class="overflow-hidden">
+        <ScrollArea
+          class="sidebar-scroll h-full [&_[data-slot=scroll-area-viewport]]:pr-0"
+          :scroll-hide-delay="300"
+        >
+          <div class="flex flex-col gap-2 pb-4">
+            <!-- One block per nav group; the group list itself lives in navGroups.
              The first group carries no label: in fullWidth (mobile list home)
              the header is hidden, so it owns the whole gap below the top-bar
              hairline — 16px, matching its own left inset. On desktop the
              header's pb-3 already carries the rhythm and pt-1 suffices. -->
-        <SidebarGroup
-          v-for="(group, idx) in navGroups"
-          :key="group.key"
-          class="px-[16px] pb-0"
-          :class="idx === 0 ? (fullWidth ? 'pt-4' : 'pt-1') : 'pt-4'"
-        >
-          <SidebarGroupLabel
-            v-if="group.label"
-            size="compact"
-          >
-            {{ group.label }}
-          </SidebarGroupLabel>
-          <SidebarGroupContent :class="group.label && 'pt-0'">
-            <SidebarMenu class="gap-1">
-              <SidebarMenuItem
-                v-for="item in group.items"
-                :key="item.name"
+            <SidebarGroup
+              v-for="(group, idx) in navGroups"
+              :key="group.key"
+              class="px-[16px] pb-0"
+              :class="idx === 0 ? (fullWidth ? 'pt-4' : 'pt-1') : 'pt-4'"
+            >
+              <SidebarGroupLabel
+                v-if="group.label"
+                size="compact"
               >
-                <NavItem
-                  :active="isItemActive(item.name)"
-                  :aria-current="isItemActive(item.name) ? 'page' : undefined"
-                  @click="navigate(item.name)"
-                >
-                  <component
-                    :is="item.icon"
-                    :stroke-width="1.75"
-                    class="size-4 shrink-0"
-                    :class="item.flipX && '-scale-x-100'"
-                  />
-                  <span>{{ item.title }}</span>
-                </NavItem>
-              </SidebarMenuItem>
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
+                {{ group.label }}
+              </SidebarGroupLabel>
+              <SidebarGroupContent :class="group.label && 'pt-0'">
+                <SidebarMenu class="gap-1">
+                  <SidebarMenuItem
+                    v-for="item in group.items"
+                    :key="item.name"
+                  >
+                    <NavItem
+                      :active="isItemActive(item.name)"
+                      :aria-current="isItemActive(item.name) ? 'page' : undefined"
+                      @click="navigate(item.name)"
+                    >
+                      <component
+                        :is="item.icon"
+                        :stroke-width="1.75"
+                        class="size-4 shrink-0"
+                        :class="item.flipX && '-scale-x-100'"
+                      />
+                      <span>{{ item.title }}</span>
+                    </NavItem>
+                  </SidebarMenuItem>
+                </SidebarMenu>
+              </SidebarGroupContent>
+            </SidebarGroup>
+          </div>
+        </ScrollArea>
       </SidebarContent>
 
       <!-- Width resize handle (web desktop only). Drag to resize the sidebar;
@@ -100,6 +107,7 @@
 </template>
 
 <script setup lang="ts">
+import { ComputerIcon } from '@memohai/icon/ui'
 import { computed, inject, onBeforeUnmount, ref, type Component } from 'vue'
 import { useLocalStorage } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
@@ -115,7 +123,6 @@ import {
   Globe,
   Info,
   Keyboard,
-  Laptop,
   Mail,
   MousePointer2,
   Store,
@@ -127,6 +134,7 @@ import { NavItem } from '@felinic/ui'
 import { useBackToChatRoute } from '@/composables/useBackToChat'
 import { useUserStore } from '@/store/user'
 import {
+  ScrollArea,
   Sidebar,
   SidebarContent,
   SidebarGroup,
@@ -137,6 +145,7 @@ import {
   SidebarMenuItem,
 } from '@felinic/ui'
 import { DesktopShellKey } from '@/lib/desktop-shell'
+import '@/styles/sidebar-scroll.css'
 
 const props = withDefaults(defineProps<{
   hideHeader?: boolean
@@ -247,7 +256,7 @@ const navGroups = computed<NavGroup[]>(() => [
     key: 'workspace',
     items: [
       { title: t('sidebar.bots'), name: 'bots', icon: MousePointer2, flipX: true },
-      { title: t('sidebar.runtimes'), name: 'runtimes', icon: Laptop },
+      { title: t('sidebar.runtimes'), name: 'runtimes', icon: ComputerIcon },
       { title: t('sidebar.supermarket'), name: 'supermarket', icon: Store },
     ],
   },

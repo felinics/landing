@@ -29,7 +29,7 @@ import i18n from '@/i18n'
 // selection still follows whichever chat view is active. Desktop is a
 // singleton WebRTC viewer per bot (DISPLAY_PANEL_ID).
 
-export type SidebarView = 'sessions' | 'files' | 'schedule'
+export type SidebarView = 'sessions' | 'files' | 'schedule' | 'supermarket'
 
 export const CHAT_PANEL_ID = 'chat'
 
@@ -1494,19 +1494,26 @@ export const useWorkspaceTabsStore = defineStore('workspace-tabs', () => {
     })
   }
 
-  // Mobile top bar "←": re-activate the chat panel for the CURRENT session.
-  // Secondary panels are never closed by going back (renderer 'always' keeps
-  // terminals/WebRTC alive), so back is a pure activation. Falls back to any
-  // open chat tab — focusing it pulls the global selection onto it via the
-  // activation sync — and on an empty dock to the draft respawn guard.
+  // Explicit navigation back to chat differs from automatic empty-dock repair:
+  // a file/preview-only layout is valid until the user asks to return. Recreate
+  // the selected chat (or a draft) as a pinned panel so neither this action nor
+  // the next file open evicts another panel from its ephemeral slot.
   function activateChatPanel() {
     const dock = api.value
-    if (!dock) return
+    const bid = (currentBotId.value ?? '').trim()
+    // Do not focus the previous bot's panels while its replacement is queued.
+    if (!dock || !bid || loadedBotId !== bid) return
+    suppressSelectionDockMutations = false
+    const explicitSelection = chatStore.hasExplicitSessionSelection === true
     const sid = (selection.sessionId ?? '').trim()
     if (sid && !isDeletedSessionForCurrentBot(sid)) {
       const current = chatPanelForSession(sid)
       if (current) {
         focusPanel(current)
+        return
+      }
+      if (explicitSelection) {
+        openSessionChatPinned({ sessionId: sid })
         return
       }
     }
@@ -1515,7 +1522,17 @@ export const useWorkspaceTabsStore = defineStore('workspace-tabs', () => {
       focusPanel(anyChat)
       return
     }
-    ensureDraftChatPanel()
+    const id = nextChatPanelId(bid)
+    const target = nonTerminalTarget(dock)
+    setNextChatActivationExplicit(id, explicitSelection)
+    dock.addPanel({
+      id,
+      component: 'chat',
+      title: DEFAULT_CHAT_TITLE,
+      params: { sessionId: null, explicitSelection },
+      renderer: 'always',
+      ...(target ? { position: target } : {}),
+    })
   }
 
   function openFile(filePath: string) {

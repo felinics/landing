@@ -235,7 +235,7 @@ export function createRuntimeIntegration(deps: RuntimeIntegrationDeps) {
       const stage: SendMessageStage = deps.hasVisibleAssistantBlocks(
         rejected.assistantTurn,
       ) ? 'stream' : 'startup'
-      if (rejected.assistantTurn.messages.length === 0) {
+      if (!deps.hasVisibleAssistantBlocks(rejected.assistantTurn)) {
         deps.removeTurnFromSession(
           rejected.botId,
           rejected.sessionId,
@@ -277,7 +277,7 @@ export function createRuntimeIntegration(deps: RuntimeIntegrationDeps) {
       const stage: SendMessageStage = deps.hasVisibleAssistantBlocks(
         pending.assistantTurn,
       ) ? 'stream' : 'startup'
-      if (pending.assistantTurn.messages.length === 0 && !event.code) {
+      if (!deps.hasVisibleAssistantBlocks(pending.assistantTurn) && !event.code) {
         deps.removeTurnFromSession(
           pending.botId,
           pending.sessionId,
@@ -300,6 +300,12 @@ export function createRuntimeIntegration(deps: RuntimeIntegrationDeps) {
     const view = deps.chatViews.getSession(botId, sessionId)
     const previousRun = change.previous.currentRunView
     const currentRun = change.current.currentRunView
+    // Configuration saves have no chat output or history to reload. Applying
+    // an empty transcript here would also disturb the previous settled reply.
+    if (currentRun?.configuration_only || (!currentRun && previousRun?.configuration_only)) {
+      deps.decisions.observeRun(sessionId, currentRun)
+      return
+    }
     const currentInvocationId = currentRun
       // The frame's own echo is authoritative; the run_id registry lookup only
       // covers frames from before the echo existed (pre-ledger runs).
@@ -387,7 +393,7 @@ export function createRuntimeIntegration(deps: RuntimeIntegrationDeps) {
           aborted.name = 'AbortError'
           deps.assistantStreams.rejectAssistantStream(invocationId, aborted)
         } else {
-          const stage: SendMessageStage = currentRun.messages.length > 0
+          const stage: SendMessageStage = currentRun.messages.some(message => message.type !== 'status')
             || Boolean(currentRun.error_code)
             ? 'stream'
             : 'startup'

@@ -13,7 +13,7 @@ import { useDependencyOperationsStore, type DependencyOperation } from '@/store/
 
 let viewerSequence = 0
 
-export function useDependencyOperation(botId: Ref<string>, targetId: Ref<string>) {
+export function useDependencyOperation(botId: Ref<string>) {
   const { t } = useI18n()
   const store = useDependencyOperationsStore()
   const viewerId = `bot-dependencies:${++viewerSequence}`
@@ -53,7 +53,6 @@ export function useDependencyOperation(botId: Ref<string>, targetId: Ref<string>
   function start(item: DependencyItem, action: DependencyOperationAction, options: { version?: string; definitionRevision?: string; sessionId?: string } = {}): boolean {
     const result = store.start({
       botId: botId.value,
-      targetId: targetId.value,
       item,
       action,
       version: options.version,

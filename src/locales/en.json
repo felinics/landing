@@ -280,9 +280,11 @@
     "play": "Play animation",
     "pause": "Pause animation",
     "replay": "Replay animation",
-    "agentAlt": "In a new session, the plus menu switches between Memoh, Codex, and Claude Code.",
+    "defaultPermission": "Default",
+    "agentAlt": "In a new session, select Memoh, Claude Code, or Codex below the input.",
     "desktopAlt": "A request to open YouTube appears in chat. The desktop opens Chromium and searches Google for YouTube.",
-    "packagesAlt": "Browse Supermarket, open Node.js, install it to a bot, and manage installed packages. A GitHub connector example shows separate authorization.",
+    "apps": "Apps",
+    "packagesAlt": "Browse the Supermarket sidebar, install uv to the selected bot, and manage Apps. GitHub shows separate connector authorization.",
     "buildAlt": "An agent builds a reading list website. Its localhost link opens a preview in a new Memoh tab.",
     "youtubeRequest": "Open YouTube for me.",
     "youtubeReply": "I’ll open it in the browser.",
@@ -308,6 +310,7 @@
     "installingPackage": "Installing Package",
     "selectBot": "Select a bot",
     "installWill": "Installing will",
+    "installUv": "Install uv and its Python project management tools.",
     "installNode": "Install Node.js into the workspace if missing.",
     "cancel": "Cancel",
     "install": "Install",
@@ -323,5 +326,20 @@
     "findBook": "Find a book…",
     "toRead": "To read",
     "finished": "Finished"
+  },
+  "legal": {
+    "titles": {
+      "terms": "Service Agreement",
+      "privacy": "Privacy Policy",
+      "cross-border": "Cross-Border Data Transfer Terms"
+    },
+    "back": "Back to home",
+    "updated": "Updated",
+    "language": "Document language",
+    "documents": "Legal documents",
+    "contents": "On this page",
+    "download": "Download Markdown",
+    "loading": "Loading document…",
+    "loadError": "The document could not be loaded. Refresh this page or download the Markdown file."
   }
 }

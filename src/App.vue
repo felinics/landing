@@ -25,8 +25,9 @@ const { isDark } = useThemePreference()
 const isDownloadRoute = computed(() => route.path.startsWith('/download'))
 const isBlogsRoute = computed(() => route.path.startsWith('/blogs'))
 const isWaitlistRoute = computed(() => route.path.startsWith('/waitlist'))
+const isHelpRoute = computed(() => route.path.startsWith('/help'))
 const isHomeRoute = computed(() => route.path === '/')
-const isPlainContentRoute = computed(() => isDownloadRoute.value || isBlogsRoute.value || isWaitlistRoute.value || route.meta.legal === true)
+const isPlainContentRoute = computed(() => isDownloadRoute.value || isBlogsRoute.value || isWaitlistRoute.value || isHelpRoute.value || route.meta.legal === true)
 
 // Single owner of the <html> `dark` class. The landing page always *renders*
 // dark, but must never overwrite the user's saved preference — so we force the
@@ -89,11 +90,15 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
                 <a href="https://github.com/felinics/Memoh/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.contributing') }}</a>
               </div>
               <div class="footer-link-group">
+                <h2 class="footer-link-heading">{{ t('footer.support') }}</h2>
+                <a href="https://help.memoh.ai" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.helpCenter') }}</a>
+              </div>
+              <div class="footer-link-group">
                 <h2 class="footer-link-heading">{{ t('footer.community') }}</h2>
                 <a href="https://github.com/felinics/Memoh" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('nav.github') }}</a>
                 <a href="https://github.com/felinics/Memoh/discussions" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.discussions') }}</a>
                 <a href="https://github.com/felinics/Memoh/issues" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.reportIssue') }}</a>
-                <a href="mailto:business@memoh.net" class="footer-link">{{ t('footer.businessContact') }}</a>
+                <a href="mailto:support@memoh.net" class="footer-link">{{ t('footer.businessContact') }}</a>
               </div>
               <div class="footer-link-group">
                 <h2 class="footer-link-heading">{{ t('footer.social') }}</h2>
@@ -192,7 +197,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 }
 .footer-links {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 32px;
 }
 .footer-link-group {

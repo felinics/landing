@@ -1102,13 +1102,13 @@ After cancellation, your data is handled per the retention terms in the [privacy
         id: 'payment-methods',
         question: { en: 'How do payment and renewal work?', zh: '支持哪些支付方式？怎么续费？', ja: '支払い方法と更新は？' },
         answer: {
-          zh: `- **支付方式**：订阅通过 **Stripe** 支付，支持主流信用卡与借记卡；暂不支持加密货币支付；
+          zh: `- **支付方式**：订阅通过 **Stripe** 支付，支持主流信用卡与借记卡，包括但不限于万事达（Mastercard）、Visa、银联（UnionPay），具体支持范围以 Stripe 为准；暂不支持加密货币支付；
 - **续费**：订阅按计费周期**自动扣款**；可随时在 **设置 → 订阅** 中取消，取消于当期结束时生效；
 - **年付**：年付方案正在准备中，近期推出，目前先提供月付。`,
-          en: `- **Payment**: subscriptions are billed through **Stripe**, covering major credit and debit cards; cryptocurrency payments are not supported yet.
+          en: `- **Payment**: subscriptions are billed through **Stripe**, covering major credit and debit cards — including but not limited to Mastercard, Visa and UnionPay, with the exact list determined by Stripe; cryptocurrency payments are not supported yet.
 - **Renewal**: plans renew by **automatic charge** each billing cycle; cancel any time under **Settings → Subscription** and it takes effect at the end of the current period.
 - **Annual plans**: in the works and coming soon — monthly billing is what's offered today.`,
-          ja: `- **支払い**：サブスクリプションは **Stripe** で決済され、主要なクレジットカード・デビットカードに対応します。暗号資産による支払いは未対応です。
+          ja: `- **支払い**：サブスクリプションは **Stripe** で決済され、Mastercard・Visa・銀聯（UnionPay）をはじめとする主要なクレジットカード・デビットカードに対応します。対応カードの詳細は Stripe に準じます。暗号資産による支払いは未対応です。
 - **更新**：請求サイクルごとに**自動課金**されます。**設定 → サブスクリプション**からいつでも解約でき、現在の期間終了時に反映されます。
 - **年額プラン**：準備中です。現在は月額のみ提供しています。`,
         },

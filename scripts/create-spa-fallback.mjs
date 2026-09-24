@@ -38,6 +38,14 @@ const pages = {
     socialDescription: 'Field notes, architecture writeups, and product updates from the Memoh team.',
     url: 'https://memoh.ai/blogs',
   },
+  // /help 集合与文章深链仍由 404.html 兜底;这个静态入口保证枢纽路由返回 200,
+  // 供文档站与外部链接导流。文案与 src/lib/help.ts 的 seoTitle/seoDescription 保持一致。
+  help: {
+    title: 'Memoh Help Center',
+    description: 'Answers about Memoh: cloud computers for agents, channels, scheduled tasks, plans and billing, desktop apps, privacy and security.',
+    socialDescription: 'Guides and answers from the Memoh team.',
+    url: 'https://memoh.ai/help',
+  },
 }
 
 // Keep legal documents out of search until the operational details are complete.

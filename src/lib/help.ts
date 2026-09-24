@@ -503,6 +503,43 @@ It does **not include the rootfs**: space taken by the system and the pre-instal
         },
       },
       {
+        id: 'rootfs-persistence',
+        question: {
+          en: 'Can I use the rootfs as persistent storage?',
+          zh: 'rootfs 可以当持久空间用吗？',
+          ja: 'rootfs を永続ストレージとして使えますか？',
+        },
+        answer: {
+          zh: `不能，请不要把 rootfs 当作持久存储。
+
+平台将 rootfs 视为**一次性**的：镜像更新或工作区重建时，这一层会被整体替换。写入 /usr、/opt 等系统路径的内容都应视为临时的 —— 使用越久，被重置的概率越高。
+
+真正持久的是**数据卷（默认挂载在 /data）**：
+
+- /data 中的内容**始终保留**，跨镜像更新与重建不受影响；
+- 平台自身也刻意把依赖缓存、Codex / Claude Code 等 CLI 的配置放在 /data 里 —— rootfs 被替换后，这些 CLI 会依靠 /data 中的副本自动装回；
+- 需要长期保留的文件与配置请写入 /data；如果你维护了自定义环境，把安装脚本放进 /data，重建后让 Agent 一键恢复即可。`,
+          en: `No — please don't treat the rootfs as persistent storage.
+
+The platform treats the rootfs as **disposable**: image updates and workspace rebuilds replace that layer wholesale. Anything written to system paths like /usr or /opt should be considered temporary — the longer you run, the more likely it is to be reset.
+
+What actually persists is the **data volume (mounted at /data by default)**:
+
+- Contents of /data are **always preserved**, across image updates and rebuilds.
+- The platform itself deliberately keeps dependency caches and the configs of CLIs like Codex / Claude Code in /data — when the rootfs is replaced, those CLIs are reinstalled automatically from the copies kept there.
+- Put anything you want to keep under /data. If you maintain a custom environment, keep its setup script in /data so the agent can restore everything after a rebuild.`,
+          ja: `いいえ。rootfs を永続ストレージとして使わないでください。
+
+プラットフォームは rootfs を**使い捨て**として扱います。イメージ更新やワークスペースの再構築で、このレイヤーは丸ごと置き換えられます。/usr や /opt などのシステムパスへ書き込んだ内容は一時的なものと考えてください。使い込むほど、リセットされる可能性は高くなります。
+
+本当に永続するのは**データボリューム（デフォルトで /data にマウント）**です：
+
+- /data の内容はイメージ更新や再構築をまたいで**常に保持**されます。
+- プラットフォーム自身も、依存キャッシュや Codex / Claude Code などの CLI 設定を意図的に /data に置いています。rootfs が置き換えられても、CLI は /data のコピーから自動的に再インストールされます。
+- 残したいファイルや設定は /data 配下へ。独自環境がある場合は、セットアップスクリプトを /data に置いておけば、再構築後にエージェントがすぐ復元できます。`,
+        },
+      },
+      {
         id: 'scale-up-bot',
         question: { en: "Can I add more resources to a Bot's workspace?", zh: '可以给 Bot 的工作空间增加配置吗？', ja: 'Bot のワークスペースのスペックを上げられますか？' },
         answer: {

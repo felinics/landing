@@ -91,7 +91,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
               </div>
               <div class="footer-link-group">
                 <h2 class="footer-link-heading">{{ t('footer.support') }}</h2>
-                <a href="https://help.memoh.ai" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.helpCenter') }}</a>
+                <router-link to="/help" class="footer-link">{{ t('footer.helpCenter') }}</router-link>
               </div>
               <div class="footer-link-group">
                 <h2 class="footer-link-heading">{{ t('footer.community') }}</h2>

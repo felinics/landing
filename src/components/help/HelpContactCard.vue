@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 import { useI18n } from 'vue-i18n'
-import { Mail, Send } from 'lucide-vue-next'
+import { Mail } from 'lucide-vue-next'
 import { getHelpUi } from '../../lib/help'
 
 const { locale } = useI18n()
@@ -17,7 +17,7 @@ const ui = computed(() => getHelpUi(locale.value))
     <div class="flex flex-wrap items-center gap-3">
       <a
         href="mailto:support@memoh.net"
-        class="inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium bg-foreground text-background transition-transform hover:scale-[1.02] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        class="inline-flex h-10 items-center justify-center gap-2 rounded-full px-5 text-sm font-medium bg-foreground text-background hover:bg-foreground/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
         <Mail :size="15" />
         {{ ui('contactEmail') }}
@@ -26,11 +26,21 @@ const ui = computed(() => getHelpUi(locale.value))
         href="https://t.me/memohai"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-border bg-background px-5 text-sm font-medium text-foreground transition-colors hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+        class="inline-flex h-10 items-center justify-center gap-2 rounded-full border border-border bg-background px-5 text-sm font-medium text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
       >
-        <Send :size="15" />
+        <span aria-hidden="true" class="telegram-icon h-4 w-4 shrink-0"></span>
         {{ ui('contactTelegram') }}
       </a>
     </div>
   </section>
 </template>
+
+<style scoped>
+/* Telegram's own mark (same technique as the site footer): the brand SVG as a
+   mask filled with currentColor, so it follows light/dark theme. */
+.telegram-icon {
+  background-color: currentColor;
+  mask: url('/brands/telegram.svg') center / contain no-repeat;
+  -webkit-mask: url('/brands/telegram.svg') center / contain no-repeat;
+}
+</style>

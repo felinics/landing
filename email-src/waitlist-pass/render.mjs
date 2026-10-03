@@ -16,9 +16,6 @@ import { copyFileSync, readFileSync, rmSync } from 'node:fs'
 const here = path.dirname(fileURLToPath(import.meta.url))
 const outDir = path.resolve(here, '../../public/email')
 const chrome = process.env.CHROME || '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
-// 图片有改动就升版本、换新文件名，模板随之指向新地址：Gmail 图片代理按 URL 缓存，
-// 旧文件保留给已经发出的邮件。
-const version = 'v2'
 const locales = ['en-US', 'zh-CN', 'zh-HK', 'ja-JP']
 
 const args = (out, url) => [
@@ -36,7 +33,7 @@ const args = (out, url) => [
 for (const locale of locales) {
   const url = new URL(pathToFileURL(path.join(here, 'card.html')))
   url.search = new URLSearchParams({ l: locale, stamp: '1' }).toString()
-  const out = path.join(outDir, `waitlist-pass-${version}-${locale}.png`)
+  const out = path.join(outDir, `waitlist-pass-${locale}.png`)
   // #stage 在页面左上角，576×196 CSS px，正是模板里的显示尺寸；按 3 倍出图给高分屏。
   // headless Chrome 偶尔会在透明背景上留下一块未重绘的不透明白块，
   // 所以每张渲染两次，字节一致才采用。

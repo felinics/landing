@@ -1,0 +1,41 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+html,body{margin:0;background:transparent}
+#stage{width:576px;height:196px;display:flex;align-items:center;justify-content:center;background:transparent}
+.card{position:relative;width:552px;height:172px;display:flex;box-sizing:border-box;font-family:var(--f)}
+.outline{position:absolute;left:0;top:0;overflow:visible;filter:drop-shadow(0 0 10px rgba(24,24,27,.06))}
+.main{position:relative;flex:1;padding:20px 24px 18px 24px;display:flex;flex-direction:column;justify-content:space-between;box-sizing:border-box}
+.top{display:flex;align-items:center;justify-content:space-between;height:18px}
+.brand{display:flex;align-items:center;gap:8px;font:600 10.5px/1 'SF Mono',Menlo,monospace;letter-spacing:1.6px;color:#71717a}
+.sq{width:8px;height:8px;border-radius:2px;background:#6d3ef5}
+.bars{display:flex;align-items:stretch;gap:2px;height:18px}.bars i{display:block;background:#a1a1aa;border-radius:.5px}
+.lbl{font:500 11px/1 var(--f);color:#a1a1aa;margin-bottom:6px;letter-spacing:.2px}
+.who{font:600 22px/1.1 var(--f);color:#18181b;letter-spacing:-.3px}
+.row{display:grid;grid-template-columns:1fr 1fr 1fr;column-gap:16px}
+.val{font:600 15px/1.1 var(--f);color:#18181b;letter-spacing:-.15px}.val.link{color:#6d3ef5}
+.stub{position:relative;width:128px;display:flex;align-items:center;justify-content:center}
+.stamp{position:absolute;left:-36px;bottom:16px;width:72px;height:72px;z-index:2;border-radius:50%;border:1.5px solid #6d3ef5;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;color:#6d3ef5;opacity:.6;transform:rotate(-14deg);box-sizing:border-box}.stamp:before{content:'';position:absolute;inset:3px;border-radius:50%;border:.75px solid #6d3ef5}.stamp .en{font:700 8.5px/1 'SF Mono',Menlo,monospace;letter-spacing:1.2px}.stamp .loc{font:700 12.5px/1 var(--f);letter-spacing:.5px}
+.stub img{width:62px;height:auto;display:block}
+</style></head><body><div id="stage"><div class="card"><svg class="outline" width="552" height="172" viewBox="0 0 552 172"><path d="M14,0.5 H415 A9,9 0 0 0 433,0.5 H538 A14,14 0 0 1 551.5,14 V158 A14,14 0 0 1 538,171.5 H433 A9,9 0 0 0 415,171.5 H14 A14,14 0 0 1 0.5,158 V14 A14,14 0 0 1 14,0.5 Z" fill="#fff" stroke="#e4e4e7" stroke-width="1"/><line x1="424" y1="14.5" x2="424" y2="157.5" stroke="#e4e4e7" stroke-width="1.5" stroke-dasharray="4 4"/></svg>
+<div class="main">
+  <div class="top"><div class="brand"><span class="sq"></span>MEMOH ACCESS PASS</div><div class="bars" id="bars"></div></div>
+  <div><div class="lbl" id="l1"></div><div class="who" id="v1"></div></div>
+  <div class="row">
+    <div><div class="lbl" id="l2"></div><div class="val link">memoh.ai</div></div>
+    <div><div class="lbl" id="l3"></div><div class="val" id="v3"></div></div>
+    <div><div class="lbl" id="l4"></div><div class="val">Memoh</div></div>
+  </div>
+</div>
+<div class="stub"><img src="../../public/logo.png" alt=""><div class="stamp" id="stamp" hidden><span class="en">APPROVED</span><span class="loc" id="sl"></span></div></div>
+</div></div>
+<script>
+const w=[2,1,3,1,1,2,3,1,2,1,1,3,2,1,2,1,3,1];document.getElementById('bars').innerHTML=w.map(x=>`<i style="width:${x}px"></i>`).join('');
+const T={
+'en-US':['Passenger','Waitlist member','Gate','Boarding','Now open','Destination',"'Inter',-apple-system,'Segoe UI',sans-serif"],
+'zh-CN':['乘客','候补名单成员','登机口','登机','现已开放','目的地',"'PingFang SC','Noto Sans SC',-apple-system,sans-serif"],
+'zh-HK':['乘客','候補名單成員','登機口','登機','現已開放','目的地',"'PingFang HK','PingFang TC','Noto Sans TC',-apple-system,sans-serif"],
+'ja-JP':['搭乗者','ウェイトリスト登録者','搭乗口','搭乗','受付中','目的地',"'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP',-apple-system,sans-serif"]};
+const t=T[new URLSearchParams(location.search).get('l')||'en-US'];
+document.documentElement.style.setProperty('--f',t[6]);if(t===T['ja-JP'])document.head.insertAdjacentHTML('beforeend','<style>.who,.val{font-weight:700}</style>');
+const S={};const q=new URLSearchParams(location.search);if(q.get('stamp')){const st=document.getElementById('stamp');st.hidden=false;const k=q.get('l')||'en-US';if(S[k])document.getElementById('sl').textContent=S[k];else{st.querySelector('.loc').remove();st.querySelector('.en').style.cssText='font-size:10.5px;letter-spacing:.8px';}}
+['l1','v1','l2','l3','v3','l4'].forEach((id,i)=>document.getElementById(id).textContent=t[i]);
+</script></body></html>

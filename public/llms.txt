@@ -28,6 +28,7 @@ curl -sL https://memoh.sh | bash
 - Plugin Market: https://github.com/felinics/supermarket
 
 ## Blog Posts
-- Desktop workspace display: https://memoh.ai/blogs/2026-05-15
-- Discuss mode for proactive group chat agents: https://memoh.ai/blogs/2026-05-02
-- Introduction to Memoh: https://memoh.ai/blogs/2026-02-16
+- Introducing Memoh: A Cloud Computer for Every Agent: https://memoh.ai/blogs/cloud-computer-for-every-agent
+- Desktop workspace display: https://memoh.ai/blogs/workspace-desktop
+- Discuss mode for proactive group chat agents: https://memoh.ai/blogs/discuss-mode
+- Introduction to Memoh: https://memoh.ai/blogs/introduction-to-memoh

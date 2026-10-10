@@ -25,19 +25,25 @@
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://memoh.ai/blogs/2026-05-15</loc>
+    <loc>https://memoh.ai/blogs/cloud-computer-for-every-agent</loc>
+    <lastmod>2026-09-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://memoh.ai/blogs/workspace-desktop</loc>
     <lastmod>2026-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://memoh.ai/blogs/2026-05-02</loc>
+    <loc>https://memoh.ai/blogs/discuss-mode</loc>
     <lastmod>2026-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://memoh.ai/blogs/2026-02-16</loc>
+    <loc>https://memoh.ai/blogs/introduction-to-memoh</loc>
     <lastmod>2026-06-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>

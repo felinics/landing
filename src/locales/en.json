@@ -2,10 +2,12 @@
   "nav": {
     "docs": "Docs",
     "github": "GitHub",
-    "blogs": "Blogs",
+    "blogs": "Blog",
     "supermarket": "Supermarket",
     "desktop": "Desktop",
     "download": "Download",
+    "pricing": "Pricing",
+    "help": "Help",
     "selectLanguage": "Select language",
     "toggleTheme": "Toggle theme"
   },

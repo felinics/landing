@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import { RouterLink } from 'vue-router'
+import { RouterLink, useRoute, useRouter } from 'vue-router'
 import { onClickOutside } from '@vueuse/core'
 import { Moon, Sun, Languages, ChevronDown, Check } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
@@ -26,6 +26,24 @@ const iconBtnClass = computed(() =>
 )
 
 const { isDark, toggle: toggleDark } = useThemePreference()
+
+const route = useRoute()
+const router = useRouter()
+
+const navItemClass = 'font-medium text-sm rounded-md px-3 py-2 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap'
+const navActiveClass = computed(() => (props.overlay ? 'text-white' : 'text-foreground'))
+
+// Pricing is a section on the home page, not a route: scroll there in place,
+// or navigate home and let HomePage resolve the hash on mount.
+const goToPricing = (event: MouseEvent) => {
+  if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey || event.button !== 0) return
+  event.preventDefault()
+  if (route.path === '/') {
+    document.getElementById('pricing')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    return
+  }
+  void router.push({ path: '/', hash: '#pricing' })
+}
 
 const { locale, t } = useI18n()
 
@@ -77,8 +95,10 @@ const selectLang = (lang: string) => {
           </span>
         </RouterLink>
         <nav class="hidden md:flex items-center gap-1 sm:gap-2">
-          <!-- Pricing 入口先撤下:/pricing 路由不存在,点进去是空白页。定价页上线时连同 nav.pricing 文案一起恢复。 -->
-          <RouterLink to="/blogs" class="font-medium text-sm rounded-md px-3 py-2 transition-colors duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 whitespace-nowrap" :class="linkClass" :active-class="overlay ? 'text-white' : 'text-foreground'">{{ $t('nav.blogs') }}</RouterLink>
+          <a href="https://docs.memoh.ai" target="_blank" rel="noopener noreferrer" :class="[navItemClass, linkClass]">{{ $t('nav.docs') }}</a>
+          <a href="/#pricing" :class="[navItemClass, linkClass]" @click="goToPricing">{{ $t('nav.pricing') }}</a>
+          <RouterLink to="/blogs" :class="[navItemClass, linkClass]" :active-class="navActiveClass">{{ $t('nav.blogs') }}</RouterLink>
+          <RouterLink to="/help" :class="[navItemClass, linkClass]" :active-class="navActiveClass">{{ $t('nav.help') }}</RouterLink>
         </nav>
       </div>
 

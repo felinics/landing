@@ -151,6 +151,8 @@ export const formatBlogDate = (dateKey: string, locale: string) => {
 export const getBlogPosts = (locale: string) => {
   const normalized = normalizeLocale(locale)
   return [...postsBySlug.keys()]
+    // Legacy date slugs are aliases of a canonical post; listing them would duplicate it.
+    .filter((slug) => !(slug in slugAliases))
     .map((slug) => pickPost(slug, normalized))
     .filter((post): post is BlogPost => Boolean(post))
     .sort((a, b) => b.dateKey.localeCompare(a.dateKey))

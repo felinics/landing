@@ -1,0 +1,282 @@
+# Memoh Help Center
+
+> Answers about Memoh plans, credits and billing, the desktop app, channels, scheduled tasks, cloud computers, privacy and security. Each article below is plain Markdown. For product setup and feature references, see the documentation index at https://docs.memoh.ai/llms.txt.
+
+## Help Center (en)
+
+### Getting started
+
+What Memoh is, how to create your first Bot, and where to use it.
+
+- [What is Memoh?](https://memoh.ai/help/getting-started/what-is-memoh.md)
+- [How do I get started with Memoh?](https://memoh.ai/help/getting-started/how-to-get-started.md)
+- [How is Memoh different from a regular AI chat assistant?](https://memoh.ai/help/getting-started/how-is-memoh-different.md)
+- [What is a Bot? How many can I create?](https://memoh.ai/help/getting-started/what-is-a-bot.md)
+- [Where can I use Memoh?](https://memoh.ai/help/getting-started/which-platforms.md)
+- [What can I actually do with Memoh?](https://memoh.ai/help/getting-started/what-can-memoh-do.md)
+- [How is this different from renting a VPS?](https://memoh.ai/help/getting-started/vs-vps.md)
+- [How do I bring my existing accounts and files?](https://memoh.ai/help/getting-started/bring-accounts-files.md)
+
+### Cloud computer & workspace
+
+Desktop, files, packages, and developing in the cloud.
+
+- [What's inside an agent's cloud computer?](https://memoh.ai/help/cloud-computer/whats-inside.md)
+- [How do I watch or take over the agent's desktop?](https://memoh.ai/help/cloud-computer/watch-and-take-over.md)
+- [How do I install packages and apps for my agent?](https://memoh.ai/help/cloud-computer/install-packages.md)
+- [Where are my files stored?](https://memoh.ai/help/cloud-computer/files-and-storage.md)
+- [What does the persistent disk size refer to?](https://memoh.ai/help/cloud-computer/persistent-disk-size.md)
+- [Can I use the rootfs as persistent storage?](https://memoh.ai/help/cloud-computer/rootfs-persistence.md)
+- [Can I add more resources to a Bot's workspace?](https://memoh.ai/help/cloud-computer/scale-up-bot.md)
+- [Can I develop and preview apps on the cloud computer?](https://memoh.ai/help/cloud-computer/develop-and-preview.md)
+- [Is the cloud computer always on?](https://memoh.ai/help/cloud-computer/always-on.md)
+- [Where are the cloud computers hosted?](https://memoh.ai/help/cloud-computer/server-locations.md)
+
+### Agents & models
+
+Bring your own agent, switch models, and how they work.
+
+- [Can I bring my own agent?](https://memoh.ai/help/agents-and-models/bring-your-own-agent.md)
+- [How do I switch agents in a session?](https://memoh.ai/help/agents-and-models/switch-agents.md)
+
+### Messaging channels
+
+Reach your agent from Telegram, Slack, WeChat, Feishu and more.
+
+- [Which chat channels does Memoh support?](https://memoh.ai/help/channels/supported-channels.md)
+- [How do I connect Memoh to Telegram?](https://memoh.ai/help/channels/connect-telegram.md)
+- [How do I connect Memoh to Discord?](https://memoh.ai/help/channels/connect-discord.md)
+- [How do I connect Memoh to WeChat?](https://memoh.ai/help/channels/connect-wechat.md)
+- [How do I connect Memoh to Feishu (Lark)?](https://memoh.ai/help/channels/connect-feishu.md)
+- [How do I connect Memoh to DingTalk?](https://memoh.ai/help/channels/connect-dingtalk.md)
+- [How do I connect Memoh to Slack?](https://memoh.ai/help/channels/connect-slack.md)
+- [How do I connect QQ or LINE?](https://memoh.ai/help/channels/connect-other-channels.md)
+- [Do conversations sync across channels?](https://memoh.ai/help/channels/cross-channel-sync.md)
+
+### Scheduled tasks & proactive messages
+
+Let your agent run on its own and reach out when it matters.
+
+- [How do I create a scheduled task?](https://memoh.ai/help/tasks-and-proactive/create-scheduled-task.md)
+- [Do tasks run while I'm offline?](https://memoh.ai/help/tasks-and-proactive/run-while-offline.md)
+- [Can it run multiple tasks at once?](https://memoh.ai/help/tasks-and-proactive/multitask.md)
+- [How do I pause, edit or delete a scheduled task?](https://memoh.ai/help/tasks-and-proactive/manage-tasks.md)
+- [Will the agent message me proactively?](https://memoh.ai/help/tasks-and-proactive/proactive-messages.md)
+
+### Plans, credits & billing
+
+Plans, what credits are, and managing your subscription.
+
+- [What plans does Memoh offer?](https://memoh.ai/help/billing/plans-overview.md)
+- [Why is it so affordable — and is that sustainable?](https://memoh.ai/help/billing/why-affordable.md)
+- [What are credits?](https://memoh.ai/help/billing/what-are-credits.md)
+- [What happens when I run out of credits?](https://memoh.ai/help/billing/out-of-credits.md)
+- [How do I top up extra credits?](https://memoh.ai/help/billing/top-up-credits.md)
+- [How do I upgrade, downgrade or cancel?](https://memoh.ai/help/billing/change-plan.md)
+- [How do payment and renewal work?](https://memoh.ai/help/billing/payment-methods.md)
+- [How do I get invoices or receipts?](https://memoh.ai/help/billing/invoices.md)
+
+### Desktop app
+
+Download, updates and system requirements.
+
+- [How do I download and install the desktop app?](https://memoh.ai/help/desktop-app/download-install.md)
+- [What's the difference between desktop and web?](https://memoh.ai/help/desktop-app/desktop-vs-web.md)
+- [How does the desktop app update?](https://memoh.ai/help/desktop-app/auto-update.md)
+- [What are the system requirements?](https://memoh.ai/help/desktop-app/system-requirements.md)
+
+### Privacy & security
+
+Data storage, isolation, authorization and deletion.
+
+- [Where is my data stored?](https://memoh.ai/help/privacy-security/where-is-data.md)
+- [Are agents' cloud computers isolated?](https://memoh.ai/help/privacy-security/isolation.md)
+- [What uses are prohibited?](https://memoh.ai/help/privacy-security/prohibited-uses.md)
+- [Is Connector authorization safe?](https://memoh.ai/help/privacy-security/connector-security.md)
+- [How do I delete my data or account?](https://memoh.ai/help/privacy-security/delete-data.md)
+
+## 帮助中心 (zh)
+
+### 开始使用
+
+了解 Memoh 的基本概念，创建你的第一个 Bot。
+
+- [Memoh 是什么？](https://memoh.ai/zh/help/getting-started/what-is-memoh.md)
+- [如何开始使用 Memoh？](https://memoh.ai/zh/help/getting-started/how-to-get-started.md)
+- [Memoh 和普通 AI 聊天助手有什么区别？](https://memoh.ai/zh/help/getting-started/how-is-memoh-different.md)
+- [什么是 Bot？我可以创建几个？](https://memoh.ai/zh/help/getting-started/what-is-a-bot.md)
+- [可以在哪些平台使用 Memoh？](https://memoh.ai/zh/help/getting-started/which-platforms.md)
+- [Memoh 具体能做什么？](https://memoh.ai/zh/help/getting-started/what-can-memoh-do.md)
+- [云电脑和自己买的 VPS 有什么区别？](https://memoh.ai/zh/help/getting-started/vs-vps.md)
+- [怎么接入我已有的账号和文件？](https://memoh.ai/zh/help/getting-started/bring-accounts-files.md)
+
+### 云电脑与工作区
+
+桌面、文件、依赖安装与云上开发。
+
+- [每个 Agent 的云电脑里有什么？](https://memoh.ai/zh/help/cloud-computer/whats-inside.md)
+- [如何查看或接管 Agent 的桌面？](https://memoh.ai/zh/help/cloud-computer/watch-and-take-over.md)
+- [如何为 Agent 安装依赖和应用？](https://memoh.ai/zh/help/cloud-computer/install-packages.md)
+- [我的文件存储在哪里？](https://memoh.ai/zh/help/cloud-computer/files-and-storage.md)
+- [持久化磁盘大小指的是什么？](https://memoh.ai/zh/help/cloud-computer/persistent-disk-size.md)
+- [rootfs 可以当持久空间用吗？](https://memoh.ai/zh/help/cloud-computer/rootfs-persistence.md)
+- [可以给 Bot 的工作空间增加配置吗？](https://memoh.ai/zh/help/cloud-computer/scale-up-bot.md)
+- [可以在云电脑上开发并预览应用吗？](https://memoh.ai/zh/help/cloud-computer/develop-and-preview.md)
+- [云电脑会一直开着吗？](https://memoh.ai/zh/help/cloud-computer/always-on.md)
+- [云电脑的服务器在哪里？](https://memoh.ai/zh/help/cloud-computer/server-locations.md)
+
+### Agent、模型
+
+自带 Agent、切换模型，以及如何工作。
+
+- [可以带自己的 Agent 吗？](https://memoh.ai/zh/help/agents-and-models/bring-your-own-agent.md)
+- [如何在会话中切换 Agent？](https://memoh.ai/zh/help/agents-and-models/switch-agents.md)
+
+### 消息渠道
+
+在 Telegram、Slack、微信、飞书等常用工具里找到你的 Agent。
+
+- [Memoh 支持哪些聊天渠道？](https://memoh.ai/zh/help/channels/supported-channels.md)
+- [如何把 Memoh 接入 Telegram？](https://memoh.ai/zh/help/channels/connect-telegram.md)
+- [如何把 Memoh 接入 Discord？](https://memoh.ai/zh/help/channels/connect-discord.md)
+- [如何把 Memoh 接入微信？](https://memoh.ai/zh/help/channels/connect-wechat.md)
+- [如何把 Memoh 接入飞书？](https://memoh.ai/zh/help/channels/connect-feishu.md)
+- [如何把 Memoh 接入钉钉？](https://memoh.ai/zh/help/channels/connect-dingtalk.md)
+- [如何把 Memoh 接入 Slack？](https://memoh.ai/zh/help/channels/connect-slack.md)
+- [QQ、LINE 如何接入？](https://memoh.ai/zh/help/channels/connect-other-channels.md)
+- [多个渠道的对话会同步吗？](https://memoh.ai/zh/help/channels/cross-channel-sync.md)
+
+### 定时任务与主动消息
+
+让 Agent 自己跑起来，有事主动来找你。
+
+- [如何创建定时任务？](https://memoh.ai/zh/help/tasks-and-proactive/create-scheduled-task.md)
+- [我不在线时任务也会运行吗？](https://memoh.ai/zh/help/tasks-and-proactive/run-while-offline.md)
+- [可以同时跑多个任务吗？](https://memoh.ai/zh/help/tasks-and-proactive/multitask.md)
+- [如何暂停、修改或删除定时任务？](https://memoh.ai/zh/help/tasks-and-proactive/manage-tasks.md)
+- [Agent 会主动给我发消息吗？](https://memoh.ai/zh/help/tasks-and-proactive/proactive-messages.md)
+
+### 订阅与计费
+
+订阅计划、credits 与账单管理。
+
+- [Memoh 有哪些订阅计划？](https://memoh.ai/zh/help/billing/plans-overview.md)
+- [为什么价格能做到这么低？可持续吗？](https://memoh.ai/zh/help/billing/why-affordable.md)
+- [什么是 credits？](https://memoh.ai/zh/help/billing/what-are-credits.md)
+- [credits 用完了怎么办？](https://memoh.ai/zh/help/billing/out-of-credits.md)
+- [如何充值 credits 余额？](https://memoh.ai/zh/help/billing/top-up-credits.md)
+- [如何升级、降级或取消订阅？](https://memoh.ai/zh/help/billing/change-plan.md)
+- [支持哪些支付方式？怎么续费？](https://memoh.ai/zh/help/billing/payment-methods.md)
+- [如何获取发票或收据？](https://memoh.ai/zh/help/billing/invoices.md)
+
+### 桌面版
+
+下载安装、更新与系统要求。
+
+- [如何下载安装桌面版？](https://memoh.ai/zh/help/desktop-app/download-install.md)
+- [桌面版和网页版有什么区别？](https://memoh.ai/zh/help/desktop-app/desktop-vs-web.md)
+- [桌面版如何更新？](https://memoh.ai/zh/help/desktop-app/auto-update.md)
+- [桌面版的系统要求是什么？](https://memoh.ai/zh/help/desktop-app/system-requirements.md)
+
+### 隐私与安全
+
+数据存储、隔离、授权与删除。
+
+- [我的数据存储在哪里？](https://memoh.ai/zh/help/privacy-security/where-is-data.md)
+- [Agent 的云电脑是隔离的吗？](https://memoh.ai/zh/help/privacy-security/isolation.md)
+- [云电脑有哪些禁止用途？](https://memoh.ai/zh/help/privacy-security/prohibited-uses.md)
+- [Connector 授权安全吗？](https://memoh.ai/zh/help/privacy-security/connector-security.md)
+- [如何删除我的数据或账户？](https://memoh.ai/zh/help/privacy-security/delete-data.md)
+
+## ヘルプセンター (ja)
+
+### スタートガイド
+
+Memoh の概要と、最初の Bot の作り方。
+
+- [Memoh とは？](https://memoh.ai/ja/help/getting-started/what-is-memoh.md)
+- [Memoh を使い始めるには？](https://memoh.ai/ja/help/getting-started/how-to-get-started.md)
+- [Memoh と普通の AI チャットアシスタントの違いは？](https://memoh.ai/ja/help/getting-started/how-is-memoh-different.md)
+- [Bot とは？いくつ作れますか？](https://memoh.ai/ja/help/getting-started/what-is-a-bot.md)
+- [Memoh はどこで使えますか？](https://memoh.ai/ja/help/getting-started/which-platforms.md)
+- [Memoh で具体的に何ができますか？](https://memoh.ai/ja/help/getting-started/what-can-memoh-do.md)
+- [クラウドコンピューターと VPS の違いは？](https://memoh.ai/ja/help/getting-started/vs-vps.md)
+- [既存のアカウントやファイルを持ち込むには？](https://memoh.ai/ja/help/getting-started/bring-accounts-files.md)
+
+### クラウドコンピューターとワークスペース
+
+デスクトップ、ファイル、パッケージ、クラウド上での開発。
+
+- [エージェントのクラウドコンピューターには何が入っていますか？](https://memoh.ai/ja/help/cloud-computer/whats-inside.md)
+- [エージェントのデスクトップを見る・操作を引き継ぐには？](https://memoh.ai/ja/help/cloud-computer/watch-and-take-over.md)
+- [エージェントにパッケージやアプリを入れるには？](https://memoh.ai/ja/help/cloud-computer/install-packages.md)
+- [ファイルはどこに保存されますか？](https://memoh.ai/ja/help/cloud-computer/files-and-storage.md)
+- [永続ディスク容量とは何を指しますか？](https://memoh.ai/ja/help/cloud-computer/persistent-disk-size.md)
+- [rootfs を永続ストレージとして使えますか？](https://memoh.ai/ja/help/cloud-computer/rootfs-persistence.md)
+- [Bot のワークスペースのスペックを上げられますか？](https://memoh.ai/ja/help/cloud-computer/scale-up-bot.md)
+- [クラウドコンピューター上で開発とプレビューはできますか？](https://memoh.ai/ja/help/cloud-computer/develop-and-preview.md)
+- [クラウドコンピューターは常に稼働していますか？](https://memoh.ai/ja/help/cloud-computer/always-on.md)
+- [サーバーはどこにありますか？](https://memoh.ai/ja/help/cloud-computer/server-locations.md)
+
+### エージェントとモデル
+
+エージェントの持ち込みとモデルの切り替え、その仕組み。
+
+- [自分のエージェントを持ち込めますか？](https://memoh.ai/ja/help/agents-and-models/bring-your-own-agent.md)
+- [セッションでエージェントを切り替えるには？](https://memoh.ai/ja/help/agents-and-models/switch-agents.md)
+
+### メッセージチャンネル
+
+Telegram、Slack、WeChat、Lark など、いつものアプリからエージェントへ。
+
+- [どのチャットチャンネルに対応していますか？](https://memoh.ai/ja/help/channels/supported-channels.md)
+- [Telegram と連携するには？](https://memoh.ai/ja/help/channels/connect-telegram.md)
+- [Discord と連携するには？](https://memoh.ai/ja/help/channels/connect-discord.md)
+- [WeChat と連携するには？](https://memoh.ai/ja/help/channels/connect-wechat.md)
+- [Lark（飛書）と連携するには？](https://memoh.ai/ja/help/channels/connect-feishu.md)
+- [DingTalk と連携するには？](https://memoh.ai/ja/help/channels/connect-dingtalk.md)
+- [Slack と連携するには？](https://memoh.ai/ja/help/channels/connect-slack.md)
+- [QQ や LINE と連携するには？](https://memoh.ai/ja/help/channels/connect-other-channels.md)
+- [会話はチャンネル間で同期されますか？](https://memoh.ai/ja/help/channels/cross-channel-sync.md)
+
+### スケジュールタスクとプロアクティブ通知
+
+エージェントが自律的に動き、必要なときに連絡してくれます。
+
+- [スケジュールタスクを作るには？](https://memoh.ai/ja/help/tasks-and-proactive/create-scheduled-task.md)
+- [オフラインでもタスクは動きますか？](https://memoh.ai/ja/help/tasks-and-proactive/run-while-offline.md)
+- [複数のタスクを同時に実行できますか？](https://memoh.ai/ja/help/tasks-and-proactive/multitask.md)
+- [スケジュールタスクの一時停止・編集・削除は？](https://memoh.ai/ja/help/tasks-and-proactive/manage-tasks.md)
+- [エージェントから連絡してくれますか？](https://memoh.ai/ja/help/tasks-and-proactive/proactive-messages.md)
+
+### プラン・クレジット・支払い
+
+プランとクレジットの仕組み、サブスクリプションの管理。
+
+- [どんなプランがありますか？](https://memoh.ai/ja/help/billing/plans-overview.md)
+- [なぜこんなに安いのですか？持続可能ですか？](https://memoh.ai/ja/help/billing/why-affordable.md)
+- [クレジットとは？](https://memoh.ai/ja/help/billing/what-are-credits.md)
+- [クレジットを使い切ったら？](https://memoh.ai/ja/help/billing/out-of-credits.md)
+- [クレジットを追加チャージするには？](https://memoh.ai/ja/help/billing/top-up-credits.md)
+- [アップグレード・ダウングレード・解約するには？](https://memoh.ai/ja/help/billing/change-plan.md)
+- [支払い方法と更新は？](https://memoh.ai/ja/help/billing/payment-methods.md)
+- [請求書や領収書はどこで入手できますか？](https://memoh.ai/ja/help/billing/invoices.md)
+
+### デスクトップアプリ
+
+ダウンロード、アップデート、システム要件。
+
+- [デスクトップアプリのダウンロードとインストールは？](https://memoh.ai/ja/help/desktop-app/download-install.md)
+- [デスクトップ版と Web 版の違いは？](https://memoh.ai/ja/help/desktop-app/desktop-vs-web.md)
+- [デスクトップアプリはどう更新されますか？](https://memoh.ai/ja/help/desktop-app/auto-update.md)
+- [システム要件は？](https://memoh.ai/ja/help/desktop-app/system-requirements.md)
+
+### プライバシーとセキュリティ
+
+データの保管、分離、認可、削除。
+
+- [データはどこに保存されますか？](https://memoh.ai/ja/help/privacy-security/where-is-data.md)
+- [クラウドコンピューターは分離されていますか？](https://memoh.ai/ja/help/privacy-security/isolation.md)
+- [禁止されている用途は？](https://memoh.ai/ja/help/privacy-security/prohibited-uses.md)
+- [Connector の認可は安全ですか？](https://memoh.ai/ja/help/privacy-security/connector-security.md)
+- [データやアカウントを削除するには？](https://memoh.ai/ja/help/privacy-security/delete-data.md)

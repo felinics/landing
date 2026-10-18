@@ -38,6 +38,12 @@ const pages = {
     socialDescription: 'Field notes, architecture writeups, and product updates from the Memoh team.',
     url: 'https://memoh.ai/blogs',
   },
+  help: {
+    title: 'Memoh Help Center',
+    description: 'Answers about Memoh: cloud computers for agents, channels, scheduled tasks, plans and billing, desktop apps, privacy and security.',
+    socialDescription: 'Answers about Memoh: cloud computers for agents, channels, scheduled tasks, plans and billing, desktop apps, privacy and security.',
+    url: 'https://memoh.ai/help',
+  },
 }
 
 // Keep legal documents out of search until the operational details are complete.

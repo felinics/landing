@@ -16,6 +16,7 @@ const here = dirname(fileURLToPath(import.meta.url))
 const root = resolve(here, '../..')
 const urlArg = process.argv.indexOf('--url')
 const siteUrl = urlArg > -1 ? process.argv[urlArg + 1] : 'https://memoh.ai'
+if (!siteUrl) throw new Error('--url requires a value, e.g. --url http://localhost:4173')
 
 // 按首页功能卡片的英文标题定位,不依赖 DOM 顺序。
 const CARDS = {
@@ -57,8 +58,14 @@ try {
     shots: Object.fromEntries(Object.entries(shots).map(([k, p]) => [k, pathToFileURL(p).href])),
     logo: pathToFileURL(join(root, 'public/logo.png')).href,
   })
-  await page.waitForLoadState('networkidle')
-  await page.evaluate(() => document.fonts.ready)
+  // 等全部卡片图解码完再截图,否则可能截到空白卡片。
+  await page.evaluate(() => Promise.all([...document.images].map((img) => img.decode())))
+  // Inter 来自 Google Fonts;加载失败时浏览器会悄悄换成系统字体,这里直接报错。
+  const fontsOk = await page.evaluate(async () => {
+    await document.fonts.ready
+    return document.fonts.check('600 64px Inter') && document.fonts.check('500 27px Inter')
+  })
+  if (!fontsOk) throw new Error('Inter failed to load from Google Fonts; check the network and retry')
   const out = join(root, 'public/og.jpg')
   await writeFile(out, await page.screenshot({ type: 'jpeg', quality: 88 }))
   console.log(`Wrote ${out}`)

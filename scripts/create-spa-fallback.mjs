@@ -71,7 +71,8 @@ const escapeHtml = (value) => {
 }
 
 const renderMeta = ({ title, description, socialDescription, url, robots = 'index, follow' }) => {
-  const image = 'https://memoh.ai/logo.png'
+  // 横版分享图 2400×1260(1200×630 的 2 倍)。X 用 summary_large_image 才会整幅显示。
+  const image = 'https://memoh.ai/og.jpg'
 
   return `<!-- app-meta-start -->
     <title>${escapeHtml(title)}</title>
@@ -84,7 +85,10 @@ const renderMeta = ({ title, description, socialDescription, url, robots = 'inde
     <meta property="og:description" content="${escapeHtml(socialDescription)}" />
     <meta property="og:url" content="${escapeHtml(url)}" />
     <meta property="og:image" content="${image}" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image:width" content="2400" />
+    <meta property="og:image:height" content="1260" />
+    <meta property="og:image:alt" content="Memoh — Give your agent a cloud computer" />
+    <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${escapeHtml(title)}" />
     <meta name="twitter:description" content="${escapeHtml(socialDescription)}" />
     <meta name="twitter:image" content="${image}" />

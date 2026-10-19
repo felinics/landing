@@ -16,7 +16,7 @@ import {
 
 const { locale, t } = useI18n()
 const pageUrl = 'https://memoh.ai/download'
-const socialImage = 'https://memoh.ai/logo.png'
+const socialImage = 'https://memoh.ai/og.jpg'
 
 useSeoMeta({
   title: () => t('download.seo.title'),

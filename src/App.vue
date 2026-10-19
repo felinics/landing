@@ -46,6 +46,11 @@ const isMemohNet = computed(() => {
   return hostname === 'memoh.net'
 })
 
+// docs.memoh.ai mirrors en (root), /zh/ and /ja/.
+const docsUrl = computed(() =>
+  locale.value === 'zh' || locale.value === 'ja' ? `https://docs.memoh.ai/${locale.value}/` : 'https://docs.memoh.ai/',
+)
+
 const miitBeianUrl = 'https://beian.miit.gov.cn/'
 const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 
@@ -85,6 +90,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
               </div>
               <div class="footer-link-group">
                 <h2 class="footer-link-heading">{{ t('footer.resources') }}</h2>
+                <a :href="docsUrl" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('nav.docs') }}</a>
                 <router-link to="/blogs" class="footer-link">{{ t('nav.blogs') }}</router-link>
                 <a href="https://github.com/felinics/Memoh/releases" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.releases') }}</a>
                 <a href="https://github.com/felinics/Memoh/blob/main/CONTRIBUTING.md" target="_blank" rel="noopener noreferrer" class="footer-link">{{ t('footer.contributing') }}</a>

@@ -88,7 +88,6 @@ const ui = {
   articleCount: { en: '{n} articles', zh: '{n} 篇文章', ja: '記事 {n} 件' },
   breadcrumbRoot: { en: 'Help Center', zh: '帮助中心', ja: 'ヘルプセンター' },
   collectionsTitle: { en: 'Browse by topic', zh: '按主题浏览', ja: 'トピックから探す' },
-  relatedTitle: { en: 'Related articles', zh: '相关文章', ja: '関連記事' },
   loadingAnswer: { en: 'Loading…', zh: '正在加载…', ja: '読み込み中…' },
   moreCollections: { en: 'Browse other topics', zh: '浏览其他主题', ja: 'ほかのトピック' },
   contactTitle: { en: 'Can’t find what you need?', zh: '没有找到答案？', ja: '解決しませんでしたか？' },

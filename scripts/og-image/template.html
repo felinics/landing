@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600&display=swap" rel="stylesheet">
+<style>
+* { margin: 0; box-sizing: border-box }
+/* 卡片底板比背景亮一档(#1c1c20 vs #0c0c0e),否则缩到分享卡片大小时卡片会和背景糊在一起。
+   不加暗角或中心暗晕:它们会把卡片一起压暗。 */
+:root { --bg: #0c0c0e; --pane: #1c1c20; --line: rgb(255 255 255 / .09); --fg: #fff }
+body { width: 1200px; height: 630px; overflow: hidden; position: relative; background: var(--bg); font-family: Inter, sans-serif; -webkit-font-smoothing: antialiased }
+.tile { position: absolute; overflow: hidden; border-radius: 26px; background: var(--pane); border: 1px solid var(--line) }
+.tile img { position: absolute; display: block; border-radius: 14px; box-shadow: 0 8px 24px rgb(0 0 0 / .12) }
+.mark { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 14px; color: var(--fg) }
+.wordmark { display: flex; align-items: center; gap: 18px; font-weight: 600; font-size: 64px; letter-spacing: -.035em }
+.wordmark img { width: 70px; height: 70px; object-fit: contain }
+/* 与首屏主标题 hero.title 一致;X 的大图卡片不显示 og:title/description,这句是 X 上唯一说明产品的文字。 */
+.tagline { font-size: 27px; font-weight: 500; letter-spacing: -.01em; color: rgb(255 255 255 / .72) }
+</style>
+</head>
+<body>
+<!-- 三列错落:左列上下两块占满高度;中列上两块、标语下方一块;右列上方窄条、下方一块。
+     卡片间距约 20px,超出画面的部分直接裁掉。data-card 对应 generate.mjs 里的 CARDS。 -->
+<div class="tile" style="left:-40px;top:-60px;width:300px;height:285px"><img data-card="schedule" style="left:40px;top:20px;width:240px"></div>
+<div class="tile" style="left:-40px;top:315px;width:310px;height:370px"><img data-card="reach-out" style="left:40px;top:34px;width:250px"></div>
+<div class="tile" style="left:280px;top:-85px;width:340px;height:240px"><img data-card="tools" style="left:24px;top:62px;width:340px"></div>
+<div class="tile" style="left:640px;top:-85px;width:430px;height:240px"><img data-card="desktop" style="left:30px;top:-40px;width:400px"></div>
+<div class="tile" style="left:310px;top:450px;width:580px;height:260px"><img data-card="agents" style="left:40px;top:28px;width:500px"></div>
+<div class="tile" style="left:1090px;top:-60px;width:200px;height:290px"><img data-card="build" style="left:24px;top:40px;width:340px"></div>
+<div class="tile" style="left:930px;top:300px;width:320px;height:380px"><img data-card="memory" style="left:30px;top:30px;width:260px"></div>
+
+<div class="mark">
+  <div class="wordmark"><img data-logo>Memoh</div>
+  <div class="tagline">Give your agent a cloud computer</div>
+</div>
+</body>
+</html>

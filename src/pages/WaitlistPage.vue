@@ -24,11 +24,11 @@ useSeoMeta({
   ogDescription: () => t('waitlist.seo.description'),
   ogType: 'website',
   ogUrl: pageUrl,
-  ogImage: 'https://memoh.ai/logo.png',
+  ogImage: 'https://memoh.ai/og.jpg',
   twitterCard: 'summary_large_image',
   twitterTitle: () => t('waitlist.seo.title'),
   twitterDescription: () => t('waitlist.seo.description'),
-  twitterImage: 'https://memoh.ai/logo.png',
+  twitterImage: 'https://memoh.ai/og.jpg',
 })
 
 useHead({

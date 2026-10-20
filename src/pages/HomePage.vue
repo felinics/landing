@@ -17,7 +17,7 @@ import { useTa } from '../composables/useTa'
 const { locale, t } = useI18n()
 const { th } = useTa()
 const siteUrl = 'https://memoh.ai/'
-const socialImage = 'https://memoh.ai/logo.png'
+const socialImage = 'https://memoh.ai/og.jpg'
 
 useSeoMeta({
   title: () => t('seo.title'),

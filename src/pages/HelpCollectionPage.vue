@@ -46,17 +46,8 @@ const toggleArticle = (articleId: string) => {
   void renderAnswer(articleId)
 }
 
-const relatedFor = (articleId: string) =>
-  (collection.value?.articles ?? []).filter((candidate) => candidate.id !== articleId).slice(0, 4)
-
 const scrollToItem = (articleId: string) =>
   document.getElementById(`help-item-${articleId}`)?.scrollIntoView({ block: 'start' })
-
-const openRelated = async (articleId: string) => {
-  if (!isExpanded(articleId)) toggleArticle(articleId)
-  await nextTick()
-  scrollToItem(articleId)
-}
 
 // Deep links: /help/:collectionId#article-id — used by search results and the
 // redirect that keeps old /help/:collectionId/:articleId URLs working.
@@ -140,21 +131,6 @@ useSeoMeta({
             <div v-if="isExpanded(article.id)" class="border-t border-border/60 px-5 py-5">
               <div v-if="renderedById[article.id]" class="help-body" v-html="renderedById[article.id]"></div>
               <p v-else class="text-sm text-muted-foreground">{{ ui('loadingAnswer') }}</p>
-
-              <div v-if="relatedFor(article.id).length" class="mt-6 border-t border-border/60 pt-4">
-                <h3 class="mb-2 text-xs font-medium text-muted-foreground">{{ ui('relatedTitle') }}</h3>
-                <div class="flex flex-wrap gap-2">
-                  <button
-                    v-for="related in relatedFor(article.id)"
-                    :key="related.id"
-                    type="button"
-                    class="rounded-full border border-border bg-background px-3 py-1.5 text-xs text-muted-foreground hover:bg-muted hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring"
-                    @click="openRelated(related.id)"
-                  >
-                    {{ related.question }}
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </section>

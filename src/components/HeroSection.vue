@@ -3,7 +3,6 @@ import { computed } from 'vue'
 import { ArrowRight } from 'lucide-vue-next'
 import sunsetBg from '../assets/sunset.webp'
 import DesktopDownloadButton from './DesktopDownloadButton.vue'
-import HeroShowcase from './HeroShowcase.vue'
 import { useTa } from '../composables/useTa'
 
 const { th } = useTa()
@@ -13,7 +12,7 @@ const titleFontClass = computed(() => 'font-serif')
 </script>
 
 <template>
-  <!-- HERO: full-bleed sunset sky + real app screenshot. -->
+  <!-- HERO: full-bleed sunset sky. -->
   <section class="relative w-full">
     <!-- Sky stage: sized close to the image ratio so the whole scene (cat + train) stays visible -->
     <div class="relative w-full h-[86svh] min-h-[640px] max-h-[880px] flex items-start justify-center">
@@ -52,13 +51,6 @@ const titleFontClass = computed(() => 'font-serif')
       </div>
     </div>
 
-    <!-- App showcase — overlaps the sky bottom, continues onto the page background.
-         原版 Memoh 前端的纯浏览器交互演示。 -->
-    <div class="relative z-20 w-full max-w-[1180px] mx-auto px-4 md:px-6 -mt-[40px] md:-mt-[90px]">
-      <div class="relative h-[520px] w-full md:h-auto md:aspect-[16/10] shadow-2xl shadow-black/50">
-        <HeroShowcase class="absolute inset-0" :chrome="false" />
-      </div>
-    </div>
   </section>
 </template>
 

@@ -6,6 +6,7 @@ import { Moon, Sun, Languages, ChevronDown, Check } from 'lucide-vue-next'
 import { useI18n } from 'vue-i18n'
 import { useThemePreference } from '../composables/useTheme'
 import GitHubStarsLink from './GitHubStarsLink.vue'
+import { ENDS_AT, STARTS_AT } from '../../events/1024/lottery.js'
 
 const props = defineProps<{
   overlay?: boolean
@@ -44,6 +45,10 @@ const goToPricing = (event: MouseEvent) => {
   }
   void router.push({ path: '/', hash: '#pricing' })
 }
+
+// The 1024 campaign entry shows only while the event runs and drops out on its own.
+const now = Date.now()
+const show1024 = now >= STARTS_AT && now < ENDS_AT
 
 const { locale, t } = useI18n()
 
@@ -103,6 +108,11 @@ const selectLang = (lang: string) => {
       </div>
 
       <div class="flex items-center ml-2 sm:ml-4 shrink-0 gap-2">
+        <RouterLink v-if="show1024" to="/1024" class="nav-1024" :class="{ 'is-overlay': overlay }">
+          <span class="nav-1024-dot" aria-hidden="true" />
+          <span class="nav-1024-num">1024</span>
+          <span class="hidden lg:inline">{{ $t('nav.event1024') }}</span>
+        </RouterLink>
         <GitHubStarsLink :overlay="overlay" />
         <a href="https://t.me/memohai"
            target="_blank"
@@ -159,6 +169,30 @@ const selectLang = (lang: string) => {
 </template>
 
 <style scoped>
+.nav-1024 {
+  margin-right: 6px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  height: 28px;
+  padding: 0 12px;
+  border: 1px solid rgba(255, 201, 77, 0.45);
+  border-radius: 999px;
+  background: rgba(255, 201, 77, 0.08);
+  color: var(--foreground);
+  font-size: 12.5px;
+  font-weight: 500;
+  white-space: nowrap;
+  transition: background 160ms, border-color 160ms;
+}
+.nav-1024.is-overlay { color: #fff; background: rgba(9, 9, 11, 0.35); }
+.nav-1024:hover { border-color: #ffc94d; background: rgba(255, 201, 77, 0.16); }
+.nav-1024-num { font-family: var(--font-mono); font-weight: 600; color: #e0a800; }
+.dark .nav-1024-num, .nav-1024.is-overlay .nav-1024-num { color: #ffc94d; }
+.nav-1024-dot { width: 6px; height: 6px; border-radius: 50%; background: #7cffb2; box-shadow: 0 0 6px #7cffb2; animation: nav-1024-pulse 1.6s ease-in-out infinite; }
+@keyframes nav-1024-pulse { 50% { opacity: 0.35; } }
+@media (prefers-reduced-motion: reduce) { .nav-1024-dot { animation: none; } }
 .telegram-icon {
   background-color: currentColor;
   mask: url('/brands/telegram.svg') center / contain no-repeat;

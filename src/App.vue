@@ -27,14 +27,15 @@ const isBlogsRoute = computed(() => route.path.startsWith('/blogs'))
 const isWaitlistRoute = computed(() => route.path.startsWith('/waitlist'))
 const isHelpRoute = computed(() => route.path.startsWith('/help'))
 const isHomeRoute = computed(() => route.path === '/')
-const isPlainContentRoute = computed(() => isDownloadRoute.value || isBlogsRoute.value || isWaitlistRoute.value || isHelpRoute.value || route.meta.legal === true)
+const isEventRoute = computed(() => route.path.startsWith('/1024'))
+const isPlainContentRoute = computed(() => isDownloadRoute.value || isBlogsRoute.value || isWaitlistRoute.value || isHelpRoute.value || isEventRoute.value || route.meta.legal === true)
 
 // Single owner of the <html> `dark` class. The landing page always *renders*
 // dark, but must never overwrite the user's saved preference — so we force the
 // class here based on route without writing to storage. Every other route
 // follows the persisted choice.
 watchEffect(() => {
-  const dark = isHomeRoute.value ? true : isDark.value
+  const dark = isHomeRoute.value || isEventRoute.value ? true : isDark.value
   document.documentElement.classList.toggle('dark', dark)
 })
 

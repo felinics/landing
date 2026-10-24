@@ -8,6 +8,7 @@
     "download": "Download",
     "pricing": "Pricing",
     "help": "Help",
+    "event1024": "Draw a free plan",
     "selectLanguage": "Select language",
     "toggleTheme": "Toggle theme"
   },
@@ -370,5 +371,84 @@
     "download": "Download Markdown",
     "loading": "Loading document…",
     "loadError": "The document could not be loaded. Refresh this page or download the Markdown file."
+  },
+  "p1024": {
+    "seo": {
+      "title": "1024 Programmers Day · Tap out Memoh in Morse",
+      "description": "Tap MEMOH in Morse code with your space bar to win a Memoh Go or Pro plan."
+    },
+    "title": "Happy Programmers Day",
+    "subtitle": "Enter the email you registered with Memoh, then tap out MEMOH in Morse code with your space bar.\nShort press for a dot, long press for a dash. Finish it to draw a Memoh Go / Pro plan.",
+    "key": "Morse key: hold for a dash, tap for a dot",
+    "hint": "Press the space bar (or tap the key on mobile) to start sending",
+    "drawing": "Signal received, drawing your plan",
+    "log": {
+      "hit": "[ OK ] {letter} received",
+      "miss": "[ERR ] {letter} mismatched, try that letter again"
+    },
+    "result": {
+      "won": "You won",
+      "go": "Go plan · everyday conversations and lighter tasks",
+      "pro": "Pro plan · daily work and always-ready agents",
+      "code": "Code",
+      "time": "Drawn at",
+      "email": "Email"
+    },
+    "steps": {
+      "screenshot": "Screenshot your prize card, code included.",
+      "follow": "Follow {handle} on X.",
+      "followBtn": "Follow {'@'}memoh_ai",
+      "send": "DM the screenshot to {'@'}memoh_ai and we will activate your plan after checking it.",
+      "sendBtn": "Open {'@'}memoh_ai"
+    },
+    "share": {
+      "btn": "Share on X",
+      "text": "Happy 1024 Programmers Day! I tapped out -- . -- --- .... in Morse and won a Memoh {plan} plan. Your turn 👇",
+      "hashtags": "1024,Memoh"
+    },
+    "rules": {
+      "title": "# Rules",
+      "time": "The event runs from Oct 24, 2026 00:00 to Oct 31, 2026 23:59 Beijing time (UTC+8). Draws outside this window are not accepted.",
+      "one": "One draw per email. You must use an email registered with Memoh; wins on unregistered emails are void.",
+      "two": "Each draw has a 20% chance to win. The pool holds 1 Pro plan and 24 Go plans, while they last.",
+      "three": "To redeem, follow {handle} and DM a screenshot showing your code.",
+      "four": "Codes are personal. We check the email and code before activating.",
+      "five": "Memoh reserves the right of final interpretation."
+    },
+    "loading": "Connecting to the event server",
+    "pool": {
+      "left": "Prizes left"
+    },
+    "email": {
+      "label": "Your Memoh account email",
+      "help": "Use the email you registered with Memoh. If you win, claim your prize by DM as described in the rules below.",
+      "placeholder": "you{'@'}example.com",
+      "submit": "Submit & start",
+      "submitting": "Submitting…",
+      "invalid": "Please enter a valid email address",
+      "as": "Playing as {email}",
+      "change": "Use another email"
+    },
+    "soldout": {
+      "title": "All prizes are gone",
+      "body": "All 25 plans have been given away. Thanks for joining! Follow {handle} to hear about the next one first.",
+      "check": "Check my result"
+    },
+    "lose": {
+      "title": "So close",
+      "body": "No prize this time, and each email gets one try. Thanks for celebrating 1024 with Memoh!"
+    },
+    "errors": {
+      "network": "Something went wrong with the network. Please try again.",
+      "status": "Can't reach the event server right now.",
+      "retry": "Retry"
+    },
+    "dates": "Oct 24 – Oct 31 (Beijing time, UTC+8)",
+    "closed": {
+      "soonTitle": "Not open yet",
+      "soonBody": "The draw opens on Oct 24 at 00:00 Beijing time (UTC+8). See you then!",
+      "endedTitle": "The event has ended",
+      "endedBody": "The 1024 draw closed on Oct 31. Thanks for joining! Winners can still look up their result here."
+    }
   }
 }

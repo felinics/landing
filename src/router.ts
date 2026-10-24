@@ -4,6 +4,7 @@ const HomePage = () => import('./pages/HomePage.vue')
 const DownloadPage = () => import('./pages/DownloadPage.vue')
 const BlogsPage = () => import('./pages/BlogsPage.vue')
 const WaitlistPage = () => import('./pages/WaitlistPage.vue')
+const Event1024Page = () => import('./pages/Event1024Page.vue')
 const NotFoundPage = () => import('./pages/NotFoundPage.vue')
 const LegalPage = () => import('./pages/LegalPage.vue')
 const HelpPage = () => import('./pages/HelpPage.vue')
@@ -15,6 +16,7 @@ export const router = createRouter({
     { path: '/', name: 'home', component: HomePage },
     { path: '/waitlist', name: 'waitlist', component: WaitlistPage },
     { path: '/download', name: 'download', component: DownloadPage },
+    { path: '/1024', name: 'event-1024', component: Event1024Page },
     { path: '/blogs', name: 'blogs', component: BlogsPage },
     // Old date-based blog URLs; keep redirects for existing links.
     { path: '/blogs/2026-02-16', redirect: '/blogs/introduction-to-memoh' },

@@ -8,6 +8,7 @@ import { useI18n } from 'vue-i18n'
 import BackgroundCanvas from './components/BackgroundCanvas.vue'
 import TopBar from './components/TopBar.vue'
 import EasterEgg from './components/EasterEgg.vue'
+import RouteProgressBar from './components/RouteProgressBar.vue'
 
 const { locale, t } = useI18n()
 const { th } = useTa()
@@ -58,6 +59,7 @@ const telecomLicenseUrl = 'https://dxzhgl.miit.gov.cn/'
 
 <template>
   <div class="min-h-screen font-sans overflow-x-hidden" :class="{ 'home-shell': isHomeRoute, 'download-shell': isPlainContentRoute }">
+    <RouteProgressBar />
     <BackgroundCanvas v-if="!isHomeRoute && !isPlainContentRoute" />
 
     <div

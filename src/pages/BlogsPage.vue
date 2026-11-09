@@ -126,8 +126,17 @@ watch(
               <ArrowRight class="w-4 h-4 transition-transform group-hover:translate-x-0.5" />
             </span>
           </div>
-          <div class="border-t md:border-t-0 md:border-l border-border bg-muted/35 p-6 md:p-8 flex items-end">
-            <div class="w-full font-mono text-xs text-muted-foreground leading-relaxed">
+          <div
+            class="border-t md:border-t-0 md:border-l border-border bg-muted/35 p-6 md:p-8 flex"
+            :class="featuredPost.cover ? 'items-center' : 'items-end'"
+          >
+            <img
+              v-if="featuredPost.cover"
+              :src="featuredPost.cover"
+              alt=""
+              class="w-full h-auto rounded-lg border border-border"
+            />
+            <div v-else class="w-full font-mono text-xs text-muted-foreground leading-relaxed">
               <div class="mb-4 flex items-center gap-1.5">
                 <span class="h-2.5 w-2.5 rounded-full bg-red-400/80"></span>
                 <span class="h-2.5 w-2.5 rounded-full bg-yellow-400/80"></span>

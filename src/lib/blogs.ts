@@ -15,6 +15,7 @@ export type BlogPost = {
   dateKey: string
   excerpt: string
   readingMinutes: number
+  cover?: string
   body: string
 }
 
@@ -98,7 +99,7 @@ const parseBlogPost = (path: string, raw: string): BlogPost | undefined => {
   if (!parsedPath) return undefined
 
   const { meta, body } = parseFrontmatter(raw)
-  const bodyWithoutTitle = body.replace(/^#\s+.+\n+/, '')
+  const bodyWithoutTitle = body.replace(/^\s*#\s+.+\n+/, '')
   const dateMatch = /^(\d{4}-\d{2}-\d{2})/.exec(parsedPath.slug)
 
   return {
@@ -109,6 +110,7 @@ const parseBlogPost = (path: string, raw: string): BlogPost | undefined => {
     dateKey: meta.date || dateMatch?.[1] || parsedPath.slug,
     excerpt: getExcerpt(bodyWithoutTitle),
     readingMinutes: getReadingMinutes(bodyWithoutTitle),
+    cover: meta.cover || undefined,
     body: bodyWithoutTitle,
   }
 }

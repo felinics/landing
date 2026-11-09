@@ -1,4 +1,4 @@
-import{$ as e,A as t,C as n,Dt as r,O as i,S as a,T as o,U as s,V as c,Z as l,a as u,i as d,k as f,lt as p,r as m,rt as h,t as g,v as _,w as v,x as y}from"./createLucideIcon-CVuxzMVS.js";import{t as ee}from"./arrow-left-CZ-a0lG8.js";import{t as b}from"./arrow-right-hXxXd9HO.js";import{t as x}from"./calendar-days-mdGmnSk2.js";import{t as S}from"./clock-3-CdPC6wqV.js";import{c as te,i as C,l as w,s as T,t as E}from"./index-CvrebedY.js";var D=g(`file-text`,[[`path`,{d:`M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z`,key:`1oefj6`}],[`path`,{d:`M14 2v5a1 1 0 0 0 1 1h5`,key:`wfsgrz`}],[`path`,{d:`M10 9H8`,key:`b1mrlr`}],[`path`,{d:`M16 13H8`,key:`t4e002`}],[`path`,{d:`M16 17H8`,key:`z1uh3a`}]]),O=g(`user-round`,[[`circle`,{cx:`12`,cy:`8`,r:`5`,key:`1hypcn`}],[`path`,{d:`M20 21a8 8 0 0 0-16 0`,key:`rfgkzh`}]]),k=Object.assign({"../content/blogs/en/cloud-computer-for-every-agent.md":`---
+import{$ as e,A as t,C as n,Dt as r,O as i,S as a,T as o,Tt as ee,U as s,V as c,Z as l,a as te,i as u,k as d,lt as f,r as p,rt as m,t as h,v as g,w as _,x as v}from"./createLucideIcon-CVuxzMVS.js";import{t as y}from"./arrow-left-CZ-a0lG8.js";import{t as b}from"./arrow-right-hXxXd9HO.js";import{t as x}from"./calendar-days-mdGmnSk2.js";import{t as S}from"./clock-3-CdPC6wqV.js";import{c as C,i as w,l as T,s as E,t as D}from"./index-BLhupcGu.js";var O=h(`file-text`,[[`path`,{d:`M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z`,key:`1oefj6`}],[`path`,{d:`M14 2v5a1 1 0 0 0 1 1h5`,key:`wfsgrz`}],[`path`,{d:`M10 9H8`,key:`b1mrlr`}],[`path`,{d:`M16 13H8`,key:`t4e002`}],[`path`,{d:`M16 17H8`,key:`z1uh3a`}]]),k=h(`user-round`,[[`circle`,{cx:`12`,cy:`8`,r:`5`,key:`1hypcn`}],[`path`,{d:`M20 21a8 8 0 0 0-16 0`,key:`rfgkzh`}]]),A=Object.assign({"../content/blogs/en/cloud-computer-for-every-agent.md":`---
 title: Introducing Memoh: A Cloud Computer for Every Agent
 author: Yanbo
 date: 2026-09-15
@@ -534,6 +534,130 @@ Discuss 模式目前已经在生产环境运行，但还有几个方向在迭代
 - **跨会话感知**：让 bot 能感知到它在不同群、不同频道中的状态，实现更丰富的上下文关联。
 
 Discuss 模式的核心理念很简单：不要把 bot 当工具，把它当群成员。让它听得到所有对话，让它自己决定什么时候说话。剩下的，交给 LLM 的推理能力。
+`,"../content/blogs/zh/user-interview-yayoi.md":`---
+title: 用户访谈｜Yayoi：散步时的灵感，也能继续往前走
+author: Team Memoh
+date: 2026-10-29
+cover: /blogs/user-interview-yayoi/cover.jpg
+---
+
+# 用户访谈｜Yayoi：散步时的灵感，也能继续往前走
+
+![用户访谈封面：与 Yayoi 聊聊他的 Memoh 日常。散步时的灵感，也能继续往前走。一台全天候开发机，接住随时出现的新想法。右侧是 Yayoi 的头像和 @Yayoi_no_yume](/blogs/user-interview-yayoi/cover.jpg)
+
+有些灵感，总是在离开电脑后才出现。Yayoi 常在散步时冒出新想法。想到一个新设计，他就在 Telegram 里给 Memoh 发条消息，路上先看一眼网页的大致效果，回家再接着改。
+
+这次，我们和首批用户 Yayoi [@Yayoi_no_yume](https://x.com/Yayoi_no_yume) 聊了聊，他如何用每月 5 美元的 Go 套餐，把 Memoh 用成了一台 24 小时在线的开发机。
+
+> 「Memoh 已经能够满足我的需求，我也不想再去看其他的产品了。」—— Yayoi
+
+## 从支持朋友开始，到找到自己的用法
+
+**Memoh：先介绍一下自己吧。**
+
+Yayoi：我是 Yayoi，一个爱把自己喜欢的东西拆开看看、再想办法装回去的人。
+
+**Memoh：你最早是怎么知道 Memoh 的？**
+
+Yayoi：最早是在 X 上看到身边的朋友加入了 Memoh。
+
+从那一刻起，Memoh 对我来说就是一个有朋友参与的产品。抱着支持朋友的心情，我想试一试。
+
+**Memoh：真正用起来之后，哪些地方吸引了你？**
+
+Yayoi：首先是性价比。我用的是 Go 套餐，每月 5 美元，有 8 核、16GB 内存、40GB 存储，每月还有 2500 credits 的模型额度。
+
+实际上手后，我发现 Memoh 的开发环境和工具比较完备，可以直接在上面搭建自己的 Bot 团队，也支持与各种通讯平台连接，比如我用的最多的 Telegram。
+
+我也看过其他人分享一些 Bot 产品的体验，但我还是喜欢 Memoh。
+
+它也是一个很棒的开源项目：[https://github.com/felinics/Memoh](https://github.com/felinics/Memoh)。
+
+我可以自己去找产品相关的问题，去给项目提 Pull Request，或者把问题反馈给官方的开发者，把喜欢的工具打造成趁手的样子。
+
+## 手机上派活，电脑前用 SSH
+
+出门在外，Yayoi 在 Telegram 里给 Memoh 派活；回到电脑前，他就用 SSH 登进这台机器敲命令。SSH 是他自己开的，弄好之后让 AI 按任务记录整理成教程，自己审过一遍，发在了 X 和自己的博客上。
+
+![Yayoi 在 X 上分享的截图：通过 SSH 登录 Memoh 云电脑并运行 fastfetch，显示 Debian 13、8 核 CPU 和约 16 GiB 内存](/blogs/user-interview-yayoi/ssh-fastfetch.jpg)
+
+_「给 @memoh_ai 上的机器开启SSH，这下执行命令行更加方便了。教程见评论区文章链接，由AI根据任务记录整理并由我个人审核。」——Yayoi，[10 月 21 日发布于 X](https://x.com/Yayoi_no_yume/status/2112753070388208124)_
+
+[https://blog.yayoi.love/post/memoh-ssh](https://blog.yayoi.love/post/memoh-ssh)
+
+**Memoh：现在，Memoh 主要帮你做什么？**
+
+Yayoi：主要是作为一台 24 小时在线的开发机为我工作。得益于配置比较好，我可以在上面进行一些负载较大的开发和编译工作，解放了我本地的电脑。
+
+**Memoh：有没有一个特别能代表你使用习惯的场景？**
+
+Yayoi：我在外面散步的时候，总是会产生一些新设计和新想法。这时候，只需要在 Telegram 里给 Memoh 发消息就可以了。
+
+Memoh 自带的浏览器环境，可以让我方便地预览网页界面的大致效果，回到家稍微改造一下就能用了。
+
+## 定时任务替他盯论坛、管资料库
+
+Yayoi 使用 Memoh 的定时任务功能，有的用来收集信息，有的用来照看机器。照看机器的那个每小时跑一次：检查机器上常驻的守护进程，掉线就自动重启。
+
+![Memoh 的编辑任务界面：名为 keep alive 的定时任务每小时运行一次，指令是检查 lody daemon 的运行状态，掉线就执行 lody daemon restart](/blogs/user-interview-yayoi/keep-alive-task.png)
+
+_「尝试了那么多memoh保活方法，这是唯一有效的一个」——Yayoi，[10 月 9 日发布于 X](https://x.com/Yayoi_no_yume/status/2108461185406489007)_
+
+**Memoh：除了开发，你还会用 Memoh 做哪些事？**
+
+Yayoi：我会用定时任务收集需要的信息。比如，关注 Windows 论坛上针对某个系统问题的最新通告和解决方案。
+
+我很重视文档的采集和管理，Memoh 的定时任务和浏览器功能，可以让我更方便地获取和更新文档资料库，而且可以直接存在云电脑的存储里面。
+
+## “前一天有人反馈，第二天就修好了”
+
+今年 10 月 12 日，Yayoi 在 Memoh 的 Telegram 群里看到有人也在反映僵尸进程的问题。第二天傍晚，开发者回他："修好了，今晚会更新一次，明天应该就能用了。"当晚他在 X 上写：[「没想到今晚就搞定了！……一直以来辛苦了！」](https://x.com/Yayoi_no_yume/status/2110030123982577805)
+
+![Telegram 对话截图，10 月 13 日：开发者回复「修好了，今晚会更新一次，明天应该就能用了」，Yayoi 回复「太好了！」「谢谢你！」](/blogs/user-interview-yayoi/zombie-process-fix.jpg)
+
+_「memoh僵尸进程的问题解决了！我昨天看到tg群里有人也在反应僵尸进程相关的问题，没想到今晚就搞定了！☺️ 一直以来辛苦了！」——Yayoi，[10 月 13 日发布于 X](https://x.com/Yayoi_no_yume/status/2110030123982577805)_
+
+**Memoh：使用过程中，有哪些体验让你印象比较深？**
+
+Yayoi：跟团队沟通挺方便的。在 Telegram 群里，有佩奇（群里的答疑 Bot）帮忙解答问题，偶尔也有 Memoh 的开发者来帮忙，还可以直接私信反馈。
+
+近期的体验很稳定，我没有遇到什么大问题。能感受到它的优化，相比最初认识的它，已经有很大不同。
+
+我其实也很喜欢 Memoh 的内置 Agent，感觉它对机器的熟悉和适配程度很高。
+
+**Memoh：是什么让你愿意继续使用 Memoh？**
+
+Yayoi：Memoh 已经能够满足我的需求，我也不想再去看其他的产品了。它响应反馈很及时。
+
+看着自己常用的产品在慢慢变好，一时间也难以割舍吧？我肯定是乐意继续订阅下去的。
+
+## 如果向更多人推荐，他会怎么说
+
+**Memoh：最后，如果向身边人推荐 Memoh，你会怎么介绍？**
+
+Yayoi：真拿你没办法，坐好咯。（笑）
+
+如果你需要一台 24 小时在线、开发工具齐全的机器，可以看看 Memoh。你可以在上面搭自己的个人助理或者编码环境，直接在 Telegram、飞书这些通讯软件里跟它交流。
+
+谢谢 Yayoi 的分享，也谢谢他从最早的尝试，一直用到今天。
+
+也许当你下次散步时冒出一个想法，也可以尝试使用 Memoh，给 Memoh 发消息试试。
+
+想照着做，你也可以从这几篇开始：
+
+- [在云电脑上开发并预览应用](/help/cloud-computer#develop-and-preview)
+- [创建定时任务](/help/tasks-and-proactive#create-scheduled-task)
+
+有任何使用问题，也可以像他一样第一时间在 Telegram 群聊或 support 邮箱联系我们：
+
+- **Telegram**：[https://t.me/memohai](https://t.me/memohai)
+- **支持邮箱**：[support@memoh.net](mailto:support@memoh.net)
+
+欢迎关注我们这次的访谈嘉宾 [@Yayoi_no_yume](https://x.com/Yayoi_no_yume)，认识这位喜欢折腾工具类产品的朋友。
+
+也欢迎关注我们 [@memoh_ai](https://x.com/memoh_ai)，了解 Memoh 的更多用户故事。
+
+*本文根据 Yayoi 提供的访谈原稿整理，回答经过节选与文字润色。文中套餐价格、配置及额度为受访时描述，当前方案请以 Memoh [定价页](/#pricing)为准。
 `,"../content/blogs/zh/workspace-desktop.md":`---
 title: 提供桌面，我们可以做到更多 - 介绍Memoh的桌面电脑功能
 author: Ran Chen
@@ -695,6 +819,6 @@ bot 可以打开本地 Web 服务，看页面、点按钮、截图、定位问�
 我们做 Memoh 的一个基本判断是：聊天框适合沟通，命令行适合执行，记忆系统适合长期上下文，桌面适合需要看画面和操作界面的任务。
 
 给 bot 一个 workspace 桌面以后，它可以打开页面、看状态、点按钮、试流程，再把结果告诉用户。
-`}),A={"2026-02-16":`introduction-to-memoh`,"2026-05-02":`discuss-mode`,"2026-05-15":`workspace-desktop`,"2026-09-11":`cloud-computer-for-every-agent`,"2026-09-11-en":`cloud-computer-for-every-agent`,"2026-09-15":`cloud-computer-for-every-agent`},j=e=>{let t=/^---\n([\s\S]*?)\n---\n?/.exec(e);return t?{meta:Object.fromEntries(t[1].split(`
-`).map(e=>{let t=e.indexOf(`:`);if(t!==-1)return[e.slice(0,t).trim(),e.slice(t+1).trim().replace(/^["']|["']$/g,``)]}).filter(e=>!!e)),body:e.slice(t[0].length)}:{meta:{},body:e}},M=e=>e.replace(/!\[[^\]]*]\([^)]+\)/g,``).replace(/\[([^\]]+)]\([^)]+\)/g,`$1`).replace(/[`*_>#|:-]/g,``).replace(/\s+/g,` `).trim(),N=e=>{let t=M(e.split(`
-`).find(e=>{let t=e.trim();return t&&!t.startsWith(`#`)&&!t.startsWith(`:::`)&&!t.startsWith(`![`)&&!t.startsWith(`- `)&&!t.startsWith(`|`)&&!t.startsWith("```")})??``);return t.length>180?`${t.slice(0,177)}...`:t},P=e=>{let t=M(e.replace(/```[\s\S]*?```/g,``)).match(/[\u4e00-\u9fff]|[A-Za-z0-9]+/g)?.length??0;return Math.max(2,Math.round(t/320))},F=e=>{let t=e.replace(/\\/g,`/`).split(`/`),n=t.pop()?.replace(/\.md$/,``),r=t.pop();if(!(!n||n===`index`)&&!(r!==`en`&&r!==`zh`))return{slug:n,locale:r}},I=(e,t)=>{let n=F(e);if(!n)return;let{meta:r,body:i}=j(t),a=i.replace(/^#\s+.+\n+/,``),o=/^(\d{4}-\d{2}-\d{2})/.exec(n.slug);return{slug:n.slug,locale:n.locale,title:r.title||n.slug,author:r.author||`Team Memoh`,dateKey:r.date||o?.[1]||n.slug,excerpt:N(a),readingMinutes:P(a),body:a}},L=new Map;for(let[e,t]of Object.entries(k)){let n=I(e,t);if(!n)continue;let r=L.get(n.slug)??{};r[n.locale]=n,L.set(n.slug,r)}var R=e=>e===`zh`?`zh`:`en`,z={zh:`zh-CN`,ja:`ja`},B=(e,t)=>{let n=L.get(e);if(n)return n[t]??n.en??n.zh},V=e=>A[e]??e,H=(e,t)=>{let n=/^(\d{4}-\d{2}-\d{2})$/.exec(e);return n?new Intl.DateTimeFormat(z[t]??`en`,{month:`short`,day:`numeric`,year:`numeric`}).format(new Date(`${n[1]}T00:00:00Z`)):e},U=e=>{let t=R(e);return[...L.keys()].filter(e=>!(e in A)).map(e=>B(e,t)).filter(e=>!!e).sort((e,t)=>t.dateKey.localeCompare(e.dateKey))},W=(e,t)=>B(V(decodeURIComponent(e)),R(t)),G={class:`w-full max-w-[1080px] min-h-[calc(100vh-3.5rem)] mx-auto px-4 md:px-8 pt-[112px] md:pt-[148px] pb-[120px] relative z-10`},K={key:0,class:`flex flex-col gap-12`},q={class:`max-w-[760px] flex flex-col gap-5`},J={class:`inline-flex w-fit items-center gap-2 rounded-md border border-border bg-background px-3 py-1.5 text-xs font-medium text-muted-foreground`},Y={class:`flex flex-col gap-4`},X={class:`text-4xl md:text-6xl font-semibold tracking-tight text-foreground leading-[1.05]`},Z={class:`text-base md:text-lg text-muted-foreground leading-relaxed max-w-[680px]`},Q={class:`p-6 md:p-8 flex flex-col gap-6`},ne={class:`flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground`},re={class:`inline-flex items-center gap-1.5`},ie={class:`inline-flex items-center gap-1.5`},ae={class:`inline-flex items-center gap-1.5`},oe={class:`flex flex-col gap-3`},se={class:`text-xs font-medium uppercase tracking-[0.16em] text-primary`},ce={class:`text-2xl md:text-3xl font-semibold tracking-tight text-foreground leading-tight`},le={class:`text-sm md:text-base text-muted-foreground leading-relaxed`},ue={class:`inline-flex items-center gap-2 text-sm font-medium text-foreground`},de={class:`grid grid-cols-1 md:grid-cols-2 gap-4`},fe={class:`flex flex-col gap-4`},pe={class:`flex items-center justify-between gap-3 text-xs text-muted-foreground`},me={class:`flex flex-col gap-3`},he={class:`text-lg font-semibold tracking-tight text-foreground leading-snug`},ge={class:`text-sm text-muted-foreground leading-relaxed`},_e={class:`mt-8 inline-flex items-center gap-2 text-sm font-medium text-foreground`},ve={key:1,class:`mx-auto max-w-[820px]`},ye={class:`mb-10 flex flex-col gap-5 border-b border-border pb-8`},be={class:`flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground`},xe={class:`inline-flex items-center gap-1.5`},Se={class:`inline-flex items-center gap-1.5`},Ce={class:`inline-flex items-center gap-1.5`},we={class:`text-3xl md:text-5xl font-semibold tracking-tight text-foreground leading-tight`},Te={class:`text-base md:text-lg text-muted-foreground leading-relaxed`},Ee={key:0,class:`rounded-xl border border-border bg-background p-6 text-sm text-muted-foreground`},De=[`innerHTML`],$={key:2,class:`mt-14 border-t border-border pt-8`},Oe={class:`mb-4 text-lg font-semibold tracking-tight text-foreground`},ke={class:`grid grid-cols-1 md:grid-cols-3 gap-4`},Ae={class:`mb-2 text-xs text-muted-foreground`},je={class:`text-sm font-medium leading-snug text-foreground`},Me={key:2,class:`mx-auto flex max-w-[640px] flex-col items-center gap-5 py-24 text-center`},Ne={class:`rounded-xl border border-border bg-muted p-3 text-muted-foreground`},Pe={class:`text-3xl font-semibold tracking-tight text-foreground`},Fe={class:`text-muted-foreground`},Ie=C(t({__name:`BlogsPage`,setup(t){let g=te(),C=w(),{t:k,locale:A}=m(),j=y(()=>{let e=g.params.slug;return typeof e==`string`?e:``}),M=y(()=>j.value.length>0),N=y(()=>U(A.value)),P=y(()=>j.value?W(j.value,A.value):void 0),F=y(()=>N.value[0]),I=y(()=>N.value.filter(e=>e.slug!==P.value?.slug).slice(0,3)),L=h(``),R=h(!1),z=0,B=y(()=>P.value?k(`blog.seoPostTitle`,{title:P.value.title}):M.value?k(`blog.seoNotFoundTitle`):k(`blog.seoTitle`)),V=y(()=>P.value?.excerpt||k(`blog.seoDescription`));return d({htmlAttrs:{lang:y(()=>A.value)}}),u({title:()=>B.value,description:()=>V.value,ogTitle:()=>B.value,ogDescription:()=>V.value,ogType:`article`,ogUrl:()=>`https://memoh.ai${g.path}`,twitterCard:`summary_large_image`,twitterTitle:()=>B.value,twitterDescription:()=>V.value}),l(P,async e=>{let t=++z;if(L.value=``,!e){R.value=!1;return}R.value=!0;let{renderMarkdown:n}=await E(async()=>{let{renderMarkdown:e}=await import(`./markdown-DLfpP03F.js`);return{renderMarkdown:e}},[]),r=await n(e.body);t===z&&(L.value=r,R.value=!1)},{immediate:!0}),(t,l)=>(c(),o(`main`,G,[M.value?P.value?(c(),o(`article`,ve,[f(p(T),{to:`/blogs`,class:`mb-8 inline-flex items-center gap-2 rounded-md px-0 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`},{default:e(()=>[f(p(ee),{class:`w-4 h-4`}),i(` `+r(t.$t(`blog.back`)),1)]),_:1}),a(`header`,ye,[a(`div`,be,[a(`span`,xe,[f(p(x),{class:`w-3.5 h-3.5`}),i(` `+r(p(H)(P.value.dateKey,p(A))),1)]),a(`span`,Se,[f(p(O),{class:`w-3.5 h-3.5`}),i(` `+r(P.value.author),1)]),a(`span`,Ce,[f(p(S),{class:`w-3.5 h-3.5`}),i(` `+r(t.$t(`blog.minRead`,{n:P.value.readingMinutes})),1)])]),a(`h1`,we,r(P.value.title),1),a(`p`,Te,r(P.value.excerpt),1)]),R.value?(c(),o(`div`,Ee,r(t.$t(`blog.rendering`)),1)):(c(),o(`div`,{key:1,class:`blog-body`,innerHTML:L.value},null,8,De)),I.value.length?(c(),o(`section`,$,[a(`h2`,Oe,r(t.$t(`blog.more`)),1),a(`div`,ke,[(c(!0),o(_,null,s(I.value,t=>(c(),n(p(T),{key:t.slug,to:`/blogs/${t.slug}`,class:`group rounded-xl border border-border bg-background p-4 transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`},{default:e(()=>[a(`p`,Ae,r(p(H)(t.dateKey,p(A))),1),a(`h3`,je,r(t.title),1)]),_:2},1032,[`to`]))),128))])])):v(``,!0)])):(c(),o(`section`,Me,[a(`div`,Ne,[f(p(D),{class:`w-6 h-6`})]),a(`h1`,Pe,r(t.$t(`blog.notFoundTitle`)),1),a(`p`,Fe,r(t.$t(`blog.notFoundDescription`)),1),a(`button`,{type:`button`,class:`inline-flex items-center justify-center rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-colors hover:bg-foreground/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`,onClick:l[0]||=e=>p(C).push(`/blogs`)},r(t.$t(`blog.back`)),1)])):(c(),o(`section`,K,[a(`header`,q,[a(`div`,J,[f(p(D),{class:`w-3.5 h-3.5`}),i(` `+r(t.$t(`blog.badge`)),1)]),a(`div`,Y,[a(`h1`,X,r(t.$t(`blog.indexTitle`)),1),a(`p`,Z,r(t.$t(`blog.indexDescription`)),1)])]),F.value?(c(),n(p(T),{key:0,to:`/blogs/${F.value.slug}`,class:`group grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] overflow-hidden rounded-xl border border-border bg-background transition-all duration-300 hover:-translate-y-1 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`},{default:e(()=>[a(`div`,Q,[a(`div`,ne,[a(`span`,re,[f(p(x),{class:`w-3.5 h-3.5`}),i(` `+r(p(H)(F.value.dateKey,p(A))),1)]),a(`span`,ie,[f(p(O),{class:`w-3.5 h-3.5`}),i(` `+r(F.value.author),1)]),a(`span`,ae,[f(p(S),{class:`w-3.5 h-3.5`}),i(` `+r(t.$t(`blog.minRead`,{n:F.value.readingMinutes})),1)])]),a(`div`,oe,[a(`span`,se,r(t.$t(`blog.latest`)),1),a(`h2`,ce,r(F.value.title),1),a(`p`,le,r(F.value.excerpt),1)]),a(`span`,ue,[i(r(t.$t(`blog.readArticle`))+` `,1),f(p(b),{class:`w-4 h-4 transition-transform group-hover:translate-x-0.5`})])]),l[1]||=a(`div`,{class:`border-t md:border-t-0 md:border-l border-border bg-muted/35 p-6 md:p-8 flex items-end`},[a(`div`,{class:`w-full font-mono text-xs text-muted-foreground leading-relaxed`},[a(`div`,{class:`mb-4 flex items-center gap-1.5`},[a(`span`,{class:`h-2.5 w-2.5 rounded-full bg-red-400/80`}),a(`span`,{class:`h-2.5 w-2.5 rounded-full bg-yellow-400/80`}),a(`span`,{class:`h-2.5 w-2.5 rounded-full bg-green-400/80`})]),a(`p`,null,`agent.workspace.boot()`),a(`p`,{class:`text-foreground`},`container.isolated = true`),a(`p`,null,`memory.local_first = true`),a(`p`,null,`status = "always-on"`)])],-1)]),_:1},8,[`to`])):v(``,!0),a(`section`,de,[(c(!0),o(_,null,s(N.value.slice(1),o=>(c(),n(p(T),{key:o.slug,to:`/blogs/${o.slug}`,class:`group flex min-h-[260px] flex-col justify-between rounded-xl border border-border bg-background p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`},{default:e(()=>[a(`div`,fe,[a(`div`,pe,[a(`span`,null,r(p(H)(o.dateKey,p(A))),1),a(`span`,null,r(t.$t(`blog.min`,{n:o.readingMinutes})),1)]),a(`div`,me,[a(`h2`,he,r(o.title),1),a(`p`,ge,r(o.excerpt),1)])]),a(`span`,_e,[i(r(t.$t(`blog.readArticle`))+` `,1),f(p(b),{class:`w-4 h-4 transition-transform group-hover:translate-x-0.5`})])]),_:2},1032,[`to`]))),128))])]))]))}}),[[`__scopeId`,`data-v-d10353af`]]);export{Ie as default};
+`}),j={"2026-02-16":`introduction-to-memoh`,"2026-05-02":`discuss-mode`,"2026-05-15":`workspace-desktop`,"2026-09-11":`cloud-computer-for-every-agent`,"2026-09-11-en":`cloud-computer-for-every-agent`,"2026-09-15":`cloud-computer-for-every-agent`},M=e=>{let t=/^---\n([\s\S]*?)\n---\n?/.exec(e);return t?{meta:Object.fromEntries(t[1].split(`
+`).map(e=>{let t=e.indexOf(`:`);if(t!==-1)return[e.slice(0,t).trim(),e.slice(t+1).trim().replace(/^["']|["']$/g,``)]}).filter(e=>!!e)),body:e.slice(t[0].length)}:{meta:{},body:e}},N=e=>e.replace(/!\[[^\]]*]\([^)]+\)/g,``).replace(/\[([^\]]+)]\([^)]+\)/g,`$1`).replace(/[`*_>#|:-]/g,``).replace(/\s+/g,` `).trim(),P=e=>{let t=N(e.split(`
+`).find(e=>{let t=e.trim();return t&&!t.startsWith(`#`)&&!t.startsWith(`:::`)&&!t.startsWith(`![`)&&!t.startsWith(`- `)&&!t.startsWith(`|`)&&!t.startsWith("```")})??``);return t.length>180?`${t.slice(0,177)}...`:t},F=e=>{let t=N(e.replace(/```[\s\S]*?```/g,``)).match(/[\u4e00-\u9fff]|[A-Za-z0-9]+/g)?.length??0;return Math.max(2,Math.round(t/320))},I=e=>{let t=e.replace(/\\/g,`/`).split(`/`),n=t.pop()?.replace(/\.md$/,``),r=t.pop();if(!(!n||n===`index`)&&!(r!==`en`&&r!==`zh`))return{slug:n,locale:r}},L=(e,t)=>{let n=I(e);if(!n)return;let{meta:r,body:i}=M(t),a=i.replace(/^\s*#\s+.+\n+/,``),o=/^(\d{4}-\d{2}-\d{2})/.exec(n.slug);return{slug:n.slug,locale:n.locale,title:r.title||n.slug,author:r.author||`Team Memoh`,dateKey:r.date||o?.[1]||n.slug,excerpt:P(a),readingMinutes:F(a),cover:r.cover||void 0,body:a}},R=new Map;for(let[e,t]of Object.entries(A)){let n=L(e,t);if(!n)continue;let r=R.get(n.slug)??{};r[n.locale]=n,R.set(n.slug,r)}var z=e=>e===`zh`?`zh`:`en`,B={zh:`zh-CN`,ja:`ja`},V=(e,t)=>{let n=R.get(e);if(n)return n[t]??n.en??n.zh},H=e=>j[e]??e,U=(e,t)=>{let n=/^(\d{4}-\d{2}-\d{2})$/.exec(e);return n?new Intl.DateTimeFormat(B[t]??`en`,{month:`short`,day:`numeric`,year:`numeric`}).format(new Date(`${n[1]}T00:00:00Z`)):e},W=e=>{let t=z(e);return[...R.keys()].filter(e=>!(e in j)).map(e=>V(e,t)).filter(e=>!!e).sort((e,t)=>t.dateKey.localeCompare(e.dateKey))},G=(e,t)=>V(H(decodeURIComponent(e)),z(t)),K={class:`w-full max-w-[1080px] min-h-[calc(100vh-3.5rem)] mx-auto px-4 md:px-8 pt-[112px] md:pt-[148px] pb-[120px] relative z-10`},q={key:0,class:`flex flex-col gap-12`},J={class:`max-w-[760px] flex flex-col gap-5`},Y={class:`inline-flex w-fit items-center gap-2 rounded-md border border-border bg-background px-3 py-1.5 text-xs font-medium text-muted-foreground`},X={class:`flex flex-col gap-4`},Z={class:`text-4xl md:text-6xl font-semibold tracking-tight text-foreground leading-[1.05]`},Q={class:`text-base md:text-lg text-muted-foreground leading-relaxed max-w-[680px]`},ne={class:`p-6 md:p-8 flex flex-col gap-6`},re={class:`flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground`},ie={class:`inline-flex items-center gap-1.5`},ae={class:`inline-flex items-center gap-1.5`},oe={class:`inline-flex items-center gap-1.5`},se={class:`flex flex-col gap-3`},ce={class:`text-xs font-medium uppercase tracking-[0.16em] text-primary`},le={class:`text-2xl md:text-3xl font-semibold tracking-tight text-foreground leading-tight`},ue={class:`text-sm md:text-base text-muted-foreground leading-relaxed`},de={class:`inline-flex items-center gap-2 text-sm font-medium text-foreground`},fe=[`src`],pe={key:1,class:`w-full font-mono text-xs text-muted-foreground leading-relaxed`},me={class:`grid grid-cols-1 md:grid-cols-2 gap-4`},he={class:`flex flex-col gap-4`},ge={class:`flex items-center justify-between gap-3 text-xs text-muted-foreground`},_e={class:`flex flex-col gap-3`},ve={class:`text-lg font-semibold tracking-tight text-foreground leading-snug`},ye={class:`text-sm text-muted-foreground leading-relaxed`},be={class:`mt-8 inline-flex items-center gap-2 text-sm font-medium text-foreground`},xe={key:1,class:`mx-auto max-w-[820px]`},Se={class:`mb-10 flex flex-col gap-5 border-b border-border pb-8`},Ce={class:`flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-muted-foreground`},we={class:`inline-flex items-center gap-1.5`},Te={class:`inline-flex items-center gap-1.5`},Ee={class:`inline-flex items-center gap-1.5`},De={class:`text-3xl md:text-5xl font-semibold tracking-tight text-foreground leading-tight`},$={class:`text-base md:text-lg text-muted-foreground leading-relaxed`},Oe={key:0,class:`rounded-xl border border-border bg-background p-6 text-sm text-muted-foreground`},ke=[`innerHTML`],Ae={key:2,class:`mt-14 border-t border-border pt-8`},je={class:`mb-4 text-lg font-semibold tracking-tight text-foreground`},Me={class:`grid grid-cols-1 md:grid-cols-3 gap-4`},Ne={class:`mb-2 text-xs text-muted-foreground`},Pe={class:`text-sm font-medium leading-snug text-foreground`},Fe={key:2,class:`mx-auto flex max-w-[640px] flex-col items-center gap-5 py-24 text-center`},Ie={class:`rounded-xl border border-border bg-muted p-3 text-muted-foreground`},Le={class:`text-3xl font-semibold tracking-tight text-foreground`},Re={class:`text-muted-foreground`},ze=w(t({__name:`BlogsPage`,setup(t){let h=C(),w=T(),{t:A,locale:j}=p(),M=v(()=>{let e=h.params.slug;return typeof e==`string`?e:``}),N=v(()=>M.value.length>0),P=v(()=>W(j.value)),F=v(()=>M.value?G(M.value,j.value):void 0),I=v(()=>P.value[0]),L=v(()=>P.value.filter(e=>e.slug!==F.value?.slug).slice(0,3)),R=m(``),z=m(!1),B=0,V=v(()=>F.value?A(`blog.seoPostTitle`,{title:F.value.title}):N.value?A(`blog.seoNotFoundTitle`):A(`blog.seoTitle`)),H=v(()=>F.value?.excerpt||A(`blog.seoDescription`));return u({htmlAttrs:{lang:v(()=>j.value)}}),te({title:()=>V.value,description:()=>H.value,ogTitle:()=>V.value,ogDescription:()=>H.value,ogType:`article`,ogUrl:()=>`https://memoh.ai${h.path}`,twitterCard:`summary_large_image`,twitterTitle:()=>V.value,twitterDescription:()=>H.value}),l(F,async e=>{let t=++B;if(R.value=``,!e){z.value=!1;return}z.value=!0;let{renderMarkdown:n}=await D(async()=>{let{renderMarkdown:e}=await import(`./markdown-DLfpP03F.js`);return{renderMarkdown:e}},[]),r=await n(e.body);t===B&&(R.value=r,z.value=!1)},{immediate:!0}),(t,l)=>(c(),o(`main`,K,[N.value?F.value?(c(),o(`article`,xe,[d(f(E),{to:`/blogs`,class:`mb-8 inline-flex items-center gap-2 rounded-md px-0 py-2 text-sm font-medium text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`},{default:e(()=>[d(f(y),{class:`w-4 h-4`}),i(` `+r(t.$t(`blog.back`)),1)]),_:1}),a(`header`,Se,[a(`div`,Ce,[a(`span`,we,[d(f(x),{class:`w-3.5 h-3.5`}),i(` `+r(f(U)(F.value.dateKey,f(j))),1)]),a(`span`,Te,[d(f(k),{class:`w-3.5 h-3.5`}),i(` `+r(F.value.author),1)]),a(`span`,Ee,[d(f(S),{class:`w-3.5 h-3.5`}),i(` `+r(t.$t(`blog.minRead`,{n:F.value.readingMinutes})),1)])]),a(`h1`,De,r(F.value.title),1),a(`p`,$,r(F.value.excerpt),1)]),z.value?(c(),o(`div`,Oe,r(t.$t(`blog.rendering`)),1)):(c(),o(`div`,{key:1,class:`blog-body`,innerHTML:R.value},null,8,ke)),L.value.length?(c(),o(`section`,Ae,[a(`h2`,je,r(t.$t(`blog.more`)),1),a(`div`,Me,[(c(!0),o(g,null,s(L.value,t=>(c(),n(f(E),{key:t.slug,to:`/blogs/${t.slug}`,class:`group rounded-xl border border-border bg-background p-4 transition-all hover:-translate-y-0.5 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`},{default:e(()=>[a(`p`,Ne,r(f(U)(t.dateKey,f(j))),1),a(`h3`,Pe,r(t.title),1)]),_:2},1032,[`to`]))),128))])])):_(``,!0)])):(c(),o(`section`,Fe,[a(`div`,Ie,[d(f(O),{class:`w-6 h-6`})]),a(`h1`,Le,r(t.$t(`blog.notFoundTitle`)),1),a(`p`,Re,r(t.$t(`blog.notFoundDescription`)),1),a(`button`,{type:`button`,class:`inline-flex items-center justify-center rounded-full bg-foreground px-5 py-2.5 text-sm font-medium text-background transition-colors hover:bg-foreground/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`,onClick:l[0]||=e=>f(w).push(`/blogs`)},r(t.$t(`blog.back`)),1)])):(c(),o(`section`,q,[a(`header`,J,[a(`div`,Y,[d(f(O),{class:`w-3.5 h-3.5`}),i(` `+r(t.$t(`blog.badge`)),1)]),a(`div`,X,[a(`h1`,Z,r(t.$t(`blog.indexTitle`)),1),a(`p`,Q,r(t.$t(`blog.indexDescription`)),1)])]),I.value?(c(),n(f(E),{key:0,to:`/blogs/${I.value.slug}`,class:`group grid grid-cols-1 md:grid-cols-[1.1fr_0.9fr] overflow-hidden rounded-xl border border-border bg-background transition-all duration-300 hover:-translate-y-1 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`},{default:e(()=>[a(`div`,ne,[a(`div`,re,[a(`span`,ie,[d(f(x),{class:`w-3.5 h-3.5`}),i(` `+r(f(U)(I.value.dateKey,f(j))),1)]),a(`span`,ae,[d(f(k),{class:`w-3.5 h-3.5`}),i(` `+r(I.value.author),1)]),a(`span`,oe,[d(f(S),{class:`w-3.5 h-3.5`}),i(` `+r(t.$t(`blog.minRead`,{n:I.value.readingMinutes})),1)])]),a(`div`,se,[a(`span`,ce,r(t.$t(`blog.latest`)),1),a(`h2`,le,r(I.value.title),1),a(`p`,ue,r(I.value.excerpt),1)]),a(`span`,de,[i(r(t.$t(`blog.readArticle`))+` `,1),d(f(b),{class:`w-4 h-4 transition-transform group-hover:translate-x-0.5`})])]),a(`div`,{class:ee([`border-t md:border-t-0 md:border-l border-border bg-muted/35 p-6 md:p-8 flex`,I.value.cover?`items-center`:`items-end`])},[I.value.cover?(c(),o(`img`,{key:0,src:I.value.cover,alt:``,class:`w-full h-auto rounded-lg border border-border`},null,8,fe)):(c(),o(`div`,pe,[...l[1]||=[a(`div`,{class:`mb-4 flex items-center gap-1.5`},[a(`span`,{class:`h-2.5 w-2.5 rounded-full bg-red-400/80`}),a(`span`,{class:`h-2.5 w-2.5 rounded-full bg-yellow-400/80`}),a(`span`,{class:`h-2.5 w-2.5 rounded-full bg-green-400/80`})],-1),a(`p`,null,`agent.workspace.boot()`,-1),a(`p`,{class:`text-foreground`},`container.isolated = true`,-1),a(`p`,null,`memory.local_first = true`,-1),a(`p`,null,`status = "always-on"`,-1)]]))],2)]),_:1},8,[`to`])):_(``,!0),a(`section`,me,[(c(!0),o(g,null,s(P.value.slice(1),o=>(c(),n(f(E),{key:o.slug,to:`/blogs/${o.slug}`,class:`group flex min-h-[260px] flex-col justify-between rounded-xl border border-border bg-background p-5 transition-all duration-300 hover:-translate-y-1 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2`},{default:e(()=>[a(`div`,he,[a(`div`,ge,[a(`span`,null,r(f(U)(o.dateKey,f(j))),1),a(`span`,null,r(t.$t(`blog.min`,{n:o.readingMinutes})),1)]),a(`div`,_e,[a(`h2`,ve,r(o.title),1),a(`p`,ye,r(o.excerpt),1)])]),a(`span`,be,[i(r(t.$t(`blog.readArticle`))+` `,1),d(f(b),{class:`w-4 h-4 transition-transform group-hover:translate-x-0.5`})])]),_:2},1032,[`to`]))),128))])]))]))}}),[[`__scopeId`,`data-v-daa9916a`]]);export{ze as default};

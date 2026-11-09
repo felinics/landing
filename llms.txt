@@ -32,6 +32,7 @@ curl -sL https://memoh.sh | bash
 - Documentation (setup and feature references): https://docs.memoh.ai/llms.txt
 
 ## Blog Posts
+- User interview: Yayoi on using Memoh as an always-on dev machine: https://memoh.ai/blogs/user-interview-yayoi
 - Introducing Memoh: A Cloud Computer for Every Agent: https://memoh.ai/blogs/cloud-computer-for-every-agent
 - Desktop workspace display: https://memoh.ai/blogs/workspace-desktop
 - Discuss mode for proactive group chat agents: https://memoh.ai/blogs/discuss-mode

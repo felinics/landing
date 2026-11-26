@@ -38,6 +38,18 @@ const pages = {
     socialDescription: 'Field notes, architecture writeups, and product updates from the Memoh team.',
     url: 'https://memoh.ai/blogs',
   },
+  guides: {
+    title: 'Memoh Guides',
+    description: 'Getting-started tutorials for Memoh — set up your agents and put them to work.',
+    socialDescription: 'Getting-started tutorials for Memoh — set up your agents and put them to work.',
+    url: 'https://memoh.ai/guides',
+  },
+  'guides/memoh-101': {
+    title: 'Memoh 101 | Memoh Guides',
+    description: 'Memoh is an agent with its own computer. Learn how to set one up, connect your channels, and run your first workflow.',
+    socialDescription: 'Memoh is an agent with its own computer. Learn how to set one up, connect your channels, and run your first workflow.',
+    url: 'https://memoh.ai/guides/memoh-101',
+  },
   help: {
     title: 'Memoh Help Center',
     description: 'Answers about Memoh: cloud computers for agents, channels, scheduled tasks, plans and billing, desktop apps, privacy and security.',

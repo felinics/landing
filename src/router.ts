@@ -8,6 +8,7 @@ const NotFoundPage = () => import('./pages/NotFoundPage.vue')
 const LegalPage = () => import('./pages/LegalPage.vue')
 const HelpPage = () => import('./pages/HelpPage.vue')
 const GuidesPage = () => import('./pages/GuidesPage.vue')
+const GuideDetailPage = () => import('./pages/GuideDetailPage.vue')
 const HelpCollectionPage = () => import('./pages/HelpCollectionPage.vue')
 
 export const router = createRouter({
@@ -26,6 +27,7 @@ export const router = createRouter({
     { path: '/blogs/2026-09-15', redirect: '/blogs/cloud-computer-for-every-agent' },
     { path: '/blogs/:slug', name: 'blog-post', component: BlogsPage },
     { path: '/guides', name: 'guides', component: GuidesPage },
+    { path: '/guides/:slug', name: 'guide', component: GuideDetailPage },
     { path: '/help', name: 'help', component: HelpPage },
     { path: '/help/:collectionId', name: 'help-collection', component: HelpCollectionPage },
     // Answers expand in place on the collection page; keep old article URLs alive.

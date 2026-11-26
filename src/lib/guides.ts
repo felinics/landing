@@ -4,8 +4,7 @@
 // (keyed by locale) so the guides section never conflicts with in-flight
 // locale-file work and can be moved out as a unit later.
 //
-// The guide list is intentionally empty for now; the page renders an empty
-// state until entries are added to `guides` below.
+// Guide bodies are not written yet; /guides/:slug shows a "coming soon" page.
 
 export const guideLocales = ['en', 'zh', 'ja'] as const
 export type GuideLocale = (typeof guideLocales)[number]
@@ -46,6 +45,13 @@ const ui = {
     en: 'No guides in this category yet.',
     zh: '这个分类下还没有教程。',
     ja: 'このカテゴリにはまだガイドがありません。',
+  },
+  back: { en: 'All guides', zh: '全部教程', ja: 'すべてのガイド' },
+  draftTitle: { en: 'This guide is being written', zh: '这篇教程正在撰写中', ja: 'このガイドは執筆中です' },
+  draftDesc: {
+    en: 'Check back soon. In the meantime, the docs cover the basics.',
+    zh: '敬请期待。在此之前，可以先看看文档。',
+    ja: '公開までお待ちください。それまではドキュメントをご覧ください。',
   },
   readDocs: { en: 'Read the docs', zh: '查看文档', ja: 'ドキュメントを読む' },
   visitHelp: { en: 'Help Center', zh: '帮助中心', ja: 'ヘルプセンター' },
@@ -96,9 +102,11 @@ type GuideSource = {
   category: GuideCategoryId
   title: Localized
   summary: Localized
-  /** Featured guides render as large cards with a cover image. */
+  /** Short title drawn on the generated cover (defaults to the English title). */
+  coverTitle?: string
+  /** Featured guides render as large cards with a cover. */
   featured?: boolean
-  /** Path under public/, e.g. /guides/<slug>/cover.webp. */
+  /** Optional cover image under public/; without one a branded cover is generated. */
   cover?: string
 }
 
@@ -108,22 +116,44 @@ export type Guide = {
   categoryTitle: string
   title: string
   summary: string
+  coverTitle: string
   featured: boolean
   cover?: string
 }
 
-// Tutorials intentionally left empty for now.
-const guides: GuideSource[] = []
+const guides: GuideSource[] = [
+  {
+    // Placeholder: the tutorial body is not written yet.
+    slug: 'memoh-101',
+    category: 'getting-started',
+    featured: true,
+    coverTitle: 'Memoh 101',
+    title: { en: 'Memoh 101', zh: 'Memoh 101', ja: 'Memoh 101' },
+    summary: {
+      en: 'Memoh is an agent with its own computer. Learn how to set one up, connect your channels, and run your first workflow.',
+      zh: 'Memoh 是一个拥有自己电脑的 Agent。了解如何创建第一个 Agent、接入常用渠道，并跑起你的第一个工作流。',
+      ja: 'Memoh は自分のコンピューターを持つエージェントです。最初のエージェントの作り方、チャンネルの接続、最初のワークフローの動かし方を紹介します。',
+    },
+  },
+]
+
+const toGuide = (g: GuideSource, resolved: GuideLocale): Guide => ({
+  slug: g.slug,
+  category: g.category,
+  categoryTitle: categories.find((c) => c.id === g.category)?.title[resolved] ?? g.category,
+  title: g.title[resolved],
+  summary: g.summary[resolved],
+  coverTitle: g.coverTitle ?? g.title.en,
+  featured: g.featured ?? false,
+  cover: g.cover,
+})
 
 export const getGuides = (locale: string): Guide[] => {
   const resolved = resolveLocale(locale)
-  return guides.map((g) => ({
-    slug: g.slug,
-    category: g.category,
-    categoryTitle: categories.find((c) => c.id === g.category)?.title[resolved] ?? g.category,
-    title: g.title[resolved],
-    summary: g.summary[resolved],
-    featured: g.featured ?? false,
-    cover: g.cover,
-  }))
+  return guides.map((g) => toGuide(g, resolved))
+}
+
+export const getGuide = (slug: string, locale: string): Guide | undefined => {
+  const source = guides.find((g) => g.slug === slug)
+  return source ? toGuide(source, resolveLocale(locale)) : undefined
 }

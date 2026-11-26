@@ -5,6 +5,7 @@ import { useSeoMeta } from '@unhead/vue'
 import { useI18n } from 'vue-i18n'
 import { ArrowRight, BookOpen } from 'lucide-vue-next'
 import MemohMascot from '../components/MemohMascot.vue'
+import GuideCover from '../components/GuideCover.vue'
 import { getGuideCategories, getGuides, getGuidesUi, isGuideCategoryId } from '../lib/guides'
 
 const { locale } = useI18n()
@@ -23,11 +24,9 @@ const activeCategory = computed(() => {
 const visibleGuides = computed(() =>
   activeCategory.value ? guides.value.filter((g) => g.category === activeCategory.value) : guides.value,
 )
-// Featured row only shows on the unfiltered view, like the reference layout.
-const featuredGuides = computed(() => (activeCategory.value ? [] : visibleGuides.value.filter((g) => g.featured)))
-const listGuides = computed(() =>
-  activeCategory.value ? visibleGuides.value : visibleGuides.value.filter((g) => !g.featured),
-)
+// Featured guides get cover cards; the rest are text-only cards.
+const featuredGuides = computed(() => visibleGuides.value.filter((g) => g.featured))
+const listGuides = computed(() => visibleGuides.value.filter((g) => !g.featured))
 
 const docsUrl = computed(() =>
   locale.value === 'zh' || locale.value === 'ja' ? `https://docs.memoh.ai/${locale.value}/` : 'https://docs.memoh.ai/',
@@ -77,24 +76,29 @@ useSeoMeta({
       </RouterLink>
     </nav>
 
-    <!-- Featured: large cards with cover image -->
+    <!-- Featured: cover + title + summary, no card frame -->
     <section v-if="featuredGuides.length" class="mt-14 flex flex-col gap-5">
       <h2 class="text-sm font-medium text-muted-foreground">{{ ui('featured') }}</h2>
-      <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+      <div class="grid grid-cols-1 gap-x-6 gap-y-10 md:grid-cols-2 lg:grid-cols-3">
         <RouterLink
-          v-for="(guide, i) in featuredGuides"
+          v-for="guide in featuredGuides"
           :key="guide.slug"
           :to="`/guides/${guide.slug}`"
-          class="group flex flex-col overflow-hidden rounded-xl border border-border bg-background hover:bg-muted/40 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
-          :class="{ 'md:col-span-2 lg:col-span-2': i === 0 }"
+          class="guide-card group flex flex-col gap-4 rounded-[14px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4 focus-visible:ring-offset-background"
         >
-          <div class="aspect-[16/9] w-full overflow-hidden border-b border-border bg-muted">
-            <img v-if="guide.cover" :src="guide.cover" alt="" class="h-full w-full object-cover" loading="lazy" />
-          </div>
-          <div class="flex flex-col gap-1.5 p-6">
-            <span class="text-xs text-muted-foreground">{{ guide.categoryTitle }}</span>
-            <h3 class="text-base md:text-lg font-semibold tracking-tight text-foreground leading-snug">{{ guide.title }}</h3>
-            <p class="text-sm text-muted-foreground leading-relaxed">{{ guide.summary }}</p>
+          <img
+            v-if="guide.cover"
+            :src="guide.cover"
+            alt=""
+            loading="lazy"
+            class="aspect-[19/10] w-full rounded-[14px] border border-border object-cover"
+          />
+          <GuideCover v-else :title="guide.coverTitle" />
+          <div class="flex flex-col gap-2 px-0.5">
+            <h3 class="text-lg font-medium tracking-tight text-foreground leading-snug group-hover:underline underline-offset-4 decoration-border">
+              {{ guide.title }}
+            </h3>
+            <p class="text-sm md:text-[15px] text-muted-foreground leading-relaxed">{{ guide.summary }}</p>
           </div>
         </RouterLink>
       </div>
